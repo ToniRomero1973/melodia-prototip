@@ -48,8 +48,9 @@ p{margin:8px 0}
   <div class="top">
     <div class="brand">Melodia</div>
     <div class="lang" role="group" aria-label="Idioma">
-      <button type="button" data-lang="ca" aria-pressed="true">Català</button>
-      <button type="button" data-lang="es" aria-pressed="false">Castellano</button>
+      <button type="button" data-lang="ca" aria-pressed="true" title="Català">CA</button>
+      <button type="button" data-lang="es" aria-pressed="false" title="Castellano">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false" title="English">EN</button>
     </div>
   </div>
 
@@ -127,21 +128,53 @@ const TXT = {
     note: "Es un prototipo: no se cobra nada y no hace falta registrarse. Todo lo que veas de pagos es simulado.",
     play: "Empezar a jugar",
     mobile: "Funciona mejor en el móvil."
+  },
+  en: {
+    title: "Will you help us test a game?",
+    intro: "Melodia is a mahjong game for your phone that is still an early sketch. We want to know what makes sense, what you like and what you don't.",
+    intro2: "We're testing the game, not you: if something is unclear, that's the game's fault. The game is in Catalan for now; the name and texts are provisional.",
+    howTitle: "How it works",
+    step1: "Play for about 10–15 minutes and try the things on the list below, slowly and without rushing.",
+    step2: "When you're done, tap “Answer the survey” in the bar at the very top.",
+    step3: "Answer the survey: it takes about 8 minutes and it's anonymous.",
+    tryTitle: "What to try",
+    tryIntro: "You don't have to follow the order. If something doesn't work for you, that's fine: it's exactly what we want to learn.",
+    t1: "Look at the home screen: what do you think the game is about?",
+    t2: "Play today's game (“Partida diària”). If you're not sure how, look for “Com es juga” (how to play).",
+    t3: "Use the rack (“Faristol”: the tray where you can set tiles aside).",
+    t4: "Try to guess the hidden phrase.",
+    t5: "Look at your result when you finish the game.",
+    t6: "Find the leaderboard (“Classificació”).",
+    t7: "Make the tiles bigger (in “Perfil”, then “Ajustos”).",
+    t8: "Play a level (“Nivells”) other than today's game.",
+    t9: "Make 3 mistakes on purpose (drop tiles on others that aren't their pair) and see what happens.",
+    note: "This is a prototype: nothing is charged and you don't need to sign up. Any payments you see are simulated.",
+    play: "Start playing",
+    mobile: "Works best on a phone."
   }
 };
+// Idioma del telèfon: el primer de la llista del sistema que tinguem; si cap, anglès.
+function systemLang(){
+  const list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]);
+  for (const l of list){ const c = String(l).toLowerCase().slice(0, 2); if (TXT[c]) return c; }
+  return "en";
+}
 function setLang(l){
   if(!TXT[l]) l = "ca";
   document.documentElement.lang = l;
   document.querySelectorAll("[data-t]").forEach(el => { el.textContent = TXT[l][el.dataset.t] || ""; });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
   document.getElementById("play").href = "index.html?prova=1&lang=" + l;
-  document.title = l === "es" ? "Prueba Melodia" : "Prova Melodia";
-  try { localStorage.setItem("melodia-prova-lang", l); } catch(e) {}
+  document.title = { ca: "Prova Melodia", es: "Prueba Melodia", en: "Test Melodia" }[l];
 }
-document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+// El participant pot canviar l'idioma a mà; la tria es recorda en aquest navegador.
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
+  setLang(b.dataset.lang);
+  try { localStorage.setItem("melodia-prova-lang", b.dataset.lang); } catch(e) {}
+}));
 let start = new URLSearchParams(location.search).get("lang");
-if(!start){ try { start = localStorage.getItem("melodia-prova-lang"); } catch(e) {} }
-if(!start) start = (navigator.language || "").toLowerCase().startsWith("es") ? "es" : "ca";
+if(!TXT[start]){ try { start = localStorage.getItem("melodia-prova-lang"); } catch(e) { start = null; } }
+if(!TXT[start]) start = systemLang();
 setLang(start);
 </script>
 </body>

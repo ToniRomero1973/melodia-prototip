@@ -891,17 +891,21 @@ render(); splash();
 <script>
 (function(){
   "use strict";
+  const TX = {
+    ca: { label: "Prova de Melodia", cta: "Respondre l'enquesta", soon: "L'enquesta encara no està a punt", ask: "Has acabat de provar el joc? Ara obrirem l'enquesta (uns 8 minuts)." },
+    es: { label: "Prueba de Melodia", cta: "Responder la encuesta", soon: "La encuesta todavía no está lista", ask: "¿Has terminado de probar el juego? Ahora abriremos la encuesta (unos 8 minutos)." },
+    en: { label: "Melodia test", cta: "Answer the survey", soon: "The survey isn't ready yet", ask: "Have you finished trying the game? We'll now open the survey (about 8 minutes)." }
+  };
+  // Idioma: el que passa la pàgina d'instruccions; si no, el primer idioma del telèfon que tinguem; si cap, anglès.
+  const sysLang = () => { for (const l of (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""])) { const c = String(l).toLowerCase().slice(0, 2); if (TX[c]) return c; } return "en"; };
   let q = new URLSearchParams(location.search), on = q.get("prova") === "1", lang = q.get("lang");
+  if(!TX[lang]) lang = sysLang();
   try {
-    if(on) sessionStorage.setItem("melodia-prova", lang === "es" ? "es" : "ca");
-    else { const s = sessionStorage.getItem("melodia-prova"); if(s){ on = true; lang = s; } }
+    if(on) sessionStorage.setItem("melodia-prova", lang);
+    else { const s = sessionStorage.getItem("melodia-prova"); if(s){ on = true; lang = TX[s] ? s : sysLang(); } }
   } catch(e) {}
   if(!on) return;
-  lang = lang === "es" ? "es" : "ca";
-  const T = {
-    ca: { label: "Prova de Melodia", cta: "Respondre l'enquesta", soon: "L'enquesta encara no està a punt", ask: "Has acabat de provar el joc? Ara obrirem l'enquesta (uns 8 minuts)." },
-    es: { label: "Prueba de Melodia", cta: "Responder la encuesta", soon: "La encuesta todavía no está lista", ask: "¿Has terminado de probar el juego? Ahora abriremos la encuesta (unos 8 minutos)." }
-  }[lang];
+  const T = TX[lang];
   const url = (window.MELODIA_ENQUESTA || {})[lang] || "";
   const css = document.createElement("style");
   css.textContent = "body.prova{flex-direction:column}" +
