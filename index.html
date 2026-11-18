@@ -886,5 +886,44 @@ function splash(){ const d=document.createElement('div'); d.className='splash he
   const close=()=>{ d.style.opacity='0'; setTimeout(()=>d.remove(),500); }; d.onclick=close; setTimeout(close, reduced?300:2200); }
 render(); splash();
 </script>
+<!-- Mode prova amb usuaris: index.html?prova=1&lang=ca|es mostra una barra amb l'enllaç a l'enquesta -->
+<script src="prova-config.js"></script>
+<script>
+(function(){
+  "use strict";
+  let q = new URLSearchParams(location.search), on = q.get("prova") === "1", lang = q.get("lang");
+  try {
+    if(on) sessionStorage.setItem("melodia-prova", lang === "es" ? "es" : "ca");
+    else { const s = sessionStorage.getItem("melodia-prova"); if(s){ on = true; lang = s; } }
+  } catch(e) {}
+  if(!on) return;
+  lang = lang === "es" ? "es" : "ca";
+  const T = {
+    ca: { label: "Prova de Melodia", cta: "Respondre l'enquesta", soon: "L'enquesta encara no està a punt", ask: "Has acabat de provar el joc? Ara obrirem l'enquesta (uns 8 minuts)." },
+    es: { label: "Prueba de Melodia", cta: "Responder la encuesta", soon: "La encuesta todavía no está lista", ask: "¿Has terminado de probar el juego? Ahora abriremos la encuesta (unos 8 minutos)." }
+  }[lang];
+  const url = (window.MELODIA_ENQUESTA || {})[lang] || "";
+  const css = document.createElement("style");
+  css.textContent = "body.prova{flex-direction:column}" +
+    ".provabar{flex:0 0 auto;width:100%;max-width:400px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 10px;background:#1F2328;color:#fff;font-size:14px;line-height:1.2}" +
+    ".provabar a,.provabar span.off{flex:0 0 auto;background:#E9B949;color:#2A1F05;font-weight:700;text-decoration:none;border-radius:999px;padding:8px 14px;min-height:36px;display:flex;align-items:center}" +
+    ".provabar span.off{background:#5B5F66;color:#fff;font-weight:400}" +
+    "body.prova .phone{height:calc(100% - 48px)}" +
+    "@media (min-width:500px){.provabar{border-radius:14px;margin-bottom:10px}body.prova .phone{height:min(860px,calc(100% - 64px))}}";
+  document.head.appendChild(css);
+  const bar = document.createElement("div");
+  bar.className = "provabar";
+  const lbl = document.createElement("span"); lbl.textContent = T.label; bar.appendChild(lbl);
+  if(url){
+    const a = document.createElement("a"); a.href = url; a.textContent = T.cta + " →"; a.rel = "noopener";
+    a.addEventListener("click", ev => { if(!confirm(T.ask)) ev.preventDefault(); });
+    bar.appendChild(a);
+  } else {
+    const s = document.createElement("span"); s.className = "off"; s.textContent = T.soon; bar.appendChild(s);
+  }
+  document.body.classList.add("prova");
+  document.body.insertBefore(bar, document.getElementById("phone"));
+})();
+</script>
 </body>
 </html>

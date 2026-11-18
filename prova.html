@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prova Melodia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<script src="prova-config.js"></script>
+<style>
+:root{
+  --bg:#F5F0E6; --surface:#FFFFFF; --ink:#1F2328; --quiet:#5B5F66; --line:#E6DDCD;
+  --jade:#1F6F5C; --jade-d:#164F41; --jade-soft:#E2EFE9;
+  --serif:"Fraunces", Georgia, serif;
+  font-family:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#191C1F; --surface:#24282C; --ink:#F1EEE8; --quiet:#B4B0A8; --line:#353A40; --jade:#3E9C83; --jade-d:#2A7563; --jade-soft:#1F3A33; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-size:18px;line-height:1.5}
+main{max-width:520px;margin:0 auto;padding:20px 16px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--jade)}
+.lang{display:flex;border:2px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{font:inherit;font-size:15px;font-weight:700;border:0;background:transparent;color:var(--quiet);padding:6px 14px;cursor:pointer;min-height:40px}
+.lang button[aria-pressed="true"]{background:var(--jade);color:#fff}
+h1{font-family:var(--serif);font-size:32px;line-height:1.15;margin:22px 0 8px}
+h2{font-family:var(--serif);font-size:22px;margin:28px 0 10px}
+p{margin:8px 0}
+.muted{color:var(--quiet)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px 18px;margin:14px 0}
+.steps{list-style:none;padding:0;margin:0;counter-reset:s}
+.steps li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:8px 0}
+.steps li::before{content:counter(s);flex:0 0 30px;height:30px;border-radius:50%;background:var(--jade-soft);color:var(--jade);font-weight:700;display:flex;align-items:center;justify-content:center;font-size:16px;margin-top:1px}
+.tasks{padding-left:22px;margin:0}
+.tasks li{padding:5px 0}
+.note{font-size:16px;background:var(--jade-soft);border-radius:14px;padding:12px 14px;margin:16px 0}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;border-radius:999px;background:var(--jade);color:#fff;font-size:19px;font-weight:700;text-decoration:none;box-shadow:0 4px 0 var(--jade-d);margin-top:22px}
+.btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--jade-d)}
+.small{font-size:15px}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div class="brand">Melodia</div>
+    <div class="lang" role="group" aria-label="Idioma">
+      <button type="button" data-lang="ca" aria-pressed="true">Català</button>
+      <button type="button" data-lang="es" aria-pressed="false">Castellano</button>
+    </div>
+  </div>
+
+  <h1 data-t="title"></h1>
+  <p data-t="intro"></p>
+  <p class="muted" data-t="intro2"></p>
+
+  <div class="card">
+    <h2 style="margin-top:4px" data-t="howTitle"></h2>
+    <ol class="steps">
+      <li data-t="step1"></li>
+      <li data-t="step2"></li>
+      <li data-t="step3"></li>
+    </ol>
+  </div>
+
+  <h2 data-t="tryTitle"></h2>
+  <p class="muted small" data-t="tryIntro"></p>
+  <ol class="tasks">
+    <li data-t="t1"></li><li data-t="t2"></li><li data-t="t3"></li>
+    <li data-t="t4"></li><li data-t="t5"></li><li data-t="t6"></li>
+    <li data-t="t7"></li><li data-t="t8"></li><li data-t="t9"></li>
+  </ol>
+
+  <p class="note" data-t="note"></p>
+
+  <a class="btn" id="play" href="index.html?prova=1&amp;lang=ca" data-t="play"></a>
+  <p class="muted small" style="text-align:center;margin-top:12px" data-t="mobile"></p>
+</main>
+<script>
+"use strict";
+const TXT = {
+  ca: {
+    title: "Ens ajudes a provar un joc?",
+    intro: "Melodia és un joc de mahjong per al mòbil que encara està en fase d'esbós. Volem saber què s'entén, què agrada i què no.",
+    intro2: "No t'avaluem a tu, sinó el joc: si alguna cosa no s'entén, és culpa del joc. El nom i els textos són provisionals.",
+    howTitle: "Com funciona",
+    step1: "Juga uns 10–15 minuts i prova les coses de la llista de sota, a poc a poc i sense pressa.",
+    step2: "Quan acabis, toca «Respondre l'enquesta» a la barra de dalt de tot.",
+    step3: "Respon l'enquesta: són uns 8 minuts i és anònima.",
+    tryTitle: "Què has de provar",
+    tryIntro: "No cal fer-ho en ordre. Si alguna cosa no et surt, no passa res: és el que volem saber.",
+    t1: "Mira la pantalla d'inici: de què creus que va el joc?",
+    t2: "Juga la partida del dia. Si no saps com, busca «Com es juga».",
+    t3: "Fes servir el faristol (la safata on pots apartar fitxes).",
+    t4: "Intenta endevinar la frase amagada.",
+    t5: "Mira el resultat quan acabis la partida.",
+    t6: "Busca la classificació.",
+    t7: "Fes les fitxes més grans (a Perfil, Ajustos).",
+    t8: "Juga un nivell que no sigui el del dia.",
+    t9: "Fes 3 errors expressament (deixa fitxes damunt d'altres que no són la seva parella) i mira què passa.",
+    note: "És un prototip: no es cobra res i no cal registrar-se. Tot el que veuràs de pagaments és simulat.",
+    play: "Començar a jugar",
+    mobile: "Funciona millor al mòbil."
+  },
+  es: {
+    title: "¿Nos ayudas a probar un juego?",
+    intro: "Melodia es un juego de mahjong para el móvil que todavía está en fase de boceto. Queremos saber qué se entiende, qué gusta y qué no.",
+    intro2: "No te evaluamos a ti, sino al juego: si algo no se entiende, es culpa del juego. El juego está en catalán; el nombre y los textos son provisionales.",
+    howTitle: "Cómo funciona",
+    step1: "Juega unos 10–15 minutos y prueba las cosas de la lista de abajo, poco a poco y sin prisa.",
+    step2: "Cuando acabes, toca «Responder la encuesta» en la barra de arriba del todo.",
+    step3: "Responde la encuesta: son unos 8 minutos y es anónima.",
+    tryTitle: "Qué tienes que probar",
+    tryIntro: "No hace falta hacerlo en orden. Si algo no te sale, no pasa nada: es lo que queremos saber.",
+    t1: "Mira la pantalla de inicio: ¿de qué crees que va el juego?",
+    t2: "Juega la partida del día («Partida diària»). Si no sabes cómo, busca «Com es juga» (cómo se juega).",
+    t3: "Usa el atril («Faristol»: la bandeja donde puedes apartar fichas).",
+    t4: "Intenta adivinar la frase oculta.",
+    t5: "Mira el resultado cuando acabes la partida.",
+    t6: "Busca la clasificación («Classificació»).",
+    t7: "Haz las fichas más grandes (en «Perfil», «Ajustos»).",
+    t8: "Juega un nivel («Nivells») que no sea el del día.",
+    t9: "Haz 3 errores a propósito (deja fichas encima de otras que no son su pareja) y mira qué pasa.",
+    note: "Es un prototipo: no se cobra nada y no hace falta registrarse. Todo lo que veas de pagos es simulado.",
+    play: "Empezar a jugar",
+    mobile: "Funciona mejor en el móvil."
+  }
+};
+function setLang(l){
+  if(!TXT[l]) l = "ca";
+  document.documentElement.lang = l;
+  document.querySelectorAll("[data-t]").forEach(el => { el.textContent = TXT[l][el.dataset.t] || ""; });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+  document.getElementById("play").href = "index.html?prova=1&lang=" + l;
+  document.title = l === "es" ? "Prueba Melodia" : "Prova Melodia";
+  try { localStorage.setItem("melodia-prova-lang", l); } catch(e) {}
+}
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+let start = new URLSearchParams(location.search).get("lang");
+if(!start){ try { start = localStorage.getItem("melodia-prova-lang"); } catch(e) {} }
+if(!start) start = (navigator.language || "").toLowerCase().startsWith("es") ? "es" : "ca";
+setLang(start);
+</script>
+</body>
+</html>
