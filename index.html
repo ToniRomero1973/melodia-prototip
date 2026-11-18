@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Melodia — prototip IPO</title>
+<title>Melodia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
@@ -356,9 +356,23 @@ const fmt = s => `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')
 const wait = ms => new Promise(r=>setTimeout(r,ms));
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const today = new Date();
-const MONTHS=['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'];
-const DAYS=['Dg','Dl','Dt','Dc','Dj','Dv','Ds'];
-const todayLabel = `${today.getDate()} de ${MONTHS[today.getMonth()]}`.replace('de a','d’a').replace('de o','d’o');
+// ================= idioma =================
+// Idioma del telèfon (català, castellà o anglès). ?lang=ca|es|en el força; si el telèfon té un altre idioma, anglès.
+const LANGS=['ca','es','en'];
+const LANG=(()=>{ const q=new URLSearchParams(location.search).get('lang'); if(LANGS.includes(q)) return q;
+  try{ const s=sessionStorage.getItem('melodia-lang'); if(LANGS.includes(s)) return s; }catch(e){}
+  for(const l of (navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''])){ const c=String(l).toLowerCase().slice(0,2); if(LANGS.includes(c)) return c; }
+  return 'en'; })();
+try{ sessionStorage.setItem('melodia-lang',LANG); }catch(e){}
+document.documentElement.lang=LANG;
+const TR={es:{"cercles": "círculos", "bambús": "bambús", "caràcters": "caracteres", "flor de prunera": "flor de ciruelo", "orquídia": "orquídea", "crisantem": "crisantemo", "bambú en flor": "bambú en flor", "primavera": "primavera", "estiu": "verano", "tardor": "otoño", "hivern": "invierno", "drac vermell": "dragón rojo", "drac verd": "dragón verde", "drac blanc": "dragón blanco", "vent {0}": "viento {0}", "est": "este", "sud": "sur", "oest": "oeste", "nord": "norte", "{0} de {1}": "{0} de {1}", "Tradicional": "Tradicional", "Fruites i horta": "Frutas y huerta", "Esports": "Deportes", "Vehicles": "Vehículos", "Animals": "Animales", "Viatges pel món": "Viajes por el mundo", "Pausa": "Pausa", "Canviar colors": "Cambiar colores", "Frase amagada": "Frase oculta", "Resoldre": "Resolver", "Faristol": "Atril", "Lloc {0} del faristol": "Hueco {0} del atril", "Plus: intents il·limitats": "Plus: intentos ilimitados", "Passi del dia actiu": "Pase del día activo", "1 fallada gratuïta": "1 fallo gratuito", "{0} fallades gratuïtes": "{0} fallos gratuitos", ", bloquejada": ", bloqueada", "{0} parelles": "{0} parejas", "Error {0} de {1}": "Error {0} de {1}", "Errors": "Errores", "Arrossega la fitxa sobre la seva parella": "Arrastra la ficha sobre su pareja", "Increïble! ×{0}": "¡Increíble! ×{0}", "Molt bé! ×{0}": "¡Muy bien! ×{0}", "Encertada! −{0} s": "¡Acertada! −{0} s", "Avui": "Hoy", "Nivells": "Niveles", "Classificació": "Clasificación", "Perfil": "Perfil", "Partida diària": "Partida diaria", "Feta!": "¡Hecha!", "Posició {0} a la teva comarca": "Posición {0} en tu comarca", "amaga un refrany": "esconde un refrán", "Torna demà per a un tauler nou": "Vuelve mañana para un tablero nuevo", "El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)": "El mismo tablero para todos. 1.284 personas ya han jugado (datos de ejemplo)", "Veure classificació": "Ver clasificación", "Jugar": "Jugar", "La teva setmana": "Tu semana", "Ratxa: {0} dies": "Racha: {0} días", "La frase d’ahir": "La frase de ayer", "La va resoldre el 64% dels jugadors · dades d’exemple": "La resolvió el 64% de los jugadores · datos de ejemplo", "Mostrar la resposta": "Mostrar la respuesta", "El teu refranyer": "Tu refranero", "{0} refranys resolts de {1}": "{0} refranes resueltos de {1}", "Temporada de tardor": "Temporada de otoño", "3 setmanes": "3 semanas", "17 de 25 partides per a la medalla de jade": "17 de 25 partidas para la medalla de jade", "es reinicien a mitjanit": "se reinician a medianoche", "Completa el nivell {0} per desbloquejar-lo": "Completa el nivel {0} para desbloquearlo", "Nivell {0}": "Nivel {0}", ", bloquejat": ", bloqueado", "✓ Fet": "✓ Hecho", "Juga": "Juega", "Nivells {0}–{1}": "Niveles {0}–{1}", "Cada nivell té més parelles que l’anterior. Completa’ls en ordre per avançar.": "Cada nivel tiene más parejas que el anterior. Complétalos en orden para avanzar.", "Pròximament": "Próximamente", "Completa el nivell {0} per desbloquejar-los": "Completa el nivel {0} para desbloquearlos", "{0}/10 completats": "{0}/10 completados", "Bloquejat": "Bloqueado", "Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.": "Avanza en orden: completa los 10 niveles de un grupo para abrir el siguiente.", "Diari": "Diario", "Setmanal": "Semanal", "Mensual": "Mensual", "Total": "Total", "Global": "Global", "Espanya": "España", "Catalunya": "Cataluña", "Comarca": "Comarca", "Amics": "Amigos", "Tu": "Tú", "Temps + 2 min per intent fallat. Dades d’exemple.": "Tiempo + 2 min por intento fallido. Datos de ejemplo.", "Normal": "Normal", "Gran": "Grande", "Molt gran": "Muy grande", "Vitrina": "Vitrina", "Top comarca": "Top comarca", "Dies seguits": "Días seguidos", "Refranys": "Refranes", "Actiu. Pots cancel·lar quan vulguis.": "Activo. Puedes cancelar cuando quieras.", "Intents il·limitats, arxiu de taulers i frases, i lligues.": "Intentos ilimitados, archivo de tableros y frases, y ligas.", "Gestionar": "Gestionar", "Veure": "Ver", "Ajustos": "Ajustes", "Colors": "Colores", "Capvespre": "Atardecer", "Llacuna": "Laguna", "Nit serena": "Noche serena", "Mida de les fitxes": "Tamaño de las fichas", "Alt contrast": "Alto contraste", "Fitxes bloquejades amb trama": "Fichas bloqueadas con trama", "Mode nit": "Modo noche", "Amagar el temps": "Ocultar el tiempo", "Mostrar el temps": "Mostrar el tiempo", "El temps es compta igualment": "El tiempo se cuenta igualmente", "So i melodia": "Sonido y melodía", "Vibració": "Vibración", "Mode esquerrà": "Modo zurdo", "Pausa i reserva canvien de costat": "Pausa y reserva cambian de lado", "Prototip: nivells 1–40 desbloquejats": "Prototipo: niveles 1–40 desbloqueados", "Prototip: desbloquejar tots els nivells": "Prototipo: desbloquear todos los niveles", "Sense anuncis. Mai.": "Sin anuncios. Nunca.", "Prototip de disseny · Melodia": "Prototipo de diseño · Melodia", "En pausa": "En pausa", "Continuar": "Continuar", "Com es juga": "Cómo se juega", "Sortir": "Salir", "Fusiona:": "Fusiona:", "arrossega una fitxa lliure i deixa-la damunt la seva bessona.": "arrastra una ficha libre y déjala encima de su gemela.", "Faristol:": "Atril:", "arrossega-hi fins a 2 fitxes per alliberar les que tenien a sobre o al costat. Després, arrossega-les damunt la seva parella.": "arrastra hasta 2 fichas para liberar las que tenían encima o al lado. Después, arrástralas encima de su pareja.", "Frase amagada:": "Frase oculta:", "cada fusió destapa lletres d’un refrany. Resol-la quan vulguis: cada lletra encara amagada et resta {0} s, i cada error en suma {1}.": "cada fusión destapa letras de un refrán. Resuélvela cuando quieras: cada letra aún oculta te resta {0} s, y cada error suma {1}.", "Compte:": "Cuidado:", "deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3 errors, fallada.": "dejar una ficha encima de una que no es su pareja es un error. Con 3 errores, fallo.", "També és fallada si el faristol és ple i no queda cap parella.": "También es fallo si el atril está lleno y no queda ninguna pareja.", "Entesos": "Entendido", "Tres errors": "Tres errores", "Sense jugades": "Sin jugadas", "Has deixat 3 fitxes damunt d’una que no era la seva parella.": "Has dejado 3 fichas encima de una que no era su pareja.", "El faristol és ple i no queda cap parella.": "El atril está lleno y no queda ninguna pareja.", "Pots tornar a provar el mateix tauler.": "Puedes volver a probar el mismo tablero.", "Has gastat les fallades gratuïtes d’avui.": "Has gastado los fallos gratuitos de hoy.", "Tens {0} de {1} lletres destapades. Cada intent fallat suma 2 minuts al temps de classificació.": "Tienes {0} de {1} letras destapadas. Cada intento fallido suma 2 minutos al tiempo de clasificación.", "Tornar a provar": "Volver a probar", "queda 1": "queda 1", "queden {0}": "quedan {0}", "Veure opcions per seguir": "Ver opciones para seguir", "Mirar el tauler": "Mirar el tablero", "Ara no, torno demà": "Ahora no, vuelvo mañana", "Segueix jugant avui": "Sigue jugando hoy", "Sense anuncis i sense monedes. Preus amb IVA inclòs.": "Sin anuncios y sin monedas. Precios con IVA incluido.", "Passi del dia": "Pase del día", "Intents il·limitats durant 24 hores": "Intentos ilimitados durante 24 horas", "0,99 €": "0,99 €", "Millor preu": "Mejor precio", "Plus anual": "Plus anual", "2,50 € al mes · arxiu de melodies, lligues, tots els nivells": "2,50 € al mes · archivo de melodías, ligas, todos los niveles", "29,99 €": "29,99 €", "Veure més opcions": "Ver más opciones", "Plus mensual": "Plus mensual", "4,99 €/mes": "4,99 €/mes", "Plus setmanal": "Plus semanal", "1,99 €/setm.": "1,99 €/sem.", "La subscripció es renova automàticament i es pot cancel·lar en qualsevol moment des de Perfil.": "La suscripción se renueva automáticamente y se puede cancelar en cualquier momento desde Perfil.", "Prototip: no es fa cap cobrament.": "Prototipo: no se cobra nada.", "Tauler resolt! Ara, la frase": "¡Tablero resuelto! Ahora, la frase", "Resol la frase": "Resuelve la frase", "{0} lletres amagades · si l’encertes: <b>−{1} s</b> · cada error: +{2} s": "{0} letras ocultas · si la aciertas: <b>−{1} s</b> · cada error: +{2} s", "Escriu la frase…": "Escribe la frase…", "La teva resposta": "Tu respuesta", "No és aquesta. +{0} s": "No es esta. +{0} s", "Comprovar": "Comprobar", "Em rendeixo, mostra-la": "Me rindo, muéstrala", "Continuar jugant": "Seguir jugando", "No cal escriure accents, apòstrofs ni comes.": "No hace falta escribir acentos, apóstrofos ni comas.", "Frase resolta!": "¡Frase resuelta!", "Tauler resolt": "Tablero resuelto", "{0} de joc": "{0} de juego", " + {0} min (intents)": " + {0} min (intentos)", " + {0} s (errors)": " + {0} s (errores)", " − {0} s (frase)": " − {0} s (frase)", "«{0}»": "«{0}»", "Desbloquejats els nivells {0}–{1}!": "¡Desbloqueados los niveles {0}–{1}!", "Tornar als nivells": "Volver a los niveles", "Compartir resultat": "Compartir resultado", "Tornar a l’inici": "Volver al inicio", "({0} intents)": "({0} intentos)", "a la primera": "a la primera", "· frase −{0} s": "· frase −{0} s", "Resultat copiat": "Resultado copiado", "No s’ha pogut copiar": "No se ha podido copiar", "Passi del dia activat (simulat)": "Pase del día activado (simulado)", "Plus activat (simulat)": "Plus activado (simulado)", "Fusiona fitxes · destapa la frase": "Fusiona fichas · destapa la frase"},en:{"cercles": "circles", "bambús": "bamboos", "caràcters": "characters", "flor de prunera": "plum blossom", "orquídia": "orchid", "crisantem": "chrysanthemum", "bambú en flor": "bamboo in bloom", "primavera": "spring", "estiu": "summer", "tardor": "autumn", "hivern": "winter", "drac vermell": "red dragon", "drac verd": "green dragon", "drac blanc": "white dragon", "vent {0}": "{0} wind", "est": "east", "sud": "south", "oest": "west", "nord": "north", "{0} de {1}": "{0} of {1}", "Tradicional": "Traditional", "Fruites i horta": "Fruit and veg", "Esports": "Sports", "Vehicles": "Vehicles", "Animals": "Animals", "Viatges pel món": "Around the world", "Pausa": "Pause", "Canviar colors": "Change colours", "Frase amagada": "Hidden phrase", "Resoldre": "Solve", "Faristol": "Rack", "Lloc {0} del faristol": "Rack slot {0}", "Plus: intents il·limitats": "Plus: unlimited tries", "Passi del dia actiu": "Day pass active", "1 fallada gratuïta": "1 free fail", "{0} fallades gratuïtes": "{0} free fails", ", bloquejada": ", blocked", "{0} parelles": "{0} pairs", "Error {0} de {1}": "Mistake {0} of {1}", "Errors": "Mistakes", "Arrossega la fitxa sobre la seva parella": "Drag the tile onto its pair", "Increïble! ×{0}": "Amazing! ×{0}", "Molt bé! ×{0}": "Great! ×{0}", "Encertada! −{0} s": "Got it! −{0} s", "Avui": "Today", "Nivells": "Levels", "Classificació": "Leaderboard", "Perfil": "Profile", "Partida diària": "Daily game", "Feta!": "Done!", "Posició {0} a la teva comarca": "Position {0} in your area", "amaga un refrany": "hides a proverb", "Torna demà per a un tauler nou": "Come back tomorrow for a new board", "El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)": "The same board for everyone. 1,284 people have already played (sample data)", "Veure classificació": "See leaderboard", "Jugar": "Play", "La teva setmana": "Your week", "Ratxa: {0} dies": "Streak: {0} days", "La frase d’ahir": "Yesterday’s phrase", "La va resoldre el 64% dels jugadors · dades d’exemple": "64% of players solved it · sample data", "Mostrar la resposta": "Show the answer", "El teu refranyer": "Your proverb book", "{0} refranys resolts de {1}": "{0} of {1} proverbs solved", "Temporada de tardor": "Autumn season", "3 setmanes": "3 weeks", "17 de 25 partides per a la medalla de jade": "17 of 25 games for the jade medal", "es reinicien a mitjanit": "reset at midnight", "Completa el nivell {0} per desbloquejar-lo": "Complete level {0} to unlock it", "Nivell {0}": "Level {0}", ", bloquejat": ", locked", "✓ Fet": "✓ Done", "Juga": "Play", "Nivells {0}–{1}": "Levels {0}–{1}", "Cada nivell té més parelles que l’anterior. Completa’ls en ordre per avançar.": "Each level has more pairs than the last. Complete them in order to move on.", "Pròximament": "Coming soon", "Completa el nivell {0} per desbloquejar-los": "Complete level {0} to unlock them", "{0}/10 completats": "{0}/10 completed", "Bloquejat": "Locked", "Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.": "Go in order: complete the 10 levels in a group to open the next one.", "Diari": "Daily", "Setmanal": "Weekly", "Mensual": "Monthly", "Total": "All time", "Global": "Global", "Espanya": "Spain", "Catalunya": "Catalonia", "Comarca": "Area", "Amics": "Friends", "Tu": "You", "Temps + 2 min per intent fallat. Dades d’exemple.": "Time + 2 min per failed attempt. Sample data.", "Normal": "Normal", "Gran": "Large", "Molt gran": "Extra large", "Vitrina": "Trophy case", "Top comarca": "Top in area", "Dies seguits": "Days in a row", "Refranys": "Proverbs", "Actiu. Pots cancel·lar quan vulguis.": "Active. You can cancel any time.", "Intents il·limitats, arxiu de taulers i frases, i lligues.": "Unlimited tries, an archive of boards and phrases, and leagues.", "Gestionar": "Manage", "Veure": "View", "Ajustos": "Settings", "Colors": "Colours", "Capvespre": "Dusk", "Llacuna": "Lagoon", "Nit serena": "Calm night", "Mida de les fitxes": "Tile size", "Alt contrast": "High contrast", "Fitxes bloquejades amb trama": "Blocked tiles get a pattern", "Mode nit": "Night mode", "Amagar el temps": "Hide the time", "Mostrar el temps": "Show the time", "El temps es compta igualment": "Time is still counted", "So i melodia": "Sound and melody", "Vibració": "Vibration", "Mode esquerrà": "Left-handed mode", "Pausa i reserva canvien de costat": "Pause and rack switch sides", "Prototip: nivells 1–40 desbloquejats": "Prototype: levels 1–40 unlocked", "Prototip: desbloquejar tots els nivells": "Prototype: unlock all levels", "Sense anuncis. Mai.": "No ads. Ever.", "Prototip de disseny · Melodia": "Design prototype · Melodia", "En pausa": "Paused", "Continuar": "Continue", "Com es juga": "How to play", "Sortir": "Exit", "Fusiona:": "Merge:", "arrossega una fitxa lliure i deixa-la damunt la seva bessona.": "drag a free tile and drop it on its twin.", "Faristol:": "Rack:", "arrossega-hi fins a 2 fitxes per alliberar les que tenien a sobre o al costat. Després, arrossega-les damunt la seva parella.": "drag up to 2 tiles onto it to free the ones above or beside them. Then drag them onto their pair.", "Frase amagada:": "Hidden phrase:", "cada fusió destapa lletres d’un refrany. Resol-la quan vulguis: cada lletra encara amagada et resta {0} s, i cada error en suma {1}.": "each merge reveals letters of a proverb. Solve it whenever you like: each letter still hidden takes {0} s off, and each mistake adds {1}.", "Compte:": "Careful:", "deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3 errors, fallada.": "dropping a tile on one that isn’t its pair is a mistake. 3 mistakes and you fail.", "També és fallada si el faristol és ple i no queda cap parella.": "You also fail if the rack is full and no pairs are left.", "Entesos": "Got it", "Tres errors": "Three mistakes", "Sense jugades": "No moves left", "Has deixat 3 fitxes damunt d’una que no era la seva parella.": "You dropped 3 tiles on ones that weren’t their pair.", "El faristol és ple i no queda cap parella.": "The rack is full and there are no pairs left.", "Pots tornar a provar el mateix tauler.": "You can try the same board again.", "Has gastat les fallades gratuïtes d’avui.": "You’ve used up today’s free fails.", "Tens {0} de {1} lletres destapades. Cada intent fallat suma 2 minuts al temps de classificació.": "You have {0} of {1} letters revealed. Each failed attempt adds 2 minutes to your leaderboard time.", "Tornar a provar": "Try again", "queda 1": "1 left", "queden {0}": "{0} left", "Veure opcions per seguir": "See options to keep playing", "Mirar el tauler": "Look at the board", "Ara no, torno demà": "Not now, I’ll come back tomorrow", "Segueix jugant avui": "Keep playing today", "Sense anuncis i sense monedes. Preus amb IVA inclòs.": "No ads and no coins. Prices include VAT.", "Passi del dia": "Day pass", "Intents il·limitats durant 24 hores": "Unlimited tries for 24 hours", "0,99 €": "€0.99", "Millor preu": "Best value", "Plus anual": "Plus yearly", "2,50 € al mes · arxiu de melodies, lligues, tots els nivells": "€2.50 a month · melody archive, leagues, all levels", "29,99 €": "€29.99", "Veure més opcions": "See more options", "Plus mensual": "Plus monthly", "4,99 €/mes": "€4.99/month", "Plus setmanal": "Plus weekly", "1,99 €/setm.": "€1.99/week", "La subscripció es renova automàticament i es pot cancel·lar en qualsevol moment des de Perfil.": "The subscription renews automatically and you can cancel any time from Profile.", "Prototip: no es fa cap cobrament.": "Prototype: you won’t be charged.", "Tauler resolt! Ara, la frase": "Board cleared! Now, the phrase", "Resol la frase": "Solve the phrase", "{0} lletres amagades · si l’encertes: <b>−{1} s</b> · cada error: +{2} s": "{0} hidden letters · if you get it: <b>−{1} s</b> · each mistake: +{2} s", "Escriu la frase…": "Type the phrase…", "La teva resposta": "Your answer", "No és aquesta. +{0} s": "That’s not it. +{0} s", "Comprovar": "Check", "Em rendeixo, mostra-la": "I give up, show it", "Continuar jugant": "Keep playing", "No cal escriure accents, apòstrofs ni comes.": "No need to type accents, apostrophes or commas.", "Frase resolta!": "Phrase solved!", "Tauler resolt": "Board cleared", "{0} de joc": "{0} played", " + {0} min (intents)": " + {0} min (attempts)", " + {0} s (errors)": " + {0} s (mistakes)", " − {0} s (frase)": " − {0} s (phrase)", "«{0}»": "“{0}”", "Desbloquejats els nivells {0}–{1}!": "Levels {0}–{1} unlocked!", "Tornar als nivells": "Back to levels", "Compartir resultat": "Share result", "Tornar a l’inici": "Back to home", "({0} intents)": "({0} attempts)", "a la primera": "first try", "· frase −{0} s": "· phrase −{0} s", "Resultat copiat": "Result copied", "No s’ha pogut copiar": "Couldn’t copy", "Passi del dia activat (simulat)": "Day pass activated (simulated)", "Plus activat (simulat)": "Plus activated (simulated)", "Fusiona fitxes · destapa la frase": "Merge tiles · reveal the phrase"}};
+// L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
+const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
+const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
+  es:['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
+  en:['January','February','March','April','May','June','July','August','September','October','November','December']}[LANG];
+const DAYS={ca:['Dg','Dl','Dt','Dc','Dj','Dv','Ds'], es:['Do','Lu','Ma','Mi','Ju','Vi','Sá'], en:['Su','Mo','Tu','We','Th','Fr','Sa']}[LANG];
+const todayLabel = LANG==='en' ? `${MONTHS[today.getMonth()]} ${today.getDate()}` : LANG==='es' ? `${today.getDate()} de ${MONTHS[today.getMonth()]}` : `${today.getDate()} de ${MONTHS[today.getMonth()]}`.replace('de a','d’a').replace('de o','d’o');
 const iso = d => new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
 const todaySeed = iso(today);
 const yesterdaySeed = iso(new Date(today.getTime()-864e5));
@@ -405,25 +419,26 @@ function svgFace(k){ const t=k[0], n=+k.slice(1);
   return `<svg viewBox="0 0 40 54" aria-hidden="true">${g}</svg>`; }
 const isEmoji = k => !/^[dbcwrfs]\d$/.test(k);
 const faceHTML = k => isEmoji(k) ? `<span class="emo">${k}</span>` : svgFace(k);
-const NAMES_K = {d:'cercles',b:'bambús',c:'caràcters',w:'vent',r:'drac'};
-const label = k => isEmoji(k) ? k : k[0]==='f' ? ['flor de prunera','orquídia','crisantem','bambú en flor'][+k[1]-1] : k[0]==='s' ? ['primavera','estiu','tardor','hivern'][+k[1]-1] : (k[0]==='r'?['drac vermell','drac verd','drac blanc'][+k[1]-1] : k[0]==='w'? 'vent '+['est','sud','oest','nord'][+k[1]-1] : `${k[1]} de ${NAMES_K[k[0]]}`);
+const NAMES_K = {d:L('cercles'),b:L('bambús'),c:L('caràcters')};
+const label = k => isEmoji(k) ? k : k[0]==='f' ? [L('flor de prunera'),L('orquídia'),L('crisantem'),L('bambú en flor')][+k[1]-1] : k[0]==='s' ? [L('primavera'),L('estiu'),L('tardor'),L('hivern')][+k[1]-1] : (k[0]==='r'?[L('drac vermell'),L('drac verd'),L('drac blanc')][+k[1]-1] : k[0]==='w'? L('vent {0}',[L('est'),L('sud'),L('oest'),L('nord')][+k[1]-1]) : L('{0} de {1}',k[1],NAMES_K[k[0]]));
 const tileHTML = (k, extra='', style='') => `<span class="tile ${extra}" style="${style}" aria-hidden="true"><span class="face">${faceHTML(k)}</span></span>`;
 
 const TRAD = []; for(const t of 'dbc') for(let n=1;n<=9;n++) TRAD.push(t+n); for(let n=1;n<=4;n++) TRAD.push('w'+n); for(let n=1;n<=3;n++) TRAD.push('r'+n); for(let n=1;n<=4;n++){ TRAD.push('f'+n); TRAD.push('s'+n); } // 42 dissenys
 const THEMES = {
-  trad:{name:'Tradicional', sym:TRAD, bg:'linear-gradient(140deg,#2F7F65,#164F41)', show:['r1','d5','b3']},
-  fruites:{name:'Fruites i horta', sym:['🍎','🍏','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🧄','🧅','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍄','🥜','🌰','🍯'], bg:'linear-gradient(140deg,#E0793F,#B4462D)', show:['🍓','🍋','🍇']},
-  esports:{name:'Esports', sym:['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🪀','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🪁','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛼','🛷','⛸️','🥌','🎿','🏂','🪂','🏆','🥇','🥈','🥉','🏅','🎯','🎳'], bg:'linear-gradient(140deg,#3B6FC2,#22447F)', show:['⚽','🎾','🏀']},
-  vehicles:{name:'Vehicles', sym:['🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🏍️','🛵','🚲','🛴','🚨','🚡','🚠','🚟','🚃','🚋','🚞','🚝','🚄','🚂','🚆','🚇','✈️','🛩️','🚀','🛸','🚁','⛵','🚤','🛥️','🛳️','⛴️','🚢','🛶'], bg:'linear-gradient(140deg,#7A5BB5,#4A3480)', show:['🚀','⛵','🚲']},
+  trad:{name:L('Tradicional'), sym:TRAD, bg:'linear-gradient(140deg,#2F7F65,#164F41)', show:['r1','d5','b3']},
+  fruites:{name:L('Fruites i horta'), sym:['🍎','🍏','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🧄','🧅','🥔','🍠','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍄','🥜','🌰','🍯'], bg:'linear-gradient(140deg,#E0793F,#B4462D)', show:['🍓','🍋','🍇']},
+  esports:{name:L('Esports'), sym:['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🪀','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🪁','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛼','🛷','⛸️','🥌','🎿','🏂','🪂','🏆','🥇','🥈','🥉','🏅','🎯','🎳'], bg:'linear-gradient(140deg,#3B6FC2,#22447F)', show:['⚽','🎾','🏀']},
+  vehicles:{name:L('Vehicles'), sym:['🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🏍️','🛵','🚲','🛴','🚨','🚡','🚠','🚟','🚃','🚋','🚞','🚝','🚄','🚂','🚆','🚇','✈️','🛩️','🚀','🛸','🚁','⛵','🚤','🛥️','🛳️','⛴️','🚢','🛶'], bg:'linear-gradient(140deg,#7A5BB5,#4A3480)', show:['🚀','⛵','🚲']},
 };
 
 // ================= frases (refranys populars) =================
-const PHRASES = [
+const PHRASES_CA = [
  'De mica en mica s’omple la pica','Al mal temps, bona cara','Qui matina fa farina','Qui no plora no mama',
  'Qui la fa la paga','Cada terra fa sa guerra','Qui dia passa, any empeny','A la taula i al llit, al primer crit',
  'Més val boig conegut que savi per conèixer','No diguis blat fins que no sigui al sac i ben lligat','Qui té un amic té un tresor',
  'Fes bé i no miris a qui','Gat escaldat, d’aigua tèbia fuig','Cel rogent, pluja o vent',
 ];
+const PHRASES = {ca:PHRASES_CA, es:["Poco a poco se va lejos", "Al mal tiempo, buena cara", "A quien madruga, Dios le ayuda", "Quien no llora no mama", "El que la hace la paga", "Más vale tarde que nunca", "No por mucho madrugar amanece más temprano", "Cada maestrillo tiene su librillo", "Más vale malo conocido que bueno por conocer", "No vendas la piel del oso antes de cazarlo", "Quien tiene un amigo tiene un tesoro", "Haz el bien y no mires a quién", "Gato escaldado del agua fría huye", "En boca cerrada no entran moscas"], en:["Slow and steady wins the race", "Every cloud has a silver lining", "The early bird catches the worm", "Practice makes perfect", "Better late than never", "Actions speak louder than words", "A friend in need is a friend indeed", "Rome was not built in a day", "Where there is a will there is a way", "Look before you leap", "Home is where the heart is", "Every little helps", "Laughter is the best medicine", "Do not judge a book by its cover"]}[LANG];
 function pickPhrase(seed){ const r=rng('f'+seed); return PHRASES[Math.floor(r()*PHRASES.length)]; }
 const norm = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z]/g,'');
 const isLetter = ch => /[A-Za-zÀ-ÿ]/.test(ch);
@@ -522,7 +537,7 @@ function burst(x,y,combo){ const fx=$('#fx');
   fx.appendChild(f); f.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:0},{transform:'translate(-50%,-110%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-260%) scale(1)',opacity:0}],{duration:1100,easing:'ease-out'}).onfinish=()=>f.remove();
 }
 function showCombo(n){ const fx=$('#fx'); fx.querySelectorAll('.combo').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='combo';
-  d.textContent = n>=5?`Increïble! ×${n}`: n>=3?`Molt bé! ×${n}`:`Combo ×${n}`; fx.appendChild(d);
+  d.textContent = n>=5?L('Increïble! ×{0}',n): n>=3?L('Molt bé! ×{0}',n):`Combo ×${n}`; fx.appendChild(d);
   d.animate([{transform:'translateX(-50%) scale(.4)',opacity:0},{transform:'translateX(-50%) scale(1.15)',opacity:1,offset:.25},{transform:'translateX(-50%) scale(1)',opacity:1,offset:.7},{transform:'translateX(-50%) translateY(-20px)',opacity:0}],{duration:1300,easing:'ease-out'}).onfinish=()=>d.remove(); }
 function petals(){ const fx=$('#fx'); const set=['♪','♫','✦','♪','✧']; for(let i=0;i<34;i++){ const p=document.createElement('div'); p.className='petal';
   p.textContent=set[i%set.length]; p.style.left=(Math.random()*100)+'%'; p.style.color=['#FFE7A0','#F6C85A','#fff','#9FD6C4'][i%4]; p.style.fontSize=(16+Math.random()*16)+'px'; fx.appendChild(p);
@@ -568,28 +583,28 @@ function phraseHTML(){ const g=S.game; const words=[]; let cur=[];
 function vJoc(){ const g=S.game; const {W,H,G}=dims();
   const tiles=g.tiles.map(t=>{ const p=tilePos(t); return `<button class="tile" data-t="${t.id}" style="left:${p.left}px;top:${p.top}px;z-index:${t.z*1000+t.y*20+t.x}"><span class="face">${faceHTML(t.s)}</span></button>`; }).join('');
   return `<div class="felt" style="flex:1;display:flex;flex-direction:column;min-height:0">
-  <div class="topbar"><button class="iconbtn" aria-label="Pausa" onclick="pause()">${ICON.pause}</button>
-   <div class="title">${esc(g.title)}</div><button class="iconbtn" aria-label="Canviar colors" onclick="cyclePal()" style="width:40px;height:40px">${ICON.pal}</button><span class="chip" id="pairsLeft"></span><span class="chip" id="clock"></span></div>
-  <div class="panel"><div class="phrase" id="phrase" aria-label="Frase amagada">${phraseHTML()}</div>
-   <button class="solvebtn" id="solveBtn" onclick="openSolve()">Resoldre<small id="hidInfo"></small></button></div>
+  <div class="topbar"><button class="iconbtn" aria-label="${L('Pausa')}" onclick="pause()">${ICON.pause}</button>
+   <div class="title">${esc(g.title)}</div><button class="iconbtn" aria-label="${L('Canviar colors')}" onclick="cyclePal()" style="width:40px;height:40px">${ICON.pal}</button><span class="chip" id="pairsLeft"></span><span class="chip" id="clock"></span></div>
+  <div class="panel"><div class="phrase" id="phrase" aria-label="${L('Frase amagada')}">${phraseHTML()}</div>
+   <button class="solvebtn" id="solveBtn" onclick="openSolve()">${L('Resoldre')}<small id="hidInfo"></small></button></div>
   <div class="boardwrap" id="boardwrap"><div class="board" style="width:${extents(g.tiles).cw*(W+G)+16}px;height:${extents(g.tiles).ch*(H+G)+20}px">${tiles}</div></div>
-  <div class="stand"><div class="standside"><span class="standlabel">${ICON.stand}Faristol</span><span id="resInfo"></span></div>
-   <div class="slots">${Array.from({length:SLOTS},(_,i)=>`<button class="slot" data-s="${i}" aria-label="Lloc ${i+1} del faristol"></button>`).join('')}</div>
+  <div class="stand"><div class="standside"><span class="standlabel">${ICON.stand}${L('Faristol')}</span><span id="resInfo"></span></div>
+   <div class="slots">${Array.from({length:SLOTS},(_,i)=>`<button class="slot" data-s="${i}" aria-label="${L('Lloc {0} del faristol',i+1)}"></button>`).join('')}</div>
    <div class="standside r"><span id="errInfo"></span><span id="failInfo"></span></div></div></div>`; }
-function failsText(){ if(S.plus) return 'Plus: intents il·limitats'; if(S.pass) return 'Passi del dia actiu'; return S.fails===1?'1 fallada gratuïta':`${S.fails} fallades gratuïtes`; }
+function failsText(){ if(S.plus) return L('Plus: intents il·limitats'); if(S.pass) return L('Passi del dia actiu'); return S.fails===1?L('1 fallada gratuïta'):L('{0} fallades gratuïtes',S.fails); }
 function updateTiles(){ const g=S.game, set=present();
   g.tiles.forEach(t=>{ const el=document.querySelector(`[data-t="${t.id}"]`); if(!el) return;
     if(t.gone){ el.classList.add('gone'); return; } el.classList.remove('gone');
     const free=isFree(t,set); el.classList.toggle('blocked',!free); el.classList.toggle('sel', !!(g.sel&&g.sel.k==='b'&&g.sel.id===t.id));
-    el.setAttribute('aria-label', label(t.s)+(free?'':', bloquejada')); }); }
+    el.setAttribute('aria-label', label(t.s)+(free?'':L(', bloquejada'))); }); }
 function updateReserve(){ const g=S.game; const full=g.reserve.filter(Boolean).length;
   document.querySelectorAll('.slot').forEach((el,i)=>{ const r=g.reserve[i]; const want=r?r.s:'';
     if(el.dataset.k!==want){ el.dataset.k=want; el.innerHTML = r?`<span class="tile" data-r="${i}" style="position:absolute"><span class="face">${faceHTML(r.s)}</span></span>`:''; if(r&&!reduced) el.firstChild.animate([{transform:'scale(.85)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:260}); }
     const t=el.querySelector('.tile'); if(t) t.classList.toggle('sel', !!(g.sel&&g.sel.k==='r'&&g.sel.i===i));
     el.classList.toggle('warnpulse', full===SLOTS-1 && !r); });
-  const ri=$('#resInfo'); if(ri){ ri.textContent=`${full} de ${SLOTS}`; ri.className=full>=SLOTS-1?'w':''; }
+  const ri=$('#resInfo'); if(ri){ ri.textContent=L('{0} de {1}',full,SLOTS); ri.className=full>=SLOTS-1?'w':''; }
   const fi=$('#failInfo'); if(fi) fi.textContent=failsText(); }
-function updateHUD(){ const g=S.game; const pl=$('#pairsLeft'); if(pl) pl.textContent=`${present().length/2|0} parelles`;
+function updateHUD(){ const g=S.game; const pl=$('#pairsLeft'); if(pl) pl.textContent=L('{0} parelles',present().length/2|0);
   const hi=$('#hidInfo'); if(hi) hi.textContent = `−${hiddenCount()*BONUS_PER} s`;
   const sb=$('#solveBtn'); if(sb) sb.style.display=g.solved?'none':''; const pn=document.querySelector('.panel'); if(pn) pn.classList.toggle('solved',g.solved);
   const c=$('#clock'); if(c){ c.style.display=S.set.hideTime?'none':''; c.textContent=fmt(elapsed()); } }
@@ -655,10 +670,10 @@ const MAX_ERR=3;
 function wrongDrop(el){ const g=S.game; g.errors=(g.errors||0)+1; el.classList.add('wrong'); shake(el); setTimeout(()=>el.classList.remove('wrong'),500);
   thump(0,.25); click(160,.12); vib([30,40,30]); updateErrors();
   if(g.errors>=MAX_ERR){ g.over=true; g.pauseAt=Date.now(); g.failReason='errors'; setTimeout(()=>{ S.sheet='blocked'; renderSheet(); },550); }
-  else toast(`Error ${g.errors} de ${MAX_ERR}`); }
+  else toast(L('Error {0} de {1}',g.errors,MAX_ERR)); }
 function updateErrors(){ const g=S.game, el=$('#errInfo'); if(!el) return; const n=g.errors||0;
-  el.innerHTML='Errors '+Array.from({length:MAX_ERR},(_,i)=>`<i class="ed ${i<n?'on':''}"></i>`).join(''); }
-let hinted=0; function hintDrag(){ if(hinted++<2) toast('Arrossega la fitxa sobre la seva parella'); }
+  el.innerHTML=L('Errors')+' '+Array.from({length:MAX_ERR},(_,i)=>`<i class="ed ${i<n?'on':''}"></i>`).join(''); }
+let hinted=0; function hintDrag(){ if(hinted++<2) toast(L('Arrossega la fitxa sobre la seva parella')); }
 function tapTile(id){ const g=S.game; const t=g.tiles[id];
   const sel=g.sel;
   if(sel&&sel.k==='b'&&sel.id===id){ g.sel=null; updateTiles(); return; }
@@ -711,7 +726,7 @@ function trySolve(){ const g=S.game, inp=$('#solveIn'), v=inp?inp.value:''; if(!
     let k=0; g.order.forEach(li=>{ if(!g.revealed.has(li)) revealLetter(li, 300+(k++)*40); });
     setTimeout(()=>document.querySelectorAll('#phrase .lc').forEach((n,j)=>setTimeout(()=>n.classList.add('win'),j*25)), 300+k*40);
     const fin=g.over; S.sheet=null; renderSheet(); if(!fin) resume();
-    toast(`Encertada! −${g.bonus} s`); updateHUD();
+    toast(L('Encertada! −{0} s',g.bonus)); updateHUD();
     if(fin){ setTimeout(()=>{ S.sheet='win'; renderSheet(); }, 1400+k*40); }
   } else { g.penalty+=MISS_PEN; g.misses++; click(200,.1); S.solveMsg = g.over?'finalbad':'bad'; renderSheet(); updateHUD();
     setTimeout(()=>{ const i=$('#solveIn'); if(i){ i.value=v; i.focus(); i.classList.add('shake'); } },50); } }
@@ -719,7 +734,7 @@ function giveUp(){ const g=S.game; let k=0; g.order.forEach(li=>{ if(!g.revealed
 const canRetry = () => S.pass || S.plus || S.fails>0;
 function useRetry(){ if(!(S.pass||S.plus)) S.fails--; S.sheet=null; renderSheet(); restartSame(); }
 // ================= pantalles =================
-function tabsBar(){ const t=[['avui','sun','Avui'],['nivells','grid','Nivells'],['class','trophy','Classificació'],['perfil','user','Perfil']];
+function tabsBar(){ const t=[['avui','sun',L('Avui')],['nivells','grid',L('Nivells')],['class','trophy',L('Classificació')],['perfil','user',L('Perfil')]];
   return `<nav class="tabs">${t.map(([k,ic,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" ${S.tab===k?'aria-current="page"':''}>${ICON[ic]}${l}</button>`).join('')}</nav>`; }
 function stackTiles(keys, w, h, pos){ return keys.map((k,i)=>tileHTML(k,'',`width:${w}px;height:${h}px;left:${pos[i][0]}px;top:${pos[i][1]}px;transform:rotate(${pos[i][2]}deg);--sym:${w*.62}px`)).join(''); }
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
@@ -728,145 +743,145 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
   <div class="row"><div class="brand"><span class="dot"></span>Melodia</div><span class="streakchip">🔥 ${S.streak+(done?1:0)}</span></div>
   <div class="hero herobg">
     <div class="stackt">${stackTiles(['r1','d5','b3'],46,61,[[10,30,-12],[40,18,-2],[70,30,10]])}</div>
-    <span class="pill" style="background:rgba(255,255,255,.16);color:#fff">Partida diària</span>
-    <h2>${done?'Feta! '+fmt(done.time):'Avui'}</h2>
-    <p class="sub">${done?`Posició ${done.pos} a la teva comarca`:todayLabel+' · amaga un refrany'}</p>
-    <p class="sub" style="font-size:13px;opacity:.8">${done?'Torna demà per a un tauler nou':'El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)'}</p>
-    ${done?`<button class="btn gold" onclick="go('class')">Veure classificació</button>`:`<button class="btn gold" onclick="playDaily()">Jugar</button>`}
+    <span class="pill" style="background:rgba(255,255,255,.16);color:#fff">${L('Partida diària')}</span>
+    <h2>${done?L('Feta!')+' '+fmt(done.time):L('Avui')}</h2>
+    <p class="sub">${done?L('Posició {0} a la teva comarca',done.pos):todayLabel+' · '+L('amaga un refrany')}</p>
+    <p class="sub" style="font-size:13px;opacity:.8">${done?L('Torna demà per a un tauler nou'):L('El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)')}</p>
+    ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
   </div>
-  <div class="card"><div class="row"><b>La teva setmana</b><span class="muted" style="font-size:14px">Ratxa: ${S.streak+(done?1:0)} dies</span></div><div class="week">${week}</div></div>
-  <div class="card"><b>La frase d’ahir</b><p class="muted ans" style="margin:4px 0 8px;font-size:15px">La va resoldre el 64% dels jugadors · dades d’exemple</p>
-    <button class="btn secondary" style="min-height:44px;font-size:16px" onclick="playYesterday(this)">Mostrar la resposta</button></div>
+  <div class="card"><div class="row"><b>${L('La teva setmana')}</b><span class="muted" style="font-size:14px">${L('Ratxa: {0} dies',S.streak+(done?1:0))}</span></div><div class="week">${week}</div></div>
+  <div class="card"><b>${L('La frase d’ahir')}</b><p class="muted ans" style="margin:4px 0 8px;font-size:15px">${L('La va resoldre el 64% dels jugadors · dades d’exemple')}</p>
+    <button class="btn secondary" style="min-height:44px;font-size:16px" onclick="playYesterday(this)">${L('Mostrar la resposta')}</button></div>
   <div class="card listen"><span class="playbtn" style="font-family:var(--serif);font-weight:700;font-size:20px">Aa</span>
-    <div style="flex:1"><b>El teu refranyer</b><p class="muted" style="margin:2px 0 0;font-size:15px">${S.found} refranys resolts de ${PHRASES.length}</p><div class="bar"><span style="width:${S.found/PHRASES.length*100}%"></span></div></div></div>
-  <div class="card"><div class="row"><b>Temporada de tardor</b><span class="muted" style="font-size:14px">3 setmanes</span></div>
-    <div class="bar"><span style="width:68%"></span></div><p class="muted" style="font-size:15px">17 de 25 partides per a la medalla de jade</p></div>
-  <p class="fine">${failsText()} · es reinicien a mitjanit</p>
+    <div style="flex:1"><b>${L('El teu refranyer')}</b><p class="muted" style="margin:2px 0 0;font-size:15px">${L('{0} refranys resolts de {1}',S.found,PHRASES.length)}</p><div class="bar"><span style="width:${S.found/PHRASES.length*100}%"></span></div></div></div>
+  <div class="card"><div class="row"><b>${L('Temporada de tardor')}</b><span class="muted" style="font-size:14px">${L('3 setmanes')}</span></div>
+    <div class="bar"><span style="width:68%"></span></div><p class="muted" style="font-size:15px">${L('17 de 25 partides per a la medalla de jade')}</p></div>
+  <p class="fine">${failsText()} · ${L('es reinicien a mitjanit')}</p>
   </div>${tabsBar()}`; }
 const GROUPS=[{from:1,theme:'trad',name:'Tradicional'},{from:11,theme:'fruites',name:'Fruites i horta'},{from:21,theme:'esports',name:'Esports'},{from:31,theme:'vehicles',name:'Vehicles'},
-  {from:41,soon:true,name:'Animals',bg:'linear-gradient(140deg,#8C9A5B,#55633A)',em:'🦊'},{from:51,soon:true,name:'Viatges pel món',bg:'linear-gradient(140deg,#C27C5B,#7E4A34)',em:'🗺️'}];
+  {from:41,soon:true,name:L('Animals'),bg:'linear-gradient(140deg,#8C9A5B,#55633A)',em:'🦊'},{from:51,soon:true,name:L('Viatges pel món'),bg:'linear-gradient(140deg,#C27C5B,#7E4A34)',em:'🗺️'}];
 const levelPairs = n => Math.min(30, 24+Math.round((n-1)*6/39)); // nivell 1: 24 parelles … nivell 40: 30
 const groupOf = n => GROUPS[Math.floor((n-1)/10)];
-function startLevel(n){ const gr=groupOf(n); if(!gr||gr.soon) return; if(n>S.unlocked){ toast('Completa el nivell '+(n-1)+' per desbloquejar-lo'); return; }
-  startGame('level', gr.theme, 'lvl-'+n, 'Nivell '+n, THEMES[gr.theme].name, levelPairs(n), n); }
+function startLevel(n){ const gr=groupOf(n); if(!gr||gr.soon) return; if(n>S.unlocked){ toast(L('Completa el nivell {0} per desbloquejar-lo',n-1)); return; }
+  startGame('level', gr.theme, 'lvl-'+n, L('Nivell {0}',n), THEMES[gr.theme].name, levelPairs(n), n); }
 function vNivells(){
   if(S.lvGroup!==null){ const gr=GROUPS[S.lvGroup], t=THEMES[gr.theme];
     const cells=Array.from({length:10},(_,i)=>{ const n=gr.from+i, done=n<S.unlocked, cur=n===S.unlocked, lock=n>S.unlocked;
-      return `<button class="lvl ${done?'done':''} ${cur?'cur':''} ${lock?'lock':''}" onclick="startLevel(${n})" aria-label="Nivell ${n}${lock?', bloquejat':''}">
-        ${lock?`<span class="lk">${ICON.lock}</span>`:`<span class="num">${n}</span>`}<small>${done?'✓ Fet':cur?'Juga':levelPairs(n)+' parelles'}</small></button>`; }).join('');
-    return `<div class="screen"><button class="back" onclick="S.lvGroup=null;render()">‹ Nivells</button>
+      return `<button class="lvl ${done?'done':''} ${cur?'cur':''} ${lock?'lock':''}" onclick="startLevel(${n})" aria-label="${L('Nivell {0}',n)}${lock?L(', bloquejat'):''}">
+        ${lock?`<span class="lk">${ICON.lock}</span>`:`<span class="num">${n}</span>`}<small>${done?L('✓ Fet'):cur?L('Juga'):L('{0} parelles',levelPairs(n))}</small></button>`; }).join('');
+    return `<div class="screen"><button class="back" onclick="S.lvGroup=null;render()">‹ ${L('Nivells')}</button>
       <div class="grphead" style="background:${t.bg}"><div class="mini">${stackTiles(t.show,38,48,[[0,14,-10],[20,6,0],[40,14,10]])}</div>
-        <small>Nivells ${gr.from}–${gr.from+9}</small><h2>${t.name}</h2><div class="bar light"><span style="width:${Math.max(0,Math.min(10,S.unlocked-gr.from))*10}%"></span></div></div>
-      <div class="lvgrid">${cells}</div><p class="fine">Cada nivell té més parelles que l’anterior. Completa’ls en ordre per avançar.</p></div>${tabsBar()}`; }
+        <small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><h2>${t.name}</h2><div class="bar light"><span style="width:${Math.max(0,Math.min(10,S.unlocked-gr.from))*10}%"></span></div></div>
+      <div class="lvgrid">${cells}</div><p class="fine">${L('Cada nivell té més parelles que l’anterior. Completa’ls en ordre per avançar.')}</p></div>${tabsBar()}`; }
   const cards=GROUPS.map((gr,i)=>{ const t=gr.soon?null:THEMES[gr.theme]; const open=!gr.soon&&S.unlocked>=gr.from; const doneN=Math.max(0,Math.min(10,S.unlocked-gr.from));
-    if(gr.soon) return `<div class="grp soon" style="background:${gr.bg}"><div class="gtxt"><small>Nivells ${gr.from}–${gr.from+9}</small><b>${gr.name}</b><span class="pill soonp">Pròximament</span></div><div class="gem">${gr.em}</div></div>`;
-    return `<button class="grp ${open?'':'locked'}" style="background:${t.bg}" onclick="${open?`S.lvGroup=${i};render()`:`toast('Completa el nivell ${gr.from-1} per desbloquejar-los')`}">
-      <div class="gtxt"><small>Nivells ${gr.from}–${gr.from+9}</small><b>${t.name}</b>
-      ${open?`<div class="bar light"><span style="width:${doneN*10}%"></span></div><span class="gsub">${doneN}/10 completats</span>`:`<span class="gsub">${ICON.lock} Bloquejat</span>`}</div>
+    if(gr.soon) return `<div class="grp soon" style="background:${gr.bg}"><div class="gtxt"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${gr.name}</b><span class="pill soonp">${L('Pròximament')}</span></div><div class="gem">${gr.em}</div></div>`;
+    return `<button class="grp ${open?'':'locked'}" style="background:${t.bg}" onclick="${open?`S.lvGroup=${i};render()`:`toast('${L('Completa el nivell {0} per desbloquejar-los',gr.from-1)}')`}">
+      <div class="gtxt"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${t.name}</b>
+      ${open?`<div class="bar light"><span style="width:${doneN*10}%"></span></div><span class="gsub">${L('{0}/10 completats',doneN)}</span>`:`<span class="gsub">${ICON.lock} ${L('Bloquejat')}</span>`}</div>
       <div class="mini">${stackTiles(t.show,34,45,[[0,14,-10],[18,6,0],[36,14,10]])}</div></button>`; }).join('');
-  return `<div class="screen"><h1>Nivells</h1><p class="muted">Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.</p>${cards}</div>${tabsBar()}`; }
+  return `<div class="screen"><h1>${L('Nivells')}</h1><p class="muted">${L('Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.')}</p>${cards}</div>${tabsBar()}`; }
 const NAMES=['Rosa del Montseny','PepTarragona','Fitxeta','JadeBCN','Avi Quim','MahjongMontse','LaFura','Pilar_77','ElBambú','Núria R.','Txema','DracVermell'];
 function vClass(){ const r=rng(S.lbScope+S.lbPeriod); let list=NAMES.map(n=>({n,t:170+Math.floor(r()*300)}));
   const mine=S.dailyDone?S.dailyDone.time:262; list.push({n:'Tu',t:Math.round(mine),me:true}); list.sort((a,b)=>a.t-b.t);
   const scopes=['Global','Espanya','Catalunya','Comarca','Amics'], per=['Diari','Setmanal','Mensual','Total'];
   const pod=[[1,'#B8BCC4',70],[0,'#E3AE3B',96],[2,'#C98B5A',54]];
-  return `<div class="screen"><h1>Classificació</h1>
-  <div class="seg">${per.map(p=>`<button class="${S.lbPeriod===p?'on':''}" onclick="S.lbPeriod='${p}';render()">${p}</button>`).join('')}</div>
-  <div class="chips">${scopes.map(s=>`<button class="${S.lbScope===s?'on':''}" onclick="S.lbScope='${s}';render()">${s}</button>`).join('')}</div>
-  <div class="podium">${pod.map(([i,c,h])=>`<div><b>${list[i].me?'Tu':esc(list[i].n)}</b><br><span class="muted">${fmt(list[i].t)}</span><div class="blk" style="background:${c};height:${h}px">${i+1}</div></div>`).join('')}</div>
-  <p class="muted" style="font-size:14px">Temps + 2 min per intent fallat. Dades d’exemple.</p>
-  <ol class="lb">${list.slice(3).map((x,i)=>`<li class="${x.me?'me':''}"><span class="pos">${i+4}</span><span class="nm">${x.me?'<b>Tu</b>':esc(x.n)}</span><span>${fmt(x.t)}</span></li>`).join('')}</ol></div>${tabsBar()}`; }
+  return `<div class="screen"><h1>${L('Classificació')}</h1>
+  <div class="seg">${per.map(p=>`<button class="${S.lbPeriod===p?'on':''}" onclick="S.lbPeriod='${p}';render()">${L(p)}</button>`).join('')}</div>
+  <div class="chips">${scopes.map(s=>`<button class="${S.lbScope===s?'on':''}" onclick="S.lbScope='${s}';render()">${L(s)}</button>`).join('')}</div>
+  <div class="podium">${pod.map(([i,c,h])=>`<div><b>${list[i].me?L('Tu'):esc(list[i].n)}</b><br><span class="muted">${fmt(list[i].t)}</span><div class="blk" style="background:${c};height:${h}px">${i+1}</div></div>`).join('')}</div>
+  <p class="muted" style="font-size:14px">${L('Temps + 2 min per intent fallat. Dades d’exemple.')}</p>
+  <ol class="lb">${list.slice(3).map((x,i)=>`<li class="${x.me?'me':''}"><span class="pos">${i+4}</span><span class="nm">${x.me?'<b>'+L('Tu')+'</b>':esc(x.n)}</span><span>${fmt(x.t)}</span></li>`).join('')}</ol></div>${tabsBar()}`; }
 function medal(c1,c2,txt){ return `<svg viewBox="0 0 56 56"><path d="M18 2h8l4 14h-8zM38 2h-8l-4 14h8z" fill="${c2}"/><circle cx="28" cy="34" r="19" fill="${c1}"/><circle cx="28" cy="34" r="14" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><text x="28" y="40" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="Fraunces,serif">${txt}</text></svg>`; }
 function sw(key,lab,desc){ return `<div class="toggle"><div><b>${lab}</b>${desc?`<br><span class="muted" style="font-size:14px">${desc}</span>`:''}</div><button class="sw ${S.set[key]?'on':''}" role="switch" aria-checked="${S.set[key]}" aria-label="${lab}" onclick="S.set['${key}']=!S.set['${key}'];render()"></button></div>`; }
-function vPerfil(){ const sizes=[['normal','Normal'],['gran','Gran'],['mgran','Molt gran']];
-  return `<div class="screen"><h1>Perfil</h1>
-  <div class="card"><b>Vitrina</b><div class="medals" style="margin-top:12px">
-   <div class="medal">${medal('#E3AE3B','#1F6F5C','10%')}Top comarca</div><div class="medal">${medal('#1F6F5C','#B8322A','30')}Dies seguits</div>
-   <div class="medal">${medal('#B8322A','#E3AE3B','中')}Tradicional</div><div class="medal">${medal('#3B6FC2','#E3AE3B',''+S.found)}Refranys</div></div></div>
-  <div class="card"><div class="row"><div><b>Melodia Plus</b><p class="muted" style="font-size:15px">${S.plus?'Actiu. Pots cancel·lar quan vulguis.':'Intents il·limitats, arxiu de taulers i frases, i lligues.'}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?'Gestionar':'Veure'}</button></div></div>
-  <h2>Ajustos</h2>
-  <b>Colors</b><div class="palsw">${[['cap','Capvespre','linear-gradient(135deg,#FFE3D3,#E4E9F8 60%,#2B3870)'],['lla','Llacuna','linear-gradient(135deg,#E8F7F4,#BFE2E6 60%,#1C6E7A)'],['nit','Nit serena','linear-gradient(135deg,#3A4A8C,#161A35 70%,#F2B84B)']].map(([k,l,g])=>`<button class="${S.set.pal===k?'on':''}" onclick="S.set.pal='${k}';render()"><i style="background:${g}"></i>${l}</button>`).join('')}</div>
-  <b>Mida de les fitxes</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
-  ${sw('hc','Alt contrast','Fitxes bloquejades amb trama')}${sw('dark','Mode nit','')}${sw('hideTime','Amagar el temps','El temps es compta igualment')}
-  ${sw('sound','So i melodia','')}${sw('vib','Vibració','')}${sw('left','Mode esquerrà','Pausa i reserva canvien de costat')}
-  <button class="btn secondary" style="margin-top:14px" onclick="S.unlocked=41;toast('Prototip: nivells 1–40 desbloquejats')">Prototip: desbloquejar tots els nivells</button>
-  <p class="fine">Sense anuncis. Mai.<br>Prototip de disseny · Melodia</p></div>${tabsBar()}`; }
+function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgran',L('Molt gran')]];
+  return `<div class="screen"><h1>${L('Perfil')}</h1>
+  <div class="card"><b>${L('Vitrina')}</b><div class="medals" style="margin-top:12px">
+   <div class="medal">${medal('#E3AE3B','#1F6F5C','10%')}${L('Top comarca')}</div><div class="medal">${medal('#1F6F5C','#B8322A','30')}${L('Dies seguits')}</div>
+   <div class="medal">${medal('#B8322A','#E3AE3B','中')}${L('Tradicional')}</div><div class="medal">${medal('#3B6FC2','#E3AE3B',''+S.found)}${L('Refranys')}</div></div></div>
+  <div class="card"><div class="row"><div><b>Melodia Plus</b><p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Intents il·limitats, arxiu de taulers i frases, i lligues.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div></div>
+  <h2>${L('Ajustos')}</h2>
+  <b>${L('Colors')}</b><div class="palsw">${[['cap',L('Capvespre'),'linear-gradient(135deg,#FFE3D3,#E4E9F8 60%,#2B3870)'],['lla',L('Llacuna'),'linear-gradient(135deg,#E8F7F4,#BFE2E6 60%,#1C6E7A)'],['nit',L('Nit serena'),'linear-gradient(135deg,#3A4A8C,#161A35 70%,#F2B84B)']].map(([k,l,g])=>`<button class="${S.set.pal===k?'on':''}" onclick="S.set.pal='${k}';render()"><i style="background:${g}"></i>${l}</button>`).join('')}</div>
+  <b>${L('Mida de les fitxes')}</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
+  ${sw('hc',L('Alt contrast'),L('Fitxes bloquejades amb trama'))}${sw('dark',L('Mode nit'),'')}${sw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}
+  ${sw('sound',L('So i melodia'),'')}${sw('vib',L('Vibració'),'')}${sw('left',L('Mode esquerrà'),L('Pausa i reserva canvien de costat'))}
+  <button class="btn secondary" style="margin-top:14px" onclick="S.unlocked=41;toast('${L('Prototip: nivells 1–40 desbloquejats')}')">${L('Prototip: desbloquejar tots els nivells')}</button>
+  <p class="fine">${L('Sense anuncis. Mai.')}<br>${L('Prototip de disseny · Melodia')}</p></div>${tabsBar()}`; }
 
 // ================= fulls inferiors =================
 const sheetWrap = html => `<div class="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`;
 function vSheet(){ const g=S.game;
-  if(S.sheet==='pause') return sheetWrap(`<h2 style="margin-top:0">En pausa</h2><div class="stack">
-    <button class="btn primary" onclick="resume()">Continuar</button>
-    <button class="btn secondary" onclick="S.set.hideTime=!S.set.hideTime;updateHUD();resume()">${S.set.hideTime?'Mostrar':'Amagar'} el temps</button>
-    <button class="btn secondary" onclick="S.sheet='help';renderSheet()">Com es juga</button>
-    <button class="btn secondary" onclick="quit()">Sortir</button></div>`);
-  if(S.sheet==='help') return sheetWrap(`<h2 style="margin-top:0">Com es juga</h2>
-    <p><b>Fusiona:</b> arrossega una fitxa lliure i deixa-la damunt la seva bessona.</p>
-    <p><b>Faristol:</b> arrossega-hi fins a 2 fitxes per alliberar les que tenien a sobre o al costat. Després, arrossega-les damunt la seva parella.</p>
-    <p><b>Frase amagada:</b> cada fusió destapa lletres d’un refrany. Resol-la quan vulguis: cada lletra encara amagada et resta ${BONUS_PER} s, i cada error en suma ${MISS_PEN}.</p>
-    <p><b>Compte:</b> deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3 errors, fallada.</p>
-    <p class="muted">També és fallada si el faristol és ple i no queda cap parella.</p><div class="stack"><button class="btn primary" onclick="resume()">Entesos</button></div>`);
+  if(S.sheet==='pause') return sheetWrap(`<h2 style="margin-top:0">${L('En pausa')}</h2><div class="stack">
+    <button class="btn primary" onclick="resume()">${L('Continuar')}</button>
+    <button class="btn secondary" onclick="S.set.hideTime=!S.set.hideTime;updateHUD();resume()">${S.set.hideTime?L('Mostrar el temps'):L('Amagar el temps')}</button>
+    <button class="btn secondary" onclick="S.sheet='help';renderSheet()">${L('Com es juga')}</button>
+    <button class="btn secondary" onclick="quit()">${L('Sortir')}</button></div>`);
+  if(S.sheet==='help') return sheetWrap(`<h2 style="margin-top:0">${L('Com es juga')}</h2>
+    <p><b>${L('Fusiona:')}</b> ${L('arrossega una fitxa lliure i deixa-la damunt la seva bessona.')}</p>
+    <p><b>${L('Faristol:')}</b> ${L('arrossega-hi fins a 2 fitxes per alliberar les que tenien a sobre o al costat. Després, arrossega-les damunt la seva parella.')}</p>
+    <p><b>${L('Frase amagada:')}</b> ${L('cada fusió destapa lletres d’un refrany. Resol-la quan vulguis: cada lletra encara amagada et resta {0} s, i cada error en suma {1}.',BONUS_PER,MISS_PEN)}</p>
+    <p><b>${L('Compte:')}</b> ${L('deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3 errors, fallada.')}</p>
+    <p class="muted">${L('També és fallada si el faristol és ple i no queda cap parella.')}</p><div class="stack"><button class="btn primary" onclick="resume()">${L('Entesos')}</button></div>`);
   if(S.sheet==='blocked'){ const ok=canRetry();
-    return sheetWrap(`<h2 style="margin-top:0">${g.failReason==='errors'?'Tres errors':'Sense jugades'}</h2><p>${g.failReason==='errors'?'Has deixat 3 fitxes damunt d’una que no era la seva parella.':'El faristol és ple i no queda cap parella.'} ${ok?'Pots tornar a provar el mateix tauler.':'Has gastat les fallades gratuïtes d’avui.'}</p>
-    <p class="muted">Tens ${g.revealed.size} de ${g.order.length} lletres destapades. Cada intent fallat suma 2 minuts al temps de classificació.</p>
-    <div class="stack">${ok?`<button class="btn primary" onclick="useRetry()">Tornar a provar${S.pass||S.plus?'':` (${S.fails===1?'queda 1':'queden '+S.fails})`}</button>`:`<button class="btn primary" onclick="S.sheet='pay';renderSheet()">Veure opcions per seguir</button>`}
-    <button class="btn secondary" onclick="S.sheet=null;renderSheet()">Mirar el tauler</button>
-    <button class="btn secondary" onclick="quit()">${ok?'Sortir':'Ara no, torno demà'}</button></div>`); }
-  if(S.sheet==='pay') return sheetWrap(`<h2 style="margin-top:0">Segueix jugant avui</h2><p class="muted">Sense anuncis i sense monedes. Preus amb IVA inclòs.</p>
+    return sheetWrap(`<h2 style="margin-top:0">${g.failReason==='errors'?L('Tres errors'):L('Sense jugades')}</h2><p>${g.failReason==='errors'?L('Has deixat 3 fitxes damunt d’una que no era la seva parella.'):L('El faristol és ple i no queda cap parella.')} ${ok?L('Pots tornar a provar el mateix tauler.'):L('Has gastat les fallades gratuïtes d’avui.')}</p>
+    <p class="muted">${L('Tens {0} de {1} lletres destapades. Cada intent fallat suma 2 minuts al temps de classificació.',g.revealed.size,g.order.length)}</p>
+    <div class="stack">${ok?`<button class="btn primary" onclick="useRetry()">${L('Tornar a provar')}${S.pass||S.plus?'':` (${S.fails===1?L('queda 1'):L('queden {0}',S.fails)})`}</button>`:`<button class="btn primary" onclick="S.sheet='pay';renderSheet()">${L('Veure opcions per seguir')}</button>`}
+    <button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Mirar el tauler')}</button>
+    <button class="btn secondary" onclick="quit()">${ok?L('Sortir'):L('Ara no, torno demà')}</button></div>`); }
+  if(S.sheet==='pay') return sheetWrap(`<h2 style="margin-top:0">${L('Segueix jugant avui')}</h2><p class="muted">${L('Sense anuncis i sense monedes. Preus amb IVA inclòs.')}</p>
     <div class="stack">
-    <button class="offer" onclick="buy('pass')"><span><b>Passi del dia</b><small>Intents il·limitats durant 24 hores</small></span><span class="price">0,99 €</span></button>
-    <button class="offer best" onclick="buy('plus')"><span><span class="pill" style="font-size:13px">Millor preu</span><br><b>Plus anual</b><small>2,50 € al mes · arxiu de melodies, lligues, tots els nivells</small></span><span class="price">29,99 €</span></button>
-    <details><summary class="muted" style="cursor:pointer;min-height:44px;display:flex;align-items:center">Veure més opcions</summary>
-      <div class="stack" style="margin-top:4px"><button class="offer" onclick="buy('plus')"><span><b>Plus mensual</b></span><span class="price">4,99 €/mes</span></button>
-      <button class="offer" onclick="buy('plus')"><span><b>Plus setmanal</b></span><span class="price">1,99 €/setm.</span></button></div></details>
-    <button class="btn secondary" onclick="quit()">Ara no, torno demà</button></div>
-    <p class="fine">La subscripció es renova automàticament i es pot cancel·lar en qualsevol moment des de Perfil.<br><b>Prototip: no es fa cap cobrament.</b></p>`);
+    <button class="offer" onclick="buy('pass')"><span><b>${L('Passi del dia')}</b><small>${L('Intents il·limitats durant 24 hores')}</small></span><span class="price">${L('0,99 €')}</span></button>
+    <button class="offer best" onclick="buy('plus')"><span><span class="pill" style="font-size:13px">${L('Millor preu')}</span><br><b>${L('Plus anual')}</b><small>${L('2,50 € al mes · arxiu de melodies, lligues, tots els nivells')}</small></span><span class="price">${L('29,99 €')}</span></button>
+    <details><summary class="muted" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${L('Veure més opcions')}</summary>
+      <div class="stack" style="margin-top:4px"><button class="offer" onclick="buy('plus')"><span><b>${L('Plus mensual')}</b></span><span class="price">${L('4,99 €/mes')}</span></button>
+      <button class="offer" onclick="buy('plus')"><span><b>${L('Plus setmanal')}</b></span><span class="price">${L('1,99 €/setm.')}</span></button></div></details>
+    <button class="btn secondary" onclick="quit()">${L('Ara no, torno demà')}</button></div>
+    <p class="fine">${L('La subscripció es renova automàticament i es pot cancel·lar en qualsevol moment des de Perfil.')}<br><b>${L('Prototip: no es fa cap cobrament.')}</b></p>`);
   if(S.sheet==='solve'){ const fin=g.over, hid=hiddenCount(); const bad=S.solveMsg==='bad'||S.solveMsg==='finalbad';
-    return sheetWrap(`<h2 style="margin-top:0">${fin?'Tauler resolt! Ara, la frase':'Resol la frase'}</h2>
+    return sheetWrap(`<h2 style="margin-top:0">${fin?L('Tauler resolt! Ara, la frase'):L('Resol la frase')}</h2>
       <div class="preview">${phraseHTML()}</div>
-      <p class="muted" style="text-align:center">${hid} lletres amagades · si l’encertes: <b>−${hid*BONUS_PER} s</b> · cada error: +${MISS_PEN} s</p>
-      <form onsubmit="event.preventDefault();trySolve()"><input id="solveIn" class="solvein" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escriu la frase…" aria-label="La teva resposta">
-      ${bad?`<p style="color:#B8322A;font-weight:700;margin:8px 0 0">No és aquesta. +${MISS_PEN} s</p>`:''}
-      <div class="stack"><button class="btn primary" type="submit">Comprovar</button>
-      ${fin?`<button class="btn secondary" type="button" onclick="giveUp()">Em rendeixo, mostra-la</button>`:`<button class="btn secondary" type="button" onclick="closeSolve()">Continuar jugant</button>`}</div></form>
-      <p class="fine">No cal escriure accents, apòstrofs ni comes.</p>`); }
+      <p class="muted" style="text-align:center">${L('{0} lletres amagades · si l’encertes: <b>−{1} s</b> · cada error: +{2} s',hid,hid*BONUS_PER,MISS_PEN)}</p>
+      <form onsubmit="event.preventDefault();trySolve()"><input id="solveIn" class="solvein" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${L('Escriu la frase…')}" aria-label="${L('La teva resposta')}">
+      ${bad?`<p style="color:#B8322A;font-weight:700;margin:8px 0 0">${L('No és aquesta. +{0} s',MISS_PEN)}</p>`:''}
+      <div class="stack"><button class="btn primary" type="submit">${L('Comprovar')}</button>
+      ${fin?`<button class="btn secondary" type="button" onclick="giveUp()">${L('Em rendeixo, mostra-la')}</button>`:`<button class="btn secondary" type="button" onclick="closeSolve()">${L('Continuar jugant')}</button>`}</div></form>
+      <p class="fine">${L('No cal escriure accents, apòstrofs ni comes.')}</p>`); }
   if(S.sheet==='win'){ const bonus=g.bonus, pen=g.attempts*120+g.penalty, tot=total(); const pos=g.mode==='daily'?Math.max(1,Math.round(tot/22)):null;
     if(g.mode==='daily') S.dailyDone={time:tot,pos};
     const med = pos&&pos<=10 ? medal('#E3AE3B','#1F6F5C','★') : medal('#1F6F5C','#E3AE3B','♪');
-    return sheetWrap(`<div style="text-align:center"><div class="medalbig">${med}</div><h2 style="margin:6px 0 0">${g.solved?'Frase resolta!':'Tauler resolt'}</h2>
+    return sheetWrap(`<div style="text-align:center"><div class="medalbig">${med}</div><h2 style="margin:6px 0 0">${g.solved?L('Frase resolta!'):L('Tauler resolt')}</h2>
       <div class="bigtime" id="countup" data-to="${tot}">0:00</div>
-      <p class="muted">${fmt(elapsed())} de joc${g.attempts?` + ${g.attempts*2} min (intents)`:''}${g.penalty?` + ${g.penalty} s (errors)`:''}${bonus?` − ${bonus} s (frase)`:''}</p>
-      <p style="margin:8px 0;font-family:var(--serif);font-size:19px">«${esc(g.phrase)}»</p>
-      ${pos?`<p style="margin-top:10px"><span class="pill">Posició ${pos} a la teva comarca</span></p>`:''}
-      ${g.newUnlock&&g.level%10===0?`<p style="margin-top:10px"><span class="pill">Desbloquejats els nivells ${g.level+1}–${g.level+10}!</span></p>`:''}
+      <p class="muted">${L('{0} de joc',fmt(elapsed()))}${g.attempts?L(' + {0} min (intents)',g.attempts*2):''}${g.penalty?L(' + {0} s (errors)',g.penalty):''}${bonus?L(' − {0} s (frase)',bonus):''}</p>
+      <p style="margin:8px 0;font-family:var(--serif);font-size:19px">${L('«{0}»',esc(g.phrase))}</p>
+      ${pos?`<p style="margin-top:10px"><span class="pill">${L('Posició {0} a la teva comarca',pos)}</span></p>`:''}
+      ${g.newUnlock&&g.level%10===0?`<p style="margin-top:10px"><span class="pill">${L('Desbloquejats els nivells {0}–{1}!',g.level+1,g.level+10)}</span></p>`:''}
       <div class="grid">${shareGrid()}</div></div>
-      <div class="stack">${g.mode==='daily'?`<button class="btn primary" onclick="S.sheet=null;go('class')">Veure classificació</button>`:(groupOf(g.level+1)&&!groupOf(g.level+1).soon?`<button class="btn primary" onclick="startLevel(${g.level+1})">Nivell ${g.level+1}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>`:`<button class="btn primary" onclick="S.sheet=null;go('nivells')">Tornar als nivells</button>`)}
-      <button class="btn secondary" onclick="share()">Compartir resultat</button>
+      <div class="stack">${g.mode==='daily'?`<button class="btn primary" onclick="S.sheet=null;go('class')">${L('Veure classificació')}</button>`:(groupOf(g.level+1)&&!groupOf(g.level+1).soon?`<button class="btn primary" onclick="startLevel(${g.level+1})">${L('Nivell {0}',g.level+1)}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>`:`<button class="btn primary" onclick="S.sheet=null;go('nivells')">${L('Tornar als nivells')}</button>`)}
+      <button class="btn secondary" onclick="share()">${L('Compartir resultat')}</button>
       
-      <button class="btn secondary" onclick="S.sheet=null;go('avui')">Tornar a l’inici</button></div>`); }
+      <button class="btn secondary" onclick="S.sheet=null;go('avui')">${L('Tornar a l’inici')}</button></div>`); }
   return ''; }
 function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
   const cu=$('#countup'); if(cu){ const to=+cu.dataset.to, t0=performance.now(), d=reduced?1:1200;
     const tick=now=>{ const k=Math.min(1,(now-t0)/d), e=1-Math.pow(1-k,3); cu.textContent=fmt(to*e); if(k<1) requestAnimationFrame(tick); else { bell(14,0,.15,1.6); bell(21,.1,.12,1.6); bell(26,.2,.12,2.2);} };
     requestAnimationFrame(tick); } }
 function shareGrid(){ const g=S.game, n=Math.min(5,Math.ceil(elapsed()/60)); return '🟩'.repeat(Math.max(1,6-n))+'🟨'.repeat(Math.min(5,n))+(g.attempts?' '+'🟥'.repeat(g.attempts):''); }
-function share(){ const g=S.game, tot=total(); const txt=`Melodia · ${todayLabel}\n${shareGrid()}\n${fmt(tot)}${g.attempts?` (${g.attempts} intents)`:' a la primera'} ${g.solved?`· frase −${g.bonus} s`:''}`;
-  try{ navigator.clipboard.writeText(txt).then(()=>toast('Resultat copiat'),()=>toast('No s’ha pogut copiar')); }catch(e){ toast('No s’ha pogut copiar'); } }
+function share(){ const g=S.game, tot=total(); const txt=`Melodia · ${todayLabel}\n${shareGrid()}\n${fmt(tot)}${g.attempts?' '+L('({0} intents)',g.attempts):' '+L('a la primera')} ${g.solved?L('· frase −{0} s',g.bonus):''}`;
+  try{ navigator.clipboard.writeText(txt).then(()=>toast(L('Resultat copiat')),()=>toast(L('No s’ha pogut copiar'))); }catch(e){ toast(L('No s’ha pogut copiar')); } }
 
 // ================= accions =================
 function go(t){ if(S.tab==='joc'&&S.game&&!S.game.over&&!S.game.pauseAt) S.game.pauseAt=Date.now(); S.tab=t; S.sheet=null; render(); }
 function playDaily(){ const g=S.game;
   if(g&&g.mode==='daily'&&g.seedStr===todaySeed&&!g.over){ S.tab='joc'; render(); resume(); return; }
   if(g&&g.mode==='daily'&&g.over&&present().length>0){ S.tab='joc'; render(); S.sheet='blocked'; renderSheet(); return; }
-  startGame('daily','trad',todaySeed,'Partida diària',todayLabel,28); }
+  startGame('daily','trad',todaySeed,L('Partida diària'),todayLabel,28); }
 function _old_nextLevel(){ const g=S.game; const n=(+g.seedStr.split('-')[1]||1)+1; startGame('level',g.theme,`${g.theme}-${n}`,THEMES[g.theme].name,`Nivell ${n} de 10`); }
-const PALS=[['cap','Capvespre'],['lla','Llacuna'],['nit','Nit serena']];
-function cyclePal(){ const i=PALS.findIndex(p=>p[0]===S.set.pal); const n=PALS[(i+1)%PALS.length]; S.set.pal=n[0]; $('#phone').className=$('#phone').className.replace(/pal-\w+/,'pal-'+n[0]); toast('Colors: '+n[1]); }
+const PALS=[['cap',L('Capvespre')],['lla',L('Llacuna')],['nit',L('Nit serena')]];
+function cyclePal(){ const i=PALS.findIndex(p=>p[0]===S.set.pal); const n=PALS[(i+1)%PALS.length]; S.set.pal=n[0]; $('#phone').className=$('#phone').className.replace(/pal-\w+/,'pal-'+n[0]); toast(L('Colors')+': '+n[1]); }
 function pause(){ S.game.pauseAt=Date.now(); S.sheet='pause'; renderSheet(); }
 function resume(){ const g=S.game; if(g&&g.pauseAt&&!g.over){ g.paused+=Date.now()-g.pauseAt; g.pauseAt=null; } S.sheet=null; renderSheet(); }
 function closeSheet(){ if(S.sheet==='solve'){ if(!S.game.over) closeSolve(); return; } if(S.sheet==='pause'||S.sheet==='help') return resume(); if(S.sheet==='win') return; S.sheet=null; renderSheet(); }
 function quit(){ S.sheet=null; renderSheet(); S.tab='avui'; render(); }
-function buy(k){ if(k==='pass') S.pass=true; else S.plus=true; toast(k==='pass'?'Passi del dia activat (simulat)':'Plus activat (simulat)');
+function buy(k){ if(k==='pass') S.pass=true; else S.plus=true; toast(k==='pass'?L('Passi del dia activat (simulat)'):L('Plus activat (simulat)'));
   S.sheet=null; renderSheet(); if(S.tab==='joc'&&S.game&&S.game.over&&present().length>0) restartSame(); else render(); }
 function playYesterday(el){ el.parentElement.querySelector('.ans').innerHTML='<b style="font-family:var(--serif);font-size:18px;color:var(--ink)">«'+esc(pickPhrase(yesterdaySeed))+'»</b>'; el.remove(); }
 let toastT; function toast(m){ clearTimeout(toastT); document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),2000); }
@@ -880,7 +895,7 @@ setInterval(()=>{ if(S.tab==='joc'&&S.game&&!S.game.pauseAt) updateHUD(); },500)
 
 // splash
 function splash(){ const d=document.createElement('div'); d.className='splash herobg';
-  d.innerHTML=`<div class="tiles3">${stackTiles(['b1','r1','d1'],50,66,[[8,12,-14],[55,0,0],[102,12,14]])}</div><div class="word">Melodia</div><div class="tag">Fusiona fitxes · destapa la frase</div>`;
+  d.innerHTML=`<div class="tiles3">${stackTiles(['b1','r1','d1'],50,66,[[8,12,-14],[55,0,0],[102,12,14]])}</div><div class="word">Melodia</div><div class="tag">${L('Fusiona fitxes · destapa la frase')}</div>`;
   $('#phone').appendChild(d);
   if(!reduced) d.querySelectorAll('.tile').forEach((t,i)=>t.animate([{transform:t.style.transform+' translateY(-80px)',opacity:0},{transform:t.style.transform,opacity:1}],{duration:600,delay:i*140,easing:'cubic-bezier(.34,1.5,.64,1)',fill:'backwards'}));
   const close=()=>{ d.style.opacity='0'; setTimeout(()=>d.remove(),500); }; d.onclick=close; setTimeout(close, reduced?300:2200); }
