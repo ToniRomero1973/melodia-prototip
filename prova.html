@@ -166,6 +166,7 @@ function setLang(l){
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
   document.getElementById("play").href = "index.html?prova=1&lang=" + l;
   document.title = { ca: "Prova Melodia", es: "Prueba Melodia", en: "Test Melodia" }[l];
+  document.querySelector(".lang").setAttribute("aria-label", { ca: "Idioma", es: "Idioma", en: "Language" }[l]);
 }
 // El participant pot canviar l'idioma a mà; la tria es recorda en aquest navegador.
 document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
