@@ -390,6 +390,85 @@ p{line-height:1.45;margin:6px 0} .muted{color:var(--quiet)}
 .giftmsg{font-family:var(--serif);font-size:19px;margin:12px 0 4px;padding:12px 16px;background:var(--jade-soft);border-radius:16px}
 .famcard{text-align:center} .famcard .btn{margin-top:12px}
 .lb.fam li .pos{font-size:18px}
+
+/* ================= IDENTITAT «RAJOLA» ================= */
+.pal-cap{ --bg:#F6EFE3; --surface:#FFFDF8; --line:#E8DCC8; --ink:#2A2522; --quiet:#6B6158; --jade:#2F4A6D; --jade-d:#1F3350; --jade-soft:#E8EDF3; --gold:#D9A441; --accent:#B5532F; --accent-d:#8E3E22;
+  --gbg:#EFE5D3; --veil:rgba(239,229,211,.9); --gink:#2A2522; --gquiet:#7A6E62; --gchip:rgba(42,37,34,.07); --gpanel:rgba(255,253,248,.94); --gstand:#FFFDF8; --gline:#E3D6C0;
+  --tside1:#E9B48F; --tside2:#B5532F; --tshadow:rgba(90,40,20,.32); --edge:rgba(181,83,47,.38); --heroveil:31,51,80; }
+.pal-lla{ --bg:#F3F1EC; --surface:#FFFFFF; --line:#DCE3EC; --ink:#1D2633; --quiet:#5D6878; --jade:#1F4E8C; --jade-d:#163A69; --jade-soft:#E3ECF7; --gold:#E2B66F; --accent:#D46A4C; --accent-d:#A84D33;
+  --gbg:#E9EEF3; --veil:rgba(233,238,243,.9); --gink:#1D2633; --gquiet:#5D6878; --gchip:rgba(29,38,51,.07); --gpanel:rgba(255,255,255,.94); --gstand:#FFFFFF; --gline:#D6DEE8;
+  --tside1:#9DBDE0; --tside2:#1F4E8C; --tshadow:rgba(20,40,80,.3); --edge:rgba(31,78,140,.38); --heroveil:22,58,105; }
+.pal-nit{ --bg:#F2EDE4; --surface:#FFFDF8; --line:#E4DBCC; --ink:#22262F; --quiet:#666B75; --jade:#2B3550; --jade-d:#1B2238; --jade-soft:#E9EAEF; --gold:#E0A84A; --accent:#C46A5A; --accent-d:#9A4C3F;
+  --gbg:#1E2433; --veil:rgba(30,36,51,.9); --gink:#EADFC8; --gquiet:#A9A08E; --gchip:rgba(234,223,200,.10); --gpanel:rgba(23,28,40,.9); --gstand:#171C28; --gline:#2C3447;
+  --tside1:#E7C27A; --tside2:#B07E2A; --tshadow:rgba(0,0,0,.55); --edge:rgba(176,126,42,.5); --heroveil:27,34,56; }
+.phone.dark{ --bg:#191C1F; --surface:#24282C; --ink:#F1EEE8; --quiet:#B4B0A8; --line:#353A40; --jade-soft:#1F3A33; }
+body{background:#D9CFBE}
+.phone{background:var(--bg)}
+h1,h2,.brand{font-family:var(--serif)}
+h1{font-size:32px;letter-spacing:-.6px}
+/* marca */
+.brand{color:var(--jade);font-size:31px} .brand .dot.rj{width:16px;height:16px;border-radius:3px;background:var(--mosaic-hero) center/18px 18px;transform:rotate(45deg);box-shadow:0 0 0 2px var(--surface),0 0 0 3px var(--jade)}
+/* portada: el refrany del dia sobre la rajola del dia */
+.hero.herobg{background-color:rgb(var(--heroveil));background-image:linear-gradient(100deg,rgba(var(--heroveil),.96) 0%,rgba(var(--heroveil),.86) 52%,rgba(var(--heroveil),.25) 100%),var(--mosaic-hero);background-size:auto,96px 96px;border-radius:28px;box-shadow:0 16px 34px rgba(var(--heroveil),.35),inset 0 0 0 1px rgba(255,255,255,.12)}
+.hero h2{font-size:34px}
+.hero .stackt{filter:drop-shadow(0 10px 12px rgba(0,0,0,.35))}
+.card{border-radius:22px;box-shadow:0 1px 0 rgba(0,0,0,.03),0 6px 18px rgba(60,40,20,.05)}
+/* joc: paret de rajoles molt suau i terra de rajoles sota les fitxes */
+.felt{background-color:var(--gbg);background-image:linear-gradient(var(--veil),var(--veil)),var(--mosaic);background-size:auto,88px 88px}
+.board{border-radius:20px;background-color:var(--gstand);background-image:linear-gradient(rgba(255,253,248,.14),rgba(255,253,248,.14)),var(--mosaic);background-size:auto,calc(var(--tw)*1.18) calc(var(--tw)*1.18);
+  box-shadow:inset 0 0 0 5px var(--gstand),inset 0 0 0 7px var(--edge),inset 0 8px 18px rgba(0,0,0,.18),0 10px 26px rgba(0,0,0,.12)}
+.board::after{content:"";position:absolute;inset:0;border-radius:20px;pointer-events:none;opacity:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.75) 48%,transparent 66%);background-size:250% 100%}
+.board.won::after{animation:shine 1.6s .1s ease-out 2}
+.board.won{animation:floorpop .9s cubic-bezier(.34,1.56,.64,1)}
+@keyframes shine{0%{opacity:1;background-position:120% 0}100%{opacity:1;background-position:-80% 0}}
+@keyframes floorpop{40%{transform:scale(1.035)}}
+/* fitxa de ceràmica: vidrat crema amb filet pintat i cantell de terracota */
+.tile::before{background:linear-gradient(180deg,var(--tside1) 0%,var(--tside2) 100%);box-shadow:0 9px 16px var(--tshadow)}
+.face{background:radial-gradient(130% 95% at 28% 12%,#FFFFFF 0%,#FCF8EF 50%,#F2E8D6 100%);
+  box-shadow:inset 0 0 0 3px #FFFDF8,inset 0 0 0 4.5px var(--edge),inset 0 -4px 0 rgba(120,80,40,.06)}
+.tile.blocked .face{background:linear-gradient(170deg,#E9E1D3 0%,#DDD3C2 100%);box-shadow:inset 0 0 0 3px #EEE7DB,inset 0 0 0 4.5px rgba(0,0,0,.06)}
+.tile.blocked .face svg,.tile.blocked .face .emo{opacity:.45}
+.pal-nit .tile.blocked .face{background:linear-gradient(170deg,#B9B2A4 0%,#A39B8B 100%)}
+.tile.sel .face{box-shadow:inset 0 0 0 3px #FFFDF8,inset 0 0 0 4.5px var(--accent),0 0 0 3px var(--gold),0 0 24px rgba(217,164,65,.9)}
+.solvebtn{border-radius:14px}
+.stand{background:var(--gstand)}
+.stand .slots{border-bottom-color:var(--accent)}
+/* botons */
+.btn{border-radius:18px}
+.btn.primary{background:var(--jade);box-shadow:0 4px 0 var(--jade-d)}
+.btn.gold{background:linear-gradient(180deg,var(--accent),var(--accent-d));color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.22),0 10px 22px rgba(0,0,0,.18)}
+.btn.secondary{border-radius:18px}
+.tabs button.on{color:var(--accent)}
+.tabs button.on svg{filter:drop-shadow(0 2px 0 rgba(0,0,0,.05))}
+/* nivells */
+.grp,.grphead{box-shadow:0 12px 26px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.12)}
+.grp b{font-size:26px}
+/* perfil: mostres de rajola */
+.palsw i{height:42px;border-radius:10px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.palsw button.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+/* refranyer */
+.album li{display:flex;gap:12px;align-items:flex-start}
+.rthumb{width:46px;height:46px;border-radius:9px;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.15)} .rthumb.off{filter:grayscale(1);opacity:.35}
+/* postal */
+.postalwrap{position:relative;width:min(78%,300px);margin:0 auto;aspect-ratio:4/5;border-radius:18px;background-size:60px 60px;box-shadow:0 18px 38px rgba(0,0,0,.28);overflow:hidden;transform:rotate(-1.2deg)}
+.postal{display:block;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s}
+.postal.in{opacity:1;animation:postin .7s cubic-bezier(.34,1.4,.64,1)}
+@keyframes postin{0%{transform:scale(.9) rotate(3deg)}100%{transform:none}}
+.meaning b{display:block;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent-d);margin-bottom:2px}
+.sendbtn{width:min(78%,300px);margin:14px auto 0;display:flex;align-items:center;justify-content:center}
+/* entrada */
+.splash{background:rgb(var(--heroveil));display:block;transition:opacity .6s}
+.splash.out{opacity:0}
+.smosaic{position:absolute;inset:-2px;display:grid;grid-auto-rows:1fr;gap:3px;background:rgba(0,0,0,.25);perspective:900px}
+.smosaic i{background-size:cover;animation:tilein .65s cubic-bezier(.3,1.35,.6,1) both;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+@keyframes tilein{0%{opacity:0;transform:rotateY(90deg) scale(.6)}100%{opacity:1;transform:none}}
+.smedal{position:absolute;left:50%;top:50%;width:258px;height:258px;margin:-129px 0 0 -129px;border-radius:50%;background:#FBF6EC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  box-shadow:0 0 0 10px rgba(251,246,236,.55),0 24px 60px rgba(0,0,0,.45);animation:medin .8s 1.05s cubic-bezier(.3,1.5,.6,1) both}
+.sring{width:64px;height:64px;border-radius:50%;background-size:cover;box-shadow:0 0 0 4px #FBF6EC,0 0 0 6px rgb(var(--heroveil));margin-bottom:6px}
+.splash .word{color:rgb(var(--heroveil));font-size:46px;animation:none}
+.splash .tag{color:#6B6158;font-size:15px;animation:none;text-align:center;max-width:200px}
+@keyframes medin{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .smosaic i,.smedal,.postal.in,.board.won,.board.won::after{animation:none!important} .smedal{opacity:1} }
 </style>
 </head>
 <body>
@@ -423,6 +502,8 @@ Object.assign(TR.es,{"Aquesta fitxa encara està tapada": "Esta ficha todavía e
 Object.assign(TR.en,{"Aquesta fitxa encara està tapada": "That tile is still covered", "He fet {0} en aquest tauler. Em guanyes?": "I did this board in {0}. Can you beat me?", "Algú ha resolt aquest tauler en <b>{0}</b>. Jugaràs exactament el mateix tauler.": "Someone solved this board in <b>{0}</b>. You'll play exactly the same board.", "Combo ×{0}": "Combo ×{0}", "Errors: {0} de {1}": "Mistakes: {0} of {1}", "si arrossegues una fitxa i la deixes damunt d’una que no és la seva parella, és un error. Amb 3 errors, fallada. Tocant no hi ha errors.": "if you drag a tile and drop it on one that isn't its pair, that's a mistake. 3 mistakes and the game is lost. Tapping never counts as a mistake."});
 Object.assign(TR.es,{"Himne de l’alegria": "Himno de la alegría", "Jingle Bells": "Jingle Bells", "Frère Jacques": "Martinillo", "Cançó de bressol de Brahms": "Canción de cuna de Brahms", "Per a Elisa": "Para Elisa", "El Danubi blau": "El Danubio azul", "La cucaracha": "La cucaracha", "Quina cançó amagava el tauler?": "¿Qué canción escondía el tablero?", "Encertada!": "¡Acertada!", "Gairebé…": "Casi…", "Escoltar la cançó": "Escuchar la canción", "Era «{0}»": "Era «{0}»", "Cançó amagada:": "Canción escondida:", "cada parella toca una nota d’una cançó coneguda. Al final, endevina quina era.": "cada pareja toca una nota de una canción conocida. Al final, adivina cuál era.", "Regalar Plus a algú": "Regalar Plus a alguien", "Un any sencer per a un familiar": "Un año entero para un familiar", "Regala Melodia": "Regala Melodia", "Un any de Plus per a qui tu vulguis. Li arriba ja activat, sense haver de pagar res.": "Un año de Plus para quien tú quieras. Le llega ya activado, sin tener que pagar nada.", "Regalar": "Regalar", "Regala Melodia Plus": "Regala Melodia Plus", "Un any sense límits i amb tots els nivells. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.": "Un año sin límites y con todos los niveles. Le enviarás un enlace y el regalo quedará activado en su móvil.", "De part de": "De parte de", "El teu nom": "Tu nombre", "Missatge": "Mensaje", "Perquè juguis cada dia una estona. Una abraçada!": "Para que juegues un rato cada día. ¡Un abrazo!", "Pagar 29,99 € i enviar": "Pagar 29,99 € y enviar", "{0} t’ha fet un regal": "{0} te ha hecho un regalo", "T’han fet un regal": "Te han hecho un regalo", "Un any de Melodia Plus: sense límits i amb tots els nivells.": "Un año de Melodia Plus: sin límites y con todos los niveles.", "Obrir el regal": "Abrir el regalo", "Crear la lliga familiar": "Crear la liga familiar", "Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup de la família.": "Cada día, el mismo tablero para todos. Sin cuentas ni contraseñas: solo un enlace para el grupo de la familia.", "Nom de la lliga": "Nombre de la liga", "Família Puig": "Familia García", "Crear i convidar": "Crear e invitar", "T’han convidat a «{0}»": "Te han invitado a «{0}»", "Cada dia jugareu el mateix tauler i veureu qui l’ha fet més ràpid.": "Cada día jugaréis el mismo tablero y veréis quién lo ha hecho más rápido.", "Unir-me a la lliga": "Unirme a la liga", "Enllaç copiat: enganxa’l on vulguis": "Enlace copiado: pégalo donde quieras", "Regal pagat (simulat)": "Regalo pagado (simulado)", "T’he regalat un any de Melodia, un joc de fitxes i refranys. Obre l’enllaç per activar-lo:": "Te he regalado un año de Melodia, un juego de fichas y refranes. Abre el enlace para activarlo:", "Regal activat. Que el gaudeixis!": "Regalo activado. ¡Que lo disfrutes!", "Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tota la família.": "Únete a la liga «{0}» de Melodia: cada día, el mismo tablero para toda la familia.", "La meva família": "Mi familia", "Família": "Familia", "La lliga de la teva família": "La liga de tu familia", "Crear la lliga": "Crear la liga", "Mama": "Mamá", "Avi": "Abuelo", "Laia": "Lucía", "Marc": "Marcos", "{0} membres": "{0} miembros", "Encara no ha jugat": "Aún no ha jugado", "Partida d’avui. Dades d’exemple.": "Partida de hoy. Datos de ejemplo.", "Convidar algú de la família": "Invitar a alguien de la familia"});
 Object.assign(TR.en,{"Himne de l’alegria": "Ode to Joy", "Jingle Bells": "Jingle Bells", "Frère Jacques": "Frère Jacques", "Cançó de bressol de Brahms": "Brahms's Lullaby", "Per a Elisa": "Für Elise", "El Danubi blau": "The Blue Danube", "La cucaracha": "La Cucaracha", "Quina cançó amagava el tauler?": "Which song was hiding in the board?", "Encertada!": "You got it!", "Gairebé…": "Not quite…", "Escoltar la cançó": "Listen to the song", "Era «{0}»": "It was “{0}”", "Cançó amagada:": "Hidden song:", "cada parella toca una nota d’una cançó coneguda. Al final, endevina quina era.": "each pair plays a note of a well-known song. At the end, guess which one it was.", "Regalar Plus a algú": "Give Plus to someone", "Un any sencer per a un familiar": "A whole year for a family member", "Regala Melodia": "Give Melodia", "Un any de Plus per a qui tu vulguis. Li arriba ja activat, sense haver de pagar res.": "A year of Plus for anyone you like. It arrives already active, with nothing for them to pay.", "Regalar": "Give", "Regala Melodia Plus": "Give Melodia Plus", "Un any sense límits i amb tots els nivells. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.": "A year with no limits and every level. You'll send them a link and the gift will be active on their phone.", "De part de": "From", "El teu nom": "Your name", "Missatge": "Message", "Perquè juguis cada dia una estona. Una abraçada!": "So you can play a little every day. Big hug!", "Pagar 29,99 € i enviar": "Pay €29.99 and send", "{0} t’ha fet un regal": "{0} sent you a gift", "T’han fet un regal": "You've got a gift", "Un any de Melodia Plus: sense límits i amb tots els nivells.": "A year of Melodia Plus: no limits and every level.", "Obrir el regal": "Open the gift", "Crear la lliga familiar": "Create a family league", "Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup de la família.": "Every day, the same board for everyone. No accounts or passwords: just one link for the family group chat.", "Nom de la lliga": "League name", "Família Puig": "The Smiths", "Crear i convidar": "Create and invite", "T’han convidat a «{0}»": "You're invited to “{0}”", "Cada dia jugareu el mateix tauler i veureu qui l’ha fet més ràpid.": "Every day you'll all play the same board and see who did it fastest.", "Unir-me a la lliga": "Join the league", "Enllaç copiat: enganxa’l on vulguis": "Link copied: paste it wherever you like", "Regal pagat (simulat)": "Gift paid (simulated)", "T’he regalat un any de Melodia, un joc de fitxes i refranys. Obre l’enllaç per activar-lo:": "I've given you a year of Melodia, a game of tiles and proverbs. Open the link to activate it:", "Regal activat. Que el gaudeixis!": "Gift activated. Enjoy!", "Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tota la família.": "Join the “{0}” league on Melodia: every day, the same board for the whole family.", "La meva família": "My family", "Família": "Family", "La lliga de la teva família": "Your family league", "Crear la lliga": "Create the league", "Mama": "Mum", "Avi": "Grandpa", "Laia": "Lucy", "Marc": "Mark", "{0} membres": "{0} members", "Encara no ha jugat": "Hasn't played yet", "Partida d’avui. Dades d’exemple.": "Today's game. Sample data.", "Convidar algú de la família": "Invite a family member"});
+Object.assign(TR.es,{"Terracota": "Terracota", "Mar": "Mar", "Nit d’estiu": "Noche de verano", "Fitxes, refranys i cançons": "Fichas, refranes y canciones", "Tauler i frase resolts": "Tablero y frase resueltos", "Fitxes, refranys i cançons · sense anuncis": "Fichas, refranes y canciones · sin anuncios", "La meva postal d’avui a Melodia. Em guanyes?": "Mi postal de hoy en Melodia. ¿Me ganas?", "Postal desada i enllaç copiat": "Postal guardada y enlace copiado", "Postal desada": "Postal guardada", "La teva postal del dia, amb el refrany i el temps": "Tu postal del día, con el refrán y el tiempo", "Enviar la postal": "Enviar la postal"});
+Object.assign(TR.en,{"Terracota": "Terracotta", "Mar": "Sea", "Nit d’estiu": "Summer night", "Fitxes, refranys i cançons": "Tiles, proverbs and songs", "Tauler i frase resolts": "Board and phrase solved", "Fitxes, refranys i cançons · sense anuncis": "Tiles, proverbs and songs · no ads", "La meva postal d’avui a Melodia. Em guanyes?": "My postcard from today's Melodia. Can you beat me?", "Postal desada i enllaç copiat": "Postcard saved and link copied", "Postal desada": "Postcard saved", "La teva postal del dia, amb el refrany i el temps": "Your postcard of the day, with the proverb and your time", "Enviar la postal": "Send the postcard"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -487,6 +568,41 @@ const THEMES = {
   esports:{name:L('Esports'), sym:['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🏉','🥏','🎱','🪀','🏓','🏸','🏒','🏑','🥍','🏏','🪃','🥅','⛳','🪁','🏹','🎣','🤿','🥊','🥋','🎽','🛹','🛼','🛷','⛸️','🥌','🎿','🏂','🪂','🏆','🥇','🥈','🥉','🏅','🎯','🎳'], bg:'linear-gradient(140deg,#3B6FC2,#22447F)', show:['⚽','🎾','🏀']},
   vehicles:{name:L('Vehicles'), sym:['🚗','🚕','🚙','🚌','🚎','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🏍️','🛵','🚲','🛴','🚨','🚡','🚠','🚟','🚃','🚋','🚞','🚝','🚄','🚂','🚆','🚇','✈️','🛩️','🚀','🛸','🚁','⛵','🚤','🛥️','🛳️','⛴️','🚢','🛶'], bg:'linear-gradient(140deg,#7A5BB5,#4A3480)', show:['🚀','⛵','🚲']},
 };
+
+
+// ================= identitat: rajola hidràulica =================
+// Paletes inspirades en rajoles reals: fons, color 1..4
+const RPAL = {
+  cap:['#F2E4CC','#B5532F','#2F4A6D','#D9A441','#6E7F57'],
+  lla:['#F3EFE6','#1F4E8C','#7FA7C9','#E2B66F','#D46A4C'],
+  nit:['#1E2433','#E0A84A','#3E8A82','#C46A5A','#EADFC8'],
+};
+const TPAL = { fruites:['#F6E7CF','#C2522E','#E39B2F','#6E8B3D','#8E3B46'], esports:['#EEF1F2','#1F4E8C','#E2B66F','#3E8A82','#C9483B'], vehicles:['#F1EAF2','#5B3F8C','#D9A441','#2F6F8C','#C46A5A'], animals:['#EEF0E2','#55633A','#8C9A5B','#D9A441','#B5532F'], viatges:['#F4E9DF','#7E4A34','#C27C5B','#2F6F8C','#D9A441'] };
+const uiPal = () => RPAL[S.set.pal] || RPAL.cap;
+const gamePal = g => (g && TPAL[g.theme]) || uiPal();
+const f1 = v => Math.round(v*10)/10;
+// Una rajola de 100×100: es dibuixa un quadrant i es gira 4 vegades, com les rajoles de debò
+function rajolaSVG(seed, pal){ const r=rng('raj'+seed), P=pal||uiPal(), G=P[0], C=P.slice(1);
+  const pick=ex=>{ let c; do{ c=C[Math.floor(r()*4)]; }while(ex&&ex.includes(c)); return c; };
+  const ca=pick(), cb=pick([ca]), cc=pick([ca,cb]), q=[]; const kind=Math.floor(r()*5);
+  const R=f1(26+r()*14);                                   // quart de cercle a la cantonada (fa cercles en ajuntar-se)
+  q.push(`<path d="M0 0H${R}A${R} ${R} 0 0 1 0 ${R}Z" fill="${ca}"/>`);
+  if(r()<.75){ const R2=f1(R*.62), R3=f1(R*.32); q.push(`<path d="M0 0H${R2}A${R2} ${R2} 0 0 1 0 ${R2}Z" fill="${G}"/><path d="M0 0H${R3}A${R3} ${R3} 0 0 1 0 ${R3}Z" fill="${cc}"/>`); }
+  if(kind!==1){ const h=f1(8+r()*9); q.push(`<path d="M${f1(50-h)} 0A${h} ${h} 0 0 0 ${f1(50+h)} 0Z" fill="${cb}"/>`); if(r()<.5) q.push(`<circle cx="50" cy="0" r="${f1(h*.45)}" fill="${G}"/>`); }
+  const pl=f1(13+r()*9), pw=f1(4.5+r()*4), px=f1(50-pl*.78);          // pètal cap a la cantonada
+  q.push(`<ellipse cx="${px}" cy="${px}" rx="${pw}" ry="${pl}" transform="rotate(-45 ${px} ${px})" fill="${cb}"/>`);
+  if(kind===2||kind===4) q.push(`<path d="M50 ${f1(50-36)}L${f1(50-7)} ${f1(50-17)}L50 ${f1(50-12)}L${f1(50+7)} ${f1(50-17)}Z" fill="${ca}"/>`);
+  if(kind===3) q.push(`<path d="M${f1(50-24)} 50L50 ${f1(50-24)}" stroke="${cc}" stroke-width="3" stroke-linecap="round"/>`);
+  if(kind===4) q.push(`<circle cx="${f1(50-31)}" cy="${f1(50-31)}" r="3" fill="${cc}"/>`);
+  if(r()<.55) q.push(`<path d="M3 3H97" stroke="${C[3]}" stroke-width="1.6"/>`);   // filet de vora
+  const cr=f1(8+r()*6);
+  const center = (kind===0||kind===3)
+    ? `<rect x="${f1(50-cr)}" y="${f1(50-cr)}" width="${f1(cr*2)}" height="${f1(cr*2)}" transform="rotate(45 50 50)" fill="${cc}"/><circle cx="50" cy="50" r="${f1(cr*.55)}" fill="${G}"/><circle cx="50" cy="50" r="${f1(cr*.28)}" fill="${ca}"/>`
+    : `<circle cx="50" cy="50" r="${cr}" fill="${cc}"/><circle cx="50" cy="50" r="${f1(cr*.6)}" fill="${G}"/><circle cx="50" cy="50" r="${f1(cr*.3)}" fill="${ca}"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${G}"/>${[0,90,180,270].map(a=>`<g transform="rotate(${a} 50 50)">${q.join('')}</g>`).join('')}${center}<rect x=".5" y=".5" width="99" height="99" fill="none" stroke="rgba(0,0,0,.10)"/></svg>`; }
+const RCACHE = new Map();
+function rajolaData(seed, pal){ const k=seed+'|'+(pal||uiPal()).join(); if(!RCACHE.has(k)) RCACHE.set(k,'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(rajolaSVG(seed,pal))); return RCACHE.get(k); }
+const rajolaURL = (seed, pal) => `url('${rajolaData(seed,pal)}')`;
 
 // ================= frases (refranys populars) =================
 const PHRASES_CA = [
@@ -613,7 +729,7 @@ function songCard(){ const g=S.game, a=g.songAns;
     + (a==null ? `<div class="songopts">${songOpts().map((x,i)=>`<button onclick="answerSong(${i})">${esc(L(x.k))}</button>`).join('')}</div>`
                : `<p class="songres">${L('Era «{0}»',esc(L(g.song.k)))}</p>`); }
 function answerSong(i){ const g=S.game; if(g.songAns!=null) return; g.songAns=songOpts()[i];
-  if(g.songAns===g.song) S.songsOK=(S.songsOK||0)+1; const el=$('#songq'); if(el) el.innerHTML=songCard(); playMine(); }
+  if(g.songAns===g.song) S.songsOK=(S.songsOK||0)+1; const el=$('#songq'); if(el) el.innerHTML=songCard(); playMine(); drawPostal(); }
 function melHTML(){ const ns=S.game.notes||[]; if(!ns.length) return ''; const lo=Math.min(...ns.map(n=>n.note)), hi=Math.max(...ns.map(n=>n.note));
   return `<div class="mel" id="mel" aria-hidden="true">${ns.map(n=>`<i class="${n.combo>1?'c2':''}" style="height:${18+(n.note-lo)/Math.max(1,hi-lo)*78}%"></i>`).join('')}</div>`; }
 document.addEventListener('pointerdown',()=>{ if(S.set.sound&&audio()&&ac.state==='suspended') ac.resume(); },true);
@@ -635,7 +751,7 @@ function showCombo(n){ if(reduced) return; const fx=$('#fx'); fx.querySelectorAl
   d.textContent = n>=5?L('Increïble! ×{0}',n): n>=3?L('Molt bé! ×{0}',n):L('Combo ×{0}',n); fx.appendChild(d);
   d.animate([{transform:'translateX(-50%) scale(.4)',opacity:0},{transform:'translateX(-50%) scale(1.15)',opacity:1,offset:.25},{transform:'translateX(-50%) scale(1)',opacity:1,offset:.7},{transform:'translateX(-50%) translateY(-20px)',opacity:0}],{duration:1300,easing:'ease-out'}).onfinish=()=>d.remove(); }
 function petals(){ if(reduced) return; const fx=$('#fx'); const set=['♪','♫','✦','♪','✧']; for(let i=0;i<34;i++){ const p=document.createElement('div'); p.className='petal';
-  p.textContent=set[i%set.length]; p.style.left=(Math.random()*100)+'%'; p.style.color=['#FFE7A0','#F6C85A','#fff','#9FD6C4'][i%4]; p.style.fontSize=(16+Math.random()*16)+'px'; fx.appendChild(p);
+  p.textContent=set[i%set.length]; p.style.left=(Math.random()*100)+'%'; p.style.color=gamePal(S.game)[1+i%4]; p.style.fontSize=(16+Math.random()*16)+'px'; fx.appendChild(p);
   p.animate([{transform:'translateY(0) rotate(0)',opacity:0},{opacity:1,offset:.1},{transform:`translateY(${880+Math.random()*80}px) translateX(${(Math.random()-.5)*120}px) rotate(${(Math.random()-.5)*540}deg)`,opacity:.9}],{duration:2600+Math.random()*1800,delay:Math.random()*900,easing:'cubic-bezier(.3,.1,.6,1)',fill:'backwards'}).onfinish=()=>p.remove(); } }
 
 // ================= joc: estat =================
@@ -678,6 +794,7 @@ const ICON = {
   pal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.9-.7-1.3-.7-2.1 0-.9.7-1.5 1.6-1.5H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.3" fill="currentColor"/><circle cx="10.5" cy="7" r="1.3" fill="currentColor"/><circle cx="15" cy="7.5" r="1.3" fill="currentColor"/></svg>',
   lock:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>',
   stand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4h16l-2 8H6z"/><path d="M12 12v9M8 21h8M5 14h14"/></svg>',
+  send:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-5px;margin-right:4px"><path d="M21 3 10 14"/><path d="M21 3l-7 18-4-7-7-4z"/></svg>',
   bulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
   disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 5.5a6.5 6.5 0 0 1 6.5 6.5" stroke-linecap="round"/></svg>',
 };
@@ -828,7 +945,7 @@ function flyLetter(from, li, delay){ const to=letterXY(li); if(!to||reduced){ re
 function checkState(){ const g=S.game; if(g.over) return;
   if(present().length===0 && g.reserve.every(v=>!v)){ g.over=true; g.won=true; g.pauseAt=Date.now(); if(g.mode==='level'&&g.level===S.unlocked){ S.unlocked=g.level+1; g.newUnlock=true; } return celebrate(); }
   if(g.reserve.every(Boolean) && !hasMove()){ g.over=true; g.pauseAt=Date.now(); if(g.mode==='daily') S.dailyFailed='blocked'; setTimeout(()=>{ click(220,.08); S.sheet='blocked'; renderSheet(); },450); } }
-async function celebrate(){ const g=S.game; await wait(700); if(S.game!==g) return; petals(); const tt=playSong(g.song); await wait(Math.min(tt*1000, 3500));
+async function celebrate(){ const g=S.game; await wait(250); if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.add('won'); await wait(450); if(S.game!==g) return; petals(); const tt=playSong(g.song); await wait(Math.min(tt*1000, 3500));
   await wait(g.solved?1400:500); if(S.game!==g||S.tab!=='joc'||S.sheet==='solve'||S.sheet==='win') return;
   if(g.solved){ S.sheet='win'; renderSheet(); } else { S.sheet='solve'; S.solveMsg='final'; renderSheet(); } }
 function openSolve(){ const g=S.game; if(g.solved||g.busy||(g.over&&!g.won)) return; if(!g.over&&!g.pauseAt) g.pauseAt=Date.now(); S.sheet='solve'; S.solveMsg=''; renderSheet(); setTimeout(()=>{ const i=$('#solveIn'); if(i) i.focus(); },350); }
@@ -853,7 +970,7 @@ function stackTiles(keys, w, h, pos){ return keys.map((k,i)=>tileHTML(k,'',`widt
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const week=order.map(d=>{ const past=(d===0?7:d)<(wd===0?7:wd); const isT=d===wd; return `<div><i class="${past||(isT&&done)?'done':''} ${isT?'today':''}">${past||(isT&&done)?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
-  <div class="row"><div class="brand"><span class="dot"></span>Melodia</div><span class="streakchip">🔥 ${S.streak+(done?1:0)}</span></div>
+  <div class="row"><div class="brand"><span class="dot rj"></span>Melodia</div><span class="streakchip">🔥 ${S.streak+(done?1:0)}</span></div>
   <div class="hero herobg">
     <div class="stackt">${stackTiles(['r1','d5','b3'],46,61,[[10,30,-12],[40,18,-2],[70,30,10]])}</div>
     <span class="pill" style="background:rgba(255,255,255,.16);color:#fff">${L('Partida diària')}</span>
@@ -872,7 +989,10 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
   <p class="fine">${failsText()} · ${L('es reinicien a mitjanit')}</p>
   </div>${tabsBar()}`; }
 const GROUPS=[{from:1,theme:'trad',name:'Tradicional'},{from:11,theme:'fruites',name:'Fruites i horta'},{from:21,theme:'esports',name:'Esports'},{from:31,theme:'vehicles',name:'Vehicles'},
-  {from:41,soon:true,name:L('Animals'),bg:'linear-gradient(140deg,#8C9A5B,#55633A)',em:'🦊'},{from:51,soon:true,name:L('Viatges pel món'),bg:'linear-gradient(140deg,#C27C5B,#7E4A34)',em:'🗺️'}];
+  {from:41,soon:true,theme:'animals',name:L('Animals'),bg:'linear-gradient(140deg,#8C9A5B,#55633A)',em:'🦊'},{from:51,soon:true,theme:'viatges',name:L('Viatges pel món'),bg:'linear-gradient(140deg,#C27C5B,#7E4A34)',em:'🗺️'}];
+const lum = h => { const v=parseInt(h.slice(1),16); return .299*(v>>16)+.587*(v>>8&255)+.114*(v&255); };
+function grpBg(theme){ const P=gamePal({theme}), d=P.slice(1).reduce((a,b)=>lum(b)<lum(a)?b:a);
+  return `background-color:${d};background-image:linear-gradient(90deg,${d} 0%,${d}E6 45%,${d}55 100%),${rajolaURL('grp'+theme,P)};background-size:auto,78px 78px`; }
 const levelPairs = n => Math.min(30, 24+Math.round((n-1)*6/39)); // nivell 1: 24 parelles … nivell 40: 30
 const groupOf = n => GROUPS[Math.floor((n-1)/10)];
 function startLevel(n){ const gr=groupOf(n); if(!gr||gr.soon) return; if(n>S.unlocked){ toast(L('Completa el nivell {0} per desbloquejar-lo',n-1)); return; }
@@ -883,12 +1003,12 @@ function vNivells(){
       return `<button class="lvl ${done?'done':''} ${cur?'cur':''} ${lock?'lock':''}" onclick="startLevel(${n})" aria-label="${L('Nivell {0}',n)}${lock?L(', bloquejat'):''}">
         ${lock?`<span class="lk">${ICON.lock}</span>`:`<span class="num">${n}</span>`}<small>${done?L('✓ Fet'):cur?L('Juga'):L('{0} parelles',levelPairs(n))}</small></button>`; }).join('');
     return `<div class="screen"><button class="back" onclick="S.lvGroup=null;render()">‹ ${L('Nivells')}</button>
-      <div class="grphead" style="background:${t.bg}"><div class="mini">${stackTiles(t.show,38,48,[[0,14,-10],[20,6,0],[40,14,10]])}</div>
+      <div class="grphead" style="${grpBg(gr.theme)}"><div class="mini">${stackTiles(t.show,38,48,[[0,14,-10],[20,6,0],[40,14,10]])}</div>
         <small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><h2>${t.name}</h2><div class="bar light"><span style="width:${Math.max(0,Math.min(10,S.unlocked-gr.from))*10}%"></span></div></div>
       <div class="lvgrid">${cells}</div><p class="fine">${L('Cada nivell té més parelles que l’anterior. Completa’ls en ordre per avançar.')}</p></div>${tabsBar()}`; }
   const cards=GROUPS.map((gr,i)=>{ const t=gr.soon?null:THEMES[gr.theme]; const open=!gr.soon&&S.unlocked>=gr.from; const doneN=Math.max(0,Math.min(10,S.unlocked-gr.from));
-    if(gr.soon) return `<div class="grp soon" style="background:${gr.bg}"><div class="gtxt"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${gr.name}</b><span class="pill soonp">${L('Pròximament')}</span></div><div class="gem">${gr.em}</div></div>`;
-    return `<button class="grp ${open?'':'locked'}" style="background:${t.bg}" onclick="${open?`S.lvGroup=${i};render()`:`toast('${L('Completa el nivell {0} per desbloquejar-los',gr.from-1)}')`}">
+    if(gr.soon) return `<div class="grp soon" style="${grpBg(gr.theme)}"><div class="gtxt"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${gr.name}</b><span class="pill soonp">${L('Pròximament')}</span></div><div class="gem">${gr.em}</div></div>`;
+    return `<button class="grp ${open?'':'locked'}" style="${grpBg(gr.theme)}" onclick="${open?`S.lvGroup=${i};render()`:`toast('${L('Completa el nivell {0} per desbloquejar-los',gr.from-1)}')`}">
       <div class="gtxt"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${t.name}</b>
       ${open?`<div class="bar light"><span style="width:${doneN*10}%"></span></div><span class="gsub">${L('{0}/10 completats',doneN)}</span>`:`<span class="gsub">${ICON.lock} ${L('Bloquejat')}</span>`}</div>
       <div class="mini">${stackTiles(t.show,34,45,[[0,14,-10],[18,6,0],[36,14,10]])}</div></button>`; }).join('');
@@ -927,7 +1047,7 @@ function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgr
   <div class="card"><div class="row"><div><b>Melodia Plus</b><p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Intents il·limitats, arxiu de taulers i frases, i lligues.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div></div>
   <div class="card"><div class="row"><div><b>🎁 ${L('Regala Melodia')}</b><p class="muted" style="font-size:15px">${L('Un any de Plus per a qui tu vulguis. Li arriba ja activat, sense haver de pagar res.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='gift';renderSheet()">${L('Regalar')}</button></div></div>
   <h2>${L('Ajustos')}</h2>
-  <b>${L('Colors')}</b><div class="palsw">${[['cap',L('Capvespre'),'linear-gradient(135deg,#FFE3D3,#E4E9F8 60%,#2B3870)'],['lla',L('Llacuna'),'linear-gradient(135deg,#E8F7F4,#BFE2E6 60%,#1C6E7A)'],['nit',L('Nit serena'),'linear-gradient(135deg,#3A4A8C,#161A35 70%,#F2B84B)']].map(([k,l,g])=>`<button class="${S.set.pal===k?'on':''}" onclick="S.set.pal='${k}';render()"><i style="background:${g}"></i>${l}</button>`).join('')}</div>
+  <b>${L('Colors')}</b><div class="palsw">${[['cap',L('Terracota')],['lla',L('Mar')],['nit',L('Nit d’estiu')]].map(([k,l])=>`<button class="${S.set.pal===k?'on':''}" onclick="S.set.pal='${k}';render()"><i style="background-image:${rajolaURL('mostra'+k,RPAL[k])};background-size:34px 34px"></i>${l}</button>`).join('')}</div>
   <b>${L('Mida de les fitxes')}</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
   ${sw('hc',L('Alt contrast'),L('Fitxes bloquejades amb trama'))}${sw('dark',L('Mode nit'),'')}${sw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}
   ${sw('sound',L('So i melodia'),'')}${sw('vib',L('Vibració'),'')}${sw('left',L('Mode esquerrà'),L('Pausa i reserva canvien de costat'))}
@@ -963,7 +1083,7 @@ function vSheet(){ const g=S.game;
     <button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`); }
   if(S.sheet==='album') return sheetWrap(`<h2 style="margin-top:0">${L('El teu refranyer')}</h2>
     <p class="muted">${L('{0} refranys resolts de {1}. Cada frase que resols queda guardada aquí amb el seu significat.',S.found,PHRASES.length)}</p>
-    <ul class="album">${PHRASES.map((p,i)=>S.solvedIdx.has(i)?`<li><q>${esc(p)}</q><p class="mn">${esc(MEANINGS[i]||'')}</p></li>`:`<li><span class="blank">${esc(p.split(' ').map(w=>'·'.repeat([...w].filter(isLetter).length)).join('  '))}</span><p class="mn">${L('Encara per descobrir')}</p></li>`).join('')}</ul>
+    <ul class="album">${PHRASES.map((p,i)=>S.solvedIdx.has(i)?`<li><img class="rthumb" src="${rajolaData('frase'+i)}" alt=""><div><q>${esc(p)}</q><p class="mn">${esc(MEANINGS[i]||'')}</p></div></li>`:`<li><img class="rthumb off" src="${rajolaData('frase'+i)}" alt=""><div><span class="blank">${esc(p.split(' ').map(w=>'·'.repeat([...w].filter(isLetter).length)).join('  '))}</span><p class="mn">${L('Encara per descobrir')}</p></div></li>`).join('')}</ul>
     <div class="stack"><button class="btn primary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`);
   if(S.sheet==='pause') return sheetWrap(`<h2 style="margin-top:0">${L('En pausa')}</h2><div class="stack">
     <button class="btn primary" onclick="resume()">${L('Continuar')}</button>
@@ -1004,27 +1124,26 @@ function vSheet(){ const g=S.game;
       <p class="fine">${L('No cal escriure accents, apòstrofs ni comes.')}</p>`); }
   if(S.sheet==='win'){ const tot=total(); const pos=g.mode==='daily'?Math.max(1,Math.round(tot/22)):null;
     if(g.mode==='daily') S.dailyDone={time:tot,pos};
-    const med = pos&&pos<=10 ? medal('#E3AE3B','#1F6F5C','★') : medal('#1F6F5C','#E3AE3B','♪');
     const parts=[L('{0} de joc',fmt(elapsed()))]; if(g.attempts) parts.push(L('+ {0} min (intents)',g.attempts*2)); if(g.penalty) parts.push(L('+ {0} s (errors)',g.penalty)); if(g.hintPen) parts.push(L('+ {0} s (pistes)',g.hintPen)); if(g.bonus) parts.push(L('− {0} s (frase)',g.bonus));
     const rp = g.mode==='repte'&&S.challenge ? Math.floor(tot)-S.challenge.t : null;
     const next = g.mode==='repte' ? `<button class="btn primary" onclick="challenge()">${L('Retornar el repte')}</button>`
       : g.mode==='daily' ? `<button class="btn primary" onclick="S.sheet=null;go('class')">${L('Veure classificació')}</button>`
       : (groupOf(g.level+1)&&!groupOf(g.level+1).soon ? `<button class="btn primary" onclick="startLevel(${g.level+1})">${L('Nivell {0}',g.level+1)}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>` : `<button class="btn primary" onclick="S.sheet=null;go('nivells')">${L('Tornar als nivells')}</button>`);
-    return sheetWrap(`<div style="text-align:center"><div class="medalbig">${med}</div><h2 style="margin:6px 0 0">${rp===null?(g.solved?L('Frase resolta!'):L('Tauler resolt')):rp<0?L('Has guanyat el repte!'):rp===0?L('Empat exacte!'):L('Gairebé!')}</h2>
-      <div class="bigtime" id="countup" data-to="${tot}">0:00</div>
-      <p class="muted" style="margin:0">${parts.join(' ')}</p>
+    return sheetWrap(`<div style="text-align:center"><h2 style="margin:0 0 10px">${rp===null?(g.solved?L('Frase resolta!'):L('Tauler resolt')):rp<0?L('Has guanyat el repte!'):rp===0?L('Empat exacte!'):L('Gairebé!')}</h2>
+      <div class="postalwrap" style="background-image:${rajolaURL(g.seedStr,gamePal(g))}"><img id="postalImg" class="postal" alt="${L('La teva postal del dia, amb el refrany i el temps')}"></div>
+      <button class="btn gold sendbtn" onclick="sendPostal()">${ICON.send} ${L('Enviar la postal')}</button>
+      <p class="muted" style="margin:10px 0 0;font-size:15px">${parts.join(' ')}</p>
       ${rp!==null?`<div class="vs"><div class="${rp<=0?'win':''}"><small>${L('Tu')}</small><b>${fmt(tot)}</b></div><div class="${rp>0?'win':''}"><small>${L('Qui t’ha reptat')}</small><b>${fmt(S.challenge.t)}</b></div></div>
         <p style="font-weight:700;margin:4px 0">${rp<0?L('Per {0}. Ara li toca a l’altra persona.',fmt(-rp)):rp===0?L('Ni un segon de diferència.'):L('T’ha guanyat per {0}. Torna-li el repte!',fmt(rp))}</p>`:''}
       ${pos?`<p style="margin:8px 0 0"><span class="pill">${L('Posició {0} a la teva comarca',pos)}</span></p>`:''}
       ${g.newUnlock&&g.level%10===0?`<p style="margin:8px 0 0"><span class="pill">${L('Desbloquejats els nivells {0}–{1}!',g.level+1,g.level+10)}</span></p>`:''}</div>
-      <div class="meaning" style="margin-top:14px"><q class="ph">${esc(g.phrase)}</q>${meaningOf(g.phrase)?`<span class="mn">${esc(meaningOf(g.phrase))}</span>`:''}
-        ${g.solved&&g.newPhrase?`<span class="new">${L('Nou al teu refranyer · {0} de {1}',S.found,PHRASES.length)}</span>`:''}</div>
+      ${meaningOf(g.phrase)||g.newPhrase?`<div class="meaning" style="margin-top:12px">${meaningOf(g.phrase)?`<b>${L('Què vol dir')}</b><span class="mn">${esc(meaningOf(g.phrase))}</span>`:''}
+        ${g.solved&&g.newPhrase?`<span class="new">${L('Nou al teu refranyer · {0} de {1}',S.found,PHRASES.length)}</span>`:''}</div>`:''}
       <div class="songq" id="songq">${songCard()}</div>
       <div class="stack">${next}
-      ${g.mode!=='repte'?`<button class="btn gold" onclick="challenge()">${L('Compartir i reptar')}</button>`:''}
       <button class="btn secondary" onclick="S.sheet=null;go('avui')">${L('Tornar a l’inici')}</button></div>`); }
   return ''; }
-function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; if(S.tab==='joc'&&S.game&&$('#solveBtn')) updateHUD(); if(S.sheet&&S.sheet!=='solve'){ const f=$('#sheet .sheet button'); if(f) f.focus({preventScroll:true}); } const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
+function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; if(S.sheet==='win'){ S.postalBlob=null; drawPostal(); } if(S.tab==='joc'&&S.game&&$('#solveBtn')) updateHUD(); if(S.sheet&&S.sheet!=='solve'){ const f=$('#sheet .sheet button'); if(f) f.focus({preventScroll:true}); } const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
   const cu=$('#countup'); if(cu){ const to=+cu.dataset.to, t0=performance.now(), d=reduced?1:1200;
     const tick=now=>{ const k=Math.min(1,(now-t0)/d), e=1-Math.pow(1-k,3); cu.textContent=fmt(to*e); if(k<1) requestAnimationFrame(tick); else { bell(14,0,.15,1.6); bell(21,.1,.12,1.6); bell(26,.2,.12,2.2);} };
     requestAnimationFrame(tick); } }
@@ -1055,6 +1174,54 @@ function readChallenge(){ const q=new URLSearchParams(location.search), seed=q.g
   try{ ['repte','tema','p','t'].forEach(k=>q.delete(k)); history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')); }catch(e){}
   return {seed, theme:th, p:Math.round(p), t:Math.round(t)}; }
 function acceptChallenge(){ const c=S.challenge; startGame('repte',c.theme,c.seed,L('Repte'),'',c.p); }
+
+// ================= postal del dia =================
+const loadImg = src => new Promise((ok,ko)=>{ const im=new Image(); im.onload=()=>ok(im); im.onerror=ko; im.src=src; });
+function rr(x,X,Y,w,h,r){ x.beginPath(); x.moveTo(X+r,Y); x.arcTo(X+w,Y,X+w,Y+h,r); x.arcTo(X+w,Y+h,X,Y+h,r); x.arcTo(X,Y+h,X,Y,r); x.arcTo(X,Y,X+w,Y,r); x.closePath(); }
+function wrapText(x,t,maxW){ const words=t.split(' '), out=[]; let cur=''; for(const w of words){ const tr=cur?cur+' '+w:w; if(x.measureText(tr).width>maxW&&cur){ out.push(cur); cur=w; } else cur=tr; } if(cur) out.push(cur); return out; }
+async function postalCanvas(){ const g=S.game, W=1080, H=1350, P=gamePal(g), [G,c1,c2,c3,c4]=P, ink='#2A2522', paper='#FBF6EC';
+  const cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
+  try{ await Promise.all([document.fonts.load('700 80px Fraunces'), document.fonts.load('700 28px "Atkinson Hyperlegible"'), document.fonts.load('400 28px "Atkinson Hyperlegible"')]); }catch(e){}
+  const tile=await loadImg(rajolaData(g.seedStr,P)), T=180;
+  for(let yy=0;yy<H;yy+=T) for(let xx=0;xx<W;xx+=T) x.drawImage(tile,xx,yy,T,T);
+  x.fillStyle='rgba(0,0,0,.10)'; x.fillRect(0,0,W,H);
+  // targeta de paper amb doble filet, com una etiqueta antiga
+  x.save(); x.shadowColor='rgba(0,0,0,.38)'; x.shadowBlur=50; x.shadowOffsetY=18; rr(x,88,200,904,1000,40); x.fillStyle=paper; x.fill(); x.restore();
+  x.strokeStyle=c1; x.lineWidth=4; rr(x,114,226,852,948,26); x.stroke(); x.lineWidth=1.5; rr(x,128,240,824,920,18); x.stroke();
+  // medalló amb la rajola del dia
+  x.beginPath(); x.arc(540,200,92,0,7); x.fillStyle=paper; x.fill();
+  x.save(); x.beginPath(); x.arc(540,200,76,0,7); x.clip(); x.drawImage(tile,464,124,152,152); x.restore();
+  x.beginPath(); x.arc(540,200,76,0,7); x.strokeStyle=c1; x.lineWidth=5; x.stroke();
+  x.textAlign='center'; x.textBaseline='alphabetic'; x.fillStyle=c1;
+  try{ x.letterSpacing='5px'; }catch(e){}
+  x.font='700 27px "Atkinson Hyperlegible", sans-serif'; x.fillText(('Melodia · '+(g.mode==='daily'?todayLabel:g.title)).toUpperCase(),540,350);
+  try{ x.letterSpacing='0px'; }catch(e){}
+  // el refrany, tan gran com càpiga
+  const txt='«'+g.phrase+'»'; let fs=92, lines; do{ x.font=`700 ${fs}px Fraunces, Georgia, serif`; lines=wrapText(x,txt,720); fs-=4; }while(lines.length*fs*1.16>430&&fs>44);
+  fs+=4; const lh=fs*1.16, top=640-lines.length*lh/2+fs*.8; x.fillStyle=ink; lines.forEach((l,i)=>x.fillText(l,540,top+i*lh));
+  // ornament
+  x.fillStyle=c3; [-1,0,1].forEach(k=>{ x.save(); x.translate(540+k*30,top+lines.length*lh+6); x.rotate(Math.PI/4); x.fillRect(-6,-6,12,12); x.restore(); });
+  // la melodia de la partida: una barra per parella, alçada segons la nota
+  const ns=(g.notes&&g.notes.length?g.notes:g.song.n.map(n=>({note:n}))).slice(0,40), lo=Math.min(...ns.map(n=>n.note)), hi=Math.max(...ns.map(n=>n.note));
+  const bw=Math.min(18,(720-(ns.length-1)*6)/ns.length), tot=ns.length*bw+(ns.length-1)*6; let bx=540-tot/2;
+  ns.forEach((n,i)=>{ const h=22+(n.note-lo)/Math.max(1,hi-lo)*78; x.fillStyle=[c1,c2,c3,c4][i%4]; rr(x,bx,1000-h,bw,h,bw/2); x.fill(); bx+=bw+6; });
+  // temps i resultat
+  x.fillStyle=c1; x.font='700 66px Fraunces, Georgia, serif'; x.fillText(fmt(total()),540,1098);
+  x.fillStyle='#6B6158'; x.font='400 27px "Atkinson Hyperlegible", sans-serif';
+  const songOk=g.songAns&&g.songAns===g.song; x.fillText((g.solved?L('Tauler i frase resolts'):L('Tauler resolt'))+(songOk?' · ♪ '+L(g.song.k):''),540,1140);
+  // peu sobre el mosaic
+  x.font='700 26px "Atkinson Hyperlegible", sans-serif'; const foot=L('Fitxes, refranys i cançons · sense anuncis'); const fw=x.measureText(foot).width+60;
+  rr(x,540-fw/2,1252,fw,56,28); x.fillStyle=paper; x.fill(); x.fillStyle=ink; x.fillText(foot,540,1290);
+  return cv; }
+let postalJob=0;
+async function drawPostal(){ const g=S.game, job=++postalJob, img=$('#postalImg'); if(!img) return;
+  try{ const cv=await postalCanvas(); if(job!==postalJob||S.game!==g) return; img.src=cv.toDataURL('image/jpeg',.88); img.classList.add('in');
+    cv.toBlob(b=>{ if(job===postalJob) S.postalBlob=b; },'image/jpeg',.9); }catch(e){ console.warn(e); } }
+function sendPostal(){ const b=S.postalBlob, url=challengeURL(), txt=L('La meva postal d’avui a Melodia. Em guanyes?');
+  const file = b && new File([b],'melodia-postal.jpg',{type:'image/jpeg'});
+  if(file && navigator.canShare && navigator.canShare({files:[file]})){ navigator.share({files:[file], text:txt+'\n'+url}).catch(()=>{}); return; }
+  if(b){ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='melodia-postal.jpg'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),5000); }
+  try{ navigator.clipboard.writeText(txt+'\n'+url).then(()=>toast(L('Postal desada i enllaç copiat')),()=>toast(L('Postal desada'))); }catch(e){ toast(L('Postal desada')); } }
 // ================= accions =================
 function go(t){ if(S.tab==='joc'&&S.game&&!S.game.over&&!S.game.pauseAt) S.game.pauseAt=Date.now(); S.tab=t; S.sheet=null; render(); }
 function playDaily(){ const g=S.game;
@@ -1062,7 +1229,7 @@ function playDaily(){ const g=S.game;
   if(g&&g.mode==='daily'&&g.over&&present().length>0){ S.tab='joc'; render(); S.sheet='blocked'; renderSheet(); return; }
   startGame('daily','trad',todaySeed,L('Partida diària'),todayLabel,28); S.game.attempts=S.dailyAtt||0;
   if(S.dailyFailed){ const n=S.game; n.over=true; n.pauseAt=Date.now(); n.failReason=S.dailyFailed; updateHUD(); S.sheet='blocked'; renderSheet(); } }
-const PALS=[['cap',L('Capvespre')],['lla',L('Llacuna')],['nit',L('Nit serena')]];
+const PALS=[['cap',L('Terracota')],['lla',L('Mar')],['nit',L('Nit d’estiu')]];
 function cyclePal(){ const i=PALS.findIndex(p=>p[0]===S.set.pal); const n=PALS[(i+1)%PALS.length]; S.set.pal=n[0]; $('#phone').className=$('#phone').className.replace(/pal-\w+/,'pal-'+n[0]); toast(L('Colors')+': '+n[1]); }
 function pause(){ const g=S.game; if(g.over){ if(!g.won){ S.sheet='blocked'; renderSheet(); } return; } if(!g.pauseAt) g.pauseAt=Date.now(); S.sheet='pause'; renderSheet(); }
 // 11. Si l'app passa a segon pla (trucada, enquesta…), es posa en pausa
@@ -1076,6 +1243,8 @@ function playYesterday(el){ el.parentElement.querySelector('.ans').innerHTML='<b
 let toastT; function toast(m){ clearTimeout(toastT); document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.setAttribute('aria-live','polite'); d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),2000); }
 
 function render(){ const ph=$('#phone');
+  ph.style.setProperty('--mosaic-hero', rajolaURL(todaySeed));
+  if(S.game) ph.style.setProperty('--mosaic', rajolaURL(S.game.seedStr, gamePal(S.game)));
   ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'');
   if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); }
   else { const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); }
@@ -1083,11 +1252,14 @@ function render(){ const ph=$('#phone');
 setInterval(()=>{ if(S.tab==='joc'&&S.game&&!S.game.pauseAt) updateHUD(); },500);
 
 // splash
-function splash(){ const d=document.createElement('div'); d.className='splash herobg';
-  d.innerHTML=`<div class="tiles3">${stackTiles(['b1','r1','d1'],50,66,[[8,12,-14],[55,0,0],[102,12,14]])}</div><div class="word">Melodia</div><div class="tag">${L('Fusiona fitxes · destapa la frase')}</div>`;
+function splash(){ const d=document.createElement('div'); d.className='splash'; const cols=5, rows=9, P=uiPal();
+  const seeds=[todaySeed,'a','b','c'].map(x=>rajolaData('splash'+x,P));
+  let cells=''; for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){ const dist=Math.hypot(x-(cols-1)/2,(y-(rows-1)/2)*.8); const k=(x+y)%2?((x*7+y*3)%4):0;
+    cells+=`<i style="background-image:url('${seeds[k]}');animation-delay:${reduced?0:Math.round(dist*85)}ms"></i>`; }
+  d.innerHTML=`<div class="smosaic" style="grid-template-columns:repeat(${cols},1fr)">${cells}</div>
+    <div class="smedal"><span class="sring" style="background-image:url('${seeds[0]}')"></span><div class="word">Melodia</div><div class="tag">${L('Fitxes, refranys i cançons')}</div></div>`;
   $('#phone').appendChild(d);
-  if(!reduced) d.querySelectorAll('.tile').forEach((t,i)=>t.animate([{transform:t.style.transform+' translateY(-80px)',opacity:0},{transform:t.style.transform,opacity:1}],{duration:600,delay:i*140,easing:'cubic-bezier(.34,1.5,.64,1)',fill:'backwards'}));
-  const close=()=>{ d.style.opacity='0'; setTimeout(()=>d.remove(),500); }; d.onclick=close; setTimeout(close, reduced?300:2200); }
+  const close=()=>{ d.classList.add('out'); setTimeout(()=>d.remove(),600); }; d.onclick=close; setTimeout(close, reduced?400:2900); }
 S.links=readLinks(); S.challenge=readChallenge(); render(); splash();
 { const first = S.links.gift?'regal' : S.links.family?'famjoin' : S.challenge?'repte' : null;
   if(first) setTimeout(()=>{ if(S.tab!=='joc'&&!S.sheet){ S.sheet=first; renderSheet(); } }, reduced?350:2300); }
