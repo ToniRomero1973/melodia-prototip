@@ -528,6 +528,17 @@ body.prova .phone{height:calc(100% - 48px)}
 .instr ol{margin:0 0 8px;padding-left:22px} .instr li{margin:0 0 6px}
 .inote{background:var(--jade-soft);border-radius:14px;padding:10px 12px;font-size:15px}
 .provacard .btn{margin:0}
+
+/* entrada: es queda quieta amb dos botons */
+.sbtns{position:absolute;left:24px;right:24px;bottom:max(28px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;z-index:3;animation:sbin .6s 1s both cubic-bezier(.2,.9,.3,1.1)}
+.sbtns button{font:inherit;font-size:19px;font-weight:700;min-height:58px;border-radius:999px;border:0;cursor:pointer}
+.sb-play{background:#C0563A;color:#fff;box-shadow:0 5px 0 #8E3A24,0 10px 24px rgba(0,0,0,.25)}
+.sb-play:active{transform:translateY(3px);box-shadow:0 2px 0 #8E3A24}
+.sb-instr{background:#FBF6EC;color:#2A2522;box-shadow:0 4px 0 rgba(0,0,0,.18),0 10px 24px rgba(0,0,0,.2)}
+.sb-instr:active{transform:translateY(2px)}
+.sbtns button:focus-visible{outline:3px solid #E9B949;outline-offset:3px}
+@keyframes sbin{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sbtns{animation:none}}
 </style>
 </head>
 <body>
@@ -1398,9 +1409,14 @@ function splash(){ const d=document.createElement('div'); d.className='splash'; 
   let cells=''; for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){ const dist=Math.hypot(x-(cols-1)/2,(y-(rows-1)/2)*.8); const k=(x+y)%2?((x*7+y*3)%4):0;
     cells+=`<i style="background-image:url('${seeds[k]}');animation-delay:${reduced?0:Math.round(dist*85)}ms"></i>`; }
   d.innerHTML=`<div class="smosaic" style="grid-template-columns:repeat(${cols},1fr)">${cells}</div>
-    <div class="smedal"><span class="sring" style="background-image:url('${seeds[0]}')"></span><div class="word">Melodia</div><div class="tag">${L('Fitxes, refranys i cançons')}</div></div>`;
+    <div class="smedal"><span class="sring" style="background-image:url('${seeds[0]}')"></span><div class="word">Melodia</div><div class="tag">${L('Fitxes, refranys i cançons')}</div></div>
+    <div class="sbtns"><button class="sb-play" type="button">${L('Jugar')}</button><button class="sb-instr" type="button">📋 ${L('Instruccions')}</button></div>`;
   $('#phone').appendChild(d);
-  const close=()=>{ d.classList.add('out'); setTimeout(()=>d.remove(),600); }; d.onclick=close; setTimeout(close, reduced?400:2900); }
+  const close=then=>{ d.classList.add('out'); setTimeout(()=>d.remove(),600);
+    if(then){ then(); return; } if(S.firstSheet&&!S.sheet){ S.sheet=S.firstSheet; renderSheet(); } S.firstSheet=null; };
+  d.querySelector('.sb-play').onclick=()=>close();
+  d.querySelector('.sb-instr').onclick=()=>close(()=>{ S.firstSheet=null; S.sheet='instr'; renderSheet(); });
+  setTimeout(()=>{ const b=d.querySelector('.sb-play'); if(b&&document.activeElement===document.body) b.focus({preventScroll:true}); }, reduced?0:1400); }
 
 // ================= mode prova amb usuaris =================
 const PROVA_TASKS=["Mira la pantalla d'inici: de què creus que va el joc?", "Juga la partida del dia. Si no saps com, busca «Com es juga».", "Fes servir el faristol (la safata on pots apartar fitxes).", "Intenta endevinar la frase amagada.", "Quan acabis la partida, mira la postal del dia i prova d'enviar-la.", "Busca la classificació.", "A Perfil, Ajustos: fes les fitxes més grans i canvia els colors.", "Juga un nivell que no sigui el del dia.", "Fes 3 errors expressament (arrossega fitxes damunt d'altres que no són la seva parella) i mira què passa.", "Quan acabis una partida, intenta endevinar quina cançó sonava.", "A Classificació, crea una lliga per a la teva gent (família, amics, escola…) i posa-la la primera.", "Busca com regalaries el joc a un familiar (no es cobra res)."];
@@ -1413,11 +1429,11 @@ function markPlayed(){ if(PV.played) return; PV.played=true; try{ localStorage.s
 function openSurvey(){ const u=surveyURL(); if(!u){ toast(L('L’enquesta encara no està a punt')); return; } window.open(u,'_blank','noopener'); }
 function provaHome(){ if(PV.read) return '';
   return `<button class="instrcard" onclick="S.sheet='instr';renderSheet()"><span class="ic" aria-hidden="true">📋</span><span><b>${L('Fas la prova del joc?')}</b><br><span>${L('Llegeix les instruccions abans de començar (1 minut)')}</span></span><span class="go" aria-hidden="true">›</span></button>`; }
-function provaCard(){ if(!PV.read) return '';
+function provaCard(){
   return `<div class="card provacard"><b>📋 ${L('La prova')}</b>
     <p class="muted" style="font-size:15px;margin:4px 0 10px">${PV.played?L('Gràcies per jugar! Pots respondre l’enquesta quan vulguis.'):L('Juga una partida i podràs respondre l’enquesta.')}</p>
     <div class="stack">${PV.played?`<button class="btn gold" onclick="openSurvey()">${L('Respondre l’enquesta')} ↗</button>`:''}<button class="btn secondary" onclick="S.sheet='instr';renderSheet()">${L('Veure les instruccions')}</button></div></div>`; }
-function provaBar(){ document.querySelectorAll('.provabar').forEach(e=>e.remove()); document.body.classList.toggle('prova',PV.read); if(!PV.read) return;
+function provaBar(){ document.querySelectorAll('.provabar').forEach(e=>e.remove()); document.body.classList.add('prova');
   const bar=document.createElement('div'); bar.className='provabar';
   const lbl=document.createElement('span'); lbl.textContent=L('Prova de Melodia'); bar.appendChild(lbl);
   const b=document.createElement('button');
@@ -1427,7 +1443,7 @@ function provaBar(){ document.querySelectorAll('.provabar').forEach(e=>e.remove(
 try{ const t=sessionStorage.getItem('melodia-tab'); if(t){ sessionStorage.removeItem('melodia-tab'); if(['avui','nivells','class','perfil'].includes(t)){ S.tab=t; S.skipSplash=true; } } }catch(e){}
 S.links=readLinks(); S.challenge=readChallenge(); render(); provaBar(); if(!S.skipSplash) splash();
 { const first = S.links.gift?'regal' : S.links.league?'lgjoin' : S.challenge?'repte' : null;
-  if(first) setTimeout(()=>{ if(S.tab!=='joc'&&!S.sheet){ S.sheet=first; renderSheet(); } }, reduced?350:2300); }
+  if(first){ if(S.skipSplash) setTimeout(()=>{ if(S.tab!=='joc'&&!S.sheet){ S.sheet=first; renderSheet(); } }, 350); else S.firstSheet=first; } }
 </script>
 <!-- Mode prova amb usuaris: index.html?prova=1&lang=ca|es mostra una barra amb l'enllaç a l'enquesta -->
 <script src="prova-config.js"></script>
