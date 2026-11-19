@@ -469,6 +469,50 @@ h1{font-size:32px;letter-spacing:-.6px}
 .splash .tag{color:#6B6158;font-size:15px;animation:none;text-align:center;max-width:200px}
 @keyframes medin{0%{opacity:0;transform:scale(.4)}100%{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){ .smosaic i,.smedal,.postal.in,.board.won,.board.won::after{animation:none!important} .smedal{opacity:1} }
+
+/* ===== lligues personalitzables ===== */
+.lgchips{scrollbar-width:none;margin:0 -16px;padding:4px 16px 10px}
+.lgchips::-webkit-scrollbar{display:none}
+.lgchips button{display:inline-flex;align-items:center;gap:6px;min-height:44px}
+.lgchips button.add{border-style:dashed;color:var(--accent,var(--jade));font-weight:700}
+.lgcard,.duel{padding:16px}
+.lghead{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.lghead>div{display:flex;flex-direction:column;line-height:1.25}
+.lghead b{font-size:19px;font-family:var(--serif)} .lghead .muted{font-size:14px}
+.lgem{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:26px;background-image:var(--mosaic-hero);background-size:48px 48px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.75),0 2px 6px rgba(0,0,0,.12)}
+.lgtypes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0 16px}
+.lgtypes button{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 12px;border-radius:16px;border:2px solid var(--line);background:var(--surface);font-size:16px;font-weight:600;cursor:pointer;text-align:left;color:inherit}
+.lgtypes button span{font-size:24px}
+.lgtypes button:active{transform:scale(.97)}
+.lgtypes.mini{margin:10px 0 0}
+.lgpub{display:flex;flex-direction:column;gap:6px;margin:8px 0 16px}
+.lgpub button{display:flex;align-items:center;gap:10px;min-height:52px;padding:0 14px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-size:16px;cursor:pointer;color:inherit}
+.lgpub button span{font-size:22px} .lgpub button i{margin-left:auto;font-style:normal;font-weight:700;color:var(--jade)}
+.lgpub button:disabled{opacity:.6;cursor:default} .lgpub button:disabled i{color:var(--quiet)}
+.lgsort{list-style:none;margin:8px 0 14px;padding:0;display:flex;flex-direction:column;gap:8px}
+.lgsort li{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;display:flex;align-items:center;gap:8px;min-height:60px;padding:0 6px 0 4px;border-radius:16px;background:var(--surface);border:2px solid var(--line);transition:box-shadow .15s}
+.lgsort li.drag{position:relative;z-index:2;box-shadow:0 10px 24px rgba(0,0,0,.22);transition:none;border-color:var(--jade)}
+.lgsort li.moved{animation:lgmoved .5s ease}
+@keyframes lgmoved{from{background:var(--jade-soft)}to{background:var(--surface)}}
+.lgsort .hdl{width:30px;min-height:56px;display:grid;place-items:center;color:var(--quiet);font-size:20px;font-weight:700;letter-spacing:-4px}
+.lgsort .em{font-size:22px} .lgsort .nm{flex:1;font-weight:600;display:flex;flex-direction:column;line-height:1.2}
+.lgsort .nm small{font-weight:700;font-size:12px;color:var(--jade);text-transform:uppercase;letter-spacing:.04em}
+.lgsort button{width:44px;height:44px;border-radius:12px;border:0;background:var(--line);font-size:15px;cursor:pointer;color:inherit}
+.lgsort button:disabled{opacity:.3;cursor:default} .lgsort button.del{background:transparent;color:var(--quiet);font-size:18px}
+.lgsuggest{margin-top:16px}
+.duelrow{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 6px}
+.duelrow .side{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.duelrow .av{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:24px;color:#fff;background:#C0563A;box-shadow:0 0 0 4px var(--surface),0 0 0 6px #C0563A}
+.duelrow .me .av{background:var(--jade);box-shadow:0 0 0 4px var(--surface),0 0 0 6px var(--jade)}
+.duelrow .side span{font-size:15px;color:var(--quiet)}
+.duelrow .side b{font-family:var(--serif);font-size:34px;font-variant-numeric:tabular-nums;line-height:1}
+.duelrow .vsx{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--quiet)}
+.duelline{text-align:center;font-weight:700;font-size:17px;margin:12px 0}
+.wk{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.wk span{width:38px;height:50px;border-radius:12px;background:var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--quiet)}
+.wk span i{font-style:normal;font-size:11px;font-weight:600;opacity:.8}
+.wk span.me{background:var(--jade);color:#fff} .wk span.ell{background:#C0563A;color:#fff}
+.wk span.avui{background:transparent;border:2px dashed var(--jade);color:var(--jade)}
 </style>
 </head>
 <body>
@@ -504,6 +548,8 @@ Object.assign(TR.es,{"Himne de l’alegria": "Himno de la alegría", "Jingle Bel
 Object.assign(TR.en,{"Himne de l’alegria": "Ode to Joy", "Jingle Bells": "Jingle Bells", "Frère Jacques": "Frère Jacques", "Cançó de bressol de Brahms": "Brahms's Lullaby", "Per a Elisa": "Für Elise", "El Danubi blau": "The Blue Danube", "La cucaracha": "La Cucaracha", "Quina cançó amagava el tauler?": "Which song was hiding in the board?", "Encertada!": "You got it!", "Gairebé…": "Not quite…", "Escoltar la cançó": "Listen to the song", "Era «{0}»": "It was “{0}”", "Cançó amagada:": "Hidden song:", "cada parella toca una nota d’una cançó coneguda. Al final, endevina quina era.": "each pair plays a note of a well-known song. At the end, guess which one it was.", "Regalar Plus a algú": "Give Plus to someone", "Un any sencer per a un familiar": "A whole year for a family member", "Regala Melodia": "Give Melodia", "Un any de Plus per a qui tu vulguis. Li arriba ja activat, sense haver de pagar res.": "A year of Plus for anyone you like. It arrives already active, with nothing for them to pay.", "Regalar": "Give", "Regala Melodia Plus": "Give Melodia Plus", "Un any sense límits i amb tots els nivells. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.": "A year with no limits and every level. You'll send them a link and the gift will be active on their phone.", "De part de": "From", "El teu nom": "Your name", "Missatge": "Message", "Perquè juguis cada dia una estona. Una abraçada!": "So you can play a little every day. Big hug!", "Pagar 29,99 € i enviar": "Pay €29.99 and send", "{0} t’ha fet un regal": "{0} sent you a gift", "T’han fet un regal": "You've got a gift", "Un any de Melodia Plus: sense límits i amb tots els nivells.": "A year of Melodia Plus: no limits and every level.", "Obrir el regal": "Open the gift", "Crear la lliga familiar": "Create a family league", "Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup de la família.": "Every day, the same board for everyone. No accounts or passwords: just one link for the family group chat.", "Nom de la lliga": "League name", "Família Puig": "The Smiths", "Crear i convidar": "Create and invite", "T’han convidat a «{0}»": "You're invited to “{0}”", "Cada dia jugareu el mateix tauler i veureu qui l’ha fet més ràpid.": "Every day you'll all play the same board and see who did it fastest.", "Unir-me a la lliga": "Join the league", "Enllaç copiat: enganxa’l on vulguis": "Link copied: paste it wherever you like", "Regal pagat (simulat)": "Gift paid (simulated)", "T’he regalat un any de Melodia, un joc de fitxes i refranys. Obre l’enllaç per activar-lo:": "I've given you a year of Melodia, a game of tiles and proverbs. Open the link to activate it:", "Regal activat. Que el gaudeixis!": "Gift activated. Enjoy!", "Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tota la família.": "Join the “{0}” league on Melodia: every day, the same board for the whole family.", "La meva família": "My family", "Família": "Family", "La lliga de la teva família": "Your family league", "Crear la lliga": "Create the league", "Mama": "Mum", "Avi": "Grandpa", "Laia": "Lucy", "Marc": "Mark", "{0} membres": "{0} members", "Encara no ha jugat": "Hasn't played yet", "Partida d’avui. Dades d’exemple.": "Today's game. Sample data.", "Convidar algú de la família": "Invite a family member"});
 Object.assign(TR.es,{"Terracota": "Terracota", "Mar": "Mar", "Nit d’estiu": "Noche de verano", "Fitxes, refranys i cançons": "Fichas, refranes y canciones", "Tauler i frase resolts": "Tablero y frase resueltos", "Fitxes, refranys i cançons · sense anuncis": "Fichas, refranes y canciones · sin anuncios", "La meva postal d’avui a Melodia. Em guanyes?": "Mi postal de hoy en Melodia. ¿Me ganas?", "Postal desada i enllaç copiat": "Postal guardada y enlace copiado", "Postal desada": "Postal guardada", "La teva postal del dia, amb el refrany i el temps": "Tu postal del día, con el refrán y el tiempo", "Enviar la postal": "Enviar la postal"});
 Object.assign(TR.en,{"Terracota": "Terracotta", "Mar": "Sea", "Nit d’estiu": "Summer night", "Fitxes, refranys i cançons": "Tiles, proverbs and songs", "Tauler i frase resolts": "Board and phrase solved", "Fitxes, refranys i cançons · sense anuncis": "Tiles, proverbs and songs · no ads", "La meva postal d’avui a Melodia. Em guanyes?": "My postcard from today's Melodia. Can you beat me?", "Postal desada i enllaç copiat": "Postcard saved and link copied", "Postal desada": "Postcard saved", "La teva postal del dia, amb el refrany i el temps": "Your postcard of the day, with the proverb and your time", "Enviar la postal": "Send the postcard"});
+Object.assign(TR.es,{"Dades d’exemple.":"Datos de ejemplo.","Escola": "Colegio", "Parella": "Pareja", "Feina": "Trabajo", "Casal o club": "Casal o club", "Una altra": "Otra", "Els amics": "Los amigos", "Famílies de l’escola": "Familias del cole", "Tu i jo": "Tú y yo", "Companys de feina": "Compañeros de trabajo", "El casal": "El casal", "La meva lliga": "Mi liga", "La colla del dijous": "La pandilla del jueves", "Classe de 3r B": "Clase de 3.º B", "L’equip del matí": "El equipo de mañana", "Casal de la gent gran": "Hogar del jubilado", "Posa-li un nom": "Ponle un nombre", "Temps mitjà de les partides d’aquesta setmana. Dades d’exemple.": "Tiempo medio de las partidas de esta semana. Datos de ejemplo.", "Temps mitjà de les partides d’aquest mes. Dades d’exemple.": "Tiempo medio de las partidas de este mes. Datos de ejemplo.", "Afegir": "Añadir", "Ordenar": "Ordenar", "Encara no tens cap lliga": "Aún no tienes ninguna liga", "Crea’n una per a la teva gent o afegeix una classificació oberta.": "Crea una para tu gente o añade una clasificación abierta.", "Afegir una lliga": "Añadir una liga", "Juga amb la teva gent": "Juega con tu gente", "Crea una lliga i envia l’enllaç pel grup. Cada dia, el mateix tauler per a tots.": "Crea una liga y envía el enlace por el grupo. Cada día, el mismo tablero para todos.", "{0} dies": "{0} días", "Convidar a la lliga": "Invitar a la liga", "Dl": "L", "Dt": "M", "Dc": "X", "Dj": "J", "Dv": "V", "Ds": "S", "Dg": "D", "{0} ja ha jugat. Et toca!": "{0} ya ha jugado. ¡Te toca!", "Avui guanyes per {0}": "Hoy ganas por {0}", "Avui guanya {0} per {1}": "Hoy gana {0} por {1}", "dies que guanyes": "días que ganas", "dies que guanya {0}": "días que gana {0}", "Vas guanyant la setmana": "Vas ganando la semana", "Aquesta setmana va per davant {0}": "Esta semana va por delante {0}", "Setmana empatada": "Semana empatada", "Vas guanyant el mes": "Vas ganando el mes", "Aquest mes va per davant {0}": "Este mes va por delante {0}", "Mes empatat": "Mes empatado", "Duel diari": "Duelo diario", "Enviar-li l’enllaç": "Enviarle el enlace", "Principal": "Principal", "Pujar": "Subir", "Baixar": "Bajar", "Treure": "Quitar", "Pots estar a tantes lligues com vulguis i ordenar-les al teu gust.": "Puedes estar en tantas ligas como quieras y ordenarlas a tu gusto.", "Amb la teva gent": "Con tu gente", "Obertes a tothom": "Abiertas a todos", "Ja hi és": "Ya está", "Nova lliga": "Nueva liga", "Un duel cada dia amb la mateixa persona: el mateix tauler, i guanya qui el fa més ràpid.": "Un duelo cada día con la misma persona: el mismo tablero, y gana quien lo haga más rápido.", "Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup.": "Cada día, el mismo tablero para todos. Sin cuentas ni contraseñas: solo un enlace para el grupo.", "Enrere": "Atrás", "Les teves lligues": "Tus ligas", "Arrossega-les o fes servir les fletxes. La primera és la que veuràs en obrir la classificació.": "Arrástralas o usa las flechas. La primera es la que verás al abrir la clasificación.", "Fet": "Hecho", "Cada dia jugareu el mateix tauler i guanyarà qui el faci més ràpid.": "Cada día jugaréis el mismo tablero y ganará quien lo haga más rápido.", "Juguem cada dia el mateix tauler a Melodia? Guanya qui el fa més ràpid. La nostra lliga: «{0}»": "¿Jugamos cada día el mismo tablero en Melodia? Gana quien lo haga más rápido. Nuestra liga: «{0}»", "Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tots.": "Únete a la liga «{0}» de Melodia: cada día, el mismo tablero para todos.", "Lliga creada: {0}": "Liga creada: {0}", "Ja ets a «{0}»": "Ya estás en «{0}»", "Has tret «{0}»": "Has quitado «{0}»"});
+Object.assign(TR.en,{"Dades d’exemple.":"Sample data.","Escola": "School", "Parella": "Partner", "Feina": "Work", "Casal o club": "Club or centre", "Una altra": "Other", "Els amics": "The friends", "Famílies de l’escola": "School families", "Tu i jo": "You and me", "Companys de feina": "Work mates", "El casal": "The club", "La meva lliga": "My league", "La colla del dijous": "Thursday crew", "Classe de 3r B": "Class 3B", "L’equip del matí": "The morning team", "Casal de la gent gran": "Seniors’ club", "Posa-li un nom": "Give it a name", "Temps mitjà de les partides d’aquesta setmana. Dades d’exemple.": "Average time over this week’s games. Sample data.", "Temps mitjà de les partides d’aquest mes. Dades d’exemple.": "Average time over this month’s games. Sample data.", "Afegir": "Add", "Ordenar": "Reorder", "Encara no tens cap lliga": "You don’t have any leagues yet", "Crea’n una per a la teva gent o afegeix una classificació oberta.": "Create one for your people or add an open leaderboard.", "Afegir una lliga": "Add a league", "Juga amb la teva gent": "Play with your people", "Crea una lliga i envia l’enllaç pel grup. Cada dia, el mateix tauler per a tots.": "Create a league and send the link to the group. Every day, the same board for everyone.", "{0} dies": "{0} days", "Convidar a la lliga": "Invite to the league", "Dl": "M", "Dt": "T", "Dc": "W", "Dj": "T", "Dv": "F", "Ds": "S", "Dg": "S", "{0} ja ha jugat. Et toca!": "{0} has played. Your turn!", "Avui guanyes per {0}": "You win today by {0}", "Avui guanya {0} per {1}": "{0} wins today by {1}", "dies que guanyes": "days you win", "dies que guanya {0}": "days {0} wins", "Vas guanyant la setmana": "You’re winning the week", "Aquesta setmana va per davant {0}": "{0} is ahead this week", "Setmana empatada": "The week is tied", "Vas guanyant el mes": "You’re winning the month", "Aquest mes va per davant {0}": "{0} is ahead this month", "Mes empatat": "The month is tied", "Duel diari": "Daily duel", "Enviar-li l’enllaç": "Send them the link", "Principal": "Main", "Pujar": "Move up", "Baixar": "Move down", "Treure": "Remove", "Pots estar a tantes lligues com vulguis i ordenar-les al teu gust.": "Join as many leagues as you like and put them in any order.", "Amb la teva gent": "With your people", "Obertes a tothom": "Open to everyone", "Ja hi és": "Added", "Nova lliga": "New league", "Un duel cada dia amb la mateixa persona: el mateix tauler, i guanya qui el fa més ràpid.": "A duel every day with the same person: the same board, and the fastest wins.", "Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup.": "Every day, the same board for everyone. No accounts or passwords: just one link for the group.", "Enrere": "Back", "Les teves lligues": "Your leagues", "Arrossega-les o fes servir les fletxes. La primera és la que veuràs en obrir la classificació.": "Drag them or use the arrows. The first one is what you’ll see when you open the leaderboard.", "Fet": "Done", "Cada dia jugareu el mateix tauler i guanyarà qui el faci més ràpid.": "Every day you’ll both play the same board and the fastest wins.", "Juguem cada dia el mateix tauler a Melodia? Guanya qui el fa més ràpid. La nostra lliga: «{0}»": "Shall we play the same Melodia board every day? Fastest wins. Our league: “{0}”", "Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tots.": "Join the “{0}” league on Melodia: every day, the same board for everyone.", "Lliga creada: {0}": "League created: {0}", "Ja ets a «{0}»": "You’re in “{0}”", "Has tret «{0}»": "Removed “{0}”"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -621,7 +667,7 @@ const isLetter = ch => /[A-Za-zÀ-ÿ]/.test(ch);
 // ================= estat =================
 const S = { unlocked:1, lvGroup:null, tab:'avui', fails:2, pass:false, plus:false, streak:12, found:5,
   set:{pal:'cap', size:'normal', hc:false, dark:false, hideTime:false, sound:true, vib:false, left:false},
-  game:null, sheet:null, lbScope:'Comarca', lbPeriod:'Diari', dailyDone:null, solveMsg:'' };
+  game:null, sheet:null, lbScope:'comarca', lbPeriod:'Diari', leagues:[{id:'comarca',pub:'comarca'},{id:'global',pub:'global'}], dailyDone:null, solveMsg:'' };
 
 S.solvedIdx = new Set(PHRASES.map((p,i)=>i).filter(i=>PHRASES[i]!==pickPhrase(todaySeed)).filter((i,k)=>k%2===1).slice(0,5)); S.found = S.solvedIdx.size;
 // ================= generador resoluble =================
@@ -1014,29 +1060,61 @@ function vNivells(){
       <div class="mini">${stackTiles(t.show,34,45,[[0,14,-10],[18,6,0],[36,14,10]])}</div></button>`; }).join('');
   return `<div class="screen"><h1>${L('Nivells')}</h1><p class="muted">${L('Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.')}</p>${cards}</div>${tabsBar()}`; }
 const NAMES=['Rosa del Montseny','PepTarragona','Fitxeta','JadeBCN','Avi Quim','MahjongMontse','LaFura','Pilar_77','ElBambú','Núria R.','Txema','DracVermell'];
-const FAM=['Mama','Avi','Laia','Marc'];
-function vClass(){ const scopes=['Global','Espanya','Catalunya','Comarca','Família'], per=['Diari','Setmanal','Mensual','Total'];
+const LG_TYPES={
+ familia:{em:'👨‍👩‍👧',n:'Família',def:'La meva família',ph:'Família Puig',mem:['Mama','Avi','Laia','Marc']},
+ amics:{em:'🥂',n:'Amics',def:'Els amics',ph:'La colla del dijous',mem:['Jordi','Mercè','Toni','Rosa','Pere']},
+ escola:{em:'🎒',n:'Escola',def:'Famílies de l’escola',ph:'Classe de 3r B',mem:['Aina','Biel','Martina','Pau','Oriol','Júlia']},
+ parella:{em:'💞',n:'Parella',def:'Tu i jo',ph:'Tu i jo',mem:['Àlex']},
+ feina:{em:'☕',n:'Feina',def:'Companys de feina',ph:'L’equip del matí',mem:['Sílvia','David','Carme','Raül']},
+ casal:{em:'🏡',n:'Casal o club',def:'El casal',ph:'Casal de la gent gran',mem:['Montse','Ramon','Lola','Josep','Teresa','Quim']},
+ altra:{em:'⭐',n:'Una altra',def:'La meva lliga',ph:'Posa-li un nom',mem:['Anna','Xavi','Rita']}};
+const LG_PUB={comarca:['🏘️','Comarca'],catalunya:['📍','Catalunya'],espanya:['🗺️','Espanya'],global:['🌍','Global']};
+const lgEm=l=>l.pub?LG_PUB[l.pub][0]:LG_TYPES[l.type].em;
+const lgName=l=>l.pub?L(LG_PUB[l.pub][1]):l.name;
+const curLeague=()=>S.leagues.find(l=>l.id===S.lbScope)||S.leagues[0];
+function perNote(){ return S.lbPeriod==='Diari'?L('Temps + 2 min per intent fallat. Dades d’exemple.'):S.lbPeriod==='Setmanal'?L('Temps mitjà de les partides d’aquesta setmana. Dades d’exemple.'):L('Temps mitjà de les partides d’aquest mes. Dades d’exemple.'); }
+function vClass(){ const per=['Diari','Setmanal','Mensual'], lg=curLeague();
   const head=`<h1>${L('Classificació')}</h1>
   <div class="seg">${per.map(p=>`<button class="${S.lbPeriod===p?'on':''}" onclick="S.lbPeriod='${p}';render()">${L(p)}</button>`).join('')}</div>
-  <div class="chips">${scopes.map(s=>`<button class="${S.lbScope===s?'on':''}" onclick="S.lbScope='${s}';render()">${s==='Família'?'👨‍👩‍👧 ':''}${L(s)}</button>`).join('')}</div>`;
-  if(S.lbScope==='Família') return `<div class="screen">${head}${vFamily()}</div>${tabsBar()}`;
-  const r=rng(S.lbScope+S.lbPeriod); let list=NAMES.map(n=>({n,t:170+Math.floor(r()*300)}));
-  const mine=S.dailyDone?S.dailyDone.time:262; list.push({n:'Tu',t:Math.round(mine),me:true}); list.sort((a,b)=>a.t-b.t);
+  <div class="chips lgchips" id="lgChips">${S.leagues.map(l=>`<button class="${lg&&lg.id===l.id?'on':''}" onclick="S.lbScope='${l.id}';render()"><span aria-hidden="true">${lgEm(l)}</span> ${esc(lgName(l))}</button>`).join('')}<button class="add" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir')}</button>${S.leagues.length>1?`<button class="add" onclick="S.sheet='sortlg';renderSheet()">⇅ ${L('Ordenar')}</button>`:''}</div>`;
+  if(!lg) return `<div class="screen">${head}<div class="card famcard"><div class="giftbig" aria-hidden="true">🏆</div><b style="font-size:20px">${L('Encara no tens cap lliga')}</b>
+    <p class="muted">${L('Crea’n una per a la teva gent o afegeix una classificació oberta.')}</p><button class="btn primary" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir una lliga')}</button></div></div>${tabsBar()}`;
+  const body = lg.pub ? vPublic(lg) : lg.type==='parella' ? vDuel(lg) : vPrivate(lg);
+  const suggest = S.leagues.some(l=>!l.pub) ? '' : `<div class="card lgsuggest"><b>${L('Juga amb la teva gent')}</b><p class="muted" style="font-size:15px">${L('Crea una lliga i envia l’enllaç pel grup. Cada dia, el mateix tauler per a tots.')}</p>
+    <div class="lgtypes mini">${['familia','amics','escola','parella'].map(k=>`<button onclick="S.newType='${k}';S.sheet='newlg';renderSheet()"><span aria-hidden="true">${LG_TYPES[k].em}</span>${L(LG_TYPES[k].n)}</button>`).join('')}</div></div>`;
+  return `<div class="screen">${head}${body}${suggest}</div>${tabsBar()}`; }
+function vPublic(lg){ const r=rng(lg.id+S.lbPeriod); let list=NAMES.map(n=>({n,t:170+Math.floor(r()*300)}));
+  const mine=S.lbPeriod==='Diari'&&S.dailyDone?S.dailyDone.time:262; list.push({n:'Tu',t:Math.round(mine),me:true}); list.sort((a,b)=>a.t-b.t);
   const pod=[[1,'#B8BCC4',70],[0,'#E3AE3B',96],[2,'#C98B5A',54]];
-  return `<div class="screen">${head}
-  <div class="podium">${pod.map(([i,c,h])=>`<div><b>${list[i].me?L('Tu'):esc(list[i].n)}</b><br><span class="muted">${fmt(list[i].t)}</span><div class="blk" style="background:${c};height:${h}px">${i+1}</div></div>`).join('')}</div>
-  <p class="muted" style="font-size:14px">${L('Temps + 2 min per intent fallat. Dades d’exemple.')}</p>
-  <ol class="lb">${list.slice(3).map((x,i)=>`<li class="${x.me?'me':''}"><span class="pos">${i+4}</span><span class="nm">${x.me?'<b>'+L('Tu')+'</b>':esc(x.n)}</span><span>${fmt(x.t)}</span></li>`).join('')}</ol></div>${tabsBar()}`; }
-function vFamily(){
-  if(!S.family) return `<div class="card famcard"><div class="giftbig" aria-hidden="true">👨‍👩‍👧‍👦</div><b style="font-size:20px">${L('La lliga de la teva família')}</b>
-    <p class="muted">${L('Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup de la família.')}</p>
-    <button class="btn primary" onclick="S.sheet='family';renderSheet()">${L('Crear la lliga')}</button></div>`;
-  const r=rng(S.family.name+S.lbPeriod); const list=FAM.map(n=>({n:L(n),t:190+Math.floor(r()*260)}));
-  const me={n:L('Tu'),me:true,t:S.dailyDone?Math.round(S.dailyDone.time):null}; list.sort((a,b)=>a.t-b.t); if(me.t!=null){ list.push(me); list.sort((a,b)=>a.t-b.t); } else list.push(me);
-  return `<div class="card"><div class="row"><b style="font-size:19px">${esc(S.family.name)}</b><span class="muted" style="font-size:14px">${L('{0} membres',list.length)}</span></div>
-    <ol class="lb fam">${list.map((x,i)=>`<li class="${x.me?'me':''}"><span class="pos">${x.t==null?'–':i===0?'🥇':i+1}</span><span class="nm">${x.me?'<b>'+esc(x.n)+'</b>':esc(x.n)}</span><span>${x.t==null?(x.me?L('Encara no has jugat'):L('Encara no ha jugat')):fmt(x.t)}</span></li>`).join('')}</ol>
-    <p class="muted" style="font-size:14px">${L('Partida d’avui. Dades d’exemple.')}</p>
-    <button class="btn gold" onclick="inviteFamily()">${L('Convidar algú de la família')}</button></div>`; }
+  return `<div class="podium">${pod.map(([i,c,h])=>`<div><b>${list[i].me?L('Tu'):esc(list[i].n)}</b><br><span class="muted">${fmt(list[i].t)}</span><div class="blk" style="background:${c};height:${h}px">${i+1}</div></div>`).join('')}</div>
+  <p class="muted" style="font-size:14px">${perNote()}</p>
+  <ol class="lb">${list.slice(3).map((x,i)=>`<li class="${x.me?'me':''}"><span class="pos">${i+4}</span><span class="nm">${x.me?'<b>'+L('Tu')+'</b>':esc(x.n)}</span><span>${fmt(x.t)}</span></li>`).join('')}</ol>`; }
+function vPrivate(lg){ const T=LG_TYPES[lg.type], d=S.lbPeriod==='Diari', days=S.lbPeriod==='Setmanal'?7:30, r=rng(lg.id+S.lbPeriod);
+  const list=T.mem.map(n=>({n:L(n),t:190+Math.floor(r()*260),dd:Math.max(1,Math.round(days*(.45+r()*.55)))}));
+  if(d&&list.length>2) list[list.length-1].t=null;
+  list.push({n:L('Tu'),me:true,t:d?(S.dailyDone?Math.round(S.dailyDone.time):null):262,dd:Math.round(days*.7)});
+  list.sort((a,b)=>(a.t==null)-(b.t==null)||a.t-b.t);
+  return `<div class="card lgcard"><div class="lghead"><span class="lgem" aria-hidden="true">${T.em}</span><div><b>${esc(lg.name)}</b><span class="muted">${L(T.n)} · ${L('{0} membres',list.length)}</span></div></div>
+    <ol class="lb fam">${list.map((x,i)=>`<li class="${x.me?'me':''}"><span class="pos">${x.t==null?'–':i===0?'🥇':i+1}</span><span class="nm">${x.me?'<b>'+esc(x.n)+'</b>':esc(x.n)}</span><span>${x.t==null?(x.me?L('Encara no has jugat'):L('Encara no ha jugat')):fmt(x.t)+(d?'':` <small class="muted">· ${L('{0} dies',x.dd)}</small>`)}</span></li>`).join('')}</ol>
+    <p class="muted" style="font-size:14px">${d?L('Partida d’avui. Dades d’exemple.'):perNote()}</p>
+    <button class="btn gold" onclick="inviteLeague('${lg.id}')">${L('Convidar a la lliga')}</button></div>`; }
+const WDAYS=['Dl','Dt','Dc','Dj','Dv','Ds','Dg'];
+function vDuel(lg){ const who=L(LG_TYPES.parella.mem[0]), r=rng(lg.id+S.lbPeriod), today=(new Date().getDay()+6)%7;
+  let a,b,line,extra='';
+  if(S.lbPeriod==='Diari'){ const mt=S.dailyDone?Math.round(S.dailyDone.time):null, ht=200+Math.floor(r()*200);
+    a=mt==null?'–':fmt(mt); b=fmt(ht);
+    line = mt==null ? L('{0} ja ha jugat. Et toca!',esc(who)) : mt<ht ? L('Avui guanyes per {0}',fmt(ht-mt)) : mt>ht ? L('Avui guanya {0} per {1}',esc(who),fmt(mt-ht)) : L('Empat exacte!');
+  } else if(S.lbPeriod==='Setmanal'){ const cells=WDAYS.map((w,i)=>i<today?(r()<.55?'me':'ell'):i===today?'avui':'');
+    a=cells.filter(c=>c==='me').length; b=cells.filter(c=>c==='ell').length;
+    extra=`<div class="wk">${WDAYS.map((w,i)=>`<span class="${cells[i]}"><i>${L(w)}</i>${cells[i]==='me'?'★':cells[i]==='ell'?'●':cells[i]==='avui'?'?':''}</span>`).join('')}</div><p class="muted" style="font-size:13px;margin:4px 0 0">★ ${L('dies que guanyes')} · ● ${L('dies que guanya {0}',esc(who))}</p>`;
+    line = a>b?L('Vas guanyant la setmana'):a<b?L('Aquesta setmana va per davant {0}',esc(who)):L('Setmana empatada');
+  } else { a=8+Math.floor(r()*8); b=8+Math.floor(r()*8); line = a>b?L('Vas guanyant el mes'):a<b?L('Aquest mes va per davant {0}',esc(who)):L('Mes empatat'); }
+  return `<div class="card duel"><div class="lghead"><span class="lgem" aria-hidden="true">💞</span><div><b>${esc(lg.name)}</b><span class="muted">${L('Duel diari')}</span></div></div>
+    <div class="duelrow"><div class="side me"><div class="av">${esc(L('Tu').slice(0,2))}</div><span>${L('Tu')}</span><b>${a}</b></div><div class="vsx">vs</div><div class="side"><div class="av">${esc([...who][0])}</div><span>${esc(who)}</span><b>${b}</b></div></div>
+    ${extra}<p class="duelline">${line}</p><p class="muted" style="font-size:13px;text-align:center;margin-top:-6px">${L('Dades d’exemple.')}</p>
+    <button class="btn gold" onclick="inviteLeague('${lg.id}')">${L('Enviar-li l’enllaç')}</button></div>`; }
+function sortRows(){ return S.leagues.map((l,i)=>`<li data-i="${i}"><span class="hdl" aria-hidden="true">⋮⋮</span><span class="em" aria-hidden="true">${lgEm(l)}</span><span class="nm">${esc(lgName(l))}${i===0?`<small>${L('Principal')}</small>`:''}</span>
+  <button aria-label="${L('Pujar')}: ${esc(lgName(l))}" ${i===0?'disabled':''} onclick="moveLg(${i},-1)">▲</button><button aria-label="${L('Baixar')}: ${esc(lgName(l))}" ${i===S.leagues.length-1?'disabled':''} onclick="moveLg(${i},1)">▼</button><button class="del" aria-label="${L('Treure')}: ${esc(lgName(l))}" onclick="delLg(${i})">✕</button></li>`).join(''); }
 function medal(c1,c2,txt){ return `<svg viewBox="0 0 56 56"><path d="M18 2h8l4 14h-8zM38 2h-8l-4 14h8z" fill="${c2}"/><circle cx="28" cy="34" r="19" fill="${c1}"/><circle cx="28" cy="34" r="14" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><text x="28" y="40" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="Fraunces,serif">${txt}</text></svg>`; }
 function sw(key,lab,desc){ return `<div class="toggle"><div><b>${lab}</b>${desc?`<br><span class="muted" style="font-size:14px">${desc}</span>`:''}</div><button class="sw ${S.set[key]?'on':''}" role="switch" aria-checked="${S.set[key]}" aria-label="${lab}" onclick="S.set['${key}']=!S.set['${key}'];render()"></button></div>`; }
 function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgran',L('Molt gran')]];
@@ -1068,14 +1146,23 @@ function vSheet(){ const g=S.game;
     <h2 style="margin:6px 0 0">${gf.de?L('{0} t’ha fet un regal',esc(gf.de)):L('T’han fet un regal')}</h2>
     <p>${L('Un any de Melodia Plus: sense límits i amb tots els nivells.')}</p>${gf.msg?`<blockquote class="giftmsg">${esc(gf.msg)}</blockquote>`:''}</div>
     <div class="stack"><button class="btn gold" onclick="acceptGift()">${L('Obrir el regal')}</button></div>`); }
-  if(S.sheet==='family') return sheetWrap(`<h2 style="margin-top:0">${L('Crear la lliga familiar')}</h2>
-    <p class="muted">${L('Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup de la família.')}</p>
-    <label class="fld">${L('Nom de la lliga')}<input id="fName" maxlength="30" placeholder="${L('Família Puig')}"></label>
-    <div class="stack"><button class="btn primary" onclick="createFamily()">${L('Crear i convidar')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`);
-  if(S.sheet==='famjoin') return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">👨‍👩‍👧‍👦</div>
-    <h2 style="margin:6px 0 0">${L('T’han convidat a «{0}»',esc(S.links.family))}</h2>
-    <p>${L('Cada dia jugareu el mateix tauler i veureu qui l’ha fet més ràpid.')}</p></div>
-    <div class="stack"><button class="btn primary" onclick="joinFamily()">${L('Unir-me a la lliga')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`);
+  if(S.sheet==='addlg') return sheetWrap(`<h2 style="margin-top:0">${L('Afegir una lliga')}</h2>
+    <p class="muted">${L('Pots estar a tantes lligues com vulguis i ordenar-les al teu gust.')}</p>
+    <b>${L('Amb la teva gent')}</b><div class="lgtypes">${Object.entries(LG_TYPES).map(([k,t])=>`<button onclick="S.newType='${k}';S.sheet='newlg';renderSheet()"><span aria-hidden="true">${t.em}</span>${L(t.n)}</button>`).join('')}</div>
+    <b>${L('Obertes a tothom')}</b><div class="lgpub">${Object.entries(LG_PUB).map(([k,[em,n]])=>{ const has=S.leagues.some(l=>l.pub===k); return `<button ${has?'disabled':''} onclick="addPublic('${k}')"><span aria-hidden="true">${em}</span>${L(n)}<i>${has?'✓ '+L('Ja hi és'):'＋ '+L('Afegir')}</i></button>`; }).join('')}</div>
+    <div class="stack"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`);
+  if(S.sheet==='newlg'){ const T=LG_TYPES[S.newType]||LG_TYPES.altra; return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">${T.em}</div><h2 style="margin:6px 0 0">${L('Nova lliga')} · ${L(T.n)}</h2></div>
+    <p class="muted">${S.newType==='parella'?L('Un duel cada dia amb la mateixa persona: el mateix tauler, i guanya qui el fa més ràpid.'):L('Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup.')}</p>
+    <label class="fld">${L('Nom de la lliga')}<input id="fName" maxlength="30" placeholder="${esc(L(T.ph))}"></label>
+    <div class="stack"><button class="btn primary" onclick="createLeague()">${L('Crear i convidar')}</button><button class="btn secondary" onclick="S.sheet='addlg';renderSheet()">${L('Enrere')}</button></div>`); }
+  if(S.sheet==='sortlg') return sheetWrap(`<h2 style="margin-top:0">${L('Les teves lligues')}</h2>
+    <p class="muted">${L('Arrossega-les o fes servir les fletxes. La primera és la que veuràs en obrir la classificació.')}</p>
+    <ul class="lgsort" id="lgSort">${sortRows()}</ul>
+    <div class="stack"><button class="btn primary" onclick="S.sheet=null;renderSheet()">${L('Fet')}</button></div>`);
+  if(S.sheet==='lgjoin'){ const j=S.links.league, T=LG_TYPES[j.type]; return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">${T.em}</div>
+    <h2 style="margin:6px 0 0">${L('T’han convidat a «{0}»',esc(j.name))}</h2>
+    <p>${j.type==='parella'?L('Cada dia jugareu el mateix tauler i guanyarà qui el faci més ràpid.'):L('Cada dia jugareu el mateix tauler i veureu qui l’ha fet més ràpid.')}</p></div>
+    <div class="stack"><button class="btn primary" onclick="joinLeague()">${L('Unir-me a la lliga')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`); }
   if(S.sheet==='repte'){ const c=S.challenge; return sheetWrap(`<div style="text-align:center"><div class="medalbig">${medal('#E3AE3B','#1F6F5C','⚔')}</div>
     <h2 style="margin:6px 0 0">${L('T’han reptat!')}</h2><p>${L('Algú ha resolt aquest tauler en <b>{0}</b>. Jugaràs exactament el mateix tauler.',fmt(c.t))}</p>
     <p class="muted">${L('{0} parelles · {1}',c.p,THEMES[c.theme].name)}</p></div>
@@ -1143,14 +1230,14 @@ function vSheet(){ const g=S.game;
       <div class="stack">${next}
       <button class="btn secondary" onclick="S.sheet=null;go('avui')">${L('Tornar a l’inici')}</button></div>`); }
   return ''; }
-function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; if(S.sheet==='win'){ S.postalBlob=null; drawPostal(); } if(S.tab==='joc'&&S.game&&$('#solveBtn')) updateHUD(); if(S.sheet&&S.sheet!=='solve'){ const f=$('#sheet .sheet button'); if(f) f.focus({preventScroll:true}); } const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
+function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; if(S.sheet==='sortlg') bindSortDrag(); if(S.sheet==='win'){ S.postalBlob=null; drawPostal(); } if(S.tab==='joc'&&S.game&&$('#solveBtn')) updateHUD(); if(S.sheet&&S.sheet!=='solve'){ const f=$('#sheet .sheet button'); if(f) f.focus({preventScroll:true}); } const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
   const cu=$('#countup'); if(cu){ const to=+cu.dataset.to, t0=performance.now(), d=reduced?1:1200;
     const tick=now=>{ const k=Math.min(1,(now-t0)/d), e=1-Math.pow(1-k,3); cu.textContent=fmt(to*e); if(k<1) requestAnimationFrame(tick); else { bell(14,0,.15,1.6); bell(21,.1,.12,1.6); bell(26,.2,.12,2.2);} };
     requestAnimationFrame(tick); } }
 function shareGrid(){ const g=S.game, n=Math.min(5,Math.ceil(elapsed()/60)); return '🟩'.repeat(Math.max(1,6-n))+'🟨'.repeat(Math.min(5,n))+(g.attempts?' '+'🟥'.repeat(g.attempts):'')+(g.hints?' '+'💡'.repeat(Math.min(5,g.hints)):'')+(g.songAns&&g.songAns===g.song?' 🎵':''); }
 
 // ================= repte: el mateix tauler per a una altra persona =================
-const LINK_KEYS=['repte','tema','p','t','lang','prova','regal','de','msg','familia'];
+const LINK_KEYS=['repte','tema','p','t','lang','prova','regal','de','msg','familia','lliga','tipus'];
 function baseURL(){ const u=new URL(location.href.split('#')[0]); LINK_KEYS.forEach(k=>u.searchParams.delete(k)); return u; }
 async function shareLink(txt, url){ if(navigator.share){ try{ await navigator.share({title:'Melodia', text:txt, url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
   try{ await navigator.clipboard.writeText(txt+'\n'+url); toast(L('Enllaç copiat: enganxa’l on vulguis')); }catch(e){ toast(L('No s’ha pogut copiar')); } }
@@ -1158,13 +1245,30 @@ function sendGift(){ const de=($('#gFrom').value||'').trim().slice(0,30), msg=($
   u.searchParams.set('regal','1'); if(de) u.searchParams.set('de',de); if(msg) u.searchParams.set('msg',msg);
   S.sheet=null; renderSheet(); toast(L('Regal pagat (simulat)')); shareLink(L('T’he regalat un any de Melodia, un joc de fitxes i refranys. Obre l’enllaç per activar-lo:'), u.toString()); }
 function acceptGift(){ S.plus=true; S.sheet=null; render(); toast(L('Regal activat. Que el gaudeixis!')); }
-function inviteFamily(){ const u=baseURL(); u.searchParams.set('familia',S.family.name); shareLink(L('Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tota la família.',S.family.name), u.toString()); }
-function createFamily(){ const n=($('#fName').value||'').trim().slice(0,30)||L('La meva família'); S.family={name:n}; S.lbScope='Família'; S.sheet=null; render(); inviteFamily(); }
-function joinFamily(){ S.family={name:S.links.family}; S.lbScope='Família'; S.sheet=null; go('class'); }
+function inviteLeague(id){ const lg=S.leagues.find(l=>l.id===id); if(!lg) return; const u=baseURL(); u.searchParams.set('lliga',lg.name); u.searchParams.set('tipus',lg.type);
+  shareLink(lg.type==='parella'?L('Juguem cada dia el mateix tauler a Melodia? Guanya qui el fa més ràpid. La nostra lliga: «{0}»',lg.name):L('Uneix-te a la lliga «{0}» de Melodia: cada dia, el mateix tauler per a tots.',lg.name), u.toString()); }
+function createLeague(){ const k=LG_TYPES[S.newType]?S.newType:'altra', n=($('#fName').value||'').trim().slice(0,30)||L(LG_TYPES[k].def), id='l'+Date.now().toString(36);
+  S.leagues.push({id,type:k,name:n}); S.lbScope=id; S.sheet=null; render(); toast(L('Lliga creada: {0}',n)); inviteLeague(id); }
+function addPublic(k){ if(!S.leagues.some(l=>l.pub===k)) S.leagues.push({id:k,pub:k}); S.lbScope=k; S.sheet=null; render(); }
+function joinLeague(){ const j=S.links.league; let lg=S.leagues.find(l=>!l.pub&&l.name===j.name&&l.type===j.type);
+  if(!lg){ lg={id:'l'+Date.now().toString(36),type:j.type,name:j.name}; S.leagues.push(lg); } go('class'); S.lbScope=lg.id; render(); toast(L('Ja ets a «{0}»',j.name)); }
+function refreshSort(){ if(S.tab==='class') $('#view').innerHTML=vClass(); const ul=$('#lgSort'); if(ul) ul.innerHTML=sortRows(); }
+function moveLgTo(from,to){ to=Math.max(0,Math.min(S.leagues.length-1,to)); if(to!==from){ const [x]=S.leagues.splice(from,1); S.leagues.splice(to,0,x); } refreshSort();
+  const li=$('#lgSort li[data-i="'+to+'"]'); if(li){ li.classList.add('moved'); const bt=li.querySelector(from>to?'button':'button+button'); if(bt&&!bt.disabled) bt.focus({preventScroll:true}); } }
+function moveLg(i,d){ moveLgTo(i,i+d); }
+function delLg(i){ const [l]=S.leagues.splice(i,1); toast(L('Has tret «{0}»',lgName(l))); refreshSort(); }
+function bindSortDrag(){ const ul=$('#lgSort'); if(!ul) return;
+  ul.onpointerdown=e=>{ const h=e.target.closest('li'); if(!h||e.target.closest('button')) return; const li=h, from=+li.dataset.i, y0=e.clientY;
+    const mids=[...ul.children].map(r=>{ const q=r.getBoundingClientRect(); return q.top+q.height/2; });
+    e.preventDefault(); li.classList.add('drag'); try{ h.setPointerCapture(e.pointerId); }catch(_){}
+    const mv=ev=>{ li.style.transform=`translateY(${ev.clientY-y0}px)`; };
+    const up=ev=>{ h.removeEventListener('pointermove',mv); h.removeEventListener('pointerup',up); h.removeEventListener('pointercancel',up);
+      const y=mids[from]+(ev.clientY-y0); moveLgTo(from, mids.filter((m,i)=>i!==from&&m<y).length); };
+    h.addEventListener('pointermove',mv); h.addEventListener('pointerup',up); h.addEventListener('pointercancel',up); }; }
 function readLinks(){ const q=new URLSearchParams(location.search), out={};
   if(q.get('regal')==='1') out.gift={de:(q.get('de')||'').slice(0,30), msg:(q.get('msg')||'').slice(0,140)};
-  const f=(q.get('familia')||'').trim().slice(0,30); if(f) out.family=f;
-  if(out.gift||out.family){ try{ ['regal','de','msg','familia'].forEach(k=>q.delete(k)); history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')); }catch(e){} }
+  const ln=(q.get('lliga')||q.get('familia')||'').trim().slice(0,30), lt=q.get('tipus'); if(ln) out.league={name:ln,type:LG_TYPES[lt]?lt:'familia'};
+  if(out.gift||out.league){ try{ ['regal','de','msg','familia','lliga','tipus'].forEach(k=>q.delete(k)); history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')); }catch(e){} }
   return out; }
 function challengeURL(){ const g=S.game, u=baseURL();
   u.searchParams.set('repte',g.seedStr); u.searchParams.set('tema',g.theme); u.searchParams.set('p',g.nPairs); u.searchParams.set('t',Math.floor(total())); return u.toString(); }
@@ -1223,7 +1327,7 @@ function sendPostal(){ const b=S.postalBlob, url=challengeURL(), txt=L('La meva 
   if(b){ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='melodia-postal.jpg'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),5000); }
   try{ navigator.clipboard.writeText(txt+'\n'+url).then(()=>toast(L('Postal desada i enllaç copiat')),()=>toast(L('Postal desada'))); }catch(e){ toast(L('Postal desada')); } }
 // ================= accions =================
-function go(t){ if(S.tab==='joc'&&S.game&&!S.game.over&&!S.game.pauseAt) S.game.pauseAt=Date.now(); S.tab=t; S.sheet=null; render(); }
+function go(t){ if(S.tab==='joc'&&S.game&&!S.game.over&&!S.game.pauseAt) S.game.pauseAt=Date.now(); if(t==='class'&&S.tab!=='class'&&S.leagues[0]) S.lbScope=S.leagues[0].id; S.tab=t; S.sheet=null; render(); }
 function playDaily(){ const g=S.game;
   if(g&&g.mode==='daily'&&g.seedStr===todaySeed&&!g.over){ S.tab='joc'; render(); resume(); return; }
   if(g&&g.mode==='daily'&&g.over&&present().length>0){ S.tab='joc'; render(); S.sheet='blocked'; renderSheet(); return; }
@@ -1247,7 +1351,7 @@ function render(){ const ph=$('#phone');
   if(S.game) ph.style.setProperty('--mosaic', rajolaURL(S.game.seedStr, gamePal(S.game)));
   ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'');
   if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); }
-  else { const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); }
+  else { const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
   renderSheet(); }
 setInterval(()=>{ if(S.tab==='joc'&&S.game&&!S.game.pauseAt) updateHUD(); },500);
 
@@ -1261,7 +1365,7 @@ function splash(){ const d=document.createElement('div'); d.className='splash'; 
   $('#phone').appendChild(d);
   const close=()=>{ d.classList.add('out'); setTimeout(()=>d.remove(),600); }; d.onclick=close; setTimeout(close, reduced?400:2900); }
 S.links=readLinks(); S.challenge=readChallenge(); render(); splash();
-{ const first = S.links.gift?'regal' : S.links.family?'famjoin' : S.challenge?'repte' : null;
+{ const first = S.links.gift?'regal' : S.links.league?'lgjoin' : S.challenge?'repte' : null;
   if(first) setTimeout(()=>{ if(S.tab!=='joc'&&!S.sheet){ S.sheet=first; renderSheet(); } }, reduced?350:2300); }
 </script>
 <!-- Mode prova amb usuaris: index.html?prova=1&lang=ca|es mostra una barra amb l'enllaç a l'enquesta -->
