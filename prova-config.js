@@ -6,3 +6,6 @@ window.MELODIA_ENQUESTA = {
   es: "https://docs.google.com/forms/d/e/1FAIpQLSff0lDN3aGU9a122WQGPOSVIhe_w6qPtAGu2-lHlpuw6dQK-w/viewform?usp=pp_url&entry.806183583={codi}",
   en: "https://docs.google.com/forms/d/e/1FAIpQLSfDpmJGlSs-ytANeg98iMk5N62rkHL5pHySsyw46fvc4j7lBQ/viewform?usp=pp_url&entry.2072547225={codi}"
 };
+
+// Google Analytics 4: identificador de mesura (comença per «G-»). Buit = no es carrega res.
+window.MELODIA_GA = "";
