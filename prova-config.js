@@ -8,4 +8,4 @@ window.MELODIA_ENQUESTA = {
 };
 
 // Google Analytics 4: identificador de mesura (comença per «G-»). Buit = no es carrega res.
-window.MELODIA_GA = "";
+window.MELODIA_GA = "G-DZ18N9S182";
