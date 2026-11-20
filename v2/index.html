@@ -638,6 +638,35 @@ body.prova .phone{height:calc(100% - 48px)}
 .newsen span{flex:1;display:flex;flex-direction:column}
 .newsen small{color:var(--accent,#B5532F);font-weight:700;font-size:13px}
 .newsen b{font-family:var(--serif);font-size:19px}
+
+/* v2: postal d'entrada que s'obre */
+.intro{position:absolute;inset:0;z-index:60;display:flex;padding:34px 18px 40px;perspective:1400px;cursor:pointer;background:rgba(20,30,40,.0);animation:introbg 1.5s ease forwards}
+@keyframes introbg{0%{background:rgba(20,30,40,0)}15%,100%{background:rgba(20,30,40,.55)}}
+.intro.open{animation:introfade .8s ease forwards}
+@keyframes introfade{to{background:rgba(20,30,40,0)}}
+.ileaf{position:relative;flex:1;overflow:hidden;background-color:#F4EBDD;background-image:var(--sen);background-size:92px 92px;box-shadow:inset 0 0 0 10px rgba(255,253,248,.0);
+  transition:transform .8s cubic-bezier(.55,.05,.35,1),filter .8s ease;backface-visibility:hidden}
+.ileaf.l{transform-origin:left center;background-position:right top;border:9px solid #FFFDF8;border-right:0;border-radius:16px 0 0 16px;box-shadow:inset -10px 0 18px -10px rgba(0,0,0,.35)}
+.ileaf.r{transform-origin:right center;background-position:left top;border:9px solid #FFFDF8;border-left:0;border-radius:0 16px 16px 0;box-shadow:inset 10px 0 18px -10px rgba(0,0,0,.35)}
+.intro .ileaf{filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+.intro .ileaf.l{animation:leafinl .55s cubic-bezier(.2,.9,.3,1.15) both}
+.intro .ileaf.r{animation:leafinr .55s cubic-bezier(.2,.9,.3,1.15) both}
+@keyframes leafinl{from{transform:translateY(40px) rotateZ(-3deg) scale(.92);opacity:0}}
+@keyframes leafinr{from{transform:translateY(40px) rotateZ(3deg) scale(.92);opacity:0}}
+.intro.open .ileaf.l{animation:none;transform:rotateY(-105deg);filter:brightness(.7)}
+.intro.open .ileaf.r{animation:none;transform:rotateY(105deg);filter:brightness(.7)}
+.ipaper{position:absolute;top:0;bottom:0;width:200%;display:flex;align-items:center;justify-content:center}
+.ileaf.l .ipaper{left:0} .ileaf.r .ipaper{right:0}
+.iseal{width:210px;height:210px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFDF8 0%,#F7EFDF 70%,#EADBC2 100%);
+  box-shadow:0 0 0 7px #FFFDF8,0 0 0 9px var(--accent,#B5532F),0 14px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#2E2A24;
+  animation:sealin .6s .25s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes sealin{from{transform:scale(.4) rotate(-12deg);opacity:0}}
+.iseal .icap{font:800 13px/1.1 var(--sans,'Atkinson Hyperlegible',sans-serif);letter-spacing:.16em;text-transform:uppercase;color:#7A6A55;max-width:160px}
+.iseal b{font:700 84px/1 var(--serif,Fraunces,Georgia,serif);margin:4px 0 2px;color:var(--accent,#B5532F)}
+.iseal b.long{font-size:34px;margin:10px 0 8px}
+.iseal .isen{font:italic 500 13px/1.2 var(--serif,Fraunces,Georgia,serif);color:#7A6A55;max-width:150px}
+@media (prefers-reduced-motion:reduce){ .intro{display:none} }
+.board.predeal .tile{opacity:0}
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -716,6 +745,8 @@ Object.assign(TR.es,{"Mantén premuda una lliga i arrossega-la per canviar-ne l�
 Object.assign(TR.en,{"Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.": "Press and hold a league, then drag it to change the order.", "Ordre desat: «{0}» és ara la {1}a": "Order saved: “{0}” is now number {1}"});
 Object.assign(TR.es,{"Casa de poble": "Casa de pueblo", "Terra cuita i blau fosc, com el terra de l’entrada de casa.": "Barro cocido y azul oscuro, como el suelo de la entrada de casa.", "Brisa de mar": "Brisa de mar", "Blaus de la costa per jugar amb calma.": "Azules de la costa para jugar con calma.", "Eixample": "Ensanche", "Granats i ocres dels pisos de l’Eixample.": "Granates y ocres de los pisos del Ensanche.", "Mas de l’Empordà": "Masía del Ampurdán", "Colors de camp, d’oliveres i de sol de tarda.": "Colores de campo, de olivos y de sol de tarde.", "Pedra catalana": "Piedra catalana", "El panot de la flor: la peça de pedra grisa dels carrers de Barcelona. Si n’ajuntes quatre, a cada cantonada hi neix una flor nova.": "El panot de la flor: la pieza de piedra gris de las calles de Barcelona. Si juntas cuatro, en cada esquina nace una flor nueva.", "Modernista": "Modernista", "Verds i corals d’un vestíbul modernista.": "Verdes y corales de un vestíbulo modernista.", "La rajola de la iaia": "La baldosa de la abuela", "La de tota la vida, amb flors i colors alegres.": "La de toda la vida, con flores y colores alegres.", "Nit d’estiu": "Noche de verano", "Fosca i càlida, per jugar al vespre.": "Oscura y cálida, para jugar por la noche.", "Cala blava": "Cala azul", "L’aigua clara d’una cala amagada.": "El agua clara de una cala escondida.", "Vinya": "Viña", "Raïm, pàmpols i terra del Penedès.": "Uva, pámpanos y tierra del Penedès.", "Taronja i blau": "Naranja y azul", "Els colors vius d’una cuina de poble.": "Los colores vivos de una cocina de pueblo.", "Safrà": "Azafrán", "Daurats càlids, com un arròs de diumenge.": "Dorados cálidos, como un arroz de domingo.", "Pissarra": "Pizarra", "Grisos de pissarra del Pirineu.": "Grises de pizarra del Pirineo.", "Romaní": "Romero", "Verds de muntanya i flor de romaní.": "Verdes de montaña y flor de romero.", "Corall": "Coral", "Rosats i blaus de la Costa Brava.": "Rosados y azules de la Costa Brava.", "Or de festa major": "Oro de fiesta mayor", "La rajola dels grans dies: l’última de la col·lecció.": "La baldosa de los grandes días: la última de la colección.", "Les teves rajoles": "Tus baldosas", "Propera: «{0}» en superar el nivell {1}": "Próxima: «{0}» al superar el nivel {1}", "Ja les tens totes!": "¡Ya las tienes todas!", "En ús": "En uso", "Peça especial": "Pieza especial", "Encara tapada": "Aún tapada", "Nova rajola!": "¡Nueva baldosa!", "Cada vegada que superes certs nivells es destapa una rajola nova. El joc fa servir sempre la més nova que tens.": "Cada vez que superas ciertos niveles se destapa una baldosa nueva. El juego usa siempre la más nueva que tienes.", "Així queden quatre peces juntes": "Así quedan cuatro piezas juntas", "Desbloquejada en superar el nivell {0}": "Desbloqueada al superar el nivel {0}", "La primera de la col·lecció": "La primera de la colección", "Veure totes les rajoles": "Ver todas las baldosas"});
 Object.assign(TR.en,{"Casa de poble": "Village house", "Terra cuita i blau fosc, com el terra de l’entrada de casa.": "Terracotta and deep blue, like the floor of a village hallway.", "Brisa de mar": "Sea breeze", "Blaus de la costa per jugar amb calma.": "Coastal blues for a calm game.", "Eixample": "Eixample", "Granats i ocres dels pisos de l’Eixample.": "The garnets and ochres of Eixample flats.", "Mas de l’Empordà": "Empordà farmhouse", "Colors de camp, d’oliveres i de sol de tarda.": "Colours of fields, olive trees and afternoon sun.", "Pedra catalana": "Catalan stone", "El panot de la flor: la peça de pedra grisa dels carrers de Barcelona. Si n’ajuntes quatre, a cada cantonada hi neix una flor nova.": "The flower paving tile: the grey stone piece of Barcelona’s streets. Put four together and a new flower appears at every corner.", "Modernista": "Modernista", "Verds i corals d’un vestíbul modernista.": "Greens and corals from a Modernista hallway.", "La rajola de la iaia": "Grandma’s tile", "La de tota la vida, amb flors i colors alegres.": "The classic one, with flowers and cheerful colours.", "Nit d’estiu": "Summer night", "Fosca i càlida, per jugar al vespre.": "Dark and warm, for evening games.", "Cala blava": "Blue cove", "L’aigua clara d’una cala amagada.": "The clear water of a hidden cove.", "Vinya": "Vineyard", "Raïm, pàmpols i terra del Penedès.": "Grapes, vine leaves and Penedès soil.", "Taronja i blau": "Orange and blue", "Els colors vius d’una cuina de poble.": "The bright colours of a village kitchen.", "Safrà": "Saffron", "Daurats càlids, com un arròs de diumenge.": "Warm golds, like a Sunday rice dish.", "Pissarra": "Slate", "Grisos de pissarra del Pirineu.": "Slate greys from the Pyrenees.", "Romaní": "Rosemary", "Verds de muntanya i flor de romaní.": "Mountain greens and rosemary flowers.", "Corall": "Coral", "Rosats i blaus de la Costa Brava.": "Pinks and blues of the Costa Brava.", "Or de festa major": "Festival gold", "La rajola dels grans dies: l’última de la col·lecció.": "The tile for big days: the last in the collection.", "Les teves rajoles": "Your tiles", "Propera: «{0}» en superar el nivell {1}": "Next: “{0}” when you pass level {1}", "Ja les tens totes!": "You’ve got them all!", "En ús": "In use", "Peça especial": "Special piece", "Encara tapada": "Still hidden", "Nova rajola!": "New tile!", "Cada vegada que superes certs nivells es destapa una rajola nova. El joc fa servir sempre la més nova que tens.": "Each time you pass certain levels a new tile is revealed. The game always uses the newest one you have.", "Així queden quatre peces juntes": "This is how four pieces look together", "Desbloquejada en superar el nivell {0}": "Unlocked by passing level {0}", "La primera de la col·lecció": "The first in the collection", "Veure totes les rajoles": "See all tiles"});
+Object.assign(TR.es,{"Nivell": "Nivel", "Partida del dia": "Partida del día"});
+Object.assign(TR.en,{"Nivell": "Level", "Partida del dia": "Daily game"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1050,7 +1081,7 @@ function startGame(mode, theme, seedStr, title, sub, nPairs=28, level=0){
   S.game={mode, theme, seedStr, title, sub, nPairs, level, tiles:g.tiles, sol:g.sol, sym0:g.tiles.map(t=>t.s), phrase:g.phrase, order:g.order, revealed:new Set(), solved:false, bonus:0, penalty:0, misses:0, reserve:Array(SLOTS).fill(null), sel:null, notes:[], song:songFor(seedStr),
     start:Date.now(), paused:0, pauseAt:null, pairs:0, attempts:0, over:false, busy:0, lastMatch:0, combo:0, dealt:false};
   S.sheet=null; S.solveMsg=''; S.tab='joc'; render(); }
-function restartSame(){ const g=S.game, a=g.attempts+1; startGame(g.mode,g.theme,g.seedStr,g.title,g.sub,g.nPairs,g.level); S.game.attempts=a; if(g.mode==='daily'){ S.dailyAtt=a; S.dailyFailed=null; } updateHUD(); }
+function restartSame(){ const g=S.game, a=g.attempts+1; S.noIntro=true; startGame(g.mode,g.theme,g.seedStr,g.title,g.sub,g.nPairs,g.level); S.game.attempts=a; if(g.mode==='daily'){ S.dailyAtt=a; S.dailyFailed=null; } updateHUD(); }
 const present = () => S.game.tiles.filter(t=>!t.gone);
 const elapsed = () => { const g=S.game; return Math.max(0,((g.pauseAt||Date.now())-g.start-g.paused)/1000); };
 const total = () => { const g=S.game; return Math.max(0, elapsed()+g.attempts*120+g.penalty+(g.hintPen||0)-g.bonus); };
@@ -1135,11 +1166,25 @@ window.addEventListener('resize',()=>{ if(S.tab==='joc'&&S.game) fitBoard(); });
 // El visor de Claude i Safari canvien l'alçada després de carregar: es reajusta el tauler cada cop que canvia la mida de l'espai
 let lastWrap=''; const RO = window.ResizeObserver ? new ResizeObserver(()=>{ const w=$('#boardwrap'); if(!w||S.tab!=='joc'||!S.game) return; const key=w.clientWidth+'x'+w.clientHeight; if(key!==lastWrap){ lastWrap=key; fitBoard(); } }) : null;
 function mountGame(){ fitBoard(); lastWrap=''; if(RO) RO.observe($('#boardwrap')); requestAnimationFrame(()=>fitBoard()); setTimeout(()=>{ if(S.tab==='joc') fitBoard(); },350); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(S.tab==='joc') fitBoard(); }); updateErrors(); updateTiles(); updateReserve(); updateHUD(); bindDrag(); const g=S.game;
-  if(!g.dealt){ g.dealt=true; if(!reduced){ const els=[...document.querySelectorAll('.board .tile')];
+  if(!g.dealt){ g.dealt=true; const skipIntro=S.noIntro||reduced; S.noIntro=false; const deal=()=>{ if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.remove('predeal'); if(!reduced){ const els=[...document.querySelectorAll('.board .tile')];
       els.sort((a,b)=>+a.style.zIndex - +b.style.zIndex).forEach((el,i)=>{ const z=Math.floor(+el.style.zIndex/1000);
         el.animate([{transform:'translateY(-60px) scale(.8) rotate(-6deg)',opacity:0},{transform:'none',opacity:1}],{duration:480,delay:z*220+i%26*18,easing:'cubic-bezier(.34,1.4,.64,1)',fill:'backwards'}); });
       [0,260,520].forEach((d,i)=>setTimeout(()=>click(900+i*200,.03),d+150)); }
-    g.start=Date.now()+(reduced?0:900); } }
+    g.start=Date.now()+(reduced?0:900); };
+    if(skipIntro) deal(); else introPostal(g, deal); } }
+function introInfo(g){ return g.mode==='level' ? [L('Nivell'), String(g.level)]
+  : g.mode==='daily' ? [L('Partida del dia'), todayLabel]
+  : g.mode==='repte' ? [L('Repte'), '⚔']
+  : g.mode==='calma' ? [L('Partida tranquil·la'), '☕'] : [g.title||'Melodia', '♪']; }
+function introPostal(g, done){ const ph=$('#phone'); document.querySelectorAll('.intro').forEach(x=>x.remove());
+  const [cap, big]=introInfo(g), x=senOf(g), bg=senURL(x), longBig=[...big].length>3;
+  const seal=`<div class="iseal"><span class="icap">${esc(cap)}</span><b class="${longBig?'long':''}">${esc(big)}</b><span class="isen">${esc(L(x.n))}</span></div>`;
+  const d=document.createElement('div'); d.className='intro'; d.setAttribute('role','img'); d.setAttribute('aria-label',cap+' '+big);
+  d.innerHTML=`<div class="ileaf l" style="--sen:${bg}"><div class="ipaper">${seal}</div></div><div class="ileaf r" style="--sen:${bg}"><div class="ipaper">${seal}</div></div>`;
+  ph.appendChild(d); const bd=document.querySelector('.board'); if(bd) bd.classList.add('predeal'); g.start=Date.now()+99999; let ended=false;
+  const open=()=>{ if(ended) return; ended=true; clearTimeout(t1); d.classList.add('open'); click(520,.05); setTimeout(()=>click(780,.035),120); done(); setTimeout(()=>d.remove(),900); };
+  const t1=setTimeout(open,1500); d.addEventListener('pointerdown',open); click(330,.04); }
+
 
 // ================= joc: tocar i arrossegar =================
 const srcOf = el => el.dataset.t!==undefined ? {k:'b',id:+el.dataset.t} : {k:'r',i:+el.dataset.r};
