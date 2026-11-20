@@ -559,6 +559,25 @@ body.prova .phone{height:calc(100% - 48px)}
 .cookiebar button.ck-si{background:#E9B949;color:#2A1F05}
 .linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--quiet);text-decoration:underline;cursor:pointer}
 
+
+/* v2: reptes, estadístiques, efectes */
+.chlist{list-style:none;padding:0;margin:10px 0 0}
+.chlist li{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.chlist li:last-child{border-bottom:0}
+.chic{flex:0 0 38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--jade-soft);font-weight:700;font-family:var(--serif);font-size:17px}
+.chlist li.ok .chic{background:#E3AE3B;color:#3A2A05}
+.chlist li.ok .chtx span{text-decoration:line-through;color:var(--quiet)}
+.chtx{flex:1;min-width:0;font-size:15px;line-height:1.3}
+.chtx .bar{margin:6px 0 2px}
+.chtx small{color:var(--quiet);font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 8px;margin-top:12px;text-align:center}
+.stats b{display:block;font-family:var(--serif);font-size:22px;line-height:1.1}
+.stats small{color:var(--quiet);font-size:13px}
+.tile.sel .face::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:2;background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.8) 48%,transparent 64%);background-size:260% 100%;animation:selshine 1.7s ease-in-out infinite}
+@keyframes selshine{0%{background-position:135% 0}55%,100%{background-position:-55% 0}}
+.tile.flyglow .face{box-shadow:0 0 16px 6px rgba(246,200,90,.85),0 0 34px 10px rgba(246,200,90,.35)!important}
+.glowfree .board .tile:not(.blocked):not(.gone):not(.sel):not(.target):not(.wrong) .face{outline:2.5px solid rgba(217,164,65,.85);outline-offset:-2px}
+@media (prefers-reduced-motion:reduce){ .tile.sel .face::before{animation:none;display:none} }
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -627,6 +646,8 @@ Object.assign(TR.es,{"No és la seva parella": "No es su pareja", "Mode tranquil
 Object.assign(TR.en,{"No és la seva parella": "That’s not its pair", "Mode tranquil": "Calm mode", "Sense límit": "No limit", "Partida tranquil·la": "Calm game", "Sense rellotge i sense puntuar": "No clock and no score", "Una altra partida tranquil·la": "Another calm game", "Sense pressa": "No rush", "Barreja les fitxes que queden: el tauler tornarà a tenir solució.": "Shuffle the tiles that are left: the board will be solvable again.", "Pots barrejar les fitxes que queden un cop per tauler. Suma 1 minut.": "You can shuffle the remaining tiles once per board. It adds 1 minute.", "Has gastat les fallades gratuïtes d’avui, però pots continuar jugant en mode tranquil.": "You’ve used up today’s free fails, but you can keep playing in calm mode.", "Barrejar les fitxes": "Shuffle the tiles", "Barrejar les fitxes (+1 min)": "Shuffle the tiles (+1 min)", "Jugar en mode tranquil": "Play in calm mode", "Desfer l’última fitxa": "Undo the last tile", "Desfer": "Undo", "Fitxes barrejades: ara el tauler torna a tenir solució": "Tiles shuffled: the board is solvable again", "Fitxa tornada al seu lloc": "Tile put back", "Acaba el refrany": "Finish the proverb", "Amb ajuda estalvies la meitat: <b>−{0} s</b>": "With help you save half: <b>−{0} s</b>", "Prefereixo escriure-la": "I’d rather type it", "No me’n surto: acaba el refrany": "I’m stuck: finish the proverb", "No cal escriure accents, apòstrofs ni comes, i una lletra equivocada no compta.": "No need to type accents, apostrophes or commas, and one wrong letter doesn’t count.", "Refrany amagat: juga per descobrir-lo": "Proverb hidden: play to find it", "{0} dies de descans disponibles aquest mes": "{0} rest days left this month", "Millor ratxa: {0}": "Best streak: {0}", "El teu mes": "Your month", "{0} or · {1} plata · {2} bronze": "{0} gold · {1} silver · {2} bronze", "Cada dia jugat és una medalla: or sense pistes ni errors, plata amb ajuda, bronze si l’acabes. Si un dia no pots jugar, un dia de descans guarda la ratxa (2 cada mes), i tens marge fins a les 3 de la matinada.": "Every day you play earns a medal: gold with no hints or mistakes, silver with help, bronze if you finish. If you can’t play one day, a rest day keeps your streak (2 a month), and you have until 3 a.m.", "Sense rellotge, amb pistes gratis i sense puntuar. Sempre disponible.": "No clock, free hints and no score. Always available.", "Si se t’acaben, pots seguir jugant en mode tranquil.": "If you run out, you can keep playing in calm mode.", "Intents il·limitats durant 24 hores · sense renovació": "Unlimited tries for 24 hours · doesn’t renew", "El Plus mensual i l’anual es renoven automàticament i es poden cancel·lar en qualsevol moment des de Perfil. El passi del dia no es renova.": "Monthly and yearly Plus renew automatically and you can cancel any time from Profile. The day pass doesn’t renew.", "Número a la cantonada": "Number in the corner", "Ajuda a distingir fitxes semblants": "Helps tell similar tiles apart", "Recordatori diari": "Daily reminder", "A les 10:00, només si encara no has jugat": "At 10:00, only if you haven’t played yet", "Compres restaurades (simulat)": "Purchases restored (simulated)", "Restaurar compres": "Restore purchases", "El progrés es guarda sense registrar-te": "Your progress is saved without signing up", "Si t’encalles:": "If you get stuck:", "pots desfer l’última fitxa del faristol i, si ja no queden parelles, barrejar les fitxes. Tots els taulers tenen solució.": "you can undo the last tile on the rack and, if there are no pairs left, shuffle the tiles. Every board can be solved.", "Versió 2 · esborrany": "Version 2 · draft", "Pista": "Hint"});
 Object.assign(TR.es,{"Si el faristol és ple i no queda cap parella, pots barrejar les fitxes un cop. Si ja has barrejat, és fallada.": "Si el atril está lleno y no queda ninguna pareja, puedes barajar las fichas una vez. Si ya has barajado, es fallo."});
 Object.assign(TR.en,{"Si el faristol és ple i no queda cap parella, pots barrejar les fitxes un cop. Si ja has barrejat, és fallada.": "If the rack is full and there are no pairs left, you can shuffle the tiles once. If you’ve already shuffled, you fail."});
+Object.assign(TR.es,{"Fes un combo de ×3": "Haz un combo de ×3", "Acaba un tauler sense fer servir cap pista": "Termina un tablero sin usar ninguna pista", "Resol el refrany quan encara hi hagi 8 lletres amagades": "Resuelve el refrán cuando aún queden 8 letras ocultas", "Endevina la cançó amagada": "Adivina la canción escondida", "Acaba una partida tranquil·la": "Termina una partida tranquila", "Fes 40 parelles avui": "Haz 40 parejas hoy", "Fes 3 parelles amb fitxes del faristol": "Haz 3 parejas con fichas del atril", "Acaba un tauler en menys de 6 minuts": "Termina un tablero en menos de 6 minutos", "Repte complert: {0}": "Reto cumplido: {0}", "Els tres reptes d’avui! Medalla d’or al calendari": "¡Los tres retos de hoy! Medalla de oro en el calendario", "Reptes d’avui": "Retos de hoy", "{0} de 3": "{0} de 3", "Compten a qualsevol partida. Amb els tres, medalla d’or al calendari.": "Cuentan en cualquier partida. Con los tres, medalla de oro en el calendario.", "Estadístiques": "Estadísticas", "Partides": "Partidas", "Guanyades": "Ganadas", "Millor temps": "Mejor tiempo", "Temps mitjà": "Tiempo medio", "Sense pistes": "Sin pistas", "Millor combo": "Mejor combo", "Dades d’exemple més les partides que facis ara.": "Datos de ejemplo más las partidas que hagas ahora.", "So ambient": "Sonido ambiente", "Cap": "Ninguno", "Mar": "Mar", "Nit d’estiu": "Noche de verano", "Pluja": "Lluvia", "Il·luminar les fitxes lliures": "Iluminar las fichas libres", "Un contorn daurat a les fitxes que es poden moure": "Un contorno dorado en las fichas que se pueden mover"});
+Object.assign(TR.en,{"Fes un combo de ×3": "Make a ×3 combo", "Acaba un tauler sense fer servir cap pista": "Finish a board without using any hints", "Resol el refrany quan encara hi hagi 8 lletres amagades": "Solve the proverb with 8 letters still hidden", "Endevina la cançó amagada": "Guess the hidden song", "Acaba una partida tranquil·la": "Finish a calm game", "Fes 40 parelles avui": "Make 40 pairs today", "Fes 3 parelles amb fitxes del faristol": "Make 3 pairs using tiles from the rack", "Acaba un tauler en menys de 6 minuts": "Finish a board in under 6 minutes", "Repte complert: {0}": "Challenge done: {0}", "Els tres reptes d’avui! Medalla d’or al calendari": "All three of today’s challenges! Gold medal on your calendar", "Reptes d’avui": "Today’s challenges", "{0} de 3": "{0} of 3", "Compten a qualsevol partida. Amb els tres, medalla d’or al calendari.": "Any game counts. Complete all three for a gold medal on your calendar.", "Estadístiques": "Statistics", "Partides": "Games", "Guanyades": "Won", "Millor temps": "Best time", "Temps mitjà": "Average time", "Sense pistes": "No hints", "Millor combo": "Best combo", "Dades d’exemple més les partides que facis ara.": "Sample data plus the games you play now.", "So ambient": "Ambient sound", "Cap": "None", "Mar": "Sea", "Nit d’estiu": "Summer night", "Pluja": "Rain", "Il·luminar les fitxes lliures": "Highlight free tiles", "Un contorn daurat a les fitxes que es poden moure": "A gold outline on tiles you can move"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -765,7 +786,7 @@ const isLetter = ch => /[A-Za-zÀ-ÿ]/.test(ch);
 
 // ================= estat =================
 const S = { unlocked:1, lvGroup:null, tab:'avui', fails:2, pass:false, plus:false, streak:12, found:5,
-  set:{pal:'cap', size:'normal', hc:false, dark:false, hideTime:false, sound:true, vib:false, left:false, idx:true, remind:false},
+  set:{pal:'cap', size:'normal', hc:false, dark:false, hideTime:false, sound:true, vib:false, left:false, idx:true, remind:false, amb:'cap', glow:false},
   game:null, sheet:null, lbScope:'comarca', lbPeriod:'Diari', leagues:[{id:'comarca',pub:'comarca'},{id:'global',pub:'global'}], dailyDone:null, solveMsg:'', rest:2, best:30 };
 
 S.solvedIdx = new Set(PHRASES.map((p,i)=>i).filter(i=>PHRASES[i]!==pickPhrase(todaySeed)).filter((i,k)=>k%2===1).slice(0,5)); S.found = S.solvedIdx.size;
@@ -874,7 +895,7 @@ function songCard(){ const g=S.game, a=g.songAns;
     + (a==null ? `<div class="songopts">${songOpts().map((x,i)=>`<button onclick="answerSong(${i})">${esc(L(x.k))}</button>`).join('')}</div>`
                : `<p class="songres">${L('Era «{0}»',esc(L(g.song.k)))}</p>`); }
 function answerSong(i){ const g=S.game; if(g.songAns!=null) return; g.songAns=songOpts()[i];
-  if(g.songAns===g.song) S.songsOK=(S.songsOK||0)+1; const el=$('#songq'); if(el) el.innerHTML=songCard(); playMine(); drawPostal(); }
+  if(g.songAns===g.song){ S.songsOK=(S.songsOK||0)+1; chTrack('song'); } const el=$('#songq'); if(el) el.innerHTML=songCard(); playMine(); drawPostal(); }
 function melHTML(){ const ns=S.game.notes||[]; if(!ns.length) return ''; const lo=Math.min(...ns.map(n=>n.note)), hi=Math.max(...ns.map(n=>n.note));
   return `<div class="mel" id="mel" aria-hidden="true">${ns.map(n=>`<i class="${n.combo>1?'c2':''}" style="height:${18+(n.note-lo)/Math.max(1,hi-lo)*78}%"></i>`).join('')}</div>`; }
 document.addEventListener('pointerdown',()=>{ if(S.set.sound&&audio()&&ac.state==='suspended') ac.resume(); },true);
@@ -1068,11 +1089,11 @@ async function doMatch(a,b,dragClone){ const g=S.game; g.busy++; const ea=elOf(a
   const A= dragClone ? freeze(dragClone) : cloneAt(ea); const B=cloneAt(eb);
   if(a.k==='b') g.tiles[a.id].gone=true; else g.reserve[a.i]=null;
   if(b.k==='b') g.tiles[b.id].gone=true; else g.reserve[b.i]=null;
-  g.sel=null; g.lastPark=null; const now=Date.now(); g.combo=(now-g.lastMatch<3500)?g.combo+1:1; g.lastMatch=now; const idx=g.pairs; g.pairs++;
+  g.sel=null; g.lastPark=null; const now=Date.now(); g.combo=(now-g.lastMatch<3500)?g.combo+1:1; g.lastMatch=now; const idx=g.pairs; g.pairs++; chTrack('pair',{fromRes:a.k==='r'||b.k==='r', combo:g.combo});
   if(ea) ea.style.visibility=''; updateTiles(); updateReserve(); updateHUD();
   const ca={x:A.r.x+A.r.w/2,y:A.r.y+A.r.h/2}, cb={x:B.r.x+B.r.w/2,y:B.r.y+B.r.h/2};
   const m = dragClone ? cb : {x:(ca.x+cb.x)/2, y:Math.min(ca.y,cb.y)-10};
-  const T=reduced?200:(dragClone?420:560);
+  A.c.classList.add('flyglow'); B.c.classList.add('flyglow'); const T=reduced?200:(dragClone?420:560);
   const fly=(o,c)=>{ const dx=m.x-c.x, dy=m.y-c.y; return o.c.animate([
       {transform:'translate(0,0) scale(1)'},{transform:`translate(${dx*.1}px,${dy*.1-10}px) scale(1.08)`,offset:.2},
       {transform:`translate(${dx}px,${dy}px) scale(1.12)`,opacity:1,offset:.72},{transform:`translate(${dx}px,${dy}px) scale(.15) rotate(20deg)`,opacity:0}],
@@ -1090,13 +1111,13 @@ function flyLetter(from, li, delay){ const to=letterXY(li); if(!to||reduced){ re
 function checkState(){ const g=S.game; if(g.over) return;
   if(present().length===0 && g.reserve.every(v=>!v)){ g.over=true; g.won=true; g.pauseAt=Date.now(); if(g.mode==='level'&&g.level===S.unlocked){ S.unlocked=g.level+1; g.newUnlock=true; } return celebrate(); }
   if(g.reserve.every(Boolean) && !hasMove()){ g.over=true; g.pauseAt=Date.now(); if(g.mode==='daily') S.dailyFailed='blocked'; setTimeout(()=>{ click(220,.08); S.sheet='blocked'; renderSheet(); },450); } }
-async function celebrate(){ const g=S.game; await wait(250); if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.add('won'); await wait(450); if(S.game!==g) return; petals(); const tt=playSong(g.song); await wait(Math.min(tt*1000, 3500));
+async function celebrate(){ const g=S.game; chTrack('win',{hints:g.hints||0, time:elapsed(), mode:g.mode}); await wait(250); if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.add('won'); await wait(450); if(S.game!==g) return; petals(); const tt=playSong(g.song); await wait(Math.min(tt*1000, 3500));
   await wait(g.solved?1400:500); if(S.game!==g||S.tab!=='joc'||S.sheet==='solve'||S.sheet==='win') return;
   if(g.solved){ S.sheet='win'; renderSheet(); } else { S.sheet='solve'; S.solveMsg='final'; renderSheet(); } }
 function openSolve(){ const g=S.game; if(g.solved||g.busy||(g.over&&!g.won)) return; if(!g.over&&!g.pauseAt) g.pauseAt=Date.now(); S.sheet='solve'; S.solveMsg=''; renderSheet(); setTimeout(()=>{ const i=$('#solveIn'); if(i) i.focus(); },350); }
 function closeSolve(){ const g=S.game; S.sheet=null; renderSheet(); if(!g.over) resume(); }
 function trySolve(f){ const g=S.game, inp=$('#solveIn'), v=f?g.phrase:(inp?inp.value:''); if(!norm(v)) return;
-  if(f||closeEnough(norm(v),norm(g.phrase))){ const hid=hiddenCount(); g.solved=true; g.bonus=Math.round(hid*BONUS_PER*(f||1)); const pi=PHRASES.indexOf(g.phrase); g.newPhrase=pi>=0&&!S.solvedIdx.has(pi); if(pi>=0) S.solvedIdx.add(pi); S.found=S.solvedIdx.size;
+  if(f||closeEnough(norm(v),norm(g.phrase))){ const hid=hiddenCount(); g.solved=true; chTrack('phrase',{hid}); g.bonus=Math.round(hid*BONUS_PER*(f||1)); const pi=PHRASES.indexOf(g.phrase); g.newPhrase=pi>=0&&!S.solvedIdx.has(pi); if(pi>=0) S.solvedIdx.add(pi); S.found=S.solvedIdx.size;
     bell(14,0,.18,1.6); bell(21,.12,.14,1.6); bell(26,.24,.14,2.2);
     let k=0; g.order.forEach(li=>{ if(!g.revealed.has(li)) revealLetter(li, 300+(k++)*40); });
     setTimeout(()=>document.querySelectorAll('#phrase .lc').forEach((n,j)=>setTimeout(()=>n.classList.add('win'),j*25)), 300+k*40);
@@ -1126,11 +1147,71 @@ function startCalm(){ S.calmN=(S.calmN||0)+1; startGame('calma','trad','calma-'+
 function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Date(y,m+1,0).getDate(), td=today.getDate(), first=(new Date(y,m,1).getDay()+6)%7, r=rng('mes'+y+'-'+m), done=S.dailyDone;
   let cells=[1,2,3,4,5,6,0].map(d=>`<b>${DAYS[d]}</b>`).join(''); for(let i=0;i<first;i++) cells+='<i class="e"></i>';
   const cnt={or:0,pl:0,br:0}, wi=(today.getDay()+6)%7, restD= wi>1 ? td-(wi-1) : -1; // el dimarts d'aquesta setmana, com a la vista de la setmana
-  for(let d=1;d<=dn;d++){ let c='', t=String(d); if(d<td){ const v=r(); if(d===restD){ c='rest'; t='🌙'; } else if(v<.42){ c='or'; cnt.or++; } else if(v<.78){ c='pl'; cnt.pl++; } else { c='br'; cnt.br++; } } else if(d===td){ c=done?'or':'avui'; if(done) cnt.or++; }
+  for(let d=1;d<=dn;d++){ let c='', t=String(d); if(d<td){ const v=r(); if(d===restD){ c='rest'; t='🌙'; } else if(v<.42){ c='or'; cnt.or++; } else if(v<.78){ c='pl'; cnt.pl++; } else { c='br'; cnt.br++; } } else if(d===td){ const au=done||chAll(); c=au?'or':'avui'; if(au) cnt.or++; }
     cells+=`<i class="${c}">${t}</i>`; }
   return `<div class="card"><div class="row"><b>${L('El teu mes')} · ${MONTHS[m]}</b><span class="muted" style="font-size:13px">${L('{0} or · {1} plata · {2} bronze',cnt.or,cnt.pl,cnt.br)}</span></div>
     <div class="mcal">${cells}</div>
     <p class="muted" style="font-size:14px;margin:10px 0 0">${L('Cada dia jugat és una medalla: or sense pistes ni errors, plata amb ajuda, bronze si l’acabes. Si un dia no pots jugar, un dia de descans guarda la ratxa (2 cada mes), i tens marge fins a les 3 de la matinada.')}</p></div>`; }
+
+// ================= Reptes del dia (inspirats en els reptes diaris del Mahjong de Microsoft) =================
+const CH_POOL=[
+ {k:'combo', t:'Fes un combo de ×3', n:1, ic:'⚡'},
+ {k:'nohint', t:'Acaba un tauler sense fer servir cap pista', n:1, ic:'💡'},
+ {k:'early', t:'Resol el refrany quan encara hi hagi 8 lletres amagades', n:1, ic:'Aa'},
+ {k:'song', t:'Endevina la cançó amagada', n:1, ic:'♪'},
+ {k:'calm', t:'Acaba una partida tranquil·la', n:1, ic:'☕'},
+ {k:'pairs', t:'Fes 40 parelles avui', n:40, ic:'🀄'},
+ {k:'res', t:'Fes 3 parelles amb fitxes del faristol', n:3, ic:'⇅'},
+ {k:'fast', t:'Acaba un tauler en menys de 6 minuts', n:1, ic:'⏱'},
+];
+function todayCh(){ if(S.ch) return S.ch; const r=rng('reptes'+todaySeed), a=CH_POOL.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return S.ch=a.slice(0,3).map(c=>({...c,p:0})); }
+const chAll = () => todayCh().every(c=>c.p>=c.n);
+function chTrack(ev,d){ d=d||{};
+  if(ev==='pair'&&d.combo) S.st.combo=Math.max(S.st.combo,d.combo);
+  todayCh().forEach(c=>{ if(c.p>=c.n) return; let inc=0;
+    if(ev==='pair'){ if(c.k==='pairs') inc=1; if(c.k==='res'&&d.fromRes) inc=1; if(c.k==='combo'&&d.combo>=3) inc=1; }
+    if(ev==='win'){ if(c.k==='nohint'&&!d.hints) inc=1; if(c.k==='calm'&&d.mode==='calma') inc=1; if(c.k==='fast'&&d.mode!=='calma'&&d.time<360) inc=1; }
+    if(ev==='phrase'&&c.k==='early'&&d.hid>=8) inc=1;
+    if(ev==='song'&&c.k==='song') inc=1;
+    if(inc){ c.p=Math.min(c.n,c.p+inc); if(c.p>=c.n) chDone(c); } }); }
+function chDone(c){ const all=chAll(); setTimeout(()=>{ toast('🏅 '+L('Repte complert: {0}',L(c.t))); bell(19,0,.14,1.4); bell(24,.12,.12,1.6);
+  if(all) setTimeout(()=>{ toast('🥇 '+L('Els tres reptes d’avui! Medalla d’or al calendari')); bell(14,0,.14,1.6); bell(21,.1,.12,1.6); bell(26,.2,.12,2.2); },2200); },1300); }
+function chCard(){ const cs=todayCh(), n=cs.filter(c=>c.p>=c.n).length;
+  return `<div class="card"><div class="row"><b>${L('Reptes d’avui')}</b><span class="muted" style="font-size:14px">${L('{0} de 3',n)}${n===3?' · 🥇':''}</span></div>
+    <ul class="chlist">${cs.map(c=>{ const ok=c.p>=c.n; return `<li class="${ok?'ok':''}"><span class="chic" aria-hidden="true">${ok?'✓':c.ic}</span><div class="chtx"><span>${L(c.t)}</span>${c.n>1&&!ok?`<div class="bar"><span style="width:${c.p/c.n*100}%"></span></div><small>${c.p} / ${c.n}</small>`:''}</div></li>`; }).join('')}</ul>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">${L('Compten a qualsevol partida. Amb els tres, medalla d’or al calendari.')}</p></div>`; }
+
+// ================= Estadístiques =================
+S.st={played:86, won:78, best:298, avgSum:78*471, nohint:39, combo:6};
+function stCount(won){ const g=S.game, st=S.st; st.played++; if(!won) return; st.won++;
+  if(g.mode!=='calma'){ const t=Math.round(total()); st.best=Math.min(st.best,t); st.avgSum+=t; } else st.avgSum+=st.avgSum/Math.max(1,st.won-1);
+  if(!g.hints) st.nohint++; }
+function statsCard(){ const s=S.st, pct=Math.round(s.won/Math.max(1,s.played)*100);
+  return `<div class="card"><b>${L('Estadístiques')}</b><div class="stats">
+    ${[[s.played,L('Partides')],[pct+'%',L('Guanyades')],[fmt(s.best),L('Millor temps')],[fmt(s.avgSum/Math.max(1,s.won)),L('Temps mitjà')],[s.nohint,L('Sense pistes')],['×'+s.combo,L('Millor combo')]].map(([v,l])=>`<div><b>${v}</b><small>${l}</small></div>`).join('')}</div>
+    <p class="fine" style="margin:8px 0 0">${L('Dades d’exemple més les partides que facis ara.')}</p></div>`; }
+
+// ================= So ambient (sintetitzat, sense enregistraments) =================
+let ambNode=null, ambPrevT=null;
+function ambStop(){ if(!ambNode||!ac) { ambNode=null; return; } const n=ambNode; ambNode=null; try{ n.g.gain.cancelScheduledValues(ac.currentTime); n.g.gain.setTargetAtTime(0,ac.currentTime,.35); }catch(e){}
+  setTimeout(()=>{ n.stop.forEach(x=>{ try{ x.stop(); }catch(e){} }); },1800); }
+function ambStart(){ const k=S.set.amb; if(!k||k==='cap'||!S.set.sound||!audio()) return ambStop(); if(ambNode&&ambNode.k===k) return; ambStop();
+  const t=ac.currentTime, len=ac.sampleRate*4, buf=ac.createBuffer(1,len,ac.sampleRate), d=buf.getChannelData(0); let last=0;
+  for(let i=0;i<len;i++){ const w=Math.random()*2-1; if(k==='pluja') d[i]=w*.5; else { last=(last+.02*w)/1.02; d[i]=last*3.5; } }
+  const src=ac.createBufferSource(); src.buffer=buf; src.loop=true; const f=ac.createBiquadFilter(), g=ac.createGain(); g.gain.value=0; const stop=[src];
+  src.connect(f).connect(g).connect(ac.destination);
+  if(k==='mar'){ f.type='lowpass'; f.frequency.value=650; g.gain.setTargetAtTime(.07,t,1.2);
+    const lfo=ac.createOscillator(), lg=ac.createGain(); lfo.frequency.value=.11; lg.gain.value=.055; lfo.connect(lg).connect(g.gain); lfo.start(); stop.push(lfo); }
+  else if(k==='pluja'){ f.type='highpass'; f.frequency.value=1500; g.gain.setTargetAtTime(.03,t,1.2); }
+  else { f.type='lowpass'; f.frequency.value=280; g.gain.setTargetAtTime(.02,t,1.2); // nit d'estiu: aire suau i grills
+    const car=ac.createOscillator(), a=ac.createGain(), b=ac.createGain(), m=ac.createOscillator(), mg=ac.createGain(), gate=ac.createOscillator(), gg=ac.createGain(), cv=ac.createGain();
+    car.frequency.value=4400; a.gain.value=.5; m.type='square'; m.frequency.value=30; mg.gain.value=.5; m.connect(mg).connect(a.gain);
+    b.gain.value=.5; gate.type='square'; gate.frequency.value=.9; gg.gain.value=.5; gate.connect(gg).connect(b.gain); cv.gain.value=0; cv.gain.setTargetAtTime(.012,t,1.5);
+    car.connect(a).connect(b).connect(cv).connect(ac.destination); [car,m,gate].forEach(o=>{ o.start(); stop.push(o); });
+    const og=g.gain; ambNode={k,g:{gain:{ cancelScheduledValues:x=>{ og.cancelScheduledValues(x); cv.gain.cancelScheduledValues(x); }, setTargetAtTime:(v,x,c)=>{ og.setTargetAtTime(v,x,c); cv.gain.setTargetAtTime(v,x,c); } }},stop}; src.start(); return; }
+  src.start(); ambNode={k,g,stop}; }
+function ambPreview(){ clearTimeout(ambPrevT); ambStart(); ambPrevT=setTimeout(()=>{ if(S.tab!=='joc') ambStop(); },4000); }
 const canRetry = () => S.pass || S.plus || S.fails>0;
 function useRetry(){ if(!(S.pass||S.plus)) S.fails--; S.sheet=null; renderSheet(); restartSame(); }
 // ================= pantalles =================
@@ -1151,7 +1232,7 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
     ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
   </div>
   <div class="card"><div class="row"><b>${L('La teva setmana')}</b><span class="muted" style="font-size:14px">${L('Ratxa: {0} dies',S.streak+(done?1:0))}</span></div><div class="week">${week}</div><p class="streaknote">🌙 ${L('{0} dies de descans disponibles aquest mes',S.rest)} · ${L('Millor ratxa: {0}',S.best)}</p></div>
-  ${monthCard()}
+  ${chCard()}${monthCard()}
   <div class="card"><b>${L('La frase d’ahir')}</b><p class="muted ans" style="margin:4px 0 8px;font-size:15px">${L('La va resoldre el 64% dels jugadors · dades d’exemple')}</p>
     <button class="btn secondary" style="min-height:44px;font-size:16px" onclick="playYesterday(this)">${L('Mostrar la resposta')}</button></div>
   <div class="card listen cardbtn" role="button" tabindex="0" onclick="startCalm()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span class="playbtn" aria-hidden="true">☕</span>
@@ -1253,13 +1334,14 @@ function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgr
   <div class="card"><div class="row"><div><b>Melodia Plus</b><p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Intents il·limitats, arxiu de taulers i frases, i lligues.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div>
     <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="toast('${L('Compres restaurades (simulat)')}')">${L('Restaurar compres')}</button> · <span class="muted">${L('El progrés es guarda sense registrar-te')}</span></p></div>
   <div class="card"><div class="row"><div><b>🎁 ${L('Regala Melodia')}</b><p class="muted" style="font-size:15px">${L('Un any de Plus per a qui tu vulguis. Li arriba ja activat, sense haver de pagar res.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='gift';renderSheet()">${L('Regalar')}</button></div></div>
-  ${provaCard()}
+  ${statsCard()}
   <h2>${L('Ajustos')}</h2>
   <b>${L('Idioma')}</b><div class="seg" role="group" aria-label="${L('Idioma')}">${[['ca','Català'],['es','Español'],['en','English']].map(([k,l])=>`<button lang="${k}" class="${LANG===k?'on':''}" aria-pressed="${LANG===k}" onclick="setLang('${k}')">${l}</button>`).join('')}</div>
   <b>${L('Colors')}</b><div class="palsw">${[['cap',L('Terracota')],['lla',L('Mar')],['nit',L('Nit d’estiu')]].map(([k,l])=>`<button class="${S.set.pal===k?'on':''}" onclick="S.set.pal='${k}';render()"><i style="background-image:${rajolaURL('mostra'+k,RPAL[k])};background-size:34px 34px"></i>${l}</button>`).join('')}</div>
   <b>${L('Mida de les fitxes')}</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
   ${sw('hc',L('Alt contrast'),L('Fitxes bloquejades amb trama'))}${sw('idx',L('Número a la cantonada'),L('Ajuda a distingir fitxes semblants'))}${sw('dark',L('Mode nit'),'')}${sw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}
-  ${sw('sound',L('So i melodia'),'')}${sw('vib',L('Vibració'),'')}${sw('remind',L('Recordatori diari'),L('A les 10:00, només si encara no has jugat'))}${sw('left',L('Mode esquerrà'),L('Pausa i reserva canvien de costat'))}
+  ${sw('sound',L('So i melodia'),'')}${sw('vib',L('Vibració'),'')}<b>${L('So ambient')}</b><div class="seg" role="group" aria-label="${L('So ambient')}">${[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')]].map(([k,l])=>`<button class="${S.set.amb===k?'on':''}" aria-pressed="${S.set.amb===k}" onclick="S.set.amb='${k}';render();ambPreview()">${l}</button>`).join('')}</div>
+  ${sw('glow',L('Il·luminar les fitxes lliures'),L('Un contorn daurat a les fitxes que es poden moure'))}${sw('remind',L('Recordatori diari'),L('A les 10:00, només si encara no has jugat'))}${sw('left',L('Mode esquerrà'),L('Pausa i reserva canvien de costat'))}
   <button class="btn secondary" style="margin-top:14px" onclick="S.unlocked=41;toast('${L('Prototip: nivells 1–40 desbloquejats')}')">${L('Prototip: desbloquejar tots els nivells')}</button>
   <p class="fine">${L('Sense anuncis. Mai.')}<br>${L('Prototip de disseny · Melodia')}</p></div>${tabsBar()}`; }
 
@@ -1390,7 +1472,7 @@ function vSheet(){ const g=S.game;
       <div class="stack">${next}
       <button class="btn secondary" onclick="S.sheet=null;go('avui')">${L('Tornar a l’inici')}</button></div>`); }
   return ''; }
-function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; if((S.sheet==='win'||S.sheet==='blocked')&&S.game&&!S.game.counted){ S.game.counted=true; markPlayed(); const g=S.game; track('level_end',{ success:S.sheet==='win', mode:g.mode, level:g.level||0, segons:S.sheet==='win'?Math.round(total()):null, frase:!!g.solved, errors:g.errors||0, pistes:g.hints||0, motiu:g.failReason||null, partides:PV.games }); } if(S.sheet==='instr') track('tutorial_begin'); if(S.sheet==='sortlg') bindSortDrag(); if(S.sheet==='win'){ S.postalBlob=null; drawPostal(); } if(S.tab==='joc'&&S.game&&$('#solveBtn')) updateHUD(); if(S.sheet&&S.sheet!=='solve'){ const f=$('#sheet .sheet button'); if(f) f.focus({preventScroll:true}); } const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
+function renderSheet(){ $('#sheet').innerHTML = S.sheet ? vSheet() : ''; if((S.sheet==='win'||S.sheet==='blocked')&&S.game&&!S.game.counted){ S.game.counted=true; markPlayed(); stCount(S.sheet==='win'); const g=S.game; track('level_end',{ success:S.sheet==='win', mode:g.mode, level:g.level||0, segons:S.sheet==='win'?Math.round(total()):null, frase:!!g.solved, errors:g.errors||0, pistes:g.hints||0, motiu:g.failReason||null, partides:PV.games }); } if(S.sheet==='instr') track('tutorial_begin'); if(S.sheet==='sortlg') bindSortDrag(); if(S.sheet==='win'){ S.postalBlob=null; drawPostal(); } if(S.tab==='joc'&&S.game&&$('#solveBtn')) updateHUD(); if(S.sheet&&S.sheet!=='solve'){ const f=$('#sheet .sheet button'); if(f) f.focus({preventScroll:true}); } const ph=$('#phone'); ph.scrollTop=0; ph.scrollLeft=0; const bw=$('#boardwrap'); if(bw&&!S.sheet){ bw.scrollLeft=Math.max(0,(bw.scrollWidth-bw.clientWidth)/2); }
   const cu=$('#countup'); if(cu){ const to=+cu.dataset.to, t0=performance.now(), d=reduced?1:1200;
     const tick=now=>{ const k=Math.min(1,(now-t0)/d), e=1-Math.pow(1-k,3); cu.textContent=fmt(to*e); if(k<1) requestAnimationFrame(tick); else { bell(14,0,.15,1.6); bell(21,.1,.12,1.6); bell(26,.2,.12,2.2);} };
     requestAnimationFrame(tick); } }
@@ -1510,9 +1592,9 @@ let toastT; function toast(m){ clearTimeout(toastT); document.querySelectorAll('
 function render(){ const ph=$('#phone');
   ph.style.setProperty('--mosaic-hero', rajolaURL(todaySeed));
   if(S.game) ph.style.setProperty('--mosaic', rajolaURL(S.game.seedStr, gamePal(S.game)));
-  ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'');
-  if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); }
-  else { const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
+  ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'')+(S.set.glow?' glowfree':'');
+  if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); ambStart(); }
+  else { ambStop(); const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
   renderSheet(); }
 setInterval(()=>{ if(S.tab==='joc'&&S.game&&!S.game.pauseAt) updateHUD(); },500);
 
