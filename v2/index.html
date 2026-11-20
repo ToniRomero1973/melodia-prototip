@@ -612,6 +612,13 @@ body.prova .phone{height:calc(100% - 48px)}
 .tile.flyglow .face{box-shadow:0 0 16px 6px rgba(246,200,90,.85),0 0 34px 10px rgba(246,200,90,.35)!important}
 .glowfree .board .tile:not(.blocked):not(.gone):not(.sel):not(.target):not(.wrong) .face{outline:2.5px solid rgba(217,164,65,.85);outline-offset:-2px}
 @media (prefers-reduced-motion:reduce){ .tile.sel .face::before{animation:none;display:none} }
+
+/* v2: ordenar lligues arrossegant */
+.lgchips button{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.lgchips.sorting button{transition:transform .15s ease}
+.lgchips button.lift{position:relative;z-index:3;transition:none!important;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.lghint{font-size:13px;color:var(--quiet);margin:-4px 0 10px}
+.lgsort.sorting li:not(.drag){transition:transform .15s ease}
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -686,6 +693,8 @@ Object.assign(TR.es,{"Acaba una partida per veure aquí els teus temps.": "Termi
 Object.assign(TR.en,{"Acaba una partida per veure aquí els teus temps.": "Finish a game to see your times here.", "Partida {0}": "Game {0}", "Temps de les últimes partides. Millor: {0}. Mitjana: {1}.": "Times of your latest games. Best: {0}. Average: {1}.", "mitjana": "average", "Les teves últimes {0} partides acabades. La daurada és la millor.": "Your last {0} finished games. The gold one is your best.", "Diària": "Daily", "Tranquil·la": "Calm", "Reptes": "Challenges", "{0}% de partides guanyades": "{0}% of games won", "guanyades": "won", "Els teus temps": "Your times", "Encerts": "Hits", "Cançons": "Songs", "Com jugues": "How you play", "Tot comença a zero. Cada partida que acabis sortirà aquí.": "Everything starts at zero. Every game you finish will show up here.", "Solució des del principi": "Solution from the start", "Així es resol": "Here’s how it’s solved", "Saltar": "Skip", "Veure la solució": "See the solution", "La partida no comptarà": "This game won’t count", "Ja has vist la solució d’avui. Demà hi haurà un tauler nou!": "You’ve already seen today’s solution. There’ll be a new board tomorrow!", "Així es resolia": "Here’s how it was solved", "Avui ja no puntues a la classificació, però demà hi haurà un tauler nou.": "You won’t score on the leaderboard today, but there’ll be a new board tomorrow.", "Aquesta partida no compta. La pots tornar a provar quan vulguis.": "This game doesn’t count. You can try it again whenever you like.", "Tornar a provar el mateix tauler": "Try the same board again", "Jugar una partida tranquil·la": "Play a calm game"});
 Object.assign(TR.es,{"Cada dia que jugues és una medalla: or si acabes sense ajuda, plata si acabes amb ajuda i bronze si hi jugues però no l’acabes. Si un dia no pots jugar, un dia de descans guarda la ratxa (en tens 2 cada mes).": "Cada día que juegas es una medalla: oro si terminas sin ayuda, plata si terminas con ayuda y bronce si juegas pero no terminas. Si un día no puedes jugar, un día de descanso guarda la racha (tienes 2 cada mes)."});
 Object.assign(TR.en,{"Cada dia que jugues és una medalla: or si acabes sense ajuda, plata si acabes amb ajuda i bronze si hi jugues però no l’acabes. Si un dia no pots jugar, un dia de descans guarda la ratxa (en tens 2 cada mes).": "Every day you play earns a medal: gold if you finish without help, silver if you finish with help and bronze if you play but don’t finish. If you can’t play one day, a rest day keeps your streak (you get 2 a month)."});
+Object.assign(TR.es,{"Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.": "Mantén pulsada una liga y arrástrala para cambiar su orden.", "Ordre desat: «{0}» és ara la {1}a": "Orden guardado: «{0}» es ahora la {1}.ª"});
+Object.assign(TR.en,{"Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.": "Press and hold a league, then drag it to change the order.", "Ordre desat: «{0}» és ara la {1}a": "Order saved: “{0}” is now number {1}"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1397,7 +1406,8 @@ function perNote(){ return S.lbPeriod==='Diari'?L('Temps + 2 min per intent fall
 function vClass(){ const per=['Diari','Setmanal','Mensual'], lg=curLeague();
   const head=`<h1>${L('Classificació')}</h1>
   <div class="seg">${per.map(p=>`<button class="${S.lbPeriod===p?'on':''}" onclick="S.lbPeriod='${p}';render()">${L(p)}</button>`).join('')}</div>
-  <div class="chips lgchips" id="lgChips">${S.leagues.map(l=>`<button class="${lg&&lg.id===l.id?'on':''}" onclick="S.lbScope='${l.id}';render()"><span aria-hidden="true">${lgEm(l)}</span> ${esc(lgName(l))}</button>`).join('')}<button class="add" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir')}</button>${S.leagues.length>1?`<button class="add" onclick="S.sheet='sortlg';renderSheet()">⇅ ${L('Ordenar')}</button>`:''}</div>`;
+  <div class="chips lgchips" id="lgChips">${S.leagues.map(l=>`<button class="${lg&&lg.id===l.id?'on':''}" data-lg="${l.id}" onclick="if(!this._dragged){S.lbScope='${l.id}';render()}"><span aria-hidden="true">${lgEm(l)}</span> ${esc(lgName(l))}</button>`).join('')}<button class="add" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir')}</button>${S.leagues.length>1?`<button class="add" onclick="S.sheet='sortlg';renderSheet()">⇅ ${L('Ordenar')}</button>`:''}</div>
+  ${S.leagues.length>1?`<p class="lghint">${L('Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.')}</p>`:''}`;
   if(!lg) return `<div class="screen">${head}<div class="card famcard"><div class="giftbig" aria-hidden="true">🏆</div><b style="font-size:20px">${L('Encara no tens cap lliga')}</b>
     <p class="muted">${L('Crea’n una per a la teva gent o afegeix una classificació oberta.')}</p><button class="btn primary" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir una lliga')}</button></div></div>${tabsBar()}`;
   const body = lg.pub ? vPublic(lg) : lg.type==='parella' ? vDuel(lg) : vPrivate(lg);
@@ -1616,19 +1626,34 @@ function createLeague(){ const k=LG_TYPES[S.newType]?S.newType:'altra', n=($('#f
 function addPublic(k){ if(!S.leagues.some(l=>l.pub===k)) S.leagues.push({id:k,pub:k}); S.lbScope=k; S.sheet=null; render(); }
 function joinLeague(){ const j=S.links.league; let lg=S.leagues.find(l=>!l.pub&&l.name===j.name&&l.type===j.type);
   if(!lg){ lg={id:'l'+Date.now().toString(36),type:j.type,name:j.name}; S.leagues.push(lg); } go('class'); S.lbScope=lg.id; render(); toast(L('Ja ets a «{0}»',j.name)); }
-function refreshSort(){ if(S.tab==='class') $('#view').innerHTML=vClass(); const ul=$('#lgSort'); if(ul) ul.innerHTML=sortRows(); }
+function refreshSort(){ if(S.tab==='class'){ $('#view').innerHTML=vClass(); bindChipDrag(); } const ul=$('#lgSort'); if(ul) ul.innerHTML=sortRows(); }
 function moveLgTo(from,to){ to=Math.max(0,Math.min(S.leagues.length-1,to)); if(to!==from){ const [x]=S.leagues.splice(from,1); S.leagues.splice(to,0,x); } refreshSort();
   const li=$('#lgSort li[data-i="'+to+'"]'); if(li){ li.classList.add('moved'); const bt=li.querySelector(from>to?'button':'button+button'); if(bt&&!bt.disabled) bt.focus({preventScroll:true}); } }
 function moveLg(i,d){ moveLgTo(i,i+d); }
 function delLg(i){ const [l]=S.leagues.splice(i,1); toast(L('Has tret «{0}»',lgName(l))); refreshSort(); }
+
+function bindChipDrag(){ const c=$('#lgChips'); if(!c||S.leagues.length<2) return; const chips=[...c.querySelectorAll('button[data-lg]')];
+  if(!c.dataset.tm){ c.dataset.tm='1'; c.addEventListener('touchmove',e=>{ if(c.classList.contains('sorting')) e.preventDefault(); },{passive:false}); }
+  chips.forEach((b,i)=>{ b.addEventListener('contextmenu',e=>e.preventDefault());
+    b.addEventListener('pointerdown',e=>{ let drag=false, to=i; const x0=e.clientX, y0=e.clientY, pid=e.pointerId, rects=chips.map(x=>x.getBoundingClientRect()), w=rects[i].width+8;
+      const off=()=>{ clearTimeout(timer); b.removeEventListener('pointermove',mv); b.removeEventListener('pointerup',up); b.removeEventListener('pointercancel',up); };
+      const mv=ev=>{ if(!drag){ if(Math.hypot(ev.clientX-x0,ev.clientY-y0)>8) off(); return; } ev.preventDefault(); const dx=ev.clientX-x0, cx=rects[i].left+rects[i].width/2+dx;
+        b.style.transform=`translateX(${dx}px) scale(1.07)`; to=rects.filter((r,j)=>j!==i&&r.left+r.width/2<cx).length;
+        chips.forEach((o,j)=>{ if(j===i) return; const sh=(j>i&&j<=to)?-w:(j<i&&j>=to)?w:0; o.style.transform=sh?`translateX(${sh}px)`:''; }); };
+      const up=()=>{ off(); if(!drag) return; c.classList.remove('sorting'); b.classList.remove('lift'); chips.forEach(o=>o.style.transform=''); b._dragged=true; setTimeout(()=>{ b._dragged=false; },80);
+        if(to!==i){ const [x]=S.leagues.splice(i,1); S.leagues.splice(to,0,x); render(); toast(L('Ordre desat: «{0}» és ara la {1}a',lgName(x),to+1)); } };
+      const timer=setTimeout(()=>{ drag=true; vib(15); click(1100,.03); c.classList.add('sorting'); b.classList.add('lift'); try{ b.setPointerCapture(pid); }catch(_){} },380);
+      b.addEventListener('pointermove',mv); b.addEventListener('pointerup',up); b.addEventListener('pointercancel',up); }); }); }
 function bindSortDrag(){ const ul=$('#lgSort'); if(!ul) return;
-  ul.onpointerdown=e=>{ const h=e.target.closest('li'); if(!h||e.target.closest('button')) return; const li=h, from=+li.dataset.i, y0=e.clientY;
-    const mids=[...ul.children].map(r=>{ const q=r.getBoundingClientRect(); return q.top+q.height/2; });
-    e.preventDefault(); li.classList.add('drag'); try{ h.setPointerCapture(e.pointerId); }catch(_){}
-    const mv=ev=>{ li.style.transform=`translateY(${ev.clientY-y0}px)`; };
-    const up=ev=>{ h.removeEventListener('pointermove',mv); h.removeEventListener('pointerup',up); h.removeEventListener('pointercancel',up);
-      const y=mids[from]+(ev.clientY-y0); moveLgTo(from, mids.filter((m,i)=>i!==from&&m<y).length); };
-    h.addEventListener('pointermove',mv); h.addEventListener('pointerup',up); h.addEventListener('pointercancel',up); }; }
+  ul.onpointerdown=e=>{ const li=e.target.closest('li'); if(!li||e.target.closest('button')) return; const rows=[...ul.children], from=+li.dataset.i, y0=e.clientY;
+    const rects=rows.map(r=>r.getBoundingClientRect()), gap=rects[1]?Math.max(0,rects[1].top-rects[0].bottom):8, hgt=rects[from].height+gap; let to=from;
+    e.preventDefault(); li.classList.add('drag'); ul.classList.add('sorting'); try{ li.setPointerCapture(e.pointerId); }catch(_){}
+    const mv=ev=>{ const dy=ev.clientY-y0, cy=rects[from].top+rects[from].height/2+dy; li.style.transform=`translateY(${dy}px) scale(1.02)`;
+      to=rects.filter((r,j)=>j!==from&&r.top+r.height/2<cy).length;
+      rows.forEach((o,j)=>{ if(j===from) return; const sh=(j>from&&j<=to)?-hgt:(j<from&&j>=to)?hgt:0; o.style.transform=sh?`translateY(${sh}px)`:''; }); };
+    const up=()=>{ li.removeEventListener('pointermove',mv); li.removeEventListener('pointerup',up); li.removeEventListener('pointercancel',up);
+      ul.classList.remove('sorting'); rows.forEach(o=>o.style.transform=''); li.classList.remove('drag'); moveLgTo(from,to); };
+    li.addEventListener('pointermove',mv); li.addEventListener('pointerup',up); li.addEventListener('pointercancel',up); }; }
 function readLinks(){ const q=new URLSearchParams(location.search), out={};
   if(q.get('regal')==='1') out.gift={de:(q.get('de')||'').slice(0,30), msg:(q.get('msg')||'').slice(0,140)};
   const ln=(q.get('lliga')||q.get('familia')||'').trim().slice(0,30), lt=q.get('tipus'); if(ln) out.league={name:ln,type:LG_TYPES[lt]?lt:'familia'};
@@ -1711,12 +1736,13 @@ function buy(k){ if(k==='pass') S.pass=true; else S.plus=true; toast(k==='pass'?
 function playYesterday(el){ el.parentElement.querySelector('.ans').innerHTML='<b style="font-family:var(--serif);font-size:18px;color:var(--ink)">«'+esc(pickPhrase(yesterdaySeed))+'»</b>'; el.remove(); }
 let toastT; function toast(m){ clearTimeout(toastT); document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.setAttribute('aria-live','polite'); d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),2000); }
 
-function render(){ const ph=$('#phone');
+function render(){ const ph=$('#phone'); const vkey=S.tab+'|'+S.lvGroup, osc=$('#view .screen'), otop=(S._vkey===vkey&&osc)?osc.scrollTop:0; S._vkey=vkey;
   ph.style.setProperty('--mosaic-hero', rajolaURL(todaySeed));
   if(S.game) ph.style.setProperty('--mosaic', rajolaURL(S.game.seedStr, gamePal(S.game)));
   ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'')+(S.set.glow?' glowfree':'');
   if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); ambStart(); }
-  else { ambStop(); const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
+  else { ambStop(); const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ bindChipDrag(); const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
+  if(otop&&S.tab!=='joc'){ const nsc=$('#view .screen'); if(nsc) nsc.scrollTop=otop; }
   renderSheet(); }
 setInterval(()=>{ if(S.tab==='joc'&&S.game&&!S.game.pauseAt) updateHUD(); },500);
 
