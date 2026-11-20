@@ -1116,8 +1116,9 @@ function revealLetter(i, delay=0){ const g=S.game; g.revealed.add(i); setTimeout
 function letterXY(i){ const n=document.querySelector(`#phrase [data-l="${i}"]`); if(!n) return null; const r=rel(n); return {x:r.x+r.w/2, y:r.y+r.h/2}; }
 function fitBoard(){ const wrap=$('#boardwrap'), board=wrap&&wrap.querySelector('.board'); if(!board) return; const ph=$('#phone');
   ph.style.removeProperty('--tw'); ph.style.removeProperty('--th'); ph.style.removeProperty('--sym');
-  const base=dims(); const aw=wrap.clientWidth-6, ah=wrap.clientHeight-6;
-  const E=extents(S.game.tiles); const k=Math.min(1.3, (aw-4)/(E.cw*(base.W+2)+2), (ah-16)/(E.ch*(base.H+2))) * ({gran:1.15, mgran:1.3}[S.set.size]||1);
+  const base=dims(); base.H=base.W*70/66; const wcs=getComputedStyle(wrap); const aw=wrap.clientWidth-parseFloat(wcs.paddingLeft)-parseFloat(wcs.paddingRight)-4, ah=wrap.clientHeight-parseFloat(wcs.paddingTop)-parseFloat(wcs.paddingBottom)-4;
+  const E=extents(S.game.tiles), g2=base.G; const fit=Math.min((aw-16-g2*E.cw)/(E.cw*base.W), (ah-20-g2*E.ch)/(E.ch*base.H));
+  const k=Math.min(1.3*({gran:1.15, mgran:1.3}[S.set.size]||1), fit);
   if(k!==1){ ph.style.setProperty('--tw',(base.W*k).toFixed(1)+'px'); ph.style.setProperty('--th',(base.H*k).toFixed(1)+'px'); ph.style.setProperty('--sym',(base.W*k*.68).toFixed(1)+'px'); }
   const {W,H,G}=dims(); board.style.width=(E.cw*(W+G)+16)+'px'; board.style.height=(E.ch*(H+G)+20)+'px';
   S.game.tiles.forEach(t=>{ const el=board.querySelector(`[data-t="${t.id}"]`); if(!el) return; const p=tilePos(t); el.style.left=p.left+'px'; el.style.top=p.top+'px'; }); }
