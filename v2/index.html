@@ -619,6 +619,25 @@ body.prova .phone{height:calc(100% - 48px)}
 .lgchips button.lift{position:relative;z-index:3;transition:none!important;box-shadow:0 8px 18px rgba(0,0,0,.25)}
 .lghint{font-size:13px;color:var(--quiet);margin:-4px 0 10px}
 .lgsort.sorting li:not(.drag){transition:transform .15s ease}
+
+/* v2: col·lecció de rajoles */
+.senrow{display:flex;gap:6px;margin:10px 0 8px}
+.senrow i{flex:1;aspect-ratio:1;border-radius:8px;background-size:cover;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);display:grid;place-items:center;font-style:normal;font-size:14px}
+.senrow i.lk,.sengrid i.lk{background:var(--line);opacity:.8}
+.sengrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 10px;margin:10px 0 16px}
+.sengrid button{border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.sengrid button:disabled{cursor:default}
+.sengrid i{width:100%;aspect-ratio:1;border-radius:12px;background-size:50%;box-shadow:0 2px 6px rgba(0,0,0,.15);display:grid;place-items:center;font-style:normal;font-size:20px}
+.sengrid button.act i{outline:3px solid var(--jade);outline-offset:2px}
+.sengrid b{font-size:13.5px;line-height:1.2}
+.sengrid small{font-size:12px;color:var(--quiet)}
+.sengrid small.on{color:var(--jade);font-weight:700}
+.senbig{width:100%;aspect-ratio:1;max-height:300px;border-radius:16px;background-size:50%;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+.newsen{display:flex;align-items:center;gap:12px;width:100%;margin:12px 0 0;padding:10px 12px;border-radius:16px;border:2px solid var(--gold,#E3AE3B);background:var(--surface,#fff);font:inherit;color:inherit;cursor:pointer;text-align:left}
+.newsen i{flex:0 0 52px;height:52px;border-radius:10px;background-size:cover}
+.newsen span{flex:1;display:flex;flex-direction:column}
+.newsen small{color:var(--accent,#B5532F);font-weight:700;font-size:13px}
+.newsen b{font-family:var(--serif);font-size:19px}
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -695,6 +714,8 @@ Object.assign(TR.es,{"Cada dia que jugues és una medalla: or si acabes sense aj
 Object.assign(TR.en,{"Cada dia que jugues és una medalla: or si acabes sense ajuda, plata si acabes amb ajuda i bronze si hi jugues però no l’acabes. Si un dia no pots jugar, un dia de descans guarda la ratxa (en tens 2 cada mes).": "Every day you play earns a medal: gold if you finish without help, silver if you finish with help and bronze if you play but don’t finish. If you can’t play one day, a rest day keeps your streak (you get 2 a month)."});
 Object.assign(TR.es,{"Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.": "Mantén pulsada una liga y arrástrala para cambiar su orden.", "Ordre desat: «{0}» és ara la {1}a": "Orden guardado: «{0}» es ahora la {1}.ª"});
 Object.assign(TR.en,{"Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.": "Press and hold a league, then drag it to change the order.", "Ordre desat: «{0}» és ara la {1}a": "Order saved: “{0}” is now number {1}"});
+Object.assign(TR.es,{"Casa de poble": "Casa de pueblo", "Terra cuita i blau fosc, com el terra de l’entrada de casa.": "Barro cocido y azul oscuro, como el suelo de la entrada de casa.", "Brisa de mar": "Brisa de mar", "Blaus de la costa per jugar amb calma.": "Azules de la costa para jugar con calma.", "Eixample": "Ensanche", "Granats i ocres dels pisos de l’Eixample.": "Granates y ocres de los pisos del Ensanche.", "Mas de l’Empordà": "Masía del Ampurdán", "Colors de camp, d’oliveres i de sol de tarda.": "Colores de campo, de olivos y de sol de tarde.", "Pedra catalana": "Piedra catalana", "El panot de la flor: la peça de pedra grisa dels carrers de Barcelona. Si n’ajuntes quatre, a cada cantonada hi neix una flor nova.": "El panot de la flor: la pieza de piedra gris de las calles de Barcelona. Si juntas cuatro, en cada esquina nace una flor nueva.", "Modernista": "Modernista", "Verds i corals d’un vestíbul modernista.": "Verdes y corales de un vestíbulo modernista.", "La rajola de la iaia": "La baldosa de la abuela", "La de tota la vida, amb flors i colors alegres.": "La de toda la vida, con flores y colores alegres.", "Nit d’estiu": "Noche de verano", "Fosca i càlida, per jugar al vespre.": "Oscura y cálida, para jugar por la noche.", "Cala blava": "Cala azul", "L’aigua clara d’una cala amagada.": "El agua clara de una cala escondida.", "Vinya": "Viña", "Raïm, pàmpols i terra del Penedès.": "Uva, pámpanos y tierra del Penedès.", "Taronja i blau": "Naranja y azul", "Els colors vius d’una cuina de poble.": "Los colores vivos de una cocina de pueblo.", "Safrà": "Azafrán", "Daurats càlids, com un arròs de diumenge.": "Dorados cálidos, como un arroz de domingo.", "Pissarra": "Pizarra", "Grisos de pissarra del Pirineu.": "Grises de pizarra del Pirineo.", "Romaní": "Romero", "Verds de muntanya i flor de romaní.": "Verdes de montaña y flor de romero.", "Corall": "Coral", "Rosats i blaus de la Costa Brava.": "Rosados y azules de la Costa Brava.", "Or de festa major": "Oro de fiesta mayor", "La rajola dels grans dies: l’última de la col·lecció.": "La baldosa de los grandes días: la última de la colección.", "Les teves rajoles": "Tus baldosas", "Propera: «{0}» en superar el nivell {1}": "Próxima: «{0}» al superar el nivel {1}", "Ja les tens totes!": "¡Ya las tienes todas!", "En ús": "En uso", "Peça especial": "Pieza especial", "Encara tapada": "Aún tapada", "Nova rajola!": "¡Nueva baldosa!", "Cada vegada que superes certs nivells es destapa una rajola nova. El joc fa servir sempre la més nova que tens.": "Cada vez que superas ciertos niveles se destapa una baldosa nueva. El juego usa siempre la más nueva que tienes.", "Així queden quatre peces juntes": "Así quedan cuatro piezas juntas", "Desbloquejada en superar el nivell {0}": "Desbloqueada al superar el nivel {0}", "La primera de la col·lecció": "La primera de la colección", "Veure totes les rajoles": "Ver todas las baldosas"});
+Object.assign(TR.en,{"Casa de poble": "Village house", "Terra cuita i blau fosc, com el terra de l’entrada de casa.": "Terracotta and deep blue, like the floor of a village hallway.", "Brisa de mar": "Sea breeze", "Blaus de la costa per jugar amb calma.": "Coastal blues for a calm game.", "Eixample": "Eixample", "Granats i ocres dels pisos de l’Eixample.": "The garnets and ochres of Eixample flats.", "Mas de l’Empordà": "Empordà farmhouse", "Colors de camp, d’oliveres i de sol de tarda.": "Colours of fields, olive trees and afternoon sun.", "Pedra catalana": "Catalan stone", "El panot de la flor: la peça de pedra grisa dels carrers de Barcelona. Si n’ajuntes quatre, a cada cantonada hi neix una flor nova.": "The flower paving tile: the grey stone piece of Barcelona’s streets. Put four together and a new flower appears at every corner.", "Modernista": "Modernista", "Verds i corals d’un vestíbul modernista.": "Greens and corals from a Modernista hallway.", "La rajola de la iaia": "Grandma’s tile", "La de tota la vida, amb flors i colors alegres.": "The classic one, with flowers and cheerful colours.", "Nit d’estiu": "Summer night", "Fosca i càlida, per jugar al vespre.": "Dark and warm, for evening games.", "Cala blava": "Blue cove", "L’aigua clara d’una cala amagada.": "The clear water of a hidden cove.", "Vinya": "Vineyard", "Raïm, pàmpols i terra del Penedès.": "Grapes, vine leaves and Penedès soil.", "Taronja i blau": "Orange and blue", "Els colors vius d’una cuina de poble.": "The bright colours of a village kitchen.", "Safrà": "Saffron", "Daurats càlids, com un arròs de diumenge.": "Warm golds, like a Sunday rice dish.", "Pissarra": "Slate", "Grisos de pissarra del Pirineu.": "Slate greys from the Pyrenees.", "Romaní": "Rosemary", "Verds de muntanya i flor de romaní.": "Mountain greens and rosemary flowers.", "Corall": "Coral", "Rosats i blaus de la Costa Brava.": "Pinks and blues of the Costa Brava.", "Or de festa major": "Festival gold", "La rajola dels grans dies: l’última de la col·lecció.": "The tile for big days: the last in the collection.", "Les teves rajoles": "Your tiles", "Propera: «{0}» en superar el nivell {1}": "Next: “{0}” when you pass level {1}", "Ja les tens totes!": "You’ve got them all!", "En ús": "In use", "Peça especial": "Special piece", "Encara tapada": "Still hidden", "Nova rajola!": "New tile!", "Cada vegada que superes certs nivells es destapa una rajola nova. El joc fa servir sempre la més nova que tens.": "Each time you pass certain levels a new tile is revealed. The game always uses the newest one you have.", "Així queden quatre peces juntes": "This is how four pieces look together", "Desbloquejada en superar el nivell {0}": "Unlocked by passing level {0}", "La primera de la col·lecció": "The first in the collection", "Veure totes les rajoles": "See all tiles"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -772,8 +793,54 @@ const RPAL = {
   nit:['#1E2433','#E0A84A','#3E8A82','#C46A5A','#EADFC8'],
 };
 const TPAL = { fruites:['#F6E7CF','#C2522E','#E39B2F','#6E8B3D','#8E3B46'], esports:['#EEF1F2','#1F4E8C','#E2B66F','#3E8A82','#C9483B'], vehicles:['#F1EAF2','#5B3F8C','#D9A441','#2F6F8C','#C46A5A'], animals:['#EEF0E2','#55633A','#8C9A5B','#D9A441','#B5532F'], viatges:['#F4E9DF','#7E4A34','#C27C5B','#2F6F8C','#D9A441'] };
-const uiPal = () => RPAL[S.set.pal] || RPAL.cap;
-const gamePal = g => (g && TPAL[g.theme]) || uiPal();
+
+// ================= Rajoles (senefes): es desbloquegen superant nivells, no es trien =================
+const SENEFES=[
+ {k:'poble', req:0, pal:RPAL.cap, n:"Casa de poble", d:"Terra cuita i blau fosc, com el terra de l’entrada de casa."},
+ {k:'mar', req:2, pal:RPAL.lla, n:"Brisa de mar", d:"Blaus de la costa per jugar amb calma."},
+ {k:'eixample', req:4, pal:['#EFE6D2','#7A2E2A','#C9A15B','#2F4F4A','#B86B4B'], n:"Eixample", d:"Granats i ocres dels pisos de l’Eixample."},
+ {k:'emporda', req:7, pal:['#F1E6D0','#8C5A2B','#5E7C4A','#D9A441','#B5532F'], n:"Mas de l’Empordà", d:"Colors de camp, d’oliveres i de sol de tarda."},
+ {k:'pedra', req:10, pal:['#D6D1C6','#6E685E','#9C958A','#B5532F','#4F6B5E'], n:"Pedra catalana", d:"El panot de la flor: la peça de pedra grisa dels carrers de Barcelona. Si n’ajuntes quatre, a cada cantonada hi neix una flor nova.", special:true},
+ {k:'modernista', req:12, pal:['#F4ECDD','#2F6F5C','#C2522E','#E2B66F','#3B4F7A'], n:"Modernista", d:"Verds i corals d’un vestíbul modernista."},
+ {k:'iaia', req:15, pal:['#F6EBDD','#A23E48','#5B7DB1','#E3B04B','#4E7D5B'], n:"La rajola de la iaia", d:"La de tota la vida, amb flors i colors alegres."},
+ {k:'nit', req:17, pal:RPAL.nit, n:"Nit d’estiu", d:"Fosca i càlida, per jugar al vespre."},
+ {k:'cala', req:20, pal:['#EEF3F5','#1F5A8C','#3E9AB8','#E8C26A','#D46A4C'], n:"Cala blava", d:"L’aigua clara d’una cala amagada."},
+ {k:'vinya', req:22, pal:['#F3EADB','#6B2E4A','#8A9A4B','#D9A441','#B5654A'], n:"Vinya", d:"Raïm, pàmpols i terra del Penedès."},
+ {k:'taronja', req:25, pal:['#F7EEE0','#D9622B','#1F4E8C','#F0B33E','#3E8A82'], n:"Taronja i blau", d:"Els colors vius d’una cuina de poble."},
+ {k:'safra', req:27, pal:['#F6EED9','#C9762C','#7A4E2D','#E3AE3B','#5E7C4A'], n:"Safrà", d:"Daurats càlids, com un arròs de diumenge."},
+ {k:'pissarra', req:30, pal:['#E6E3DD','#3B3F46','#7C8590','#B5532F','#C9A15B'], n:"Pissarra", d:"Grisos de pissarra del Pirineu."},
+ {k:'romani', req:32, pal:['#EEF0E6','#55633A','#8C9A5B','#9B6FC0','#D9A441'], n:"Romaní", d:"Verds de muntanya i flor de romaní."},
+ {k:'corall', req:35, pal:['#F8ECE6','#C65A3C','#E39B7F','#2F6F8C','#E2B66F'], n:"Corall", d:"Rosats i blaus de la Costa Brava."},
+ {k:'festa', req:40, pal:['#F7F0DC','#B8862B','#1F6F5C','#B8322A','#E9D7A6'], n:"Or de festa major", d:"La rajola dels grans dies: l’última de la col·lecció."}
+];
+const senOk = x => S.unlocked > x.req;
+const senList = () => SENEFES.filter(senOk);
+const activeSen = () => { const l=senList(); return l[l.length-1]||SENEFES[0]; };
+const senForLevel = n => SENEFES.filter(x=>x.req<n).pop()||SENEFES[0];
+const senOf = g => g&&g.mode==='level' ? senForLevel(g.level) : activeSen();
+// La pedra catalana: el panot de la flor, pedra grisa amb relleu; en ajuntar-ne quatre, a la cantonada hi surt una altra flor
+function panotSVG(){ const r=rng('panot'), base='#C4BEB3', pet='#A9A296', edge='#8A8378', lite='#DDD8CE';
+  let sp=''; for(let i=0;i<90;i++) sp+=`<circle cx="${f1(r()*100)}" cy="${f1(r()*100)}" r="${f1(.35+r()*.8)}" fill="${r()<.5?'#ADA79B':'#D4CFC5'}" opacity=".7"/>`;
+  const P='M0 0C-11 -11 -11 -29 0 -38C11 -29 11 -11 0 0Z', V='M0 -4L0 -31';
+  const petal=(tf,sc=1)=>`<g transform="${tf} scale(${sc})"><path d="${P}" fill="${edge}" transform="translate(1.2 1.2)"/><path d="${P}" fill="${pet}"/><path d="${P}" fill="none" stroke="${lite}" stroke-width="1.1" opacity=".8" transform="translate(-.6 -.6)"/><path d="${V}" stroke="${edge}" stroke-width="1"/></g>`;
+  const centre=[0,90,180,270].map(a=>petal(`translate(50 50) rotate(${a})`)).join('');
+  const corners=[[0,0,135],[100,0,-135],[100,100,-45],[0,100,45]].map(([x,y,a])=>petal(`translate(${x} ${y}) rotate(${a})`,.8)+`<circle cx="${x}" cy="${y}" r="6" fill="${pet}" stroke="${edge}" stroke-width="1"/>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="${base}"/>${sp}${corners}${centre}<circle cx="50" cy="50" r="7" fill="${pet}" stroke="${edge}" stroke-width="1.2"/><circle cx="49.4" cy="49.4" r="2.6" fill="${lite}"/><rect x=".5" y=".5" width="99" height="99" fill="none" stroke="rgba(0,0,0,.16)"/></svg>`; }
+let PANOT=null;
+const senData = x => x.special ? (PANOT=PANOT||'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(panotSVG())) : rajolaData('sen-'+x.k, x.pal);
+const senURL = x => `url('${senData(x)}')`;
+function senCard(compact){ const l=senList(), nx=SENEFES.find(x=>!senOk(x));
+  return `<div class="card cardbtn sencard" role="button" tabindex="0" onclick="S.sheet='rajoles';renderSheet()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+    <div class="row"><b>${L('Les teves rajoles')}</b><span class="muted" style="font-size:14px">${L('{0} de {1}',l.length,SENEFES.length)}</span></div>
+    <div class="senrow">${SENEFES.slice(0,compact?6:8).map(x=>senOk(x)?`<i style="background-image:${senURL(x)}"></i>`:`<i class="lk" aria-hidden="true">🔒</i>`).join('')}</div>
+    <div class="bar"><span style="width:${l.length/SENEFES.length*100}%"></span></div>
+    <p class="muted" style="font-size:14px;margin:6px 0 0">${nx?L('Propera: «{0}» en superar el nivell {1}',L(nx.n),nx.req):L('Ja les tens totes!')}</p></div>`; }
+function senGrid(){ const act=activeSen();
+  return `<div class="sengrid">${SENEFES.map(x=>senOk(x)
+    ? `<button class="${x===act?'act':''}" onclick="S.senView='${x.k}';S.sheet='rajola';renderSheet()"><i style="background-image:${senURL(x)}"></i><b>${esc(L(x.n))}</b>${x===act?`<small class="on">${L('En ús')}</small>`:x.special?`<small>⭐ ${L('Peça especial')}</small>`:''}</button>`
+    : `<button disabled><i class="lk"><span>🔒</span></i><b>${L('Nivell {0}',x.req)}</b><small>${L('Encara tapada')}</small></button>`).join('')}</div>`; }
+const uiPal = () => activeSen().pal;
+const gamePal = g => g&&g.seedStr ? senOf(g).pal : uiPal();
 const f1 = v => Math.round(v*10)/10;
 // Una rajola de 100×100: es dibuixa un quadrant i es gira 4 vegades, com les rajoles de debò
 function rajolaSVG(seed, pal){ const r=rng('raj'+seed), P=pal||uiPal(), G=P[0], C=P.slice(1);
@@ -1156,7 +1223,7 @@ function flyLetter(from, li, delay){ const to=letterXY(li); if(!to||reduced){ re
   const dx=to.x-from.x, dy=to.y-from.y, g=S.game; g.revealed.add(li);
   n.animate([{transform:'translate(-50%,-50%) scale(.4)',opacity:0},{transform:`translate(calc(-50% + ${dx*.3}px),calc(-50% + ${dy*.3-50}px)) scale(1.3)`,opacity:1,offset:.35},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.5)`,opacity:.9}],{duration:650,delay,easing:'cubic-bezier(.4,0,.2,1)',fill:'backwards'}).onfinish=()=>{ n.remove(); if(S.game===g){ revealLetter(li); click(1800,.025); } }; }
 function checkState(){ const g=S.game; if(g.over) return;
-  if(present().length===0 && g.reserve.every(v=>!v)){ g.over=true; g.won=true; g.pauseAt=Date.now(); if(g.mode==='level'&&g.level===S.unlocked){ S.unlocked=g.level+1; g.newUnlock=true; } return celebrate(); }
+  if(present().length===0 && g.reserve.every(v=>!v)){ g.over=true; g.won=true; g.pauseAt=Date.now(); if(g.mode==='level'&&g.level===S.unlocked){ S.unlocked=g.level+1; g.newUnlock=true; const ns=SENEFES.find(x=>x.req===g.level); if(ns) g.newSen=ns.k; } return celebrate(); }
   if(g.reserve.every(Boolean) && !hasMove()){ g.over=true; g.pauseAt=Date.now(); if(g.mode==='daily') S.dailyFailed='blocked'; setTimeout(()=>{ click(220,.08); S.sheet='blocked'; renderSheet(); },450); } }
 async function celebrate(){ const g=S.game; chTrack('win',{hints:g.hints||0, time:elapsed(), mode:g.mode}); await wait(250); if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.add('won'); await wait(450); if(S.game!==g) return; petals(); const tt=playSong(g.song); await wait(Math.min(tt*1000, 3500));
   await wait(g.solved?1400:500); if(S.game!==g||S.tab!=='joc'||S.sheet==='solve'||S.sheet==='win') return;
@@ -1367,7 +1434,7 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
 const GROUPS=[{from:1,theme:'trad',name:'Tradicional'},{from:11,theme:'fruites',name:'Fruites i horta'},{from:21,theme:'esports',name:'Esports'},{from:31,theme:'vehicles',name:'Vehicles'},
   {from:41,soon:true,theme:'animals',name:L('Animals'),bg:'linear-gradient(140deg,#8C9A5B,#55633A)',em:'🦊'},{from:51,soon:true,theme:'viatges',name:L('Viatges pel món'),bg:'linear-gradient(140deg,#C27C5B,#7E4A34)',em:'🗺️'}];
 const lum = h => { const v=parseInt(h.slice(1),16); return .299*(v>>16)+.587*(v>>8&255)+.114*(v&255); };
-function grpBg(theme){ const P=gamePal({theme}), d=P.slice(1).reduce((a,b)=>lum(b)<lum(a)?b:a);
+function grpBg(theme){ const P=TPAL[theme]||uiPal(), d=P.slice(1).reduce((a,b)=>lum(b)<lum(a)?b:a);
   return `background-color:${d};background-image:linear-gradient(90deg,${d} 0%,${d}E6 45%,${d}55 100%),${rajolaURL('grp'+theme,P)};background-size:auto,78px 78px`; }
 const levelPairs = n => Math.min(30, 24+Math.round((n-1)*6/39)); // nivell 1: 24 parelles … nivell 40: 30
 const groupOf = n => GROUPS[Math.floor((n-1)/10)];
@@ -1388,7 +1455,7 @@ function vNivells(){
       <div class="gtxt"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${t.name}</b>
       ${open?`<div class="bar light"><span style="width:${doneN*10}%"></span></div><span class="gsub">${L('{0}/10 completats',doneN)}</span>`:`<span class="gsub">${ICON.lock} ${L('Bloquejat')}</span>`}</div>
       <div class="mini">${stackTiles(t.show,34,45,[[0,14,-10],[18,6,0],[36,14,10]])}</div></button>`; }).join('');
-  return `<div class="screen"><h1>${L('Nivells')}</h1><p class="muted">${L('Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.')}</p>${cards}</div>${tabsBar()}`; }
+  return `<div class="screen"><h1>${L('Nivells')}</h1><p class="muted">${L('Avança en ordre: completa els 10 nivells d’un grup per obrir el següent.')}</p>${senCard(true)}${cards}</div>${tabsBar()}`; }
 const NAMES=['Rosa del Montseny','PepTarragona','Fitxeta','JadeBCN','Avi Quim','MahjongMontse','LaFura','Pilar_77','ElBambú','Núria R.','Txema','DracVermell'];
 const LG_TYPES={
  familia:{em:'👨‍👩‍👧',n:'Família',def:'La meva família',ph:'Família Puig',mem:['Mama','Avi','Laia','Marc']},
@@ -1456,10 +1523,9 @@ function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgr
   <div class="card"><div class="row"><div><b>Melodia Plus</b><p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Intents il·limitats, arxiu de taulers i frases, i lligues.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div>
     <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="toast('${L('Compres restaurades (simulat)')}')">${L('Restaurar compres')}</button> · <span class="muted">${L('El progrés es guarda sense registrar-te')}</span></p></div>
   <div class="card"><div class="row"><div><b>🎁 ${L('Regala Melodia')}</b><p class="muted" style="font-size:15px">${L('Un any de Plus per a qui tu vulguis. Li arriba ja activat, sense haver de pagar res.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='gift';renderSheet()">${L('Regalar')}</button></div></div>
-  ${statsCard()}
+  ${senCard()}${statsCard()}
   <h2>${L('Ajustos')}</h2>
   <b>${L('Idioma')}</b><div class="seg" role="group" aria-label="${L('Idioma')}">${[['ca','Català'],['es','Español'],['en','English']].map(([k,l])=>`<button lang="${k}" class="${LANG===k?'on':''}" aria-pressed="${LANG===k}" onclick="setLang('${k}')">${l}</button>`).join('')}</div>
-  <b>${L('Colors')}</b><div class="palsw">${[['cap',L('Terracota')],['lla',L('Mar')],['nit',L('Nit d’estiu')]].map(([k,l])=>`<button class="${S.set.pal===k?'on':''}" onclick="S.set.pal='${k}';render()"><i style="background-image:${rajolaURL('mostra'+k,RPAL[k])};background-size:34px 34px"></i>${l}</button>`).join('')}</div>
   <b>${L('Mida de les fitxes')}</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
   ${sw('hc',L('Alt contrast'),L('Fitxes bloquejades amb trama'))}${sw('idx',L('Número a la cantonada'),L('Ajuda a distingir fitxes semblants'))}${sw('dark',L('Mode nit'),'')}${sw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}
   ${sw('sound',L('So i melodia'),'')}${sw('vib',L('Vibració'),'')}<b>${L('So ambient')}</b><div class="seg" role="group" aria-label="${L('So ambient')}">${[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')]].map(([k,l])=>`<button class="${S.set.amb===k?'on':''}" aria-pressed="${S.set.amb===k}" onclick="S.set.amb='${k}';render();ambPreview()">${l}</button>`).join('')}</div>
@@ -1555,6 +1621,15 @@ function vSheet(){ const g=S.game;
       <button class="btn ${daily?'primary':'secondary'}" onclick="startCalm()">☕ ${L('Jugar una partida tranquil·la')}</button>
       <button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Mirar el tauler')}</button>
       <button class="btn secondary" onclick="quit()">${L('Tornar a l’inici')}</button></div>`); }
+  if(S.sheet==='rajoles') return sheetWrap(`<h2 style="margin-top:0">${L('Les teves rajoles')}</h2>
+    <p class="muted">${L('Cada vegada que superes certs nivells es destapa una rajola nova. El joc fa servir sempre la més nova que tens.')}</p>
+    ${senGrid()}<div class="stack"><button class="btn primary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`);
+  if(S.sheet==='rajola'){ const x=SENEFES.find(y=>y.k===S.senView)||activeSen();
+    return sheetWrap(`<div class="senbig" style="background-image:${senURL(x)}" role="img" aria-label="${esc(L(x.n))}"></div>
+      <p class="fine" style="margin:6px 0 0">${L('Així queden quatre peces juntes')}</p>
+      <h2 style="margin:10px 0 4px">${x.special?'⭐ ':''}${esc(L(x.n))}</h2><p>${esc(L(x.d))}</p>
+      <p class="muted">${x.req?L('Desbloquejada en superar el nivell {0}',x.req):L('La primera de la col·lecció')}${x===activeSen()?' · '+L('En ús'):''}</p>
+      <div class="stack"><button class="btn primary" onclick="S.sheet='rajoles';renderSheet()">${L('Veure totes les rajoles')}</button></div>`); }
   if(S.sheet==='pay') return sheetWrap(`<h2 style="margin-top:0">${L('Segueix jugant avui')}</h2><p class="muted">${L('Sense anuncis i sense monedes. Preus amb IVA inclòs.')}</p>
     <div class="stack">
     <button class="offer" onclick="buy('pass')"><span><b>${L('Passi del dia')}</b><small>${L('Intents il·limitats durant 24 hores · sense renovació')}</small></span><span class="price">${L('0,99 €')}</span></button>
@@ -1591,13 +1666,14 @@ function vSheet(){ const g=S.game;
       : g.mode==='daily' ? `<button class="btn primary" onclick="S.sheet=null;go('class')">${L('Veure classificació')}</button>`
       : (groupOf(g.level+1)&&!groupOf(g.level+1).soon ? `<button class="btn primary" onclick="startLevel(${g.level+1})">${L('Nivell {0}',g.level+1)}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>` : `<button class="btn primary" onclick="S.sheet=null;go('nivells')">${L('Tornar als nivells')}</button>`);
     return sheetWrap(`<div style="text-align:center"><h2 style="margin:0 0 10px">${rp===null?(g.solved?L('Frase resolta!'):L('Tauler resolt')):rp<0?L('Has guanyat el repte!'):rp===0?L('Empat exacte!'):L('Gairebé!')}</h2>
-      <div class="postalwrap" style="background-image:${rajolaURL(g.seedStr,gamePal(g))}"><img id="postalImg" class="postal" alt="${L('La teva postal del dia, amb el refrany i el temps')}"></div>
+      <div class="postalwrap" style="background-image:${senURL(senOf(g))}"><img id="postalImg" class="postal" alt="${L('La teva postal del dia, amb el refrany i el temps')}"></div>
       <button class="btn gold sendbtn" onclick="sendPostal()">${ICON.send} ${L('Enviar la postal')}</button>
       ${g.mode==='calma'?'':`<p class="muted" style="margin:10px 0 0;font-size:15px">${parts.join(' ')}</p>`}
       ${rp!==null?`<div class="vs"><div class="${rp<=0?'win':''}"><small>${L('Tu')}</small><b>${fmt(tot)}</b></div><div class="${rp>0?'win':''}"><small>${L('Qui t’ha reptat')}</small><b>${fmt(S.challenge.t)}</b></div></div>
         <p style="font-weight:700;margin:4px 0">${rp<0?L('Per {0}. Ara li toca a l’altra persona.',fmt(-rp)):rp===0?L('Ni un segon de diferència.'):L('T’ha guanyat per {0}. Torna-li el repte!',fmt(rp))}</p>`:''}
       ${pos?`<p style="margin:8px 0 0"><span class="pill">${L('Posició {0} a la teva comarca',pos)}</span></p>`:''}
-      ${g.newUnlock&&g.level%10===0?`<p style="margin:8px 0 0"><span class="pill">${L('Desbloquejats els nivells {0}–{1}!',g.level+1,g.level+10)}</span></p>`:''}</div>
+      ${g.newUnlock&&g.level%10===0?`<p style="margin:8px 0 0"><span class="pill">${L('Desbloquejats els nivells {0}–{1}!',g.level+1,g.level+10)}</span></p>`:''}
+      ${g.newSen?(x=>`<button class="newsen" onclick="S.senView='${x.k}';S.sheet='rajola';renderSheet()"><i style="background-image:${senURL(x)}"></i><span><small>${L('Nova rajola!')}</small><b>${esc(L(x.n))}</b></span><span class="chev" aria-hidden="true">›</span></button>`)(SENEFES.find(x=>x.k===g.newSen)):''}</div>
       ${meaningOf(g.phrase)||g.newPhrase?`<div class="meaning" style="margin-top:12px">${meaningOf(g.phrase)?`<b>${L('Què vol dir')}</b><span class="mn">${esc(meaningOf(g.phrase))}</span>${equivHTML(PHRASES.indexOf(g.phrase))}`:''}
         ${g.solved&&g.newPhrase?`<span class="new">${L('Nou al teu refranyer · {0} de {1}',S.found,PHRASES.length)}</span>`:''}</div>`:''}
       <div class="songq" id="songq">${songCard()}</div>
@@ -1675,7 +1751,7 @@ function wrapText(x,t,maxW){ const words=t.split(' '), out=[]; let cur=''; for(c
 async function postalCanvas(){ const g=S.game, W=1080, H=1350, P=gamePal(g), [G,c1,c2,c3,c4]=P, ink='#2A2522', paper='#FBF6EC';
   const cv=document.createElement('canvas'); cv.width=W; cv.height=H; const x=cv.getContext('2d');
   try{ await Promise.all([document.fonts.load('700 80px Fraunces'), document.fonts.load('700 28px "Atkinson Hyperlegible"'), document.fonts.load('400 28px "Atkinson Hyperlegible"')]); }catch(e){}
-  const tile=await loadImg(rajolaData(g.seedStr,P)), T=180;
+  const tile=await loadImg(senData(senOf(g))), T=180;
   for(let yy=0;yy<H;yy+=T) for(let xx=0;xx<W;xx+=T) x.drawImage(tile,xx,yy,T,T);
   x.fillStyle='rgba(0,0,0,.10)'; x.fillRect(0,0,W,H);
   // targeta de paper amb doble filet, com una etiqueta antiga
@@ -1737,8 +1813,8 @@ function playYesterday(el){ el.parentElement.querySelector('.ans').innerHTML='<b
 let toastT; function toast(m){ clearTimeout(toastT); document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.setAttribute('aria-live','polite'); d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),2000); }
 
 function render(){ const ph=$('#phone'); const vkey=S.tab+'|'+S.lvGroup, osc=$('#view .screen'), otop=(S._vkey===vkey&&osc)?osc.scrollTop:0; S._vkey=vkey;
-  ph.style.setProperty('--mosaic-hero', rajolaURL(todaySeed));
-  if(S.game) ph.style.setProperty('--mosaic', rajolaURL(S.game.seedStr, gamePal(S.game)));
+  ph.style.setProperty('--mosaic-hero', senURL(activeSen()));
+  if(S.game) ph.style.setProperty('--mosaic', senURL(senOf(S.game)));
   ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'')+(S.set.glow?' glowfree':'');
   if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); ambStart(); }
   else { ambStop(); const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ bindChipDrag(); const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
