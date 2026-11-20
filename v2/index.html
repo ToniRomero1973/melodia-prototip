@@ -1727,12 +1727,12 @@ function splash(){ const d=document.createElement('div'); d.className='splash'; 
     cells+=`<i style="background-image:url('${seeds[k]}');animation-delay:${reduced?0:Math.round(dist*85)}ms"></i>`; }
   d.innerHTML=`<div class="smosaic" style="grid-template-columns:repeat(${cols},1fr)">${cells}</div>
     <div class="smedal"><span class="sring" style="background-image:url('${seeds[0]}')"></span><div class="word">Melodia</div><div class="tag">${L('Fitxes, refranys i cançons')}</div></div>
-    <div class="sbtns"><span class="sb-pill">${L('Versió 2 · esborrany')}</span><button class="sb-instr" type="button">📋 ${L('Instruccions de la prova')}</button><button class="sb-play" type="button">${L('Jugar')}</button></div>`;
+    <div class="sbtns"><span class="sb-pill">${L('Versió 2 · esborrany')}</span><button class="sb-play" type="button">${L('Jugar')}</button></div>`;
   $('#phone').appendChild(d);
   const close=then=>{ d.classList.add('out'); setTimeout(()=>d.remove(),600);
     if(then){ then(); return; } if(S.firstSheet&&!S.sheet){ S.sheet=S.firstSheet; renderSheet(); } S.firstSheet=null; };
   d.querySelector('.sb-play').onclick=()=>close();
-  d.querySelector('.sb-instr').onclick=()=>close(()=>{ S.firstSheet=null; S.sheet='instr'; renderSheet(); });
+  
   setTimeout(()=>{ const b=d.querySelector('.sb-play'); if(b&&document.activeElement===document.body) b.focus({preventScroll:true}); }, reduced?0:1400); }
 
 // ================= mode prova amb usuaris =================
@@ -1748,7 +1748,8 @@ const surveyURL=()=>{ const u=(window.MELODIA_ENQUESTA||{})[LANG]||''; return u.
 function readInstr(){ PV.read=true; try{ localStorage.setItem('melodia-prova-llegit','1'); }catch(e){} S.sheet=null; render(); provaBar(); }
 function markPlayed(){ PV.games++; const first=!PV.played; PV.played=true; try{ localStorage.setItem('melodia-prova-jugat','1'); localStorage.setItem('melodia-prova-partides',PV.games); }catch(e){} if(first) provaBar(); }
 function openSurvey(){ const u=surveyURL(); if(!u){ toast(L('L’enquesta encara no està a punt')); return; } window.open(u,'_blank','noopener'); }
-function provaHome(){ if(PV.read) return '';
+function provaHome(){ return ''; // la v2 no té instruccions de la prova
+  if(PV.read) return '';
   return `<button class="instrcard" onclick="S.sheet='instr';renderSheet()"><span class="ic" aria-hidden="true">📋</span><span><b>${L('Instruccions de la prova')}</b><br><span>${L('Això és una versió de prova. Llegeix-les abans de començar (1 minut).')}</span><span class="giftline">🎁 ${L('Regal: 3 mesos de Melodia Plus')}</span></span><span class="go" aria-hidden="true">›</span></button>`; }
 function provaCard(){
   return `<div class="card provacard"><b>📋 ${L('La prova')}</b>
@@ -1757,7 +1758,8 @@ function provaCard(){
     <p class="codeline">${L('El teu codi de participant')}: <b>${PV.code}</b></p>
     ${GA_ID?`<p class="codeline"><button class="linkbtn" onclick="cookiePrefs()">${L('Preferències de galetes')}</button></p>`:''}
     <div class="stack">${PV.played?`<button class="btn gold" onclick="openSurvey()">${L('Respondre l’enquesta')} ↗</button>`:''}<button class="btn secondary" onclick="S.sheet='instr';renderSheet()">${L('Veure les instruccions')}</button></div></div>`; }
-function provaBar(){ document.querySelectorAll('.provabar').forEach(e=>e.remove()); document.body.classList.add('prova');
+function provaBar(){ return; // la v2 no té barra de prova
+  document.querySelectorAll('.provabar').forEach(e=>e.remove()); document.body.classList.add('prova');
   const bar=document.createElement('div'); bar.className='provabar';
   const left=document.createElement('div'); left.className='pb-left';
   const lbl=document.createElement('span'); lbl.className='pb-lbl'; lbl.textContent=L('Versió 2 · esborrany'); left.appendChild(lbl);
