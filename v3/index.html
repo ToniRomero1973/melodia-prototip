@@ -717,6 +717,21 @@ body.prova .phone{height:calc(100% - 48px)}
 .jmeta .dd i.o{background:rgba(255,255,255,.35)} .jmeta .dd i:not(.o){background:#fff}
 .jmeta .boss{background:rgba(0,0,0,.25);border-radius:10px;padding:2px 8px}
 .trainnote{font-size:14px;margin:0 0 10px;opacity:.9}
+
+/* v3: fitxes petites */
+.board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
+.board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
+.board.tiny .face .emo{filter:none}
+/* v3: triar parelles */
+.pairctl{background:var(--surface);border-radius:18px;padding:12px 14px;margin:0 0 14px;box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.pairctl .prow{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pairctl .pval{font-family:var(--serif);font-weight:800;font-size:22px;color:var(--accent)}
+.pairctl .stp{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pairctl .stp button{min-height:48px;border-radius:14px;border:2px solid var(--line);background:transparent;color:var(--ink);font:inherit;font-size:20px;font-weight:800;cursor:pointer}
+.pairctl .stp button:active{background:var(--jade-soft)}
+.pairctl .link{background:none;border:0;color:var(--accent);font:inherit;font-weight:700;padding:8px 0 0;cursor:pointer;text-decoration:underline}
+.pairctl p{margin:6px 0 0;font-size:13px}
+.pairctl.compact p{display:none}
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -805,6 +820,8 @@ Object.assign(TR.es,{"Fàcil": "Fácil", "Mitjà": "Medio", "Difícil": "Difíci
 Object.assign(TR.en,{"Fàcil": "Easy", "Mitjà": "Medium", "Difícil": "Hard", "Molt difícil": "Very hard", "Mestre": "Master", "Dificultat": "Difficulty", "Nivell final del capítol": "Chapter final level"});
 Object.assign(TR.es,{"Taulell d’entrenament": "Tablero de entrenamiento", "Sense límit d’intents i sense puntuar": "Sin límite de intentos y sin puntuar", "Has gastat els intents d’avui, però pots seguir jugant al taulell d’entrenament: sense límit i sense puntuar.": "Has gastado los intentos de hoy, pero puedes seguir jugando en el tablero de entrenamiento: sin límite y sin puntuar.", "Un altre taulell d’entrenament": "Otro tablero de entrenamiento", "Avui ja no et queden intents. Pots seguir practicant sense puntuar.": "Hoy ya no te quedan intentos. Puedes seguir practicando sin puntuar.", "Ja has vist la solució d’avui: et porto al taulell d’entrenament": "Ya has visto la solución de hoy: te llevo al tablero de entrenamiento"});
 Object.assign(TR.en,{"Taulell d’entrenament": "Practice board", "Sense límit d’intents i sense puntuar": "Unlimited tries, no score", "Has gastat els intents d’avui, però pots seguir jugant al taulell d’entrenament: sense límit i sense puntuar.": "You’ve used today’s tries, but you can keep playing on the practice board: unlimited and unscored.", "Un altre taulell d’entrenament": "Another practice board", "Avui ja no et queden intents. Pots seguir practicant sense puntuar.": "No tries left today. You can keep practising without a score.", "Ja has vist la solució d’avui: et porto al taulell d’entrenament": "You’ve seen today’s solution: here’s the practice board"});
+Object.assign(TR.es,{"Parelles per tauler": "Parejas por tablero", "Auto": "Auto", "Treure 10 parelles": "Quitar 10 parejas", "Treure una parella": "Quitar una pareja", "Afegir una parella": "Añadir una pareja", "Afegir 10 parelles": "Añadir 10 parejas", "Tornar a automàtic (segons el nivell)": "Volver a automático (según el nivel)", "De {0} a {1} parelles. La partida diària no canvia: és igual per a tothom.": "De {0} a {1} parejas. La partida diaria no cambia: es igual para todos."});
+Object.assign(TR.en,{"Parelles per tauler": "Pairs per board", "Auto": "Auto", "Treure 10 parelles": "Remove 10 pairs", "Treure una parella": "Remove one pair", "Afegir una parella": "Add one pair", "Afegir 10 parelles": "Add 10 pairs", "Tornar a automàtic (segons el nivell)": "Back to automatic (by level)", "De {0} a {1} parelles. La partida diària no canvia: és igual per a tothom.": "From {0} to {1} pairs. The daily game doesn’t change: it’s the same for everyone."});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1125,14 +1142,39 @@ const isLetter = ch => /[A-Za-zÀ-ÿ]/.test(ch);
 
 // ================= estat =================
 const S = { unlocked:1, lvGroup:null, tab:'avui', fails:2, pass:false, plus:false, streak:12, found:5,
-  set:{pal:'cap', size:'normal', hc:false, dark:false, hideTime:false, sound:true, vib:false, left:false, idx:true, remind:false, amb:'cap', glow:false},
+  set:{pairs:(()=>{ try{ return +localStorage.getItem('melodia-v3-parelles')||0; }catch(e){ return 0; } })(), pal:'cap', size:'normal', hc:false, dark:false, hideTime:false, sound:true, vib:false, left:false, idx:true, remind:false, amb:'cap', glow:false},
   game:null, sheet:null, lbScope:'comarca', lbPeriod:'Diari', leagues:[{id:'comarca',pub:'comarca'},{id:'global',pub:'global'}], dailyDone:null, solveMsg:'', rest:2, best:30 };
 
 S.solvedIdx = new Set(PHRASES.map((p,i)=>i).filter(i=>PHRASES[i]!==pickPhrase(todaySeed)).filter((i,k)=>k%2===1).slice(0,5)); S.found = S.solvedIdx.size;
 // ================= generador resoluble =================
 // Coordenades en MITGES fitxes: una fitxa ocupa [x,x+2) × [y,y+2). Les capes de dalt poden quedar entre dues fitxes.
 // Base de 5 d'ample × 7 d'alt (forats només a la vora, files desplaçades mitja fitxa) i capes al centre. Nombre EXACTE de fitxes (target).
+
+const PAIRS_MIN=4, PAIRS_MAX=256;
+const pairsOver = def => S.set.pairs ? Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, S.set.pairs)) : def;
+function setPairs(d){ const cur=S.set.pairs||(S.game&&S.game.mode!=='daily'?S.game.nPairs:30); S.set.pairs=Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, cur+d)); try{ localStorage.setItem('melodia-v3-parelles', S.set.pairs); }catch(e){} render(); }
+function autoPairs(){ S.set.pairs=0; try{ localStorage.removeItem('melodia-v3-parelles'); }catch(e){} render(); }
+function pairCtl(compact){ const v=S.set.pairs;
+  return `<div class="pairctl ${compact?'compact':''}"><div class="prow"><b>${L('Parelles per tauler')}</b><span class="pval">${v?v:L('Auto')}</span></div>
+    <div class="stp"><button onclick="setPairs(-10)" aria-label="${L('Treure 10 parelles')}">−10</button><button onclick="setPairs(-1)" aria-label="${L('Treure una parella')}">−</button><button onclick="setPairs(1)" aria-label="${L('Afegir una parella')}">+</button><button onclick="setPairs(10)" aria-label="${L('Afegir 10 parelles')}">+10</button></div>
+    ${v?`<button class="link" onclick="autoPairs()">${L('Tornar a automàtic (segons el nivell)')}</button>`:''}
+    <p class="muted">${L('De {0} a {1} parelles. La partida diària no canvia: és igual per a tothom.',PAIRS_MIN,PAIRS_MAX)}</p></div>`; }
+// Tauler gran: una graella més ampla i més alta, amb pisos al mig
+function bigLayout(r, target){
+  const base=Math.ceil(target/2.5), C=Math.max(5,Math.round(Math.sqrt(base*5/6))), R=Math.max(6,Math.ceil(base/C));
+  const p=[], occ=new Set(), key=(x,y,z)=>x+','+y+','+z, add=(x,y,z)=>{ p.push({x,y,z}); occ.add(key(x,y,z)); };
+  for(let y=0;y<R;y++)for(let x=0;x<C;x++){ const edge=x===0||y===0||x===C-1||y===R-1; if(p.length<target && (!edge||r()<.9)) add(x*2,y*2,0); }
+  const covers=(px,py,z)=>{ for(const tx of [Math.floor(px)-1,Math.floor(px)]) for(const ty of [Math.floor(py)-1,Math.floor(py)]) if(occ.has(key(tx,ty,z))&&tx<=px&&px<tx+2&&ty<=py&&py<ty+2) return true; return false; };
+  const supported=(x,y,z)=>[[.5,.5],[1.5,.5],[.5,1.5],[1.5,1.5]].every(([dx,dy])=>covers(x+dx,y+dy,z-1));
+  const clash=(x,y,z)=>{ for(let dx=-1;dx<=1;dx++)for(let dy=-1;dy<=1;dy++) if(occ.has(key(x+dx,y+dy,z))) return true; return false; };
+  const cx=C-1, cy=R-1;
+  for(let z=1;z<=12&&p.length<target;z++){ const cand=[]; for(let y=0;y<=2*R-2;y++)for(let x=0;x<=2*C-2;x++) if(supported(x,y,z)) cand.push([x,y,Math.hypot(x-cx,(y-cy)*.8)+r()*2]);
+    if(!cand.length) break; cand.sort((a,b)=>a[2]-b[2]);
+    for(const [x,y,d] of cand){ if(p.length>=target) break; if(!clash(x,y,z) && r()<.9*Math.max(.5,1-d/(C+R))) add(x,y,z); } }
+  for(let z=1;p.length<target&&z<=40;z++) for(const t of p.filter(t=>t.z===z-1)){ if(p.length>=target) break; if(!occ.has(key(t.x,t.y,z))&&!clash(t.x,t.y,z)) add(t.x,t.y,z); }
+  return p; }
 function layout(r, target){
+  if(target>76) return bigLayout(r, target);
   const covers=(t,px,py)=>t.x<=px&&px<t.x+2&&t.y<=py&&py<t.y+2;
   for(let tries=0;tries<150;tries++){
     const p=[]; const cx=4, cy=5, edgeP= target>=60?.95:(target>=52?.85:.75);
@@ -1164,7 +1206,7 @@ function greedyRate(tiles, r, runs=24){ let win=0;
     if(!rem.length) win++; }
   return win/runs; }
 function generate(seedStr, theme, nPairs=28){ let best=null;
-  const lvM=/^lvl-(\d+)$/.exec(seedStr), tgt=lvM?levelTarget(+lvM[1]):null, need=lvM?8:5;
+  const lvM=/^lvl-(\d+)$/.exec(seedStr), tgt=lvM?levelTarget(+lvM[1]):null, need=nPairs>38?1:(lvM?8:5);
   for(let a=0;a<90 && (!best||best.n<need);a++){ const r=rng(seedStr+'#'+a); const pos0=layout(rng(seedStr+'L'+a), nPairs*2).map((p,i)=>({...p,id:i}));
     let rem=[...pos0]; const pairs=[]; let ok=true;
     while(rem.length){ const free=rem.filter(t=>isFree(t,rem)); if(free.length<2){ok=false;break}
@@ -1172,11 +1214,11 @@ function generate(seedStr, theme, nPairs=28){ let best=null;
       pairs.push([A,B]); rem=rem.filter(t=>t!==A&&t!==B); }
     if(!ok) continue;
     // cada disseny surt 4 vegades (2 parelles): una parella que s'ha de treure aviat i una que s'ha de treure tard (paranys)
-    const all=levelPool(seedStr, theme, r);
+    const all=levelPool(seedStr, theme, r, nPairs);
     const P=pairs.length, half=Math.floor(P/2);
     const D=lvM?Math.min(all.length, winSize(+lvM[1])):0, ex=Math.max(0, D-(half+1));
     pairs.forEach(([A,B],i)=>{ let k = i<half ? i : (i<2*half ? i-half : half); if(ex && i>=half && i<2*half && k>=half-ex) k=half+1+(k-(half-ex)); const sym=all[k%all.length]; A.s=sym; B.s=sym; });
-    const tiles=pos0.map(t=>({...t,gone:false})); const rate=greedyRate(tiles, rng(seedStr+'g'+a));
+    const tiles=pos0.map(t=>({...t,gone:false})); const rate=tiles.length>80 ? .5 : greedyRate(tiles, rng(seedStr+'g'+a));
     const sc=tgt==null?rate:Math.abs(rate-tgt); if(!best||sc<best.sc) best={tiles, rate, sc, n:(best?best.n:0)+1, sol:pairs.map(([A,B])=>[A.id,B.id])}; else best.n++;
   }
   const phrase=pickPhrase(seedStr); const pos=[...phrase].map((ch,i)=>isLetter(ch)?i:-1).filter(i=>i>=0); const r=rng(seedStr+'p');
@@ -1306,7 +1348,7 @@ const ICON = {
   disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 5.5a6.5 6.5 0 0 1 6.5 6.5" stroke-linecap="round"/></svg>',
 };
 function dims(){ const cs=getComputedStyle($('#phone')); return {W:parseFloat(cs.getPropertyValue('--tw')), H:parseFloat(cs.getPropertyValue('--th')), G:2}; }
-function tilePos(t){ const {W,H,G}=dims(); return {left:t.x*(W+G)/2 - t.z*3 + 8, top:t.y*(H+G)/2 - t.z*4 + 14}; }
+function tilePos(t){ const {W,H,G}=dims(), zx=Math.min(3,W/15), zy=Math.min(4,W/11.5); return {left:t.x*(W+G)/2 - t.z*zx + 8, top:t.y*(H+G)/2 - t.z*zy + 14}; }
 function phraseHTML(){ const g=S.game; const words=[]; let cur=[];
   [...g.phrase].forEach((ch,i)=>{ if(ch===' '){ if(cur.length) words.push(cur); cur=[]; } else cur.push([ch,i]); }); if(cur.length) words.push(cur);
   return words.map(w=>`<span class="word">${w.map(([ch,i])=> isLetter(ch) ? `<span class="lc ${g.revealed.has(i)?'on':''}" data-l="${i}">${g.revealed.has(i)?esc(ch.toUpperCase()):''}</span>` : `<span class="punct">${esc(ch)}</span>`).join('')}</span>`).join(''); }
@@ -1347,7 +1389,7 @@ function fitBoard(){ const wrap=$('#boardwrap'), board=wrap&&wrap.querySelector(
   const E=extents(S.game.tiles), g2=base.G; const fit=Math.min((aw-16-g2*E.cw)/(E.cw*base.W), (ah-20-g2*E.ch)/(E.ch*base.H));
   const k=Math.min(1.3*({gran:1.15, mgran:1.3}[S.set.size]||1), fit);
   if(k!==1){ ph.style.setProperty('--tw',(base.W*k).toFixed(1)+'px'); ph.style.setProperty('--th',(base.H*k).toFixed(1)+'px'); } ph.style.setProperty('--sym',(base.W*k*({gran:.73, mgran:.77}[S.set.size]||.68)).toFixed(1)+'px');
-  const {W,H,G}=dims(); board.style.width=(E.cw*(W+G)+16)+'px'; board.style.height=(E.ch*(H+G)+20)+'px';
+  const {W,H,G}=dims(); board.classList.toggle('small', W<40); board.classList.toggle('tiny', W<30); board.style.width=(E.cw*(W+G)+16)+'px'; board.style.height=(E.ch*(H+G)+20)+'px';
   S.game.tiles.forEach(t=>{ const el=board.querySelector(`[data-t="${t.id}"]`); if(!el) return; const p=tilePos(t); el.style.left=p.left+'px'; el.style.top=p.top+'px'; }); }
 window.addEventListener('resize',()=>{ if(S.tab==='joc'&&S.game) fitBoard(); });
 // El visor de Claude i Safari canvien l'alçada després de carregar: es reajusta el tauler cada cop que canvia la mida de l'espai
@@ -1515,8 +1557,8 @@ function shuffleBoard(){ const g=S.game; if(!g||g.busy) return; const calm=g.mod
   S.sheet=null; render(); toast(L('Fitxes barrejades: ara el tauler torna a tenir solució')); }
 const isTrain = g => !!(g&&g.seedStr&&g.seedStr.startsWith('entr-'));
 const dailyOut = () => !S.dailyDone && (S.dailySeen || (S.dailyFailed && !canRetry()));
-function startTraining(){ S.trainN=(S.trainN||0)+1; startGame('calma','trad','entr-'+todaySeed+'-'+S.trainN, L('Taulell d’entrenament'), L('Sense límit d’intents i sense puntuar'), 28); }
-function startCalm(){ S.calmN=(S.calmN||0)+1; startGame('calma','trad','calma-'+todaySeed+'-'+S.calmN, L('Partida tranquil·la'), L('Sense rellotge i sense puntuar'), 24); }
+function startTraining(){ S.trainN=(S.trainN||0)+1; startGame('calma','trad','entr-'+todaySeed+'-'+S.trainN, L('Taulell d’entrenament'), L('Sense límit d’intents i sense puntuar'), pairsOver(28)); }
+function startCalm(){ S.calmN=(S.calmN||0)+1; startGame('calma','trad','calma-'+todaySeed+'-'+S.calmN, L('Partida tranquil·la'), L('Sense rellotge i sense puntuar'), pairsOver(24)); }
 function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Date(y,m+1,0).getDate(), td=today.getDate(), first=(new Date(y,m,1).getDay()+6)%7, r=rng('mes'+y+'-'+m), done=S.dailyDone;
   let cells=[1,2,3,4,5,6,0].map(d=>`<b>${DAYS[d]}</b>`).join(''); for(let i=0;i<first;i++) cells+='<i class="e"></i>';
   const cnt={or:0,pl:0,br:0}, SI=streakInfo();
@@ -1727,9 +1769,10 @@ const winSize = n => Math.max(WIN, Math.min(WINMAX, Math.ceil(levelPairsF(n)/2)+
 const winStart = n => Math.round((Math.min(n,LAST)-1)*(SEQ.length-WINMAX)/(LAST-1));
 const levelWin = n => SEQ.slice(winStart(n), winStart(n)+winSize(n));
 const levelNew = n => { if(n<=1) return levelWin(1); const prev=new Set(levelWin(n-1)); return levelWin(n).filter(e=>!prev.has(e)); };
-function levelPool(seedStr, theme, r){ const m=/^lvl-(\d+)$/.exec(seedStr);
+function levelPool(seedStr, theme, r, nP){ const m=/^lvl-(\d+)$/.exec(seedStr);
   const sh=a=>{ for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a; };
   if(!m) return sh([...THEMES[theme].sym]);
+  if(nP>38){ const need=Math.min(SEQ.length, Math.ceil(nP/2)+1), st=Math.max(0,Math.min(winStart(+m[1]), SEQ.length-need)); return sh(SEQ.slice(st, st+need)); }
   const n=+m[1], nw=n>1?levelNew(n):[], rest=levelWin(n).filter(e=>!nw.includes(e));
   return [...sh([...nw]), ...sh(rest)]; }   // les noves van primer: segur que surten al tauler
 GROUPS.length=0; [{"name": "La taula de l’àvia", "theme": "trad", "desc": "Les fitxes de sempre, com les de la capsa de casa."}, {"name": "El casino del poble", "theme": "trad", "desc": "Arriben els dòminos, els daus i les cartes."}, {"name": "Tarda de cartes", "theme": "roba", "desc": "Cartes, daus i cubs de lletres damunt el marbre del cafè."}, {"name": "Capses de jocs", "theme": "jocs", "desc": "Joguines de l’armari… i ja se sent el xiulet del pati."}, {"name": "Dia de partit", "theme": "musica", "desc": "Pilotes, raquetes i medalles."}, {"name": "Carretera i manta", "theme": "casa", "desc": "Cotxes, trens, avions… i els primers senyals."}, {"name": "Ulls a la carretera", "theme": "viatges", "desc": "Senyals de trànsit i maletes a punt."}, {"name": "Rumb al port", "theme": "temps", "desc": "Monuments, mapes i banderes de vaixell."}, {"name": "Banderes al vent", "theme": "mar", "desc": "El codi de banderes dels vaixells, i el mar."}, {"name": "Mirant el cel", "theme": "espai", "desc": "Núvols, pluja i les primeres estrelles."}, {"name": "Contes sota les estrelles", "theme": "fantasia", "desc": "Coets, dracs i castells."}, {"name": "Festa major", "theme": "festa", "desc": "Globus, focs artificials i música."}, {"name": "Ball i berenar", "theme": "postres", "desc": "Instruments i pastissos."}, {"name": "A taula!", "theme": "cuina", "desc": "Dels fogons a la fruiteria."}, {"name": "L’hort de la masia", "theme": "animals", "desc": "Fruites i verdures acabades de collir."}, {"name": "Jardí de flors", "theme": "flors", "desc": "Flors, plantes i les primeres bestioles."}, {"name": "Bestioles i animals", "theme": "bestioles", "desc": "Del rusc a la granja."}, {"name": "Tornem a casa", "theme": "casa", "desc": "Animals, mobles i rellotges."}, {"name": "L’armari i el taller", "theme": "oficis", "desc": "Roba, complements i eines."}, {"name": "El gran mosaic", "theme": "jocs", "desc": "Les últimes eines… i la col·lecció de rajoles."}].forEach((g,i)=>GROUPS.push({...g, name:L(g.name), desc:L(g.desc), from:i*10+1}));
@@ -1743,7 +1786,7 @@ function grpBg(theme){ if(COLS[theme]){ const P=COLS[theme].pal, d=P.slice(1).co
 const levelPairs = n => levelPairsF(n); // 24 parelles al nivell 1 … 36 al final (+2 als nivells finals de capítol)
 const groupOf = n => GROUPS[Math.floor((n-1)/10)];
 function startLevel(n){ const gr=groupOf(n); if(!gr||gr.soon) return; if(n>S.unlocked){ toast(L('Completa el nivell {0} per desbloquejar-lo',n-1)); return; }
-  startGame('level', gr.theme, 'lvl-'+n, L('Nivell {0}',n), gr.name, levelPairs(n), n); }
+  startGame('level', gr.theme, 'lvl-'+n, L('Nivell {0}',n), gr.name, pairsOver(levelPairs(n)), n); }
 function grpTile(theme){ return COLS[theme] ? colData(theme) : rajolaData('grp'+theme, TPAL[theme]||uiPal()); }
 const nchips = (keys, q) => keys.map(k=>q?'<span class="nchip q">?</span>':`<span class="nchip">${faceHTML(k)}</span>`).join('');
 function lvDots(gr){ return Array.from({length:10},(_,i)=>{ const n=gr.from+i; return `<i class="${n<S.unlocked?'d':n===S.unlocked?'c':''}"></i>`; }).join(''); }
@@ -1761,14 +1804,14 @@ function vNivells(){
   const curG=Math.min(GROUPS.length-1,Math.floor((S.unlocked-1)/10)), cg=GROUPS[curG], curN=Math.min(S.unlocked,GROUPS.length*10);
   const hero=`<div class="jhero" style="${grpBg(cg.theme)}"><small>${L('Capítol {0} de {1}',curG+1,GROUPS.length)}</small><h2>${cg.name}</h2><p>${cg.desc}</p>
       <div class="jnew"><span>${L('S’estrenen al nivell {0}',curN)}</span><div class="nrow">${nchips(levelNew(curN).slice(0,5))}</div></div>
-      <div class="jmeta">${isBoss(curN)?`<span class="boss">⭐ ${L('Nivell final del capítol')}</span>`:''}<span>${L('{0} parelles',levelPairs(curN))}</span>${diffDots(curN)}</div>
+      <div class="jmeta">${isBoss(curN)?`<span class="boss">⭐ ${L('Nivell final del capítol')}</span>`:''}<span>${L('{0} parelles',pairsOver(levelPairs(curN)))}</span>${S.set.pairs?'':diffDots(curN)}</div>
       <button class="btn" onclick="startLevel(${curN})">${L('Juga el nivell {0}',curN)}</button></div>`;
   const items=GROUPS.map((gr,i)=>{ const open=S.unlocked>=gr.from, doneN=Math.max(0,Math.min(10,S.unlocked-gr.from)), cur=i===curG;
     return `<button class="jstep ${open?'':'locked'} ${cur?'cur':''}" onclick="${open?`S.lvGroup=${i};render()`:`toast('${L('Completa el nivell {0} per desbloquejar-los',gr.from-1)}')`}">
       <span class="jmed" style="background-image:url('${grpTile(gr.theme)}')"><b>${doneN===10?'✓':i+1}</b></span>
       <span class="jtx"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${gr.name}</b><span class="jdots">${lvDots(gr)}</span></span>
       <span class="jprev">${nchips(gr.show,!open)}</span></button>`; }).join('');
-  return `<div class="screen"><h1>${L('Nivells')}</h1>${hero}${senCard(true)}<h3 class="jtitle">${L('El camí')}</h3><div class="journey">${items}</div></div>${tabsBar()}`; }
+  return `<div class="screen"><h1>${L('Nivells')}</h1>${hero}${pairCtl(true)}${senCard(true)}<h3 class="jtitle">${L('El camí')}</h3><div class="journey">${items}</div></div>${tabsBar()}`; }
 const NAMES=['Rosa del Montseny','PepTarragona','Fitxeta','JadeBCN','Avi Quim','MahjongMontse','LaFura','Pilar_77','ElBambú','Núria R.','Txema','DracVermell'];
 const LG_TYPES={
  familia:{em:'👨‍👩‍👧',n:'Família',def:'La meva família',ph:'Família Puig',mem:['Mama','Avi','Laia','Marc']},
@@ -1839,6 +1882,7 @@ function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgr
   ${senCard()}${statsCard()}
   <h2>${L('Ajustos')}</h2>
   <b>${L('Idioma')}</b><div class="seg" role="group" aria-label="${L('Idioma')}">${[['ca','Català'],['es','Español'],['en','English']].map(([k,l])=>`<button lang="${k}" class="${LANG===k?'on':''}" aria-pressed="${LANG===k}" onclick="setLang('${k}')">${l}</button>`).join('')}</div>
+  ${pairCtl()}
   <b>${L('Mida de les fitxes')}</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
   ${sw('hc',L('Alt contrast'),L('Fitxes bloquejades amb trama'))}${sw('idx',L('Número a la cantonada'),L('Ajuda a distingir fitxes semblants'))}${sw('dark',L('Mode nit'),'')}${sw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}
   ${sw('sound',L('So i melodia'),'')}${sw('vib',L('Vibració'),'')}<b>${L('So ambient')}</b><div class="seg" role="group" aria-label="${L('So ambient')}">${[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')]].map(([k,l])=>`<button class="${S.set.amb===k?'on':''}" aria-pressed="${S.set.amb===k}" onclick="S.set.amb='${k}';render();ambPreview()">${l}</button>`).join('')}</div>
