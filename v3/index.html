@@ -1463,7 +1463,7 @@ function isFreeSrc(s){ return s.k==='r' || isFree(S.game.tiles[s.id], present())
 function shake(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); click(300,.04); }
 let D=null;
 function bindDrag(){ const root=$('#view'); if(root.dataset.bound) return; root.dataset.bound='1';
-  root.addEventListener('pointerdown',e=>{ if(D||S.tab!=='joc') return; const g=S.game; if(!g||g.over||g.busy) return;
+  root.addEventListener('pointerdown',e=>{ if(D||S.tab!=='joc') return; const g=S.game; if(!g||g.over) return;
     const tEl=e.target.closest('.tile'); const sEl=e.target.closest('.slot');
     if(!tEl){ if(sEl&&!g.reserve[+sEl.dataset.s]&&g.sel&&g.sel.k==='b') tapSlot(+sEl.dataset.s); return; }
     if(tEl.closest('#fx')) return; const src=srcOf(tEl);
@@ -1496,7 +1496,7 @@ function bindDrag(){ const root=$('#view'); if(root.dataset.bound) return; root.
     const back=d.clone.animate([{transform:d.clone.style.transform},{transform:'none'}],{duration:reduced?1:260,easing:'cubic-bezier(.34,1.4,.64,1)'});
     back.onfinish=()=>{ d.clone.remove(); d.el.style.visibility=''; }; };
   window.addEventListener('pointerup',end); window.addEventListener('pointercancel',end);
-  root.addEventListener('click',e=>{ if(e.detail!==0||S.tab!=='joc') return; const g=S.game; if(!g||g.over||g.busy) return;
+  root.addEventListener('click',e=>{ if(e.detail!==0||S.tab!=='joc') return; const g=S.game; if(!g||g.over) return;
     const sl=e.target.closest('.slot'); if(sl) return tapSlot(+sl.dataset.s);
     const t=e.target.closest('.tile[data-t]'); if(!t) return; if(!isFreeSrc(srcOf(t))) return shake(t); tapTile(+t.dataset.t); }); }
 const MAX_ERR=3;
@@ -1512,7 +1512,7 @@ function tapTile(id){ const g=S.game; const t=g.tiles[id];
   if(sel && symOf(sel)===t.s) return doMatch(sel,{k:'b',id});
   g.sel={k:'b',id}; click(); vib(5); updateTiles(); updateReserve();
   if(!S.tapTold){ S.tapTold=true; toast(L('Ara toca la seva parella, o un lloc buit del faristol')); } }
-function tapSlot(i){ const g=S.game; if(g.over||g.busy) return; const sel=g.sel, r=g.reserve[i];
+function tapSlot(i){ const g=S.game; if(g.over) return; const sel=g.sel, r=g.reserve[i];
   if(!r){ if(sel&&sel.k==='b') return doPark(sel.id,i); return; }
   if(sel&&sel.k==='r'&&sel.i===i){ g.sel=null; updateReserve(); return; }
   if(sel && symOf(sel)===r.s) return doMatch(sel,{k:'r',i});
@@ -1520,9 +1520,9 @@ function tapSlot(i){ const g=S.game; if(g.over||g.busy) return; const sel=g.sel,
 function freeze(c){ const r=rel(c); c.style.left=r.x+'px'; c.style.top=r.y+'px'; c.style.transform='none'; c.classList.remove('drag'); return {c, r:rel(c)}; }
 async function doPark(id,i,dragClone){ const g=S.game; g.busy++; const el=elOf({k:'b',id}); const slot=document.querySelector(`.slot[data-s="${i}"]`);
   const {c,r}= dragClone ? freeze(dragClone) : cloneAt(el); const sr=rel(slot); el.style.visibility='';
-  g.tiles[id].gone=true; g.sel=null; updateTiles(); knock(); vib(8);
-  if(!reduced) await c.animate([{transform:'none'},{transform:`translate(${(sr.x+4-r.x)/2}px,${(sr.y-r.y)/2-24}px) scale(1.05)`,offset:.5},{transform:`translate(${sr.x+4-r.x}px,${sr.y+4-r.y}px)`}],{duration:300,easing:'cubic-bezier(.4,0,.2,1)'}).finished;
-  c.remove(); g.reserve[i]={s:g.tiles[id].s, id}; g.lastPark={id,i}; updateReserve(); updateHUD(); g.busy--; checkState(); }
+  g.tiles[id].gone=true; g.sel=null; g.reserve[i]={s:g.tiles[id].s, id}; g.lastPark={id,i}; updateTiles(); updateReserve(); const land=slot.firstChild; if(land) land.style.visibility='hidden'; knock(); vib(8);
+  if(!reduced) await Promise.race([c.animate([{transform:'none'},{transform:`translate(${(sr.x+4-r.x)/2}px,${(sr.y-r.y)/2-24}px) scale(1.05)`,offset:.5},{transform:`translate(${sr.x+4-r.x}px,${sr.y+4-r.y}px)`}],{duration:240,easing:'cubic-bezier(.4,0,.2,1)'}).finished.catch(()=>{}), new Promise(r=>setTimeout(r,400))]);
+  c.remove(); if(land) land.style.visibility=''; updateHUD(); g.busy--; checkState(); }
 
 // So característic de parella: dues rajoles de ceràmica que topen (clic-clac)
 function clack(vol=.32){ if(!S.set.sound||!audio()) return; const t0=ac.currentTime;
@@ -1545,7 +1545,7 @@ async function doMatch(a,b,dragClone){ const g=S.game; g.busy++; const ea=elOf(a
   if(ea) ea.style.visibility=''; updateTiles(); updateReserve(); updateHUD();
   const ca={x:A.r.x+A.r.w/2,y:A.r.y+A.r.h/2}, cb={x:B.r.x+B.r.w/2,y:B.r.y+B.r.h/2};
   const m = dragClone ? cb : {x:(ca.x+cb.x)/2, y:Math.min(ca.y,cb.y)-10};
-  A.c.classList.add('flyglow'); B.c.classList.add('flyglow'); const T=reduced?200:(dragClone?420:560);
+  A.c.classList.add('flyglow'); B.c.classList.add('flyglow'); const T=reduced?200:(dragClone?340:440);
   const fly=(o,c)=>{ const dx=m.x-c.x, dy=m.y-c.y; return o.c.animate([
       {transform:'translate(0,0) scale(1)'},{transform:`translate(${dx*.1}px,${dy*.1-10}px) scale(1.08)`,offset:.2},
       {transform:`translate(${dx}px,${dy}px) scale(1.12)`,opacity:1,offset:.72},{transform:`translate(${dx}px,${dy}px) scale(.15) rotate(20deg)`,opacity:0}],
@@ -1555,7 +1555,7 @@ async function doMatch(a,b,dragClone){ const g=S.game; g.busy++; const ea=elOf(a
   setTimeout(()=>{ burst(m.x,m.y,g.combo); stamp(m.x,m.y,g.combo); vib([12,30,18]); if(g.combo>1) showCombo(g.combo);
     const note=g.song.n[idx%g.song.n.length]; (g.notes=g.notes||[]).push({t:Date.now(),note,combo:g.combo}); voice(note,0,.22); bell(note+24,.06,.05,.7); if(g.combo>1) voice(note+(g.combo>3?12:7),.07,.09); if(g.combo>2) voice(note-12,0,.08,2);
     lets.forEach((li,k)=>flyLetter(m, li, k*110)); setTimeout(updateHUD, 900); }, T*.72);
-  await Promise.all([fly(A,ca),fly(B,cb)]); A.c.remove(); B.c.remove(); g.busy--; checkState(); }
+  await Promise.race([Promise.all([fly(A,ca),fly(B,cb)]).catch(()=>{}), new Promise(r=>setTimeout(r,T+250))]); A.c.remove(); B.c.remove(); g.busy--; checkState(); }
 function flyLetter(from, li, delay){ const to=letterXY(li); if(!to||reduced){ revealLetter(li,delay); return; }
   const n=document.createElement('div'); n.className='flynote'; n.textContent='✦'; n.style.left=from.x+'px'; n.style.top=from.y+'px'; $('#fx').appendChild(n);
   const dx=to.x-from.x, dy=to.y-from.y, g=S.game; g.revealed.add(li);
