@@ -718,6 +718,7 @@ body.prova .phone{height:calc(100% - 48px)}
 .jmeta .boss{background:rgba(0,0,0,.25);border-radius:10px;padding:2px 8px}
 .trainnote{font-size:14px;margin:0 0 10px;opacity:.9}
 
+.hero .pairctl{margin:12px 0 0;color:var(--ink)}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -822,6 +823,8 @@ Object.assign(TR.es,{"Taulell d’entrenament": "Tablero de entrenamiento", "Sen
 Object.assign(TR.en,{"Taulell d’entrenament": "Practice board", "Sense límit d’intents i sense puntuar": "Unlimited tries, no score", "Has gastat els intents d’avui, però pots seguir jugant al taulell d’entrenament: sense límit i sense puntuar.": "You’ve used today’s tries, but you can keep playing on the practice board: unlimited and unscored.", "Un altre taulell d’entrenament": "Another practice board", "Avui ja no et queden intents. Pots seguir practicant sense puntuar.": "No tries left today. You can keep practising without a score.", "Ja has vist la solució d’avui: et porto al taulell d’entrenament": "You’ve seen today’s solution: here’s the practice board"});
 Object.assign(TR.es,{"Parelles per tauler": "Parejas por tablero", "Auto": "Auto", "Treure 10 parelles": "Quitar 10 parejas", "Treure una parella": "Quitar una pareja", "Afegir una parella": "Añadir una pareja", "Afegir 10 parelles": "Añadir 10 parejas", "Tornar a automàtic (segons el nivell)": "Volver a automático (según el nivel)", "De {0} a {1} parelles. La partida diària no canvia: és igual per a tothom.": "De {0} a {1} parejas. La partida diaria no cambia: es igual para todos."});
 Object.assign(TR.en,{"Parelles per tauler": "Pairs per board", "Auto": "Auto", "Treure 10 parelles": "Remove 10 pairs", "Treure una parella": "Remove one pair", "Afegir una parella": "Add one pair", "Afegir 10 parelles": "Add 10 pairs", "Tornar a automàtic (segons el nivell)": "Back to automatic (by level)", "De {0} a {1} parelles. La partida diària no canvia: és igual per a tothom.": "From {0} to {1} pairs. The daily game doesn’t change: it’s the same for everyone."});
+Object.assign(TR.es,{"Parelles del taulell d’entrenament": "Parejas del tablero de entrenamiento", "Tornar a 28 parelles": "Volver a 28 parejas", "De {0} a {1} parelles. Només per al taulell d’entrenament: els nivells i la partida diària no canvien.": "De {0} a {1} parejas. Solo para el tablero de entrenamiento: los niveles y la partida diaria no cambian."});
+Object.assign(TR.en,{"Parelles del taulell d’entrenament": "Practice board pairs", "Tornar a 28 parelles": "Back to 28 pairs", "De {0} a {1} parelles. Només per al taulell d’entrenament: els nivells i la partida diària no canvien.": "From {0} to {1} pairs. Practice board only: levels and the daily game don’t change."});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1152,13 +1155,13 @@ S.solvedIdx = new Set(PHRASES.map((p,i)=>i).filter(i=>PHRASES[i]!==pickPhrase(to
 
 const PAIRS_MIN=4, PAIRS_MAX=256;
 const pairsOver = def => S.set.pairs ? Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, S.set.pairs)) : def;
-function setPairs(d){ const cur=S.set.pairs||(S.game&&S.game.mode!=='daily'?S.game.nPairs:30); S.set.pairs=Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, cur+d)); try{ localStorage.setItem('melodia-v3-parelles', S.set.pairs); }catch(e){} render(); }
+function setPairs(d){ const cur=S.set.pairs||28; S.set.pairs=Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, cur+d)); try{ localStorage.setItem('melodia-v3-parelles', S.set.pairs); }catch(e){} render(); }
 function autoPairs(){ S.set.pairs=0; try{ localStorage.removeItem('melodia-v3-parelles'); }catch(e){} render(); }
 function pairCtl(compact){ const v=S.set.pairs;
-  return `<div class="pairctl ${compact?'compact':''}"><div class="prow"><b>${L('Parelles per tauler')}</b><span class="pval">${v?v:L('Auto')}</span></div>
+  return `<div class="pairctl ${compact?'compact':''}"><div class="prow"><b>${L('Parelles del taulell d’entrenament')}</b><span class="pval">${v||28}</span></div>
     <div class="stp"><button onclick="setPairs(-10)" aria-label="${L('Treure 10 parelles')}">−10</button><button onclick="setPairs(-1)" aria-label="${L('Treure una parella')}">−</button><button onclick="setPairs(1)" aria-label="${L('Afegir una parella')}">+</button><button onclick="setPairs(10)" aria-label="${L('Afegir 10 parelles')}">+10</button></div>
-    ${v?`<button class="link" onclick="autoPairs()">${L('Tornar a automàtic (segons el nivell)')}</button>`:''}
-    <p class="muted">${L('De {0} a {1} parelles. La partida diària no canvia: és igual per a tothom.',PAIRS_MIN,PAIRS_MAX)}</p></div>`; }
+    ${v&&v!==28?`<button class="link" onclick="autoPairs()">${L('Tornar a 28 parelles')}</button>`:''}
+    <p class="muted">${L('De {0} a {1} parelles. Només per al taulell d’entrenament: els nivells i la partida diària no canvien.',PAIRS_MIN,PAIRS_MAX)}</p></div>`; }
 // Tauler gran: sempre 5×6; les fitxes de més s'apilen (muntanyeta al mig i munts de cartes a la primera fila)
 function bigLayout(r, target){
   const C=5, R=6, cells=[];
@@ -1554,7 +1557,7 @@ function shuffleBoard(){ const g=S.game; if(!g||g.busy) return; const calm=g.mod
 const isTrain = g => !!(g&&g.seedStr&&g.seedStr.startsWith('entr-'));
 const dailyOut = () => !S.dailyDone && (S.dailySeen || (S.dailyFailed && !canRetry()));
 function startTraining(){ S.trainN=(S.trainN||0)+1; startGame('calma','trad','entr-'+todaySeed+'-'+S.trainN, L('Taulell d’entrenament'), L('Sense límit d’intents i sense puntuar'), pairsOver(28)); }
-function startCalm(){ S.calmN=(S.calmN||0)+1; startGame('calma','trad','calma-'+todaySeed+'-'+S.calmN, L('Partida tranquil·la'), L('Sense rellotge i sense puntuar'), pairsOver(24)); }
+function startCalm(){ S.calmN=(S.calmN||0)+1; startGame('calma','trad','calma-'+todaySeed+'-'+S.calmN, L('Partida tranquil·la'), L('Sense rellotge i sense puntuar'), 24); }
 function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Date(y,m+1,0).getDate(), td=today.getDate(), first=(new Date(y,m,1).getDay()+6)%7, r=rng('mes'+y+'-'+m), done=S.dailyDone;
   let cells=[1,2,3,4,5,6,0].map(d=>`<b>${DAYS[d]}</b>`).join(''); for(let i=0;i<first;i++) cells+='<i class="e"></i>';
   const cnt={or:0,pl:0,br:0}, SI=streakInfo();
@@ -1713,7 +1716,7 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
     <h2>${done?L('Feta!')+' '+fmt(done.time):L('Avui')}</h2>
     <p class="sub">${done?L('Posició {0} a la teva comarca',done.pos):todayLabel+' · '+L('amaga un refrany')}</p>
     <p class="sub" style="font-size:13px;opacity:.8">${done?L('Torna demà per a un tauler nou'):L('El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)')}</p>
-    ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:dailyOut()?`<p class="sub trainnote">${L('Avui ja no et queden intents. Pots seguir practicant sense puntuar.')}</p><button class="btn gold" onclick="startTraining()">🎯 ${L('Taulell d’entrenament')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
+    ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:dailyOut()?`<p class="sub trainnote">${L('Avui ja no et queden intents. Pots seguir practicant sense puntuar.')}</p><button class="btn gold" onclick="startTraining()">🎯 ${L('Taulell d’entrenament')}</button>${pairCtl(true)}`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
   </div>
   <div class="card"><div class="row"><b>${L('La teva setmana')}</b><span class="muted" style="font-size:14px">${L('Ratxa: {0} dies',SI.n)}</span></div><div class="week">${week}</div><p class="streaknote">🌙 ${L('{0} dies de descans disponibles aquest mes',SI.left)} · ${L('Millor ratxa: {0}',SI.best)}</p></div>
   ${chCard()}${monthCard()}
@@ -1782,7 +1785,7 @@ function grpBg(theme){ if(COLS[theme]){ const P=COLS[theme].pal, d=P.slice(1).co
 const levelPairs = n => levelPairsF(n); // 24 parelles al nivell 1 … 36 al final (+2 als nivells finals de capítol)
 const groupOf = n => GROUPS[Math.floor((n-1)/10)];
 function startLevel(n){ const gr=groupOf(n); if(!gr||gr.soon) return; if(n>S.unlocked){ toast(L('Completa el nivell {0} per desbloquejar-lo',n-1)); return; }
-  startGame('level', gr.theme, 'lvl-'+n, L('Nivell {0}',n), gr.name, pairsOver(levelPairs(n)), n); }
+  startGame('level', gr.theme, 'lvl-'+n, L('Nivell {0}',n), gr.name, levelPairs(n), n); }
 function grpTile(theme){ return COLS[theme] ? colData(theme) : rajolaData('grp'+theme, TPAL[theme]||uiPal()); }
 const nchips = (keys, q) => keys.map(k=>q?'<span class="nchip q">?</span>':`<span class="nchip">${faceHTML(k)}</span>`).join('');
 function lvDots(gr){ return Array.from({length:10},(_,i)=>{ const n=gr.from+i; return `<i class="${n<S.unlocked?'d':n===S.unlocked?'c':''}"></i>`; }).join(''); }
@@ -1800,14 +1803,14 @@ function vNivells(){
   const curG=Math.min(GROUPS.length-1,Math.floor((S.unlocked-1)/10)), cg=GROUPS[curG], curN=Math.min(S.unlocked,GROUPS.length*10);
   const hero=`<div class="jhero" style="${grpBg(cg.theme)}"><small>${L('Capítol {0} de {1}',curG+1,GROUPS.length)}</small><h2>${cg.name}</h2><p>${cg.desc}</p>
       <div class="jnew"><span>${L('S’estrenen al nivell {0}',curN)}</span><div class="nrow">${nchips(levelNew(curN).slice(0,5))}</div></div>
-      <div class="jmeta">${isBoss(curN)?`<span class="boss">⭐ ${L('Nivell final del capítol')}</span>`:''}<span>${L('{0} parelles',pairsOver(levelPairs(curN)))}</span>${S.set.pairs?'':diffDots(curN)}</div>
+      <div class="jmeta">${isBoss(curN)?`<span class="boss">⭐ ${L('Nivell final del capítol')}</span>`:''}<span>${L('{0} parelles',levelPairs(curN))}</span>${diffDots(curN)}</div>
       <button class="btn" onclick="startLevel(${curN})">${L('Juga el nivell {0}',curN)}</button></div>`;
   const items=GROUPS.map((gr,i)=>{ const open=S.unlocked>=gr.from, doneN=Math.max(0,Math.min(10,S.unlocked-gr.from)), cur=i===curG;
     return `<button class="jstep ${open?'':'locked'} ${cur?'cur':''}" onclick="${open?`S.lvGroup=${i};render()`:`toast('${L('Completa el nivell {0} per desbloquejar-los',gr.from-1)}')`}">
       <span class="jmed" style="background-image:url('${grpTile(gr.theme)}')"><b>${doneN===10?'✓':i+1}</b></span>
       <span class="jtx"><small>${L('Nivells {0}–{1}',gr.from,gr.from+9)}</small><b>${gr.name}</b><span class="jdots">${lvDots(gr)}</span></span>
       <span class="jprev">${nchips(gr.show,!open)}</span></button>`; }).join('');
-  return `<div class="screen"><h1>${L('Nivells')}</h1>${hero}${pairCtl(true)}${senCard(true)}<h3 class="jtitle">${L('El camí')}</h3><div class="journey">${items}</div></div>${tabsBar()}`; }
+  return `<div class="screen"><h1>${L('Nivells')}</h1>${hero}${senCard(true)}<h3 class="jtitle">${L('El camí')}</h3><div class="journey">${items}</div></div>${tabsBar()}`; }
 const NAMES=['Rosa del Montseny','PepTarragona','Fitxeta','JadeBCN','Avi Quim','MahjongMontse','LaFura','Pilar_77','ElBambú','Núria R.','Txema','DracVermell'];
 const LG_TYPES={
  familia:{em:'👨‍👩‍👧',n:'Família',def:'La meva família',ph:'Família Puig',mem:['Mama','Avi','Laia','Marc']},
@@ -2014,7 +2017,7 @@ function vSheet(){ const g=S.game;
     const parts=[L('{0} de joc',fmt(elapsed()))]; if(g.attempts) parts.push(L('+ {0} min (intents)',g.attempts*2)); if(g.penalty) parts.push(L('+ {0} s (errors)',g.penalty)); if(g.hintPen) parts.push(L('+ {0} s (pistes)',g.hintPen)); if(g.bonus) parts.push(L('− {0} s (frase)',g.bonus));
     const rp = g.mode==='repte'&&S.challenge ? Math.floor(tot)-S.challenge.t : null;
     const next = g.mode==='repte' ? `<button class="btn primary" onclick="challenge()">${L('Retornar el repte')}</button>`
-      : isTrain(g) ? `<button class="btn primary" onclick="startTraining()">🎯 ${L('Un altre taulell d’entrenament')}</button>`
+      : isTrain(g) ? `${pairCtl(true)}<button class="btn primary" onclick="startTraining()">🎯 ${L('Un altre taulell d’entrenament')}</button>`
       : g.mode==='calma' ? `<button class="btn primary" onclick="startCalm()">☕ ${L('Una altra partida tranquil·la')}</button>`
       : g.mode==='daily' ? `<button class="btn primary" onclick="S.sheet=null;go('class')">${L('Veure classificació')}</button>`
       : (groupOf(g.level+1)&&!groupOf(g.level+1).soon ? `<button class="btn primary" onclick="startLevel(${g.level+1})">${L('Nivell {0}',g.level+1)}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>` : `<button class="btn primary" onclick="S.sheet=null;go('nivells')">${L('Tornar als nivells')}</button>`);
