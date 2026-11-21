@@ -721,6 +721,7 @@ body.prova .phone{height:calc(100% - 48px)}
 .hero .pairctl{margin:12px 0 0;color:var(--ink)}
 .tile.pile.buried::before{box-shadow:none} .tile.pile.buried .face{box-shadow:inset 0 0 0 1px rgba(110,90,60,.22),1px 1px 0 #DCCDB0}
 html,body{overflow-x:hidden}
+.seg.ambseg{flex-wrap:wrap;border-radius:22px} .seg.ambseg button{flex:1 0 22%}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -843,6 +844,8 @@ Object.assign(TR.es,{"{0} parelles sense pressa": "{0} parejas sin prisa", "La t
 Object.assign(TR.en,{"{0} parelles sense pressa": "{0} pairs, no rush", "La teva postal de la partida tranquil·la": "Your calm game postcard"});
 Object.assign(TR.es,{"Tots els sons del joc": "Todos los sonidos del juego", "So de les parelles": "Sonido de las parejas", "La nota i el clic-clac de cada parella": "La nota y el clic-clac de cada pareja", "Piano": "Piano"});
 Object.assign(TR.en,{"Tots els sons del joc": "All game sounds", "So de les parelles": "Pair sound", "La nota i el clic-clac de cada parella": "The note and click-clack of each pair", "Piano": "Piano"});
+Object.assign(TR.es,{"Guitarra": "Guitarra", "Rock": "Rock"});
+Object.assign(TR.en,{"Guitarra": "Guitar", "Rock": "Rock"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1624,7 +1627,7 @@ function cfgSheet(){ const g=S.game, tr=isTrain(g);
       <button class="btn primary" onclick="S.sheet=null;startCalm()">☕ ${L('Nou taulell amb {0} parelles',S.set.pairs||28).replace(String(S.set.pairs||28),'<span class="pairsN">'+(S.set.pairs||28)+'</span>')}</button></div>`
       :`<p class="muted cfgnote">${L('Les parelles i els dibuixos es poden triar a la partida tranquil·la. Aquesta partida té les seves parelles fixes.')}</p>`}
     <div class="cfgsec"><h3>♪ ${L('Música i so')}</h3>${cfgSw('sound',L('So i melodia'),L('Tots els sons del joc'))}${cfgSw('pairSnd',L('So de les parelles'),L('La nota i el clic-clac de cada parella'))}${cfgSw('vib',L('Vibració'),'')}
-      <b>${L('So ambient')}</b>${cfgSeg('amb',[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')],['piano',L('Piano')]])}</div>
+      <b>${L('So ambient')}</b>${cfgSeg('amb',[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')],['piano',L('Piano')],['guitarra',L('Guitarra')],['rock',L('Rock')]]).replace('class="seg"','class="seg ambseg"')}</div>
     <div class="cfgsec"><h3>🀄 ${L('Fitxes i tauler')}</h3><b>${L('Mida de les fitxes')}</b>${cfgSeg('size',[['normal',L('Normal')],['gran',L('Gran')],['mgran',L('Molt gran')]])}
       ${cfgSw('glow',L('Il·luminar les fitxes lliures'),'')}${cfgSw('idx',L('Número a la cantonada'),'')}${cfgSw('hc',L('Alt contrast'),'')}${cfgSw('dark',L('Mode nit'),'')}${g&&g.mode==='calma'?'':cfgSw('hideTime',L('Amagar el temps'),'')}</div>
     <div class="stack"><button class="btn secondary" onclick="resume()">${L('Tornar a la partida')}</button></div>`; }
@@ -1739,8 +1742,61 @@ function pianoAmb(){ const g=ac.createGain(), lp=ac.createBiquadFilter(); lp.typ
   const tick=()=>{ const lim=ac.currentTime+.8; while(t0+E[i].t<lim){ const e=E[i]; pianoNote(lp, e.n, t0+e.t, e.v, e.d); i++; if(i>=E.length){ i=0; t0+=L; } } };
   tick(); const id=setInterval(tick,200);
   return {k:'piano', g, stop:[{stop:()=>clearInterval(id)}]}; }
+
+// ---- Bucle genèric per als sons ambient amb música (programa les notes una mica per endavant) ----
+function loopAmb(k, score, play, vol){ const g=ac.createGain(); g.gain.value=0; g.gain.setTargetAtTime(vol,ac.currentTime,.6); g.connect(ac.destination);
+  const {E,L}=score, out=play.init?play.init(g):g; let t0=ac.currentTime+.3, i=0;
+  const tick=()=>{ const lim=ac.currentTime+.8; while(t0+E[i].t<lim){ play(out, E[i], t0+E[i].t); i++; if(i>=E.length){ i=0; t0+=L; } } };
+  tick(); const id=setInterval(tick,200); return {k, g, stop:[{stop:()=>clearInterval(id)}]}; }
+let NOISE=null; const noiseBuf=()=>{ if(NOISE) return NOISE; const n=ac.sampleRate, b=ac.createBuffer(1,n,n), d=b.getChannelData(0); for(let i=0;i<n;i++) d[i]=Math.random()*2-1; return NOISE=b; };
+
+// Guitarra (composició pròpia, la menor, estil clàssic espanyol): arpegis amb els dits i, la segona volta, melodia a dalt. Corda pinçada (Karplus-Strong)
+const KS={}; function ksBuf(semi){ if(KS[semi]) return KS[semi]; const sr=ac.sampleRate, f=261.63*Math.pow(2,semi/12), N=Math.round(sr/f), len=Math.floor(sr*2.6), b=ac.createBuffer(1,len,sr), d=b.getChannelData(0);
+  for(let i=0;i<N;i++) d[i]=Math.random()*2-1; const damp=semi<-12?.9965:.9945; for(let i=N;i<len;i++) d[i]=damp*.5*(d[i-N]+d[i-N+1]); return KS[semi]=b; }
+const GCH={Am:[-15,-8,-3,0],G:[-17,-10,-5,-1],F:[-19,-12,-7,-3],E:[-20,-13,-8,-4],Dm:[-10,-3,2,5],C:[-12,-8,-5,0],Em:[-20,-13,-8,-5]};
+const GPROG=['Am','G','F','E','Am','Dm','E','Am','C','G','Am','Em','F','Dm','E','Am'];
+const GMEL=[[12,9],[11,7],[9,12],[11,8],[12,16],[14,17],[16,11],[12,9],[12,16],[14,11],[12,9],[11,7],[9,12],[14,9],[8,11],[9,9]];
+function guitarScore(){ const E=[], q=.3; let t=0;
+  for(let pass=0;pass<2;pass++) GPROG.forEach((ch,bi)=>{ const [b,x,y,z]=GCH[ch], last=bi===15;
+    const pat=last?[b]:[b,x,y,z,y,x];
+    pat.forEach((n,k)=>E.push({t:t+k*q, n, v:k===0?.16:.11}));
+    if(last) [x,y,z].forEach((n,k)=>E.push({t:t+.05*(k+1), n, v:.1}));
+    if(pass===1){ const [m1,m2]=GMEL[bi]; E.push({t:t, n:m1, v:.15}); if(!last) E.push({t:t+3*q, n:m2, v:.13}); }
+    t+=6*q; });
+  E.sort((a,b)=>a.t-b.t); return {E, L:t+3*q}; }
+function guitarPlay(out, e, t){ const s=ac.createBufferSource(), g=ac.createGain(); s.buffer=ksBuf(e.n); g.gain.value=e.v; s.connect(g).connect(out); s.start(t); }
+guitarPlay.init = g => { const lp=ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=3200; lp.connect(g); if(master){ const w=ac.createGain(); w.gain.value=.35; lp.connect(w); w.connect(master); } return lp; };
+
+// Rock (composició pròpia, mi menor, 120 per minut): bateria, baix i guitarra distorsionada amb acords de quinta
+const RROOT={E:-20,G:-17,A:-15,D:-22,C:-24,B:-25};
+const RRIFF=[ [[['E',0,4],['E',4,2],['G',6,1],['A',7,1]], [['E',0,4],['D',4,2],['C',6,1],['B',7,1]]],
+              [[['C',0,4],['C',4,2],['D',6,2]], [['E',0,4],['G',4,2],['A',6,2]]] ];
+function rockScore(){ const E=[], q=.25, BAR=8*q; let t=0;
+  [0,0,1,0,0,1,1,0].forEach(ri=>{ RRIFF[ri].forEach(bar=>{
+      bar.forEach(([ch,st,len])=>{ for(let k=0;k<len;k++){ const tt=t+(st+k)*q, mute=k>0;
+        E.push({t:tt, ins:'gtr', n:RROOT[ch]+12, d:mute?q*.6:q*.95, v:mute?.6:1}); E.push({t:tt, ins:'bass', n:RROOT[ch], d:q*.9}); } });
+      for(let k=0;k<8;k++){ const tt=t+k*q; E.push({t:tt, ins:'hat', v:k%2?.5:.8}); if(k===0||k===3||k===4) E.push({t:tt, ins:'kick'}); if(k===2||k===6) E.push({t:tt, ins:'snare'}); }
+      t+=BAR; }); });
+  E.push({t, ins:'kick'}); E.push({t, ins:'crash'}); E.push({t, ins:'gtr', n:RROOT.E+12, d:1.6, v:1}); E.push({t, ins:'bass', n:RROOT.E, d:1.4});
+  E.sort((a,b)=>a.t-b.t); return {E, L:t+BAR}; }
+function rockPlay(out, e, t){ const hz=f=>261.63*Math.pow(2,f/12);
+  if(e.ins==='kick'){ const o=ac.createOscillator(), g=ac.createGain(); o.frequency.setValueAtTime(140,t); o.frequency.exponentialRampToValueAtTime(45,t+.18); g.gain.setValueAtTime(.9,t); g.gain.exponentialRampToValueAtTime(.001,t+.32); o.connect(g).connect(out.dry); o.start(t); o.stop(t+.35); return; }
+  if(e.ins==='snare'||e.ins==='hat'||e.ins==='crash'){ const n=ac.createBufferSource(), f=ac.createBiquadFilter(), g=ac.createGain(); n.buffer=noiseBuf(); f.type='highpass';
+    const [hp,v,d]= e.ins==='snare'?[1200,.5,.16]: e.ins==='hat'?[7000,.13*e.v,.045]:[4500,.3,1.4]; f.frequency.value=hp; g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(.001,t+d);
+    n.connect(f).connect(g).connect(out.dry); n.start(t, Math.random()*.4); n.stop(t+d+.05);
+    if(e.ins==='snare'){ const o=ac.createOscillator(), og=ac.createGain(); o.frequency.value=190; og.gain.setValueAtTime(.35,t); og.gain.exponentialRampToValueAtTime(.001,t+.1); o.connect(og).connect(out.dry); o.start(t); o.stop(t+.12); } return; }
+  if(e.ins==='bass'){ const o=ac.createOscillator(), f=ac.createBiquadFilter(), g=ac.createGain(); o.type='sawtooth'; o.frequency.value=hz(e.n); f.type='lowpass'; f.frequency.value=420;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.4,t+.01); g.gain.setValueAtTime(.4,t+e.d*.8); g.gain.linearRampToValueAtTime(0,t+e.d); o.connect(f).connect(g).connect(out.dry); o.start(t); o.stop(t+e.d+.02); return; }
+  if(e.ins==='gtr'){ const g=ac.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.22*e.v,t+.005); g.gain.setValueAtTime(.22*e.v,t+e.d*.85); g.gain.linearRampToValueAtTime(0,t+e.d); g.connect(out.gtr);
+    [0,7,12].forEach((iv,k)=>{ const o=ac.createOscillator(); o.type='sawtooth'; o.frequency.value=hz(e.n+iv); o.detune.value=(k-1)*6; o.connect(g); o.start(t); o.stop(t+e.d+.02); }); } }
+rockPlay.init = g => { const dry=ac.createGain(); dry.gain.value=1; dry.connect(g);
+  const sh=ac.createWaveShaper(), c=new Float32Array(1024); for(let i=0;i<1024;i++){ const x=i/511.5-1; c[i]=Math.tanh(x*6)/Math.tanh(6); } sh.curve=c;
+  const pre=ac.createGain(); pre.gain.value=2.2; const lp=ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=2800; const post=ac.createGain(); post.gain.value=.28;
+  pre.connect(sh).connect(lp).connect(post).connect(g); return {dry, gtr:pre}; };
 function ambStart(){ const k=S.set.amb; if(!k||k==='cap'||!S.set.sound||!audio()) return ambStop(); if(ambNode&&ambNode.k===k) return; ambStop();
   if(k==='piano'){ ambNode=pianoAmb(); return; }
+  if(k==='guitarra'){ ambNode=loopAmb(k, guitarScore(), guitarPlay, .55); return; }
+  if(k==='rock'){ ambNode=loopAmb(k, rockScore(), rockPlay, .085); return; }
   const t=ac.currentTime, len=ac.sampleRate*4, buf=ac.createBuffer(1,len,ac.sampleRate), d=buf.getChannelData(0); let last=0;
   for(let i=0;i<len;i++){ const w=Math.random()*2-1; if(k==='pluja') d[i]=w*.5; else { last=(last+.02*w)/1.02; d[i]=last*3.5; } }
   const src=ac.createBufferSource(); src.buffer=buf; src.loop=true; const f=ac.createBiquadFilter(), g=ac.createGain(); g.gain.value=0; const stop=[src];
@@ -1985,7 +2041,7 @@ function vPerfil(){ const sizes=[['normal',L('Normal')],['gran',L('Gran')],['mgr
   ${pairCtl()}
   <b>${L('Mida de les fitxes')}</b><div class="seg">${sizes.map(([k,l])=>`<button class="${S.set.size===k?'on':''}" onclick="S.set.size='${k}';render()">${l}</button>`).join('')}</div>
   ${sw('hc',L('Alt contrast'),L('Fitxes bloquejades amb trama'))}${sw('idx',L('Número a la cantonada'),L('Ajuda a distingir fitxes semblants'))}${sw('dark',L('Mode nit'),'')}${sw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}
-  ${sw('sound',L('So i melodia'),'')}${sw('pairSnd',L('So de les parelles'),'')}${sw('vib',L('Vibració'),'')}<b>${L('So ambient')}</b><div class="seg" role="group" aria-label="${L('So ambient')}">${[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')],['piano',L('Piano')]].map(([k,l])=>`<button class="${S.set.amb===k?'on':''}" aria-pressed="${S.set.amb===k}" onclick="S.set.amb='${k}';render();ambPreview()">${l}</button>`).join('')}</div>
+  ${sw('sound',L('So i melodia'),'')}${sw('pairSnd',L('So de les parelles'),'')}${sw('vib',L('Vibració'),'')}<b>${L('So ambient')}</b><div class="seg ambseg" role="group" aria-label="${L('So ambient')}">${[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')],['piano',L('Piano')],['guitarra',L('Guitarra')],['rock',L('Rock')]].map(([k,l])=>`<button class="${S.set.amb===k?'on':''}" aria-pressed="${S.set.amb===k}" onclick="S.set.amb='${k}';render();ambPreview()">${l}</button>`).join('')}</div>
   ${sw('glow',L('Il·luminar les fitxes lliures'),L('Un contorn daurat a les fitxes que es poden moure'))}${sw('remind',L('Recordatori diari'),L('A les 10:00, només si encara no has jugat'))}${sw('left',L('Mode esquerrà'),L('Pausa i reserva canvien de costat'))}
   <button class="btn secondary" style="margin-top:14px" onclick="S.unlocked=GROUPS.length*10+1;toast('${L('Prototip: tots els nivells desbloquejats')}')">${L('Prototip: desbloquejar tots els nivells')}</button>
   <p class="fine">${L('Sense anuncis. Mai.')}<br>${L('Prototip de disseny · Melodia')}</p></div>${tabsBar()}`; }
