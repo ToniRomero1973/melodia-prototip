@@ -1174,7 +1174,7 @@ function pairCtl(compact){ const v=S.set.pairs;
     ${v&&v!==28?`<button class="link" onclick="autoPairs()">${L('Tornar a 28 parelles')}</button>`:''}
     <p class="muted">${L('De {0} a {1} parelles. Només per al taulell d’entrenament: els nivells i la partida diària no canvien.',PAIRS_MIN,PAIRS_MAX)}</p></div>`; }
 // Tauler gran: a dalt 5×5 variat; a baix, separada, la fila dels munts
-const PILE_Y = 11.3;   // un xic més avall que la fila normal (10): queda separada de la resta
+const PILE_Y = 12.2;   // un xic més avall que la fila normal (10): queda separada de la resta
 function mainLayout(r, target){
   const covers=(t,px,py)=>t.x<=px&&px<t.x+2&&t.y<=py&&py<t.y+2;
   for(let tries=0;tries<200;tries++){
