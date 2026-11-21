@@ -707,6 +707,15 @@ body.prova .phone{height:calc(100% - 48px)}
 .lvl2.cur{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset} .lvl2.cur .lvtop small{color:var(--accent);font-weight:800}
 .lvl2.done{background:var(--jade-soft)} .lvl2.lock{opacity:.6}
 .lvl2 .lvtop svg{width:16px;height:16px}
+
+/* v3: dificultat */
+.dd{display:inline-flex;gap:3px;align-items:center} .dd i{width:7px;height:7px;border-radius:50%;background:var(--accent)} .dd i.o{background:var(--line)}
+.dd.d4 i:not(.o),.dd.d5 i:not(.o){background:#B3261E}
+.lvl2 .dd{margin-top:-2px}
+.gdiff{margin:0 0 10px;font-size:14px;font-weight:700;opacity:.95}
+.jmeta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:-2px 0 12px;font-size:14px;font-weight:700}
+.jmeta .dd i.o{background:rgba(255,255,255,.35)} .jmeta .dd i:not(.o){background:#fff}
+.jmeta .boss{background:rgba(0,0,0,.25);border-radius:10px;padding:2px 8px}
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -791,6 +800,8 @@ Object.assign(TR.es,{"Prototip: tots els nivells desbloquejats": "Prototipo: tod
 Object.assign(TR.en,{"Prototip: tots els nivells desbloquejats": "Prototype: all levels unlocked", "Fitxes i refranys": "Tiles and proverbs", "Fitxes i refranys · sense anuncis": "Tiles and proverbs · no ads", "Animals": "Animals", "Mar i platja": "Sea and beach", "Flors i jardí": "Flowers and garden", "A la cuina": "In the kitchen", "Dolços i postres": "Sweets and desserts", "Viatges pel món": "Travel the world", "Música": "Music", "Festa": "Party", "A casa": "At home", "Roba i complements": "Clothes and accessories", "Jocs i joguines": "Games and toys", "Bestioles": "Bugs and critters", "Cel i temps": "Sky and weather", "Oficis i eines": "Trades and tools", "Contes i fantasia": "Tales and fantasy", "L’espai": "Space", "Tova de masia": "Farmhouse terracotta", "Onades del Japó": "Japanese waves", "Rajola de Delft": "Delft tile", "Escaquer de cuina": "Kitchen checkerboard", "Rajola victoriana": "Victorian tile", "Zellige": "Zellige", "Parquet d’escenari": "Stage parquet", "Talavera": "Talavera", "Terra d’escacs": "Chessboard floor", "Marbre i filet d’or": "Marble and gold trim", "Mosaic de tessel·les": "Tessera mosaic", "Bresca": "Honeycomb", "Azulejo de Lisboa": "Lisbon azulejo", "Iznik": "Iznik", "Trencadís": "Trencadís", "Terratzo estelat": "Starry terrazzo", "La rajola quadrada de terra cuita del terra de les masies.": "The square terracotta tile of old farmhouse floors.", "Les onades en escata del seigaiha japonès, que porten bona sort.": "The scale-like waves of Japanese seigaiha, said to bring good luck.", "Blau sobre blanc, amb una flor al mig, com a les cuines d’Holanda.": "Blue on white with a flower in the middle, like Dutch kitchens.", "Rombes vermells i blancs, com el terra d’una cuina d’abans.": "Red and white diamonds, like an old kitchen floor.", "Rajola encàustica anglesa, de les cases on es prenia el te amb pastes.": "English encaustic tile, from houses where tea came with biscuits.", "L’estrella de vuit puntes dels mosaics de Fes i Marràqueix.": "The eight-pointed star of the mosaics of Fez and Marrakesh.", "Les taules de fusta d’un escenari, gastades de tant ballar-hi.": "The wooden boards of a stage, worn from all the dancing.", "La ceràmica alegre de Puebla, a Mèxic: blau, groc i verd de festa.": "The cheerful pottery of Puebla, Mexico: party blue, yellow and green.", "Blanc i negre com un tauler d’escacs: el terra de l’entrada de tota la vida.": "Black and white like a chessboard: the classic hallway floor.", "Marbre blanc amb filets daurats, com els vestíbuls art déco de París.": "White marble with gold trim, like the art deco lobbies of Paris.", "Tessel·les petites de colors, com els mosaics romans… o els píxels d’un videojoc.": "Small coloured tesserae, like Roman mosaics… or the pixels of a video game.", "Hexàgons de color mel, com les cel·les d’un rusc.": "Honey-coloured hexagons, like the cells of a beehive.", "El blau i blanc de les façanes de Lisboa, del color del cel.": "The blue and white of Lisbon’s façades, the colour of the sky.", "Clavells i tulipes en blau cobalt, turquesa i vermell, dels artesans d’Iznik, a Turquia.": "Carnations and tulips in cobalt, turquoise and red, by the craftsmen of Iznik, Turkey.", "Trossets de rajola trencada, com el drac de Gaudí al Park Güell.": "Pieces of broken tile, like Gaudí’s dragon in Park Güell.", "Terratzo fosc amb trossets de marbre que brillen com estrelles.": "Dark terrazzo with marble chips that shine like stars."});
 Object.assign(TR.es,{"La taula de l’àvia": "La mesa de la abuela", "Les fitxes de sempre, com les de la capsa de casa.": "Las fichas de siempre, como las de la caja de casa.", "El casino del poble": "El casino del pueblo", "Arriben els dòminos, els daus i les cartes.": "Llegan los dominós, los dados y las cartas.", "Tarda de cartes": "Tarde de cartas", "Cartes, daus i cubs de lletres damunt el marbre del cafè.": "Cartas, dados y cubos de letras sobre el mármol del café.", "Capses de jocs": "Cajas de juegos", "Joguines de l’armari… i ja se sent el xiulet del pati.": "Juguetes del armario… y ya suena el silbato del patio.", "Dia de partit": "Día de partido", "Pilotes, raquetes i medalles.": "Pelotas, raquetas y medallas.", "Carretera i manta": "Carretera y manta", "Cotxes, trens, avions… i els primers senyals.": "Coches, trenes, aviones… y las primeras señales.", "Ulls a la carretera": "Ojos en la carretera", "Senyals de trànsit i maletes a punt.": "Señales de tráfico y maletas listas.", "Rumb al port": "Rumbo al puerto", "Monuments, mapes i banderes de vaixell.": "Monumentos, mapas y banderas de barco.", "Banderes al vent": "Banderas al viento", "El codi de banderes dels vaixells, i el mar.": "El código de banderas de los barcos, y el mar.", "Mirant el cel": "Mirando el cielo", "Núvols, pluja i les primeres estrelles.": "Nubes, lluvia y las primeras estrellas.", "Contes sota les estrelles": "Cuentos bajo las estrellas", "Coets, dracs i castells.": "Cohetes, dragones y castillos.", "Festa major": "Fiesta mayor", "Globus, focs artificials i música.": "Globos, fuegos artificiales y música.", "Ball i berenar": "Baile y merienda", "Instruments i pastissos.": "Instrumentos y pasteles.", "A taula!": "¡A la mesa!", "Dels fogons a la fruiteria.": "De los fogones a la frutería.", "L’hort de la masia": "El huerto de la masía", "Fruites i verdures acabades de collir.": "Frutas y verduras recién cogidas.", "Jardí de flors": "Jardín de flores", "Flors, plantes i les primeres bestioles.": "Flores, plantas y los primeros bichitos.", "Bestioles i animals": "Bichitos y animales", "Del rusc a la granja.": "De la colmena a la granja.", "Tornem a casa": "Volvemos a casa", "Animals, mobles i rellotges.": "Animales, muebles y relojes.", "L’armari i el taller": "El armario y el taller", "Roba, complements i eines.": "Ropa, complementos y herramientas.", "El gran mosaic": "El gran mosaico", "Les últimes eines… i la col·lecció de rajoles.": "Las últimas herramientas… y la colección de baldosas.", "Capítol {0} · nivells {1}–{2}": "Capítulo {0} · niveles {1}–{2}", "Capítol {0} de {1}": "Capítulo {0} de {1}", "S’estrenen al nivell {0}": "Se estrenan en el nivel {0}", "Juga el nivell {0}": "Juega el nivel {0}", "El camí": "El camino", "A cada nivell s’estrenen fitxes noves i en marxen d’altres. Aquí tens les que hi debuten.": "En cada nivel se estrenan fichas nuevas y se van otras. Aquí tienes las que debutan.", "dòmino": "dominó", "dau": "dado", "carta": "carta", "lletra": "letra", "senyal": "señal", "bandera": "bandera", "rellotge": "reloj", "rajola": "baldosa", "fitxa": "ficha"});
 Object.assign(TR.en,{"La taula de l’àvia": "Grandma’s table", "Les fitxes de sempre, com les de la capsa de casa.": "The classic tiles, like the box at home.", "El casino del poble": "The village club", "Arriben els dòminos, els daus i les cartes.": "Here come dominoes, dice and cards.", "Tarda de cartes": "Card afternoon", "Cartes, daus i cubs de lletres damunt el marbre del cafè.": "Cards, dice and letter blocks on the café’s marble table.", "Capses de jocs": "Game boxes", "Joguines de l’armari… i ja se sent el xiulet del pati.": "Toys from the cupboard… and the playground whistle blows.", "Dia de partit": "Match day", "Pilotes, raquetes i medalles.": "Balls, rackets and medals.", "Carretera i manta": "Hit the road", "Cotxes, trens, avions… i els primers senyals.": "Cars, trains, planes… and the first signs.", "Ulls a la carretera": "Eyes on the road", "Senyals de trànsit i maletes a punt.": "Road signs and packed suitcases.", "Rumb al port": "Heading to port", "Monuments, mapes i banderes de vaixell.": "Monuments, maps and ship flags.", "Banderes al vent": "Flags in the wind", "El codi de banderes dels vaixells, i el mar.": "The ships’ flag code, and the sea.", "Mirant el cel": "Looking at the sky", "Núvols, pluja i les primeres estrelles.": "Clouds, rain and the first stars.", "Contes sota les estrelles": "Tales under the stars", "Coets, dracs i castells.": "Rockets, dragons and castles.", "Festa major": "Town festival", "Globus, focs artificials i música.": "Balloons, fireworks and music.", "Ball i berenar": "Dance and snack", "Instruments i pastissos.": "Instruments and cakes.", "A taula!": "Dinner’s ready!", "Dels fogons a la fruiteria.": "From the stove to the greengrocer’s.", "L’hort de la masia": "The farmhouse garden", "Fruites i verdures acabades de collir.": "Freshly picked fruit and vegetables.", "Jardí de flors": "Flower garden", "Flors, plantes i les primeres bestioles.": "Flowers, plants and the first critters.", "Bestioles i animals": "Critters and animals", "Del rusc a la granja.": "From the hive to the farm.", "Tornem a casa": "Back home", "Animals, mobles i rellotges.": "Animals, furniture and clocks.", "L’armari i el taller": "Wardrobe and workshop", "Roba, complements i eines.": "Clothes, accessories and tools.", "El gran mosaic": "The great mosaic", "Les últimes eines… i la col·lecció de rajoles.": "The last tools… and the tile collection.", "Capítol {0} · nivells {1}–{2}": "Chapter {0} · levels {1}–{2}", "Capítol {0} de {1}": "Chapter {0} of {1}", "S’estrenen al nivell {0}": "New in level {0}", "Juga el nivell {0}": "Play level {0}", "El camí": "The path", "A cada nivell s’estrenen fitxes noves i en marxen d’altres. Aquí tens les que hi debuten.": "Each level brings in new tiles and retires others. Here are the ones that debut.", "dòmino": "domino", "dau": "die", "carta": "card", "lletra": "letter", "senyal": "sign", "bandera": "flag", "rellotge": "clock", "rajola": "tile", "fitxa": "tile"});
+Object.assign(TR.es,{"Fàcil": "Fácil", "Mitjà": "Medio", "Difícil": "Difícil", "Molt difícil": "Muy difícil", "Mestre": "Maestro", "Dificultat": "Dificultad", "Nivell final del capítol": "Nivel final del capítulo"});
+Object.assign(TR.en,{"Fàcil": "Easy", "Mitjà": "Medium", "Difícil": "Hard", "Molt difícil": "Very hard", "Mestre": "Master", "Dificultat": "Difficulty", "Nivell final del capítol": "Chapter final level"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1150,7 +1161,8 @@ function greedyRate(tiles, r, runs=24){ let win=0;
     if(!rem.length) win++; }
   return win/runs; }
 function generate(seedStr, theme, nPairs=28){ let best=null;
-  for(let a=0;a<60 && (!best||best.n<5);a++){ const r=rng(seedStr+'#'+a); const pos0=layout(rng(seedStr+'L'+a), nPairs*2).map((p,i)=>({...p,id:i}));
+  const lvM=/^lvl-(\d+)$/.exec(seedStr), tgt=lvM?levelTarget(+lvM[1]):null, need=lvM?8:5;
+  for(let a=0;a<90 && (!best||best.n<need);a++){ const r=rng(seedStr+'#'+a); const pos0=layout(rng(seedStr+'L'+a), nPairs*2).map((p,i)=>({...p,id:i}));
     let rem=[...pos0]; const pairs=[]; let ok=true;
     while(rem.length){ const free=rem.filter(t=>isFree(t,rem)); if(free.length<2){ok=false;break}
       const A=free.splice(Math.floor(r()*free.length),1)[0], B=free[Math.floor(r()*free.length)];
@@ -1159,9 +1171,10 @@ function generate(seedStr, theme, nPairs=28){ let best=null;
     // cada disseny surt 4 vegades (2 parelles): una parella que s'ha de treure aviat i una que s'ha de treure tard (paranys)
     const all=levelPool(seedStr, theme, r);
     const P=pairs.length, half=Math.floor(P/2);
-    pairs.forEach(([A,B],i)=>{ const k = i<half ? i : (i<2*half ? i-half : half); const sym=all[k%all.length]; A.s=sym; B.s=sym; });
+    const D=lvM?Math.min(all.length, winSize(+lvM[1])):0, ex=Math.max(0, D-(half+1));
+    pairs.forEach(([A,B],i)=>{ let k = i<half ? i : (i<2*half ? i-half : half); if(ex && i>=half && i<2*half && k>=half-ex) k=half+1+(k-(half-ex)); const sym=all[k%all.length]; A.s=sym; B.s=sym; });
     const tiles=pos0.map(t=>({...t,gone:false})); const rate=greedyRate(tiles, rng(seedStr+'g'+a));
-    if(!best||rate<best.rate) best={tiles, rate, n:(best?best.n:0)+1, sol:pairs.map(([A,B])=>[A.id,B.id])}; else best.n++;
+    const sc=tgt==null?rate:Math.abs(rate-tgt); if(!best||sc<best.sc) best={tiles, rate, sc, n:(best?best.n:0)+1, sol:pairs.map(([A,B])=>[A.id,B.id])}; else best.n++;
   }
   const phrase=pickPhrase(seedStr); const pos=[...phrase].map((ch,i)=>isLetter(ch)?i:-1).filter(i=>i>=0); const r=rng(seedStr+'p');
   for(let i=pos.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[pos[i],pos[j]]=[pos[j],pos[i]]}
@@ -1695,10 +1708,19 @@ const CHAIN = [ ['t','trad'], ['x','dm'], ['x','dau'], ['x','ca'], ['x','ll'], [
   ['t','temps'], ['t','espai'], ['t','fantasia'], ['t','festa'], ['t','musica'], ['t','postres'], ['t','cuina'], ['t','fruites'], ['t','flors'], ['t','bestioles'], ['t','animals'],
   ['t','casa'], ['x','rl'], ['t','roba'], ['t','oficis'], ['x','rj'] ];
 const SEQ=[], SEQFAM=[]; { const seen=new Set(); CHAIN.forEach(([ty,k])=>{ (ty==='x'?XF[k]:THEMES[k].sym).forEach(e=>{ if(!seen.has(e)){ seen.add(e); SEQ.push(e); SEQFAM.push(k); } }); }); }
-const WIN=15, LAST=200;
-const winStart = n => Math.round((Math.min(n,LAST)-1)*(SEQ.length-WIN)/(LAST-1));
-const levelWin = n => SEQ.slice(winStart(n), winStart(n)+WIN);
-const levelNew = n => n<=1 ? levelWin(1) : SEQ.slice(winStart(n-1)+WIN, winStart(n)+WIN);
+
+function levelPairsF(n){ const i=(n-1)%10; return Math.min(38, 24+Math.round((Math.min(n,200)-1)*12/180) + (i===9?2:0)); }
+const isBoss = n => (n-1)%10===9;
+// Proporció de partides que un jugador «a l'atzar» acabaria: 0,80 al nivell 1 … 0,15 al nivell 200
+function levelTarget(n){ const g=Math.floor((n-1)/10), i=(n-1)%10; return Math.max(.1, .80 - .55*Math.min(g,19)/19 - .10*i/9); }
+const DIFFN = ['Fàcil','Mitjà','Difícil','Molt difícil','Mestre'];
+const levelDiff = n => Math.min(5, 1+Math.floor((.82-levelTarget(n))/.135));   // 1..5
+const diffDots = n => { const d=levelDiff(n); return `<span class="dd d${d}" title="${L(DIFFN[d-1])}">${'<i></i>'.repeat(d)}${'<i class="o"></i>'.repeat(5-d)}</span>`; };
+const WIN=15, WINMAX=24, LAST=200;
+const winSize = n => Math.max(WIN, Math.min(WINMAX, Math.ceil(levelPairsF(n)/2)+1+Math.floor(4*(Math.min(n,200)-1)/199)));   // cap al final, més dibuixos diferents i menys repetits
+const winStart = n => Math.round((Math.min(n,LAST)-1)*(SEQ.length-WINMAX)/(LAST-1));
+const levelWin = n => SEQ.slice(winStart(n), winStart(n)+winSize(n));
+const levelNew = n => { if(n<=1) return levelWin(1); const prev=new Set(levelWin(n-1)); return levelWin(n).filter(e=>!prev.has(e)); };
 function levelPool(seedStr, theme, r){ const m=/^lvl-(\d+)$/.exec(seedStr);
   const sh=a=>{ for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a; };
   if(!m) return sh([...THEMES[theme].sym]);
@@ -1712,7 +1734,7 @@ function grpBg(theme){ if(COLS[theme]){ const P=COLS[theme].pal, d=P.slice(1).co
     return `background-color:${d};background-image:linear-gradient(90deg,${d} 0%,${d}E6 45%,${d}40 100%),url('${colData(theme)}');background-size:auto,78px 78px`; }
   const P=TPAL[theme]||uiPal(), d=P.slice(1).reduce((a,b)=>lum(b)<lum(a)?b:a);
   return `background-color:${d};background-image:linear-gradient(90deg,${d} 0%,${d}E6 45%,${d}55 100%),${rajolaURL('grp'+theme,P)};background-size:auto,78px 78px`; }
-const levelPairs = n => Math.min(30, 24+Math.round((n-1)*6/39)); // nivell 1: 24 parelles … nivell 40: 30
+const levelPairs = n => levelPairsF(n); // 24 parelles al nivell 1 … 36 al final (+2 als nivells finals de capítol)
 const groupOf = n => GROUPS[Math.floor((n-1)/10)];
 function startLevel(n){ const gr=groupOf(n); if(!gr||gr.soon) return; if(n>S.unlocked){ toast(L('Completa el nivell {0} per desbloquejar-lo',n-1)); return; }
   startGame('level', gr.theme, 'lvl-'+n, L('Nivell {0}',n), gr.name, levelPairs(n), n); }
@@ -1724,15 +1746,16 @@ function vNivells(){
     const cells=Array.from({length:10},(_,i)=>{ const n=gr.from+i, done=n<S.unlocked, cur=n===S.unlocked, lock=n>S.unlocked, nw=levelNew(n).slice(0,3);
       return `<button class="lvl2 ${done?'done':''} ${cur?'cur':''} ${lock?'lock':''}" onclick="startLevel(${n})" aria-label="${L('Nivell {0}',n)}${lock?L(', bloquejat'):''}">
         <span class="lvtop"><span class="num">${n}</span><small>${done?L('✓ Fet'):cur?L('Juga'):lock?ICON.lock:''}</small></span>
-        <span class="nw">${nchips(nw, lock)}</span><small class="pp">${L('{0} parelles',levelPairs(n))}</small></button>`; }).join('');
+        <span class="nw">${nchips(nw, lock)}</span><small class="pp">${isBoss(n)?'⭐ ':''}${L('{0} parelles',levelPairs(n))}</small>${diffDots(n)}</button>`; }).join('');
     return `<div class="screen"><button class="back" onclick="S.lvGroup=null;render()">‹ ${L('Nivells')}</button>
       <div class="grphead" style="${grpBg(gr.theme)}"><div class="mini">${stackTiles(gr.show,38,48,[[0,14,-10],[20,6,0],[40,14,10]])}</div>
-        <small>${L('Capítol {0} · nivells {1}–{2}',gi+1,gr.from,gr.from+9)}</small><h2>${gr.name}</h2><p class="gdesc">${gr.desc}</p><div class="bar light"><span style="width:${doneN*10}%"></span></div></div>
+        <small>${L('Capítol {0} · nivells {1}–{2}',gi+1,gr.from,gr.from+9)}</small><h2>${gr.name}</h2><p class="gdesc">${gr.desc}</p><p class="gdiff">${L('Dificultat')}: ${L(DIFFN[levelDiff(gr.from)-1])}${levelDiff(gr.from+9)!==levelDiff(gr.from)?' → '+L(DIFFN[levelDiff(gr.from+9)-1]):''}</p><div class="bar light"><span style="width:${doneN*10}%"></span></div></div>
       <p class="muted lvnote">${L('A cada nivell s’estrenen fitxes noves i en marxen d’altres. Aquí tens les que hi debuten.')}</p>
       <div class="lvlist">${cells}</div></div>${tabsBar()}`; }
   const curG=Math.min(GROUPS.length-1,Math.floor((S.unlocked-1)/10)), cg=GROUPS[curG], curN=Math.min(S.unlocked,GROUPS.length*10);
   const hero=`<div class="jhero" style="${grpBg(cg.theme)}"><small>${L('Capítol {0} de {1}',curG+1,GROUPS.length)}</small><h2>${cg.name}</h2><p>${cg.desc}</p>
       <div class="jnew"><span>${L('S’estrenen al nivell {0}',curN)}</span><div class="nrow">${nchips(levelNew(curN).slice(0,5))}</div></div>
+      <div class="jmeta">${isBoss(curN)?`<span class="boss">⭐ ${L('Nivell final del capítol')}</span>`:''}<span>${L('{0} parelles',levelPairs(curN))}</span>${diffDots(curN)}</div>
       <button class="btn" onclick="startLevel(${curN})">${L('Juga el nivell {0}',curN)}</button></div>`;
   const items=GROUPS.map((gr,i)=>{ const open=S.unlocked>=gr.from, doneN=Math.max(0,Math.min(10,S.unlocked-gr.from)), cur=i===curG;
     return `<button class="jstep ${open?'':'locked'} ${cur?'cur':''}" onclick="${open?`S.lvGroup=${i};render()`:`toast('${L('Completa el nivell {0} per desbloquejar-los',gr.from-1)}')`}">
