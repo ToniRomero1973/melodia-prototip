@@ -716,6 +716,7 @@ body.prova .phone{height:calc(100% - 48px)}
 .jmeta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:-2px 0 12px;font-size:14px;font-weight:700}
 .jmeta .dd i.o{background:rgba(255,255,255,.35)} .jmeta .dd i:not(.o){background:#fff}
 .jmeta .boss{background:rgba(0,0,0,.25);border-radius:10px;padding:2px 8px}
+.trainnote{font-size:14px;margin:0 0 10px;opacity:.9}
 /* v2 */
 .undobtn{margin-top:4px;align-self:flex-start;border:1.5px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:13px;font-weight:700;border-radius:999px;padding:3px 10px;min-height:32px;cursor:pointer}
 .undobtn[hidden]{display:none}
@@ -802,6 +803,8 @@ Object.assign(TR.es,{"La taula de l’àvia": "La mesa de la abuela", "Les fitxe
 Object.assign(TR.en,{"La taula de l’àvia": "Grandma’s table", "Les fitxes de sempre, com les de la capsa de casa.": "The classic tiles, like the box at home.", "El casino del poble": "The village club", "Arriben els dòminos, els daus i les cartes.": "Here come dominoes, dice and cards.", "Tarda de cartes": "Card afternoon", "Cartes, daus i cubs de lletres damunt el marbre del cafè.": "Cards, dice and letter blocks on the café’s marble table.", "Capses de jocs": "Game boxes", "Joguines de l’armari… i ja se sent el xiulet del pati.": "Toys from the cupboard… and the playground whistle blows.", "Dia de partit": "Match day", "Pilotes, raquetes i medalles.": "Balls, rackets and medals.", "Carretera i manta": "Hit the road", "Cotxes, trens, avions… i els primers senyals.": "Cars, trains, planes… and the first signs.", "Ulls a la carretera": "Eyes on the road", "Senyals de trànsit i maletes a punt.": "Road signs and packed suitcases.", "Rumb al port": "Heading to port", "Monuments, mapes i banderes de vaixell.": "Monuments, maps and ship flags.", "Banderes al vent": "Flags in the wind", "El codi de banderes dels vaixells, i el mar.": "The ships’ flag code, and the sea.", "Mirant el cel": "Looking at the sky", "Núvols, pluja i les primeres estrelles.": "Clouds, rain and the first stars.", "Contes sota les estrelles": "Tales under the stars", "Coets, dracs i castells.": "Rockets, dragons and castles.", "Festa major": "Town festival", "Globus, focs artificials i música.": "Balloons, fireworks and music.", "Ball i berenar": "Dance and snack", "Instruments i pastissos.": "Instruments and cakes.", "A taula!": "Dinner’s ready!", "Dels fogons a la fruiteria.": "From the stove to the greengrocer’s.", "L’hort de la masia": "The farmhouse garden", "Fruites i verdures acabades de collir.": "Freshly picked fruit and vegetables.", "Jardí de flors": "Flower garden", "Flors, plantes i les primeres bestioles.": "Flowers, plants and the first critters.", "Bestioles i animals": "Critters and animals", "Del rusc a la granja.": "From the hive to the farm.", "Tornem a casa": "Back home", "Animals, mobles i rellotges.": "Animals, furniture and clocks.", "L’armari i el taller": "Wardrobe and workshop", "Roba, complements i eines.": "Clothes, accessories and tools.", "El gran mosaic": "The great mosaic", "Les últimes eines… i la col·lecció de rajoles.": "The last tools… and the tile collection.", "Capítol {0} · nivells {1}–{2}": "Chapter {0} · levels {1}–{2}", "Capítol {0} de {1}": "Chapter {0} of {1}", "S’estrenen al nivell {0}": "New in level {0}", "Juga el nivell {0}": "Play level {0}", "El camí": "The path", "A cada nivell s’estrenen fitxes noves i en marxen d’altres. Aquí tens les que hi debuten.": "Each level brings in new tiles and retires others. Here are the ones that debut.", "dòmino": "domino", "dau": "die", "carta": "card", "lletra": "letter", "senyal": "sign", "bandera": "flag", "rellotge": "clock", "rajola": "tile", "fitxa": "tile"});
 Object.assign(TR.es,{"Fàcil": "Fácil", "Mitjà": "Medio", "Difícil": "Difícil", "Molt difícil": "Muy difícil", "Mestre": "Maestro", "Dificultat": "Dificultad", "Nivell final del capítol": "Nivel final del capítulo"});
 Object.assign(TR.en,{"Fàcil": "Easy", "Mitjà": "Medium", "Difícil": "Hard", "Molt difícil": "Very hard", "Mestre": "Master", "Dificultat": "Difficulty", "Nivell final del capítol": "Chapter final level"});
+Object.assign(TR.es,{"Taulell d’entrenament": "Tablero de entrenamiento", "Sense límit d’intents i sense puntuar": "Sin límite de intentos y sin puntuar", "Has gastat els intents d’avui, però pots seguir jugant al taulell d’entrenament: sense límit i sense puntuar.": "Has gastado los intentos de hoy, pero puedes seguir jugando en el tablero de entrenamiento: sin límite y sin puntuar.", "Un altre taulell d’entrenament": "Otro tablero de entrenamiento", "Avui ja no et queden intents. Pots seguir practicant sense puntuar.": "Hoy ya no te quedan intentos. Puedes seguir practicando sin puntuar.", "Ja has vist la solució d’avui: et porto al taulell d’entrenament": "Ya has visto la solución de hoy: te llevo al tablero de entrenamiento"});
+Object.assign(TR.en,{"Taulell d’entrenament": "Practice board", "Sense límit d’intents i sense puntuar": "Unlimited tries, no score", "Has gastat els intents d’avui, però pots seguir jugant al taulell d’entrenament: sense límit i sense puntuar.": "You’ve used today’s tries, but you can keep playing on the practice board: unlimited and unscored.", "Un altre taulell d’entrenament": "Another practice board", "Avui ja no et queden intents. Pots seguir practicant sense puntuar.": "No tries left today. You can keep practising without a score.", "Ja has vist la solució d’avui: et porto al taulell d’entrenament": "You’ve seen today’s solution: here’s the practice board"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1359,7 +1362,7 @@ function mountGame(){ fitBoard(); lastWrap=''; if(RO) RO.observe($('#boardwrap')
 function introInfo(g){ return g.mode==='level' ? [L('Nivell'), String(g.level)]
   : g.mode==='daily' ? [L('Partida del dia'), todayLabel]
   : g.mode==='repte' ? [L('Repte'), '⚔']
-  : g.mode==='calma' ? [L('Partida tranquil·la'), '☕'] : [g.title||'Melodia', '♪']; }
+  : isTrain(g) ? [L('Taulell d’entrenament'), '🎯'] : g.mode==='calma' ? [L('Partida tranquil·la'), '☕'] : [g.title||'Melodia', '♪']; }
 function introPostal(g, done){ const ph=$('#phone'); document.querySelectorAll('.intro').forEach(x=>x.remove());
   const [cap, big]=introInfo(g), x=senOf(g), bg=senURL(x), longBig=[...big].length>3;
   const seal=`<div class="iseal"><span class="icap">${esc(cap)}</span><b class="${longBig?'long':''}">${esc(big)}</b><span class="isen">${esc(L(x.n))}</span></div>`;
@@ -1510,6 +1513,9 @@ function shuffleBoard(){ const g=S.game; if(!g||g.busy) return; const calm=g.mod
   g.shuffles=(g.shuffles||0)+1; if(!calm){ g.shuffled=true; g.penalty+=60; }
   if(g.pauseAt){ g.paused+=Date.now()-g.pauseAt; g.pauseAt=null; } g.over=false; g.failReason=null; if(g.mode==='daily') S.dailyFailed=null;
   S.sheet=null; render(); toast(L('Fitxes barrejades: ara el tauler torna a tenir solució')); }
+const isTrain = g => !!(g&&g.seedStr&&g.seedStr.startsWith('entr-'));
+const dailyOut = () => !S.dailyDone && (S.dailySeen || (S.dailyFailed && !canRetry()));
+function startTraining(){ S.trainN=(S.trainN||0)+1; startGame('calma','trad','entr-'+todaySeed+'-'+S.trainN, L('Taulell d’entrenament'), L('Sense límit d’intents i sense puntuar'), 28); }
 function startCalm(){ S.calmN=(S.calmN||0)+1; startGame('calma','trad','calma-'+todaySeed+'-'+S.calmN, L('Partida tranquil·la'), L('Sense rellotge i sense puntuar'), 24); }
 function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Date(y,m+1,0).getDate(), td=today.getDate(), first=(new Date(y,m,1).getDay()+6)%7, r=rng('mes'+y+'-'+m), done=S.dailyDone;
   let cells=[1,2,3,4,5,6,0].map(d=>`<b>${DAYS[d]}</b>`).join(''); for(let i=0;i<first;i++) cells+='<i class="e"></i>';
@@ -1669,7 +1675,7 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
     <h2>${done?L('Feta!')+' '+fmt(done.time):L('Avui')}</h2>
     <p class="sub">${done?L('Posició {0} a la teva comarca',done.pos):todayLabel+' · '+L('amaga un refrany')}</p>
     <p class="sub" style="font-size:13px;opacity:.8">${done?L('Torna demà per a un tauler nou'):L('El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)')}</p>
-    ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
+    ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:dailyOut()?`<p class="sub trainnote">${L('Avui ja no et queden intents. Pots seguir practicant sense puntuar.')}</p><button class="btn gold" onclick="startTraining()">🎯 ${L('Taulell d’entrenament')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
   </div>
   <div class="card"><div class="row"><b>${L('La teva setmana')}</b><span class="muted" style="font-size:14px">${L('Ratxa: {0} dies',SI.n)}</span></div><div class="week">${week}</div><p class="streaknote">🌙 ${L('{0} dies de descans disponibles aquest mes',SI.left)} · ${L('Millor ratxa: {0}',SI.best)}</p></div>
   ${chCard()}${monthCard()}
@@ -1910,12 +1916,12 @@ function vSheet(){ const g=S.game;
     <p><b>${L('Compte:')}</b> ${L('si arrossegues una fitxa i la deixes damunt d’una que no és la seva parella, és un error. Amb 3 errors, fallada. Tocant no hi ha errors.')}</p>
     <p class="muted">${L('Si el faristol és ple i no queda cap parella, pots barrejar les fitxes un cop. Si ja has barrejat, és fallada.')}</p><div class="stack"><button class="btn primary" onclick="resume()">${L('Entesos')}</button></div>`);
   if(S.sheet==='blocked'){ const calm=g.mode==='calma', ok=calm||canRetry(), errs=g.failReason==='errors', canSh=!errs&&(calm||!g.shuffled), canUndo=!errs&&!!g.lastPark;
-    return sheetWrap(`<h2 style="margin-top:0">${errs?L('Tres errors'):L('Sense jugades')}</h2><p>${errs?L('Has deixat 3 fitxes damunt d’una que no era la seva parella.'):L('El faristol és ple i no queda cap parella.')} ${canSh?(calm?L('Barreja les fitxes que queden: el tauler tornarà a tenir solució.'):L('Pots barrejar les fitxes que queden un cop per tauler. Suma 1 minut.')):ok?L('Pots tornar a provar el mateix tauler.'):L('Has gastat les fallades gratuïtes d’avui, però pots continuar jugant en mode tranquil.')}</p>
+    return sheetWrap(`<h2 style="margin-top:0">${errs?L('Tres errors'):L('Sense jugades')}</h2><p>${errs?L('Has deixat 3 fitxes damunt d’una que no era la seva parella.'):L('El faristol és ple i no queda cap parella.')} ${canSh?(calm?L('Barreja les fitxes que queden: el tauler tornarà a tenir solució.'):L('Pots barrejar les fitxes que queden un cop per tauler. Suma 1 minut.')):ok?L('Pots tornar a provar el mateix tauler.'):L('Has gastat els intents d’avui, però pots seguir jugant al taulell d’entrenament: sense límit i sense puntuar.')}</p>
     ${calm?'':`<p class="muted">${L('Tens {0} de {1} lletres destapades. Cada intent fallat suma 2 minuts al temps de classificació.',g.revealed.size,g.order.length)}</p>`}
     <div class="stack">${canSh?`<button class="btn primary" onclick="shuffleBoard()">🔀 ${calm?L('Barrejar les fitxes'):L('Barrejar les fitxes (+1 min)')}</button>`:''}
     ${canUndo?`<button class="btn secondary" onclick="undoPark()">↶ ${L('Desfer l’última fitxa')}</button>`:''}
     ${!calm&&ok?`<button class="btn ${canSh?'secondary':'primary'}" onclick="useRetry()">${L('Tornar a provar')}${S.pass||S.plus?'':` (${S.fails===1?L('queda 1'):L('queden {0}',S.fails)})`}</button>`:''}
-    ${!calm&&!ok?`<button class="btn ${canSh?'secondary':'primary'}" onclick="startCalm()">☕ ${L('Jugar en mode tranquil')}</button><button class="btn secondary" onclick="S.sheet='pay';renderSheet()">${L('Veure opcions per seguir')}</button>`:''}
+    ${!calm&&!ok?`<button class="btn ${canSh?'secondary':'primary'}" onclick="startTraining()">🎯 ${L('Taulell d’entrenament')}</button><button class="btn secondary" onclick="S.sheet='pay';renderSheet()">${L('Veure opcions per seguir')}</button>`:''}
     <button class="btn secondary" onclick="showSolution()">👁 ${L('Veure la solució')}</button>
     <button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Mirar el tauler')}</button>
     <button class="btn secondary" onclick="quit()">${ok?L('Sortir'):L('Ara no, torno demà')}</button></div>`); }
@@ -1924,7 +1930,7 @@ function vSheet(){ const g=S.game;
       <div class="meaning"><span class="ph">${esc(g.phrase)}</span>${mn?`<span class="mn">${esc(mn)}</span>`:''}${equivHTML(PHRASES.indexOf(g.phrase))}</div>
       <p class="muted">${daily?L('Avui ja no puntues a la classificació, però demà hi haurà un tauler nou.'):L('Aquesta partida no compta. La pots tornar a provar quan vulguis.')}</p>
       <div class="stack">${daily?'':`<button class="btn primary" onclick="retryShown()">${L('Tornar a provar el mateix tauler')}</button>`}
-      <button class="btn ${daily?'primary':'secondary'}" onclick="startCalm()">☕ ${L('Jugar una partida tranquil·la')}</button>
+      ${daily?`<button class="btn primary" onclick="startTraining()">🎯 ${L('Taulell d’entrenament')}</button>`:`<button class="btn secondary" onclick="startCalm()">☕ ${L('Jugar una partida tranquil·la')}</button>`}
       <button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Mirar el tauler')}</button>
       <button class="btn secondary" onclick="quit()">${L('Tornar a l’inici')}</button></div>`); }
   if(S.sheet==='rajoles') return sheetWrap(`<h2 style="margin-top:0">${L('Les teves rajoles')}</h2>
@@ -1968,6 +1974,7 @@ function vSheet(){ const g=S.game;
     const parts=[L('{0} de joc',fmt(elapsed()))]; if(g.attempts) parts.push(L('+ {0} min (intents)',g.attempts*2)); if(g.penalty) parts.push(L('+ {0} s (errors)',g.penalty)); if(g.hintPen) parts.push(L('+ {0} s (pistes)',g.hintPen)); if(g.bonus) parts.push(L('− {0} s (frase)',g.bonus));
     const rp = g.mode==='repte'&&S.challenge ? Math.floor(tot)-S.challenge.t : null;
     const next = g.mode==='repte' ? `<button class="btn primary" onclick="challenge()">${L('Retornar el repte')}</button>`
+      : isTrain(g) ? `<button class="btn primary" onclick="startTraining()">🎯 ${L('Un altre taulell d’entrenament')}</button>`
       : g.mode==='calma' ? `<button class="btn primary" onclick="startCalm()">☕ ${L('Una altra partida tranquil·la')}</button>`
       : g.mode==='daily' ? `<button class="btn primary" onclick="S.sheet=null;go('class')">${L('Veure classificació')}</button>`
       : (groupOf(g.level+1)&&!groupOf(g.level+1).soon ? `<button class="btn primary" onclick="startLevel(${g.level+1})">${L('Nivell {0}',g.level+1)}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>` : `<button class="btn primary" onclick="S.sheet=null;go('nivells')">${L('Tornar als nivells')}</button>`);
@@ -2100,7 +2107,7 @@ function sendPostal(){ const b=S.postalBlob, url=challengeURL(), txt=L('La meva 
   try{ navigator.clipboard.writeText(txt+'\n'+url).then(()=>toast(L('Postal desada i enllaç copiat')),()=>toast(L('Postal desada'))); }catch(e){ toast(L('Postal desada')); } }
 // ================= accions =================
 function go(t){ if(t!==S.tab) setTimeout(()=>pageView(t),0); if(S.tab==='joc'&&S.game&&!S.game.over&&!S.game.pauseAt) S.game.pauseAt=Date.now(); if(t==='class'&&S.tab!=='class'&&S.leagues[0]) S.lbScope=S.leagues[0].id; S.tab=t; S.sheet=null; render(); }
-function playDaily(){ const g=S.game; if(S.dailySeen){ toast(L('Ja has vist la solució d’avui. Demà hi haurà un tauler nou!')); return; }
+function playDaily(){ const g=S.game; if(S.dailySeen){ toast(L('Ja has vist la solució d’avui: et porto al taulell d’entrenament')); startTraining(); return; }
   if(g&&g.mode==='daily'&&g.seedStr===todaySeed&&!g.over){ S.tab='joc'; render(); resume(); return; }
   if(g&&g.mode==='daily'&&g.over&&present().length>0){ S.tab='joc'; render(); S.sheet='blocked'; renderSheet(); return; }
   startGame('daily','trad',todaySeed,L('Partida diària'),todayLabel,28); S.game.attempts=S.dailyAtt||0;
