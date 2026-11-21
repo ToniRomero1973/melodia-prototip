@@ -719,6 +719,7 @@ body.prova .phone{height:calc(100% - 48px)}
 .trainnote{font-size:14px;margin:0 0 10px;opacity:.9}
 
 .hero .pairctl{margin:12px 0 0;color:var(--ink)}
+.tile.pile.buried::before{box-shadow:none} .tile.pile.buried .face{box-shadow:inset 0 0 0 1px rgba(110,90,60,.22),1px 1px 0 #DCCDB0}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -1172,14 +1173,34 @@ function pairCtl(compact){ const v=S.set.pairs;
     <div class="stp"><button onclick="setPairs(-10)" aria-label="${L('Treure 10 parelles')}">−10</button><button onclick="setPairs(-1)" aria-label="${L('Treure una parella')}">−</button><button onclick="setPairs(1)" aria-label="${L('Afegir una parella')}">+</button><button onclick="setPairs(10)" aria-label="${L('Afegir 10 parelles')}">+10</button></div>
     ${v&&v!==28?`<button class="link" onclick="autoPairs()">${L('Tornar a 28 parelles')}</button>`:''}
     <p class="muted">${L('De {0} a {1} parelles. Només per al taulell d’entrenament: els nivells i la partida diària no canvien.',PAIRS_MIN,PAIRS_MAX)}</p></div>`; }
-// Tauler gran: sempre 5×6; les fitxes de més s'apilen (muntanyeta al mig i munts de cartes a la primera fila)
+// Tauler gran: a dalt 5×5 variat; a baix, separada, la fila dels munts
+const PILE_Y = 11.3;   // un xic més avall que la fila normal (10): queda separada de la resta
+function mainLayout(r, target){
+  const covers=(t,px,py)=>t.x<=px&&px<t.x+2&&t.y<=py&&py<t.y+2;
+  for(let tries=0;tries<200;tries++){
+    const p=[], cx=4, cy=4;
+    for(let row=0;row<5;row++){ const off=(row>0&&row<4&&r()<.2)?1:0, n=off?4:5;
+      for(let c=0;c<n;c++){ const edge=row===0||row===4||c===0||c===n-1; if(r()<(edge?.82:.92)) p.push({x:off+c*2, y:row*2, z:0}); } }
+    if(p.length>target) continue;
+    // recolzada si almenys 3 dels 4 quarts tenen fitxa a sota: sobre 1, a cavall de 2, sobre 3 o sobre 4
+    const sup=(x,y,z)=>[[.5,.5],[1.5,.5],[.5,1.5],[1.5,1.5]].filter(([dx,dy])=>p.some(t=>t.z===z-1&&covers(t,x+dx,y+dy))).length>=3;
+    const clash=(x,y,z)=>p.some(t=>t.z===z&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2);
+    for(let z=1;z<=6&&p.length<target;z++){ const cand=[]; for(let y=0;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()*2.5]);
+      cand.sort((a,b)=>a[2]-b[2]);
+      for(const [x,y,d] of cand){ if(p.length>=target) break; if(!clash(x,y,z) && r()<.85*Math.max(.45,1-d/8)) p.push({x,y,z}); } }
+    // si en falten, s'omple amb més fitxes recolzades (de baix a dalt, primer les del mig)
+    for(let z=1;z<=7&&p.length<target;z++){ const cand=[]; for(let y=0;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()]);
+      cand.sort((a,b)=>a[2]-b[2]); for(const [x,y] of cand){ if(p.length>=target) break; if(!clash(x,y,z)) p.push({x,y,z}); } }
+    if(p.length===target) return p; }
+  const p=[]; for(let z=0;p.length<target;z++) for(let y=0;y<10&&p.length<target;y+=2) for(let x=0;x<10&&p.length<target;x+=2) p.push({x,y,z}); return p; }
 function bigLayout(r, target){
-  const C=5, R=6, cells=[];
-  for(let y=0;y<R;y++)for(let x=0;x<C;x++){ const hill=Math.max(0,1-Math.hypot(x-2,(y-3)*.8)/3.2); cells.push({x:x*2, y:y*2, w:(y===0?2.4:1)*(.6+1.8*hill)+r()*.35, h:1}); }
-  let left=Math.max(0,target-cells.length); const W=cells.reduce((a,c)=>a+c.w,0);
-  cells.forEach(c=>{ c.h+=Math.floor(left*c.w/W); });
-  let rest=target-cells.reduce((a,c)=>a+c.h,0); const ord=[...cells].sort((a,b)=>b.w-a.w); for(let i=0;rest>0;i++,rest--) ord[i%ord.length].h++;
-  const p=[]; cells.forEach(c=>{ for(let z=0;z<c.h;z++) p.push({x:c.x,y:c.y,z}); }); return p; }
+  const main=Math.min(66, target-5), p=mainLayout(r, main);
+  // 4 munts amb un petit espai entre ells: no es toquen pels costats, així la fitxa de dalt de cada munt sempre es pot agafar
+  let left=target-p.length; const NP=4, hs=Array(NP).fill(0), wt=[1,1.2,1.2,1].map(w=>w*(.85+r()*.3)), W=wt.reduce((a,b)=>a+b,0);
+  hs.forEach((_,i)=>{ hs[i]=Math.max(1,Math.floor(left*wt[i]/W)); }); let rest=left-hs.reduce((a,b)=>a+b,0);
+  for(let i=0;rest!==0;i=(i+1)%NP){ if(rest>0){ hs[i]++; rest--; } else if(hs[i]>1){ hs[i]--; rest++; } }
+  hs.forEach((h,i)=>{ for(let z=0;z<h;z++) p.push({x:+(i*2.6).toFixed(1), y:PILE_Y, z, pile:true, ph:h}); });
+  return p; }
 function layout(r, target){
   if(target>76) return bigLayout(r, target);
   const covers=(t,px,py)=>t.x<=px&&px<t.x+2&&t.y<=py&&py<t.y+2;
@@ -1216,8 +1237,9 @@ function generate(seedStr, theme, nPairs=28){ let best=null;
   const lvM=/^lvl-(\d+)$/.exec(seedStr), tgt=lvM?levelTarget(+lvM[1]):null, need=nPairs>38?1:(lvM?8:5);
   for(let a=0;a<90 && (!best||best.n<need);a++){ const r=rng(seedStr+'#'+a); const pos0=layout(rng(seedStr+'L'+a), nPairs*2).map((p,i)=>({...p,id:i}));
     let rem=[...pos0]; const pairs=[]; let ok=true;
+    const pickT=(free,rem)=>{ const pf=free.filter(t=>t.pile); if(pf.length && r()<.75){ const h=t=>rem.reduce((n,o)=>n+(o.pile&&o.x===t.x?1:0),0); let best=pf[0], bh=h(best); for(const t of pf){ const v=h(t); if(v>bh){ best=t; bh=v; } } return free.splice(free.indexOf(best),1)[0]; } return free.splice(Math.floor(r()*free.length),1)[0]; };
     while(rem.length){ const free=rem.filter(t=>isFree(t,rem)); if(free.length<2){ok=false;break}
-      const A=free.splice(Math.floor(r()*free.length),1)[0], B=free[Math.floor(r()*free.length)];
+      const A=pickT(free,rem), B=pickT(free,rem);
       pairs.push([A,B]); rem=rem.filter(t=>t!==A&&t!==B); }
     if(!ok) continue;
     // cada disseny surt 4 vegades (2 parelles): una parella que s'ha de treure aviat i una que s'ha de treure tard (paranys)
@@ -1355,14 +1377,14 @@ const ICON = {
   disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 5.5a6.5 6.5 0 0 1 6.5 6.5" stroke-linecap="round"/></svg>',
 };
 function dims(){ const cs=getComputedStyle($('#phone')); return {W:parseFloat(cs.getPropertyValue('--tw')), H:parseFloat(cs.getPropertyValue('--th')), G:2}; }
-const zVis = z => (S.game&&S.game.nPairs>38) ? (z<=2 ? z : 2+(z-2)*.32) : z;
-const zMaxV = () => { const g=S.game; if(!g||g.nPairs<=38) return 0; if(g._zm==null) g._zm=Math.max(0,...g.tiles.map(t=>zVis(t.z))); return g._zm; };
-function tilePos(t){ const {W,H,G}=dims(), zx=Math.min(3,W/15), zy=Math.min(4,W/11.5), zv=zVis(t.z); const zm=zMaxV(); return {left:t.x*(W+G)/2 + (zm-zv)*zx + 8, top:t.y*(H+G)/2 + (zm-zv)*zy + 14}; }
+const zVis = t => (t.pile && t.z>2) ? 2+(t.z-2)*Math.min(.32, 10/Math.max(1,t.ph||1)) : t.z;
+const zMaxV = () => { const g=S.game; if(!g||g.nPairs<=38) return 0; if(g._zm==null) g._zm=Math.max(0,...g.tiles.map(t=>zVis(t))); return g._zm; };
+function tilePos(t){ const {W,H,G}=dims(), zx=Math.min(3,W/15), zy=Math.min(4,W/11.5), zv=zVis(t); const zm=zMaxV(); return {left:t.x*(W+G)/2 + (zm-zv)*zx + 8, top:t.y*(H+G)/2 + (zm-zv)*zy + 14}; }
 function phraseHTML(){ const g=S.game; const words=[]; let cur=[];
   [...g.phrase].forEach((ch,i)=>{ if(ch===' '){ if(cur.length) words.push(cur); cur=[]; } else cur.push([ch,i]); }); if(cur.length) words.push(cur);
   return words.map(w=>`<span class="word">${w.map(([ch,i])=> isLetter(ch) ? `<span class="lc ${g.revealed.has(i)?'on':''}" data-l="${i}">${g.revealed.has(i)?esc(ch.toUpperCase()):''}</span>` : `<span class="punct">${esc(ch)}</span>`).join('')}</span>`).join(''); }
 function vJoc(){ const g=S.game; const {W,H,G}=dims();
-  const tiles=g.tiles.map(t=>{ const p=tilePos(t); return `<button class="tile" data-t="${t.id}" style="left:${p.left}px;top:${p.top}px;z-index:${t.z*1000+t.y*20+t.x}"><span class="face">${faceHTML(t.s)}</span></button>`; }).join('');
+  const tiles=g.tiles.map(t=>{ const p=tilePos(t); return `<button class="tile${t.pile?(t.z<t.ph-1?' pile buried':' pile'):''}" data-t="${t.id}" style="left:${p.left}px;top:${p.top}px;z-index:${t.z*1000+t.y*20+t.x}"><span class="face">${faceHTML(t.s)}</span></button>`; }).join('');
   return `<div class="felt" style="flex:1;display:flex;flex-direction:column;min-height:0">
   <div class="topbar"><button class="iconbtn" aria-label="${L('Pausa')}" onclick="pause()">${ICON.pause}</button><button class="iconbtn gear" aria-label="${L('Configuració')}" onclick="openCfg()"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-1.7-1L15 3.5h-4l-.4 2.5a7.4 7.4 0 0 0-1.7 1l-2.4-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 1.7 1l.3 2.5h4l.4-2.5a7.4 7.4 0 0 0 1.7-1l2.4 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg></button>
    <div class="title">${esc(g.title)}</div><button class="hintbtn" id="hintBtn" onclick="hint()" aria-label="${L('Pista: ensenya una parella (+{0} s)',HINT_PEN)}">${ICON.bulb}<span>${L('Pista')}</span></button><span class="chip" id="pairsLeft"></span><span class="chip" id="clock"></span></div>
@@ -1558,7 +1580,7 @@ function shuffleBoard(){ const g=S.game; if(!g||g.busy) return; const calm=g.mod
   g.reserve.forEach(r=>{ if(r) g.tiles[r.id].gone=false; }); g.reserve=Array(SLOTS).fill(null); g.sel=null; g.lastPark=null;
   const rem=present(), by={}; rem.forEach(t=>by[t.s]=(by[t.s]||0)+1); const pairSyms=[]; Object.entries(by).forEach(([sy,n])=>{ for(let k=0;k<Math.floor(n/2);k++) pairSyms.push(sy); });
   for(let a=0;a<80;a++){ const r=rng(g.seedStr+'sh'+(g.shuffles||0)+'#'+a); let left=rem.slice(); const pairs=[]; let ok=true;
-    while(left.length){ const free=left.filter(t=>isFree(t,left)); if(free.length<2){ ok=false; break; } const A=free.splice(Math.floor(r()*free.length),1)[0], B=free[Math.floor(r()*free.length)]; pairs.push([A,B]); left=left.filter(t=>t!==A&&t!==B); }
+    const pickT=(free,rem)=>{ const pf=free.filter(t=>t.pile); if(pf.length && r()<.75){ const h=t=>rem.reduce((n,o)=>n+(o.pile&&o.x===t.x?1:0),0); let best=pf[0], bh=h(best); for(const t of pf){ const v=h(t); if(v>bh){ best=t; bh=v; } } return free.splice(free.indexOf(best),1)[0]; } return free.splice(Math.floor(r()*free.length),1)[0]; }; while(left.length){ const free=left.filter(t=>isFree(t,left)); if(free.length<2){ ok=false; break; } const A=pickT(free,left), B=pickT(free,left); pairs.push([A,B]); left=left.filter(t=>t!==A&&t!==B); }
     if(!ok||pairs.length!==pairSyms.length) continue; const ps=pairSyms.slice(); for(let i=ps.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [ps[i],ps[j]]=[ps[j],ps[i]]; }
     pairs.forEach(([A,B],i)=>{ A.s=ps[i]; B.s=ps[i]; }); break; }
   g.shuffles=(g.shuffles||0)+1; if(!calm){ g.shuffled=true; g.penalty+=60; }
