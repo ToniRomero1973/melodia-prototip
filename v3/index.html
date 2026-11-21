@@ -1233,13 +1233,14 @@ function greedyRate(tiles, r, runs=24){ let win=0;
       rem=rem.filter(t=>t!==x&&t!==y); }
     if(!rem.length) win++; }
   return win/runs; }
+function pickMix(free,A,r){ if(A.pile){ const other=free.filter(t=>!t.pile); if(other.length && r()<.8) return free.splice(free.indexOf(other[Math.floor(r()*other.length)]),1)[0]; const op=free.filter(t=>t.x!==A.x); if(op.length) return free.splice(free.indexOf(op[Math.floor(r()*op.length)]),1)[0]; } return free.splice(Math.floor(r()*free.length),1)[0]; }
 function generate(seedStr, theme, nPairs=28){ let best=null;
   const lvM=/^lvl-(\d+)$/.exec(seedStr), tgt=lvM?levelTarget(+lvM[1]):null, need=nPairs>38?1:(lvM?8:5);
   for(let a=0;a<90 && (!best||best.n<need);a++){ const r=rng(seedStr+'#'+a); const pos0=layout(rng(seedStr+'L'+a), nPairs*2).map((p,i)=>({...p,id:i}));
     let rem=[...pos0]; const pairs=[]; let ok=true;
     const pickT=(free,rem)=>{ const pf=free.filter(t=>t.pile); if(pf.length && r()<.75){ const h=t=>rem.reduce((n,o)=>n+(o.pile&&o.x===t.x?1:0),0); let best=pf[0], bh=h(best); for(const t of pf){ const v=h(t); if(v>bh){ best=t; bh=v; } } return free.splice(free.indexOf(best),1)[0]; } return free.splice(Math.floor(r()*free.length),1)[0]; };
     while(rem.length){ const free=rem.filter(t=>isFree(t,rem)); if(free.length<2){ok=false;break}
-      const A=pickT(free,rem), B=pickT(free,rem);
+      const A=pickT(free,rem), B=pickMix(free,A,r);
       pairs.push([A,B]); rem=rem.filter(t=>t!==A&&t!==B); }
     if(!ok) continue;
     // cada disseny surt 4 vegades (2 parelles): una parella que s'ha de treure aviat i una que s'ha de treure tard (paranys)
@@ -1377,8 +1378,8 @@ const ICON = {
   disc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 5.5a6.5 6.5 0 0 1 6.5 6.5" stroke-linecap="round"/></svg>',
 };
 function dims(){ const cs=getComputedStyle($('#phone')); return {W:parseFloat(cs.getPropertyValue('--tw')), H:parseFloat(cs.getPropertyValue('--th')), G:2}; }
-const zVis = t => (t.pile && t.z>2) ? 2+(t.z-2)*Math.min(.32, 10/Math.max(1,t.ph||1)) : t.z;
-const zMaxV = () => { const g=S.game; if(!g||g.nPairs<=38) return 0; if(g._zm==null) g._zm=Math.max(0,...g.tiles.map(t=>zVis(t))); return g._zm; };
+const zVis = t => (t.pile && t.z>2) ? 2+(t.z-2)*Math.min(.32, 2.5/Math.max(1,(t.ph||1)-2)) : t.z;   // un munt puja com a molt ~4,5 pisos
+const zMaxV = () => { const g=S.game; if(!g||g.nPairs<=38||true) return 0; if(g._zm==null) g._zm=Math.max(0,...g.tiles.map(t=>zVis(t))); return g._zm; };
 function tilePos(t){ const {W,H,G}=dims(), zx=Math.min(3,W/15), zy=Math.min(4,W/11.5), zv=zVis(t); const zm=zMaxV(); return {left:t.x*(W+G)/2 + (zm-zv)*zx + 8, top:t.y*(H+G)/2 + (zm-zv)*zy + 14}; }
 function phraseHTML(){ const g=S.game; const words=[]; let cur=[];
   [...g.phrase].forEach((ch,i)=>{ if(ch===' '){ if(cur.length) words.push(cur); cur=[]; } else cur.push([ch,i]); }); if(cur.length) words.push(cur);
@@ -1580,7 +1581,7 @@ function shuffleBoard(){ const g=S.game; if(!g||g.busy) return; const calm=g.mod
   g.reserve.forEach(r=>{ if(r) g.tiles[r.id].gone=false; }); g.reserve=Array(SLOTS).fill(null); g.sel=null; g.lastPark=null;
   const rem=present(), by={}; rem.forEach(t=>by[t.s]=(by[t.s]||0)+1); const pairSyms=[]; Object.entries(by).forEach(([sy,n])=>{ for(let k=0;k<Math.floor(n/2);k++) pairSyms.push(sy); });
   for(let a=0;a<80;a++){ const r=rng(g.seedStr+'sh'+(g.shuffles||0)+'#'+a); let left=rem.slice(); const pairs=[]; let ok=true;
-    const pickT=(free,rem)=>{ const pf=free.filter(t=>t.pile); if(pf.length && r()<.75){ const h=t=>rem.reduce((n,o)=>n+(o.pile&&o.x===t.x?1:0),0); let best=pf[0], bh=h(best); for(const t of pf){ const v=h(t); if(v>bh){ best=t; bh=v; } } return free.splice(free.indexOf(best),1)[0]; } return free.splice(Math.floor(r()*free.length),1)[0]; }; while(left.length){ const free=left.filter(t=>isFree(t,left)); if(free.length<2){ ok=false; break; } const A=pickT(free,left), B=pickT(free,left); pairs.push([A,B]); left=left.filter(t=>t!==A&&t!==B); }
+    const pickT=(free,rem)=>{ const pf=free.filter(t=>t.pile); if(pf.length && r()<.75){ const h=t=>rem.reduce((n,o)=>n+(o.pile&&o.x===t.x?1:0),0); let best=pf[0], bh=h(best); for(const t of pf){ const v=h(t); if(v>bh){ best=t; bh=v; } } return free.splice(free.indexOf(best),1)[0]; } return free.splice(Math.floor(r()*free.length),1)[0]; }; while(left.length){ const free=left.filter(t=>isFree(t,left)); if(free.length<2){ ok=false; break; } const A=pickT(free,left), B=pickMix(free,A,r); pairs.push([A,B]); left=left.filter(t=>t!==A&&t!==B); }
     if(!ok||pairs.length!==pairSyms.length) continue; const ps=pairSyms.slice(); for(let i=ps.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [ps[i],ps[j]]=[ps[j],ps[i]]; }
     pairs.forEach(([A,B],i)=>{ A.s=ps[i]; B.s=ps[i]; }); break; }
   g.shuffles=(g.shuffles||0)+1; if(!calm){ g.shuffled=true; g.penalty+=60; }
