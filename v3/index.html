@@ -1213,13 +1213,13 @@ function layout(r, target){
     if(p.length>target) continue;
     const supported=(x,y,z)=>[[.5,.5],[1.5,.5],[.5,1.5],[1.5,1.5]].every(([dx,dy])=>p.some(t=>t.z===z-1&&covers(t,x+dx,y+dy)));
     const clash=(x,y,z)=>p.some(t=>t.z===z&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2);
-    for(let z=1;z<=8 && p.length<target;z++){ const cand=[]; for(let y=0;y<=10;y++)for(let x=0;x<=8;x++) if(supported(x,y,z)) cand.push([x,y, Math.hypot(x-cx,(y-cy)*.75)+r()*2]);
+    for(let z=1;z<=8 && p.length<target;z++){ const cand=[]; for(let y=2;y<=10;y++)for(let x=0;x<=8;x++) if(supported(x,y,z)) cand.push([x,y, Math.hypot(x-cx,(y-cy)*.75)+r()*2]);
       cand.sort((a,b)=>a[2]-b[2]);
       for(const [x,y,d] of cand){ if(p.length>=target) break; if(!clash(x,y,z) && r()<.92*Math.max(.55,1-d/9)) p.push({x,y,z}); } }
     if(p.length===target) return p; }
   // reserva determinista
   const p=[], cells=[]; for(let y=0;y<12;y+=2)for(let x=0;x<10;x+=2) cells.push([x,y]); cells.sort((a,b)=>Math.hypot(a[0]-4,a[1]-5)-Math.hypot(b[0]-4,b[1]-5));
-  for(let z=0;z<=8&&p.length<target;z++) for(const [x,y] of cells){ if(p.length>=target) break; if(z===0||p.some(t=>t.z===z-1&&t.x===x&&t.y===y)) p.push({x,y,z}); }
+  for(let z=0;z<=8&&p.length<target;z++) for(const [x,y] of cells){ if(p.length>=target) break; if(z===0||(y>0&&p.some(t=>t.z===z-1&&t.x===x&&t.y===y))) p.push({x,y,z}); }
   return p; }
 function isFree(t, set){
   if(set.some(o=>o.z===t.z+1&&Math.abs(o.x-t.x)<2&&Math.abs(o.y-t.y)<2)) return false;
