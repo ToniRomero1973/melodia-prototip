@@ -838,6 +838,8 @@ Object.assign(TR.es,{"Configuració": "Configuración", "Fitxes clàssiques": "F
 Object.assign(TR.en,{"Configuració": "Settings", "Fitxes clàssiques": "Classic tiles", "Dibuixos del camí": "Path drawings", "Tots els dibuixos": "All drawings", "Dibuixos": "Drawings", "Nou taulell amb {0} parelles": "New board with {0} pairs", "Les parelles i els dibuixos es poden triar al taulell d’entrenament. Aquesta partida té les seves parelles fixes.": "Pairs and drawings can be chosen on the practice board. This game has fixed pairs.", "Música i so": "Music and sound", "Les notes de cada parella i el clic-clac": "The notes of each pair and the click-clack", "Fitxes i tauler": "Tiles and board", "Tornar a la partida": "Back to the game", "Juga quan vulguis, sense límit i sense puntuar. Amb la roda dentada ⚙ tries les parelles i els dibuixos.": "Play whenever you like, unlimited and unscored. Use the ⚙ gear to choose pairs and drawings.", "Entrenar": "Practise"});
 Object.assign(TR.es,{"Les parelles i els dibuixos es poden triar a la partida tranquil·la. Aquesta partida té les seves parelles fixes.": "Las parejas y los dibujos se pueden elegir en la partida tranquila. Esta partida tiene sus parejas fijas.", "Ja has vist la solució d’avui: et porto a una partida tranquil·la": "Ya has visto la solución de hoy: te llevo a una partida tranquila", "Has gastat els intents d’avui, però pots seguir jugant una partida tranquil·la: sense límit i sense puntuar.": "Has gastado los intentos de hoy, pero puedes seguir jugando una partida tranquila: sin límite y sin puntuar.", "Sense rellotge, amb pistes gratis i sense puntuar. Sempre disponible. Amb la roda dentada ⚙ tries les parelles i els dibuixos.": "Sin reloj, con pistas gratis y sin puntuar. Siempre disponible. Con la rueda dentada ⚙ eliges las parejas y los dibujos.", "Parelles de la partida tranquil·la": "Parejas de la partida tranquila", "De {0} a {1} parelles. Només per a la partida tranquil·la: els nivells i la partida diària no canvien.": "De {0} a {1} parejas. Solo para la partida tranquila: los niveles y la partida diaria no cambian."});
 Object.assign(TR.en,{"Les parelles i els dibuixos es poden triar a la partida tranquil·la. Aquesta partida té les seves parelles fixes.": "Pairs and drawings can be chosen in the calm game. This game has fixed pairs.", "Ja has vist la solució d’avui: et porto a una partida tranquil·la": "You’ve seen today’s solution: here’s a calm game", "Has gastat els intents d’avui, però pots seguir jugant una partida tranquil·la: sense límit i sense puntuar.": "You’ve used today’s tries, but you can keep playing a calm game: unlimited and unscored.", "Sense rellotge, amb pistes gratis i sense puntuar. Sempre disponible. Amb la roda dentada ⚙ tries les parelles i els dibuixos.": "No clock, free hints and no score. Always available. Use the ⚙ gear to choose pairs and drawings.", "Parelles de la partida tranquil·la": "Calm game pairs", "De {0} a {1} parelles. Només per a la partida tranquil·la: els nivells i la partida diària no canvien.": "From {0} to {1} pairs. Calm game only: levels and the daily game don’t change."});
+Object.assign(TR.es,{"{0} parelles sense pressa": "{0} parejas sin prisa", "La teva postal de la partida tranquil·la": "Tu postal de la partida tranquila"});
+Object.assign(TR.en,{"{0} parelles sense pressa": "{0} pairs, no rush", "La teva postal de la partida tranquil·la": "Your calm game postcard"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1341,7 +1343,7 @@ function petals(){ if(reduced) return; const fx=$('#fx'); const set=['♪','♫'
 const SLOTS=2;
 function startGame(mode, theme, seedStr, title, sub, nPairs=28, level=0){
   const g=generate(seedStr, theme, nPairs);
-  S.game={mode, theme, seedStr, title, sub, nPairs, level, tiles:g.tiles, sol:g.sol, sym0:g.tiles.map(t=>t.s), phrase:g.phrase, order:g.order, revealed:new Set(), solved:false, bonus:0, penalty:0, misses:0, reserve:Array(SLOTS).fill(null), sel:null, notes:[], song:songFor(seedStr),
+  S.game={mode, theme, seedStr, title, sub, nPairs, level, tiles:g.tiles, sol:g.sol, sym0:g.tiles.map(t=>t.s), phrase:g.phrase, order:mode==='calma'?[]:g.order, revealed:new Set(), solved:false, bonus:0, penalty:0, misses:0, reserve:Array(SLOTS).fill(null), sel:null, notes:[], song:songFor(seedStr),
     start:Date.now(), paused:0, pauseAt:null, pairs:0, attempts:0, over:false, busy:0, lastMatch:0, combo:0, dealt:false};
   S.sheet=null; S.solveMsg=''; S.tab='joc'; render(); }
 function restartSame(){ const g=S.game, a=g.attempts+1; S.noIntro=true; startGame(g.mode,g.theme,g.seedStr,g.title,g.sub,g.nPairs,g.level); S.game.attempts=a; if(g.mode==='daily'){ S.dailyAtt=a; S.dailyFailed=null; } updateHUD(); }
@@ -1393,7 +1395,7 @@ function vJoc(){ const g=S.game; const {W,H,G}=dims();
   return `<div class="felt" style="flex:1;display:flex;flex-direction:column;min-height:0">
   <div class="topbar"><button class="iconbtn" aria-label="${L('Pausa')}" onclick="pause()">${ICON.pause}</button><button class="iconbtn gear" aria-label="${L('Configuració')}" onclick="openCfg()"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-1.7-1L15 3.5h-4l-.4 2.5a7.4 7.4 0 0 0-1.7 1l-2.4-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 1.7 1l.3 2.5h4l.4-2.5a7.4 7.4 0 0 0 1.7-1l2.4 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg></button>
    <div class="title">${esc(g.title)}</div><button class="hintbtn" id="hintBtn" onclick="hint()" aria-label="${L('Pista: ensenya una parella (+{0} s)',HINT_PEN)}">${ICON.bulb}<span>${L('Pista')}</span></button><span class="chip" id="pairsLeft"></span><span class="chip" id="clock"></span></div>
-  <div class="panel"><div class="phrase" id="phrase" aria-label="${L('Frase amagada')}">${phraseHTML()}</div>
+  <div class="panel"${g.mode==='calma'?' style="display:none"':''}><div class="phrase" id="phrase" aria-label="${L('Frase amagada')}">${phraseHTML()}</div>
    <button class="solvebtn" id="solveBtn" onclick="openSolve()">${L('Resoldre')}<small id="hidInfo"></small></button></div>
   <div class="boardwrap" id="boardwrap"><div class="board" style="width:${extents(g.tiles).cw*(W+G)+16}px;height:${extents(g.tiles).ch*(H+G)+20}px">${tiles}</div></div>
   <div class="stand"><div class="standside"><span class="standlabel">${ICON.stand}${L('Faristol')}</span><span id="resInfo"></span><button class="undobtn" id="undoBtn" onclick="undoPark()" hidden>↶ ${L('Desfer')}</button></div>
@@ -1620,7 +1622,7 @@ function cfgSheet(){ const g=S.game, tr=isTrain(g);
     <div class="cfgsec"><h3>♪ ${L('Música i so')}</h3>${cfgSw('sound',L('So i melodia'),L('Les notes de cada parella i el clic-clac'))}${cfgSw('vib',L('Vibració'),'')}
       <b>${L('So ambient')}</b>${cfgSeg('amb',[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')]])}</div>
     <div class="cfgsec"><h3>🀄 ${L('Fitxes i tauler')}</h3><b>${L('Mida de les fitxes')}</b>${cfgSeg('size',[['normal',L('Normal')],['gran',L('Gran')],['mgran',L('Molt gran')]])}
-      ${cfgSw('glow',L('Il·luminar les fitxes lliures'),'')}${cfgSw('idx',L('Número a la cantonada'),'')}${cfgSw('hc',L('Alt contrast'),'')}${cfgSw('dark',L('Mode nit'),'')}${cfgSw('hideTime',L('Amagar el temps'),'')}</div>
+      ${cfgSw('glow',L('Il·luminar les fitxes lliures'),'')}${cfgSw('idx',L('Número a la cantonada'),'')}${cfgSw('hc',L('Alt contrast'),'')}${cfgSw('dark',L('Mode nit'),'')}${g&&g.mode==='calma'?'':cfgSw('hideTime',L('Amagar el temps'),'')}</div>
     <div class="stack"><button class="btn secondary" onclick="resume()">${L('Tornar a la partida')}</button></div>`; }
 function startCalm(){ S.calmN=(S.calmN||0)+1; const ts=S.set.trainSet||'trad'; let th='trad';
   if(ts==='cami'){ THEMES.cami={name:L('Dibuixos del camí'), sym:SEQ.slice(0, Math.max(60, winStart(Math.min(S.unlocked,200))+winSize(Math.min(S.unlocked,200))))}; th='cami'; }
@@ -2041,7 +2043,7 @@ function vSheet(){ const g=S.game;
     <button class="btn secondary" onclick="quit()">${ok?L('Sortir'):L('Ara no, torno demà')}</button></div>`); }
   if(S.sheet==='shown'){ const daily=g.mode==='daily', mn=meaningOf(g.phrase);
     return sheetWrap(`<h2 style="margin-top:0">${L('Així es resolia')}</h2>
-      <div class="meaning"><span class="ph">${esc(g.phrase)}</span>${mn?`<span class="mn">${esc(mn)}</span>`:''}${equivHTML(PHRASES.indexOf(g.phrase))}</div>
+      ${g.mode==='calma'?'':`<div class="meaning"><span class="ph">${esc(g.phrase)}</span>${mn?`<span class="mn">${esc(mn)}</span>`:''}${equivHTML(PHRASES.indexOf(g.phrase))}</div>`}
       <p class="muted">${daily?L('Avui ja no puntues a la classificació, però demà hi haurà un tauler nou.'):L('Aquesta partida no compta. La pots tornar a provar quan vulguis.')}</p>
       <div class="stack">${daily?'':`<button class="btn primary" onclick="retryShown()">${L('Tornar a provar el mateix tauler')}</button>`}
       ${daily?`<button class="btn primary" onclick="startCalm()">☕ ${L('Partida tranquil·la')}</button>`:`<button class="btn secondary" onclick="startCalm()">☕ ${L('Jugar una partida tranquil·la')}</button>`}
@@ -2093,7 +2095,7 @@ function vSheet(){ const g=S.game;
       : g.mode==='daily' ? `<button class="btn primary" onclick="S.sheet=null;go('class')">${L('Veure classificació')}</button>`
       : (groupOf(g.level+1)&&!groupOf(g.level+1).soon ? `<button class="btn primary" onclick="startLevel(${g.level+1})">${L('Nivell {0}',g.level+1)}${g.level%10===0?' · '+THEMES[groupOf(g.level+1).theme].name:''}</button>` : `<button class="btn primary" onclick="S.sheet=null;go('nivells')">${L('Tornar als nivells')}</button>`);
     return sheetWrap(`<div style="text-align:center"><h2 style="margin:0 0 10px">${rp===null?(g.solved?L('Frase resolta!'):L('Tauler resolt')):rp<0?L('Has guanyat el repte!'):rp===0?L('Empat exacte!'):L('Gairebé!')}</h2>
-      <div class="postalwrap" style="background-image:${senURL(senOf(g))}"><img id="postalImg" class="postal" alt="${L('La teva postal del dia, amb el refrany i el temps')}"></div>
+      <div class="postalwrap" style="background-image:${senURL(senOf(g))}"><img id="postalImg" class="postal" alt="${g.mode==='calma'?L('La teva postal de la partida tranquil·la'):L('La teva postal del dia, amb el refrany i el temps')}"></div>
       <button class="btn gold sendbtn" onclick="sendPostal()">${ICON.send} ${L('Enviar la postal')}</button>
       ${g.mode==='calma'?'':`<p class="muted" style="margin:10px 0 0;font-size:15px">${parts.join(' ')}</p>`}
       ${rp!==null?`<div class="vs"><div class="${rp<=0?'win':''}"><small>${L('Tu')}</small><b>${fmt(tot)}</b></div><div class="${rp>0?'win':''}"><small>${L('Qui t’ha reptat')}</small><b>${fmt(S.challenge.t)}</b></div></div>
@@ -2101,7 +2103,7 @@ function vSheet(){ const g=S.game;
       ${pos?`<p style="margin:8px 0 0"><span class="pill">${L('Posició {0} a la teva comarca',pos)}</span></p>`:''}
       ${g.newUnlock&&g.level%10===0?`<p style="margin:8px 0 0"><span class="pill">${L('Desbloquejats els nivells {0}–{1}!',g.level+1,g.level+10)}</span></p>`:''}
       ${g.newSen?(x=>`<button class="newsen" onclick="S.senView='${x.k}';S.sheet='rajola';renderSheet()"><i style="background-image:${senURL(x)}"></i><span><small>${L('Nova rajola!')}</small><b>${esc(L(x.n))}</b></span><span class="chev" aria-hidden="true">›</span></button>`)(SENEFES.find(x=>x.k===g.newSen)):''}</div>
-      ${meaningOf(g.phrase)||g.newPhrase?`<div class="meaning" style="margin-top:12px">${meaningOf(g.phrase)?`<b>${L('Què vol dir')}</b><span class="mn">${esc(meaningOf(g.phrase))}</span>${equivHTML(PHRASES.indexOf(g.phrase))}`:''}
+      ${g.mode!=='calma'&&(meaningOf(g.phrase)||g.newPhrase)?`<div class="meaning" style="margin-top:12px">${meaningOf(g.phrase)?`<b>${L('Què vol dir')}</b><span class="mn">${esc(meaningOf(g.phrase))}</span>${equivHTML(PHRASES.indexOf(g.phrase))}`:''}
         ${g.solved&&g.newPhrase?`<span class="new">${L('Nou al teu refranyer · {0} de {1}',S.found,PHRASES.length)}</span>`:''}</div>`:''}
 
       <div class="stack">${next}
@@ -2193,7 +2195,7 @@ async function postalCanvas(){ const g=S.game, W=1080, H=1350, P=gamePal(g), [G,
   x.font='700 27px "Atkinson Hyperlegible", sans-serif'; x.fillText(('Melodia · '+(g.mode==='daily'?todayLabel:g.title)).toUpperCase(),540,350);
   try{ x.letterSpacing='0px'; }catch(e){}
   // el refrany, tan gran com càpiga
-  const hideP=g.mode==='daily'||g.mode==='repte'; const txt=hideP?maskPhrase(g.phrase):'«'+g.phrase+'»'; let fs=92, lines; do{ x.font=`700 ${fs}px Fraunces, Georgia, serif`; lines=wrapText(x,txt,720); fs-=4; }while(lines.length*fs*1.16>430&&fs>44);
+  const hideP=g.mode==='daily'||g.mode==='repte'; const txt=g.mode==='calma'?L('{0} parelles sense pressa',g.nPairs):hideP?maskPhrase(g.phrase):'«'+g.phrase+'»'; let fs=92, lines; do{ x.font=`700 ${fs}px Fraunces, Georgia, serif`; lines=wrapText(x,txt,720); fs-=4; }while(lines.length*fs*1.16>430&&fs>44);
   fs+=4; const lh=fs*1.16, top=640-lines.length*lh/2+fs*.8; x.fillStyle=ink; lines.forEach((l,i)=>x.fillText(l,540,top+i*lh));
   // ornament
   if(hideP){ x.fillStyle='#6B6158'; x.font='400 27px "Atkinson Hyperlegible", sans-serif'; x.fillText(L('Refrany amagat: juga per descobrir-lo'),540,top+lines.length*lh+58); }
