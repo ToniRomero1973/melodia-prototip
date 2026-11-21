@@ -1193,16 +1193,16 @@ function mainLayout(r, target){
     const sup=(x,y,z)=>[[.5,.5],[1.5,.5],[.5,1.5],[1.5,1.5]].filter(([dx,dy])=>p.some(t=>t.z===z-1&&covers(t,x+dx,y+dy))).length>=3;
     const clash=(x,y,z)=>p.some(t=>t.z===z&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2);
     const nsup=(x,y,z)=>p.filter(t=>t.z===z-1&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2).length, PRI={1:0,2:1.2,3:4.5,4:6};   // preferència per a les que reposen sobre 2, 3 o 4
-    for(let z=1;z<=6&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)-PRI[nsup(x,y,z)]*r()*1.6+r()*2.5]);
+    for(let z=1;z<=3&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)-PRI[nsup(x,y,z)]*r()*1.6+r()*2.5]);
       cand.sort((a,b)=>a[2]-b[2]);
       for(const [x,y,d] of cand){ if(p.length>=target) break; if(!clash(x,y,z) && r()<.85*Math.max(.45,1-d/8)) p.push({x,y,z}); } }
     // si en falten, s'omple amb més fitxes recolzades (de baix a dalt, primer les del mig)
-    for(let z=1;z<=8&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)-PRI[nsup(x,y,z)]*r()*1.6+r()]);
+    for(let z=1;z<=4&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)-PRI[nsup(x,y,z)]*r()*1.6+r()]);
       cand.sort((a,b)=>a[2]-b[2]); for(const [x,y] of cand){ if(p.length>=target) break; if(!clash(x,y,z)) p.push({x,y,z}); } }
     if(p.length===target) return p; }
   const p=[]; for(let z=0;p.length<target;z++) for(let y=0;y<10&&p.length<target;y+=2) for(let x=0;x<10&&p.length<target;x+=2) p.push({x,y,z}); return p; }
 function bigLayout(r, target){
-  const main=Math.min(52, target-5), p=mainLayout(r, main);
+  const main=Math.min(34, target-5), p=mainLayout(r, main);
   // 4 munts amb un petit espai entre ells: no es toquen pels costats, així la fitxa de dalt de cada munt sempre es pot agafar
   let left=target-p.length; const NP=4, hs=Array(NP).fill(0), wt=[1,1.2,1.2,1].map(w=>w*(.85+r()*.3)), W=wt.reduce((a,b)=>a+b,0);
   hs.forEach((_,i)=>{ hs[i]=Math.max(1,Math.floor(left*wt[i]/W)); }); let rest=left-hs.reduce((a,b)=>a+b,0);
