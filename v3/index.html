@@ -1212,7 +1212,6 @@ function generate(seedStr, theme, nPairs=28){ let best=null;
     const P=pairs.length, half=Math.floor(P/2);
     const D=lvM?Math.min(all.length, winSize(+lvM[1])):0, ex=Math.max(0, D-(half+1));
     pairs.forEach(([A,B],i)=>{ let k = i<half ? i : (i<2*half ? i-half : half); if(ex && i>=half && i<2*half && k>=half-ex) k=half+1+(k-(half-ex)); const sym=all[k%all.length]; A.s=sym; B.s=sym; });
-    if(all.length>=pairs.length) pairs.forEach(([A,B],i)=>{ A.s=all[i]; B.s=all[i]; });   // un dibuix per parella: no hi ha paranys
     const tiles=pos0.map(t=>({...t,gone:false})); const rate=tiles.length>80 ? .5 : greedyRate(tiles, rng(seedStr+'g'+a));
     const sc=tgt==null?rate:Math.abs(rate-tgt); if(!best||sc<best.sc) best={tiles, rate, sc, n:(best?best.n:0)+1, sol:pairs.map(([A,B])=>[A.id,B.id])}; else best.n++;
   }
@@ -1761,15 +1760,15 @@ function levelTarget(n){ const g=Math.floor((n-1)/10), i=(n-1)%10; return Math.m
 const DIFFN = ['Fàcil','Mitjà','Difícil','Molt difícil','Mestre'];
 const levelDiff = n => Math.min(5, 1+Math.floor((.82-levelTarget(n))/.135));   // 1..5
 const diffDots = n => { const d=levelDiff(n); return `<span class="dd d${d}" title="${L(DIFFN[d-1])}">${'<i></i>'.repeat(d)}${'<i class="o"></i>'.repeat(5-d)}</span>`; };
-const WIN=15, WINMAX=38, LAST=200;
-const winSize = n => levelPairsF(n);   // cap al final, més dibuixos diferents i menys repetits
+const WIN=15, WINMAX=24, LAST=200;
+const winSize = n => Math.max(WIN, Math.min(WINMAX, Math.ceil(levelPairsF(n)/2)+1+Math.floor(4*(Math.min(n,200)-1)/199)));   // cap al final, més dibuixos diferents i menys repetits
 const winStart = n => Math.round((Math.min(n,LAST)-1)*(SEQ.length-WINMAX)/(LAST-1));
 const levelWin = n => SEQ.slice(winStart(n), winStart(n)+winSize(n));
 const levelNew = n => { if(n<=1) return levelWin(1); const prev=new Set(levelWin(n-1)); return levelWin(n).filter(e=>!prev.has(e)); };
 function levelPool(seedStr, theme, r, nP){ const m=/^lvl-(\d+)$/.exec(seedStr);
   const sh=a=>{ for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]} return a; };
-  if(!m){ const base=[...THEMES[theme].sym]; if(nP && base.length<nP) base.push(...SEQ.filter(e=>!base.includes(e)).slice(0,nP-base.length)); return sh(base); }
-  if(nP>38){ const need=Math.min(SEQ.length, nP), st=Math.max(0,Math.min(winStart(+m[1]), SEQ.length-need)); return sh(SEQ.slice(st, st+need)); }
+  if(!m) return sh([...THEMES[theme].sym]);
+  if(nP>38){ const need=Math.min(SEQ.length, Math.ceil(nP/2)+1), st=Math.max(0,Math.min(winStart(+m[1]), SEQ.length-need)); return sh(SEQ.slice(st, st+need)); }
   const n=+m[1], nw=n>1?levelNew(n):[], rest=levelWin(n).filter(e=>!nw.includes(e));
   return [...sh([...nw]), ...sh(rest)]; }   // les noves van primer: segur que surten al tauler
 GROUPS.length=0; [{"name": "La taula de l’àvia", "theme": "trad", "desc": "Les fitxes de sempre, com les de la capsa de casa."}, {"name": "El casino del poble", "theme": "trad", "desc": "Arriben els dòminos, els daus i les cartes."}, {"name": "Tarda de cartes", "theme": "roba", "desc": "Cartes, daus i cubs de lletres damunt el marbre del cafè."}, {"name": "Capses de jocs", "theme": "jocs", "desc": "Joguines de l’armari… i ja se sent el xiulet del pati."}, {"name": "Dia de partit", "theme": "musica", "desc": "Pilotes, raquetes i medalles."}, {"name": "Carretera i manta", "theme": "casa", "desc": "Cotxes, trens, avions… i els primers senyals."}, {"name": "Ulls a la carretera", "theme": "viatges", "desc": "Senyals de trànsit i maletes a punt."}, {"name": "Rumb al port", "theme": "temps", "desc": "Monuments, mapes i banderes de vaixell."}, {"name": "Banderes al vent", "theme": "mar", "desc": "El codi de banderes dels vaixells, i el mar."}, {"name": "Mirant el cel", "theme": "espai", "desc": "Núvols, pluja i les primeres estrelles."}, {"name": "Contes sota les estrelles", "theme": "fantasia", "desc": "Coets, dracs i castells."}, {"name": "Festa major", "theme": "festa", "desc": "Globus, focs artificials i música."}, {"name": "Ball i berenar", "theme": "postres", "desc": "Instruments i pastissos."}, {"name": "A taula!", "theme": "cuina", "desc": "Dels fogons a la fruiteria."}, {"name": "L’hort de la masia", "theme": "animals", "desc": "Fruites i verdures acabades de collir."}, {"name": "Jardí de flors", "theme": "flors", "desc": "Flors, plantes i les primeres bestioles."}, {"name": "Bestioles i animals", "theme": "bestioles", "desc": "Del rusc a la granja."}, {"name": "Tornem a casa", "theme": "casa", "desc": "Animals, mobles i rellotges."}, {"name": "L’armari i el taller", "theme": "oficis", "desc": "Roba, complements i eines."}, {"name": "El gran mosaic", "theme": "jocs", "desc": "Les últimes eines… i la col·lecció de rajoles."}].forEach((g,i)=>GROUPS.push({...g, name:L(g.name), desc:L(g.desc), from:i*10+1}));
