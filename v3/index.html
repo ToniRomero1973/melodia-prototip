@@ -1166,12 +1166,14 @@ S.solvedIdx = new Set(PHRASES.map((p,i)=>i).filter(i=>PHRASES[i]!==pickPhrase(to
 
 const PAIRS_MIN=4, PAIRS_MAX=256;
 const pairsOver = def => S.set.pairs ? Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, S.set.pairs)) : def;
-function setPairs(d){ const cur=S.set.pairs||28; S.set.pairs=Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, cur+d)); try{ localStorage.setItem('melodia-v3-parelles', S.set.pairs); }catch(e){} render(); if(S.sheet) renderSheet(); }
-function autoPairs(){ S.set.pairs=0; try{ localStorage.removeItem('melodia-v3-parelles'); }catch(e){} render(); if(S.sheet) renderSheet(); }
+function setPairs(d){ const cur=S.set.pairs||28; S.set.pairs=Math.max(PAIRS_MIN, Math.min(PAIRS_MAX, cur+d)); try{ localStorage.setItem('melodia-v3-parelles', S.set.pairs); }catch(e){} pairsRefresh(); }
+function pairsRefresh(){ if(S.tab==='joc' && S.sheet){ const n=S.set.pairs||28; document.querySelectorAll('#pairsVal').forEach(e=>e.textContent=n); document.querySelectorAll('.pairsN').forEach(e=>e.textContent=n);
+    document.querySelectorAll('.pairctl .link').forEach(e=>e.style.display=(S.set.pairs&&S.set.pairs!==28)?'':'none'); } else render(); }
+function autoPairs(){ S.set.pairs=0; try{ localStorage.removeItem('melodia-v3-parelles'); }catch(e){} pairsRefresh(); }
 function pairCtl(compact){ const v=S.set.pairs;
-  return `<div class="pairctl ${compact?'compact':''}"><div class="prow"><b>${L('Parelles del taulell d’entrenament')}</b><span class="pval">${v||28}</span></div>
+  return `<div class="pairctl ${compact?'compact':''}"><div class="prow"><b>${L('Parelles del taulell d’entrenament')}</b><span class="pval" id="pairsVal">${v||28}</span></div>
     <div class="stp"><button onclick="setPairs(-10)" aria-label="${L('Treure 10 parelles')}">−10</button><button onclick="setPairs(-1)" aria-label="${L('Treure una parella')}">−</button><button onclick="setPairs(1)" aria-label="${L('Afegir una parella')}">+</button><button onclick="setPairs(10)" aria-label="${L('Afegir 10 parelles')}">+10</button></div>
-    ${v&&v!==28?`<button class="link" onclick="autoPairs()">${L('Tornar a 28 parelles')}</button>`:''}
+    <button class="link" onclick="autoPairs()" style="${v&&v!==28?'':'display:none'}">${L('Tornar a 28 parelles')}</button>
     <p class="muted">${L('De {0} a {1} parelles. Només per al taulell d’entrenament: els nivells i la partida diària no canvien.',PAIRS_MIN,PAIRS_MAX)}</p></div>`; }
 // Tauler gran: a dalt 5×5 variat; a baix, separada, la fila dels munts
 const PILE_Y = 12.2;   // un xic més avall que la fila normal (10): queda separada de la resta
@@ -1185,11 +1187,11 @@ function mainLayout(r, target){
     // recolzada si almenys 3 dels 4 quarts tenen fitxa a sota: sobre 1, a cavall de 2, sobre 3 o sobre 4
     const sup=(x,y,z)=>[[.5,.5],[1.5,.5],[.5,1.5],[1.5,1.5]].filter(([dx,dy])=>p.some(t=>t.z===z-1&&covers(t,x+dx,y+dy))).length>=3;
     const clash=(x,y,z)=>p.some(t=>t.z===z&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2);
-    for(let z=1;z<=6&&p.length<target;z++){ const cand=[]; for(let y=0;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()*2.5]);
+    for(let z=1;z<=6&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()*2.5]);
       cand.sort((a,b)=>a[2]-b[2]);
       for(const [x,y,d] of cand){ if(p.length>=target) break; if(!clash(x,y,z) && r()<.85*Math.max(.45,1-d/8)) p.push({x,y,z}); } }
     // si en falten, s'omple amb més fitxes recolzades (de baix a dalt, primer les del mig)
-    for(let z=1;z<=7&&p.length<target;z++){ const cand=[]; for(let y=0;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()]);
+    for(let z=1;z<=8&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()]);
       cand.sort((a,b)=>a[2]-b[2]); for(const [x,y] of cand){ if(p.length>=target) break; if(!clash(x,y,z)) p.push({x,y,z}); } }
     if(p.length===target) return p; }
   const p=[]; for(let z=0;p.length<target;z++) for(let y=0;y<10&&p.length<target;y+=2) for(let x=0;x<10&&p.length<target;x+=2) p.push({x,y,z}); return p; }
@@ -1593,14 +1595,25 @@ const dailyOut = () => !S.dailyDone && (S.dailySeen || (S.dailyFailed && !canRet
 // ---- Configuració des del tauler ----
 const TRAIN_SETS=[['trad','Fitxes clàssiques'],['cami','Dibuixos del camí'],['tot','Tots els dibuixos']];
 function openCfg(){ const g=S.game; if(g&&!g.over&&!g.pauseAt) g.pauseAt=Date.now(); S.sheet='cfg'; renderSheet(); }
-function cfgSet(k,v){ S.set[k]= v===undefined ? !S.set[k] : v; render(); renderSheet(); if(k==='amb') ambPreview(); }
-const cfgSw=(k,lab,desc)=>`<div class="toggle"><div><b>${lab}</b>${desc?`<br><span class="muted" style="font-size:14px">${desc}</span>`:''}</div><button class="sw ${S.set[k]?'on':''}" role="switch" aria-checked="${!!S.set[k]}" aria-label="${lab}" onclick="cfgSet('${k}')"></button></div>`;
-const cfgSeg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button class="${S.set[k]===v?'on':''}" aria-pressed="${S.set[k]===v}" onclick="cfgSet('${k}','${v}')">${l}</button>`).join('')}</div>`;
+function phoneClass(){ const ph=$('#phone'); if(ph) ph.className='phone pal-'+S.set.pal+(S.set.size!=='normal'?' size-'+S.set.size:'')+(S.set.hc?' hc':'')+(S.set.dark?' dark':'')+(S.set.left?' left':'')+(S.set.glow?' glowfree':''); }
+function cfgSet(k,v,el){ const val = v===undefined ? !S.set[k] : v; S.set[k]=val;
+  // el control: només canvia el seu estat
+  if(el){ if(el.classList.contains('sw')){ el.classList.toggle('on',!!val); el.setAttribute('aria-checked',!!val); }
+          else { el.parentNode.querySelectorAll('button').forEach(b=>{ const on=b===el; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }); } }
+  // i el que en depèn directament
+  if(['pal','size','hc','dark','left','glow'].includes(k)) phoneClass();
+  if(k==='size' && S.tab==='joc') fitBoard();
+  if(k==='hideTime') updateHUD();
+  if(k==='idx' && S.game) document.querySelectorAll('.board .tile').forEach(e=>{ const t=S.game.tiles[+e.dataset.t], f=e.querySelector('.face'); if(t&&f) f.innerHTML=faceHTML(t.s); });
+  if(k==='amb') ambPreview();
+  if(k==='sound'){ if(val) ambStart(); else ambStop(); } }
+const cfgSw=(k,lab,desc)=>`<div class="toggle"><div><b>${lab}</b>${desc?`<br><span class="muted" style="font-size:14px">${desc}</span>`:''}</div><button class="sw ${S.set[k]?'on':''}" role="switch" aria-checked="${!!S.set[k]}" aria-label="${lab}" onclick="cfgSet('${k}',undefined,this)"></button></div>`;
+const cfgSeg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button class="${S.set[k]===v?'on':''}" aria-pressed="${S.set[k]===v}" onclick="cfgSet('${k}','${v}',this)">${l}</button>`).join('')}</div>`;
 function cfgSheet(){ const g=S.game, tr=isTrain(g);
   return `<h2 style="margin-top:0">⚙ ${L('Configuració')}</h2>
     ${tr?`<div class="cfgsec train"><h3>🎯 ${L('Taulell d’entrenament')}</h3>${pairCtl(true)}
       <b>${L('Dibuixos')}</b>${cfgSeg('trainSet',TRAIN_SETS.map(([v,l])=>[v,L(l)]))}
-      <button class="btn primary" onclick="S.sheet=null;startTraining()">🎯 ${L('Nou taulell amb {0} parelles',S.set.pairs||28)}</button></div>`
+      <button class="btn primary" onclick="S.sheet=null;startTraining()">🎯 ${L('Nou taulell amb {0} parelles',S.set.pairs||28).replace(String(S.set.pairs||28),'<span class="pairsN">'+(S.set.pairs||28)+'</span>')}</button></div>`
       :`<p class="muted cfgnote">${L('Les parelles i els dibuixos es poden triar al taulell d’entrenament. Aquesta partida té les seves parelles fixes.')}</p>`}
     <div class="cfgsec"><h3>♪ ${L('Música i so')}</h3>${cfgSw('sound',L('So i melodia'),L('Les notes de cada parella i el clic-clac'))}${cfgSw('vib',L('Vibració'),'')}
       <b>${L('So ambient')}</b>${cfgSeg('amb',[['cap',L('Cap')],['mar',L('Mar')],['nit',L('Nit d’estiu')],['pluja',L('Pluja')]])}</div>
