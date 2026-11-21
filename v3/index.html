@@ -720,6 +720,7 @@ body.prova .phone{height:calc(100% - 48px)}
 
 .hero .pairctl{margin:12px 0 0;color:var(--ink)}
 .tile.pile.buried::before{box-shadow:none} .tile.pile.buried .face{box-shadow:inset 0 0 0 1px rgba(110,90,60,.22),1px 1px 0 #DCCDB0}
+html,body{overflow-x:hidden}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -1191,16 +1192,17 @@ function mainLayout(r, target){
     // recolzada si almenys 3 dels 4 quarts tenen fitxa a sota: sobre 1, a cavall de 2, sobre 3 o sobre 4
     const sup=(x,y,z)=>[[.5,.5],[1.5,.5],[.5,1.5],[1.5,1.5]].filter(([dx,dy])=>p.some(t=>t.z===z-1&&covers(t,x+dx,y+dy))).length>=3;
     const clash=(x,y,z)=>p.some(t=>t.z===z&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2);
-    for(let z=1;z<=6&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()*2.5]);
+    const nsup=(x,y,z)=>p.filter(t=>t.z===z-1&&Math.abs(t.x-x)<2&&Math.abs(t.y-y)<2).length, PRI={1:0,2:1.2,3:4.5,4:6};   // preferència per a les que reposen sobre 2, 3 o 4
+    for(let z=1;z<=6&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)-PRI[nsup(x,y,z)]*r()*1.6+r()*2.5]);
       cand.sort((a,b)=>a[2]-b[2]);
       for(const [x,y,d] of cand){ if(p.length>=target) break; if(!clash(x,y,z) && r()<.85*Math.max(.45,1-d/8)) p.push({x,y,z}); } }
     // si en falten, s'omple amb més fitxes recolzades (de baix a dalt, primer les del mig)
-    for(let z=1;z<=8&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)+r()]);
+    for(let z=1;z<=8&&p.length<target;z++){ const cand=[]; for(let y=2;y<=8;y++)for(let x=0;x<=8;x++) if(sup(x,y,z)&&!clash(x,y,z)) cand.push([x,y,Math.hypot(x-cx,y-cy)-PRI[nsup(x,y,z)]*r()*1.6+r()]);
       cand.sort((a,b)=>a[2]-b[2]); for(const [x,y] of cand){ if(p.length>=target) break; if(!clash(x,y,z)) p.push({x,y,z}); } }
     if(p.length===target) return p; }
   const p=[]; for(let z=0;p.length<target;z++) for(let y=0;y<10&&p.length<target;y+=2) for(let x=0;x<10&&p.length<target;x+=2) p.push({x,y,z}); return p; }
 function bigLayout(r, target){
-  const main=Math.min(66, target-5), p=mainLayout(r, main);
+  const main=Math.min(52, target-5), p=mainLayout(r, main);
   // 4 munts amb un petit espai entre ells: no es toquen pels costats, així la fitxa de dalt de cada munt sempre es pot agafar
   let left=target-p.length; const NP=4, hs=Array(NP).fill(0), wt=[1,1.2,1.2,1].map(w=>w*(.85+r()*.3)), W=wt.reduce((a,b)=>a+b,0);
   hs.forEach((_,i)=>{ hs[i]=Math.max(1,Math.floor(left*wt[i]/W)); }); let rest=left-hs.reduce((a,b)=>a+b,0);
@@ -1385,7 +1387,7 @@ const ICON = {
 };
 function dims(){ const cs=getComputedStyle($('#phone')); return {W:parseFloat(cs.getPropertyValue('--tw')), H:parseFloat(cs.getPropertyValue('--th')), G:2}; }
 const zVis = t => (t.pile && t.z>2) ? 2+(t.z-2)*Math.min(.32, 2.5/Math.max(1,(t.ph||1)-2)) : t.z;   // un munt puja com a molt ~4,5 pisos
-const zMaxV = () => { const g=S.game; if(!g||g.nPairs<=38||true) return 0; if(g._zm==null) g._zm=Math.max(0,...g.tiles.map(t=>zVis(t))); return g._zm; };
+const zMaxV = () => { const g=S.game; if(!g) return 0; if(g._zm==null) g._zm=Math.max(0,...g.tiles.map(t=>zVis(t)-t.x*7-2.6)); return g._zm; };
 function tilePos(t){ const {W,H,G}=dims(), zx=Math.min(3,W/15), zy=Math.min(4,W/11.5), zv=zVis(t); const zm=zMaxV(); return {left:t.x*(W+G)/2 + (zm-zv)*zx + 8, top:t.y*(H+G)/2 + (zm-zv)*zy + 14}; }
 function phraseHTML(){ const g=S.game; const words=[]; let cur=[];
   [...g.phrase].forEach((ch,i)=>{ if(ch===' '){ if(cur.length) words.push(cur); cur=[]; } else cur.push([ch,i]); }); if(cur.length) words.push(cur);
@@ -1432,7 +1434,7 @@ function fitBoard(){ const wrap=$('#boardwrap'), board=wrap&&wrap.querySelector(
 window.addEventListener('resize',()=>{ if(S.tab==='joc'&&S.game) fitBoard(); });
 // El visor de Claude i Safari canvien l'alçada després de carregar: es reajusta el tauler cada cop que canvia la mida de l'espai
 let lastWrap=''; const RO = window.ResizeObserver ? new ResizeObserver(()=>{ const w=$('#boardwrap'); if(!w||S.tab!=='joc'||!S.game) return; const key=w.clientWidth+'x'+w.clientHeight; if(key!==lastWrap){ lastWrap=key; fitBoard(); } }) : null;
-function mountGame(){ fitBoard(); lastWrap=''; if(RO) RO.observe($('#boardwrap')); requestAnimationFrame(()=>fitBoard()); setTimeout(()=>{ if(S.tab==='joc') fitBoard(); },350); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(S.tab==='joc') fitBoard(); }); updateErrors(); updateTiles(); updateReserve(); updateHUD(); bindDrag(); const g=S.game;
+function mountGame(){ const php=$('#phone'); if(php&&!php._noSide){ php._noSide=true; php.addEventListener('scroll',()=>{ if(php.scrollLeft) php.scrollLeft=0; }); } fitBoard(); lastWrap=''; if(RO) RO.observe($('#boardwrap')); requestAnimationFrame(()=>fitBoard()); setTimeout(()=>{ if(S.tab==='joc') fitBoard(); },350); if(document.fonts&&document.fonts.ready) document.fonts.ready.then(()=>{ if(S.tab==='joc') fitBoard(); }); updateErrors(); updateTiles(); updateReserve(); updateHUD(); bindDrag(); const g=S.game;
   if(!g.dealt){ g.dealt=true; const skipIntro=S.noIntro||reduced; S.noIntro=false; const deal=()=>{ if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.remove('predeal'); if(!reduced){ const els=[...document.querySelectorAll('.board .tile')];
       els.sort((a,b)=>+a.style.zIndex - +b.style.zIndex).forEach((el,i)=>{ const z=Math.floor(+el.style.zIndex/1000);
         el.animate([{transform:'translateY(-60px) scale(.8) rotate(-6deg)',opacity:0},{transform:'none',opacity:1}],{duration:480,delay:z*220+i%26*18,easing:'cubic-bezier(.34,1.4,.64,1)',fill:'backwards'}); });
