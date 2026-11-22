@@ -2356,13 +2356,13 @@ function vSheet(){ const g=S.game;
       <button class="btn secondary" onclick="quit()">${L('Tornar a l’inici')}</button></div>`); }
   if(S.sheet==='rajoles') return sheetWrap(`<h2 style="margin-top:0">${L('Les teves rajoles')}</h2>
     <p class="muted">${L('Cada vegada que superes certs nivells es destapa una rajola nova. El joc fa servir sempre la més nova que tens.')}</p>
-    ${senGrid()}<div class="stack"><button class="btn primary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`);
+    ${senGrid()}<div class="stack"><button class="btn primary" onclick="closeSheet()">${senFromWin()?L('Tornar a la partida'):L('Tancar')}</button></div>`);
   if(S.sheet==='rajola'){ const x=SENEFES.find(y=>y.k===S.senView)||activeSen();
     return sheetWrap(`<div class="senbig" style="background-image:${senURL(x)}" role="img" aria-label="${esc(L(x.n))}"></div>
       <p class="fine" style="margin:6px 0 0">${L('Així queden quatre peces juntes')}</p>
       <h2 style="margin:10px 0 4px">${x.special?'⭐ ':''}${esc(L(x.n))}</h2><p>${esc(L(x.d))}</p>
       <p class="muted">${x.req?L('Desbloquejada en superar el nivell {0}',x.req):L('La primera de la col·lecció')}${x===activeSen()?' · '+L('En ús'):''}</p>
-      <div class="stack"><button class="btn primary" onclick="S.sheet='rajoles';renderSheet()">${L('Veure totes les rajoles')}</button></div>`); }
+      <div class="stack"><button class="btn primary" onclick="S.sheet='rajoles';renderSheet()">${L('Veure totes les rajoles')}</button><button class="btn secondary" onclick="closeSheet()">${senFromWin()?L('Tornar a la partida'):L('Tancar')}</button></div>`); }
   if(S.sheet==='pay') return sheetWrap(`<h2 style="margin-top:0">${L('Segueix jugant avui')}</h2><p class="muted">${L('Sense anuncis i sense monedes. Preus amb IVA inclòs.')}</p>${S.plus?'':`<div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>`}
     <div class="stack">
     <button class="offer" onclick="buy('pass')"><span><b>${L('Passi del dia')}</b><small>${L('Intents il·limitats durant 24 hores · sense renovació')}</small></span><span class="price">${L('0,99 €')}</span></button>
@@ -2545,7 +2545,8 @@ function pause(){ const g=S.game; if(g.over){ if(!g.won){ S.sheet=g.demo?'shown'
 // 11. Si l'app passa a segon pla (trucada, enquesta…), es posa en pausa
 document.addEventListener('visibilitychange',()=>{ if(document.hidden&&S.tab==='joc'&&S.game&&!S.game.over&&!S.game.pauseAt&&!S.sheet) pause(); });
 function resume(){ const g=S.game; if(g&&g.pauseAt&&!g.over){ g.paused+=Date.now()-g.pauseAt; g.pauseAt=null; } S.sheet=null; renderSheet(); }
-function closeSheet(){ if(S.sheet==='solve'){ if(!S.game.over) closeSolve(); return; } if(S.sheet==='pause'||S.sheet==='help'||S.sheet==='cfg') return resume(); if(S.sheet==='win') return; S.sheet=null; renderSheet(); }
+const senFromWin=()=>!!(S.tab==='joc'&&S.game&&S.game.over&&S.game.won);
+function closeSheet(){ if((S.sheet==='rajola'||S.sheet==='rajoles')&&senFromWin()){ S.sheet='win'; renderSheet(); return; } if(S.sheet==='solve'){ if(!S.game.over) closeSolve(); return; } if(S.sheet==='pause'||S.sheet==='help'||S.sheet==='cfg') return resume(); if(S.sheet==='win') return; S.sheet=null; renderSheet(); }
 function quit(){ S.sheet=null; renderSheet(); S.tab='avui'; render(); }
 function buy(k){ if(k==='pass') S.pass=true; else S.plus=true; toast(k==='pass'?L('Passi del dia activat (simulat)'):L('Plus activat (simulat)'));
   S.sheet=null; renderSheet(); if(S.tab==='joc'&&S.game&&S.game.over&&present().length>0) restartSame(); else render(); }
