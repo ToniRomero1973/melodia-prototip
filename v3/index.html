@@ -781,6 +781,12 @@ html,body{overflow-x:hidden}
 .savestreak{display:flex;gap:12px;align-items:center;background:#FFF4D6;border-radius:18px;padding:12px 14px;margin:0 0 14px} .savestreak>span{font-size:26px} .savestreak div{flex:1;min-width:0} .savestreak b{display:block;color:#6B4B00} .savestreak small{color:#8A6A1E;font-size:14px} .savestreak .btn{width:auto;padding:0 18px;min-height:44px}
 .dark .savestreak{background:#3A3322} .dark .savestreak b{color:#F4D27A} .dark .savestreak small{color:#D9C08A}
 .streakchip:not(.lit){filter:grayscale(1);opacity:.7}
+.lgnews{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.lgnews .lgem{font-size:26px} .lgnews .tx{flex:1;min-width:0} .lgnews b{display:block;font-size:16px} .lgnews small{color:var(--quiet);font-size:14px}
+.notif{position:absolute;left:10px;right:10px;top:10px;z-index:80;display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;color:#1C1C1E;cursor:pointer;
+  background:rgba(250,248,244,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:0;border-radius:20px;padding:11px 13px;box-shadow:0 10px 30px rgba(0,0,0,.22);transform:translateY(-130%);transition:transform .45s cubic-bezier(.2,1.2,.4,1)}
+.notif.in{transform:none} .notif .nic{flex:none;width:38px;height:38px;border-radius:9px;background-size:22px 22px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.notif .ntx{flex:1;min-width:0;font-size:15px;line-height:1.3} .notif .nhd{display:flex;justify-content:space-between;margin-bottom:2px} .notif .nhd small{color:#8E8E93;font-size:13px}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -932,6 +938,8 @@ Object.assign(TR.es,{"Toca dues fitxes iguals, o arrossega l’una damunt l’al
 Object.assign(TR.en,{"Toca dues fitxes iguals, o arrossega l’una damunt l’altra.": "Tap two matching tiles, or drag one onto the other.", "Només es mouen les lliures: sense cap fitxa a sobre i amb el costat esquerre o el dret buit.": "Only free tiles move: nothing on top and an empty left or right side.", "Al faristol hi caben 2 fitxes: deixa-n’hi per destapar les de sota.": "The rack holds 2 tiles: park some there to uncover the ones below.", "Cada parella destapa lletres del refrany. Si l’endevines abans, guanyes {0} s per lletra amagada (cada error, +{1} s).": "Each pair reveals letters of the proverb. Guess it early and win {0} s per hidden letter (each mistake, +{1} s).", "Deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3, fallada.": "Dropping a tile on one that isn't its pair is a mistake. Three and you're out.", "T’has encallat? Desfés l’última fitxa del faristol o barreja (un cop per tauler).": "Stuck? Undo the last rack tile or shuffle (once per board).", "Tots els taulers tenen solució.": "Every board can be solved.", "Cada intent fallat suma 2 min a la classificació.": "Each failed try adds 2 min to your ranking time.", "Surt a 2,50 € al mes": "Works out at €2.50 a month"});
 Object.assign(TR.es,{"net": "limpio", "Refrany endevinat amb {0} lletres amagades": "Refrán adivinado con {0} letras ocultas", "Posició {0} a la meva comarca": "Posición {0} en mi comarca", "Hi jugues?": "¿Juegas?", "Compartir el resultat sense desvetllar el refrany": "Compartir el resultado sin desvelar el refrán", "Gairebé! Només et faltaven {0} parelles.": "¡Casi! Solo te faltaban {0} parejas.", "Has fet {0} de {1} parelles.": "Has hecho {0} de {1} parejas.", "Fita! {0} dies seguits": "¡Hito! {0} días seguidos", "Ratxa: {0} dies": "Racha: {0} días", "Comença la teva ratxa!": "¡Empieza tu racha!", "Guarda-la: demà, un tauler nou.": "Guárdala: mañana, un tablero nuevo.", "Torna demà per mantenir-la.": "Vuelve mañana para mantenerla.", "Encara pots salvar la ratxa de {0} dies": "Aún puedes salvar la racha de {0} días", "Juga una partida abans de mitjanit.": "Juega una partida antes de medianoche."});
 Object.assign(TR.en,{"net": "clean", "Refrany endevinat amb {0} lletres amagades": "Proverb guessed with {0} letters hidden", "Posició {0} a la meva comarca": "#{0} in my county", "Hi jugues?": "Want to play?", "Compartir el resultat sense desvetllar el refrany": "Share your result without spoiling the proverb", "Gairebé! Només et faltaven {0} parelles.": "So close! Only {0} pairs left.", "Has fet {0} de {1} parelles.": "You made {0} of {1} pairs.", "Fita! {0} dies seguits": "Milestone! {0} days in a row", "Ratxa: {0} dies": "Streak: {0} days", "Comença la teva ratxa!": "Your streak starts today!", "Guarda-la: demà, un tauler nou.": "Keep it going: a new board tomorrow.", "Torna demà per mantenir-la.": "Come back tomorrow to keep it.", "Encara pots salvar la ratxa de {0} dies": "You can still save your {0}-day streak", "Juga una partida abans de mitjanit.": "Play a game before midnight."});
+Object.assign(TR.es,{"{0} de «{1}» ja han jugat avui": "{0} de «{1}» ya han jugado hoy", "La més ràpida: {0}, {1}": "La más rápida: {0}, {1}", "{0} t’ha superat per {1}": "{0} te ha superado por {1}", "Posició {0} de {1} a «{2}»": "Posición {0} de {1} en «{2}»", "Vas primer a «{0}»!": "¡Vas primero en «{0}»!", "{0} és a {1}": "{0} está a {1}", "{0} ja ha fet el tauler d’avui en {1}. L’atrapes?": "{0} ya ha hecho el tablero de hoy en {1}. ¿Lo alcanzas?", "🔥 {0} dies seguits. El refrany d’avui té {1} paraules: no perdis la ratxa!": "🔥 {0} días seguidos. El refrán de hoy tiene {1} palabras: ¡no pierdas la racha!", "El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?": "El refrán de hoy empieza por «{0}»… ¿Lo adivinarás antes de acabar el tablero?", "ara": "ahora", "A les 10:00, si encara no has jugat. Amb la teva ratxa o una pista del refrany.": "A las 10:00, si aún no has jugado. Con tu racha o una pista del refrán.", "Veure un exemple": "Ver un ejemplo"});
+Object.assign(TR.en,{"{0} de «{1}» ja han jugat avui": "{0} in “{1}” have played today", "La més ràpida: {0}, {1}": "Fastest: {0}, {1}", "{0} t’ha superat per {1}": "{0} beat you by {1}", "Posició {0} de {1} a «{2}»": "#{0} of {1} in “{2}”", "Vas primer a «{0}»!": "You're top of “{0}”!", "{0} és a {1}": "{0} is {1} behind", "{0} ja ha fet el tauler d’avui en {1}. L’atrapes?": "{0} already did today's board in {1}. Can you beat it?", "🔥 {0} dies seguits. El refrany d’avui té {1} paraules: no perdis la ratxa!": "🔥 {0} days in a row. Today's proverb has {1} words: keep your streak!", "El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?": "Today's proverb starts with “{0}”… Can you guess it before the board is done?", "ara": "now", "A les 10:00, si encara no has jugat. Amb la teva ratxa o una pista del refrany.": "At 10:00 if you haven't played. With your streak or a proverb clue.", "Veure un exemple": "See an example"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1702,6 +1710,7 @@ function cfgSet(k,v,el){ const val = v===undefined ? !S.set[k] : v; S.set[k]=val
   if(k==='hideTime') updateHUD();
   if(k==='idx' && S.game) document.querySelectorAll('.board .tile').forEach(e=>{ const t=S.game.tiles[+e.dataset.t], f=e.querySelector('.face'); if(t&&f) f.innerHTML=faceHTML(t.s); });
   if(k==='amb') ambPreview();
+  if(k==='remind'&&val) setTimeout(showNotif,250);
   if(k==='sound'){ document.querySelectorAll('.sndsub').forEach(e=>e.classList.toggle('off',!val)); if(val) ambStart(); else ambStop(); } }
 const cfgSw=(k,lab,desc)=>`<div class="toggle"><div><b>${lab}</b>${desc?`<br><span class="muted" style="font-size:14px">${desc}</span>`:''}</div><button class="sw ${S.set[k]?'on':''}" role="switch" aria-checked="${!!S.set[k]}" aria-label="${lab}" onclick="cfgSet('${k}',undefined,this)"></button></div>`;
 const cfgSeg=(k,opts)=>`<div class="seg">${opts.map(([v,l])=>`<button class="${S.set[k]===v?'on':''}" aria-pressed="${S.set[k]===v}" onclick="cfgSet('${k}','${v}',this)">${l}</button>`).join('')}</div>`;
@@ -1720,7 +1729,7 @@ function settingsHTML(where){ const g=S.game, inGame=where==='game', calmG=!!(in
       ${calmG?'':cfgSw('hideTime',L('Amagar el temps'),L('El temps es compta igualment'))}</div>
     <div class="cfgsec"><h3>👁 ${L('Vista')}</h3>${cfgSw('dark',L('Mode nit'),'')}${cfgSw('hc',L('Alt contrast'),L('Colors i vores més marcats'))}${cfgSw('left',L('Mode esquerrà'),L('Pausa i reserva canvien de costat'))}</div>
     ${inGame?'':`<div class="cfgsec"><h3>🌐 ${L('General')}</h3><b>${L('Idioma')}</b><div class="seg" role="group" aria-label="${L('Idioma')}">${[['ca','Català'],['es','Español'],['en','English']].map(([k,l])=>`<button lang="${k}" class="${LANG===k?'on':''}" aria-pressed="${LANG===k}" onclick="setLang('${k}')">${l}</button>`).join('')}</div>
-      ${cfgSw('remind',L('Recordatori diari'),L('A les 10:00, només si encara no has jugat'))}</div>`}`; }
+      ${cfgSw('remind',L('Recordatori diari'),L('A les 10:00, si encara no has jugat. Amb la teva ratxa o una pista del refrany.'))+`<button class="linkbtn" style="margin:2px 0 8px" onclick="showNotif()">${L('Veure un exemple')}</button>`}</div>`}`; }
 function cfgSheet(){ return `<h2 style="margin-top:0">⚙ ${L('Configuració')}</h2>${settingsHTML('game')}
     <div class="stack"><button class="btn secondary" onclick="resume()">${L('Tornar a la partida')}</button></div>`; }
 function startCalm(){ S.calmN=(S.calmN||0)+1; const ts=S.set.trainSet||'trad'; let th='trad';
@@ -1931,6 +1940,31 @@ function tabsBar(){ const t=[['avui','sun',L('Avui')],['nivells','grid',L('Nivel
   return `<nav class="tabs">${t.map(([k,ic,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" ${S.tab===k?'aria-current="page"':''}>${ICON[ic]}${l}</button>`).join('')}</nav>`; }
 function stackTiles(keys, w, h, pos){ return keys.map((k,i)=>tileHTML(k,'',`width:${w}px;height:${h}px;left:${pos[i][0]}px;top:${pos[i][1]}px;transform:rotate(${pos[i][2]}deg);--sym:${w*.62}px`)).join(''); }
 function keepScroll(fn){ const sc=document.querySelector('#view .screen'), y=sc?sc.scrollTop:0; fn(); const s2=document.querySelector('#view .screen'); if(s2) s2.scrollTop=y; }
+
+// ---- La lliga avui: els mateixos temps d'exemple que la classificació (mateixa llavor) ----
+function leagueToday(){ const lg=S.leagues.find(l=>!l.pub); if(!lg) return null; const T=LG_TYPES[lg.type]||LG_TYPES.altra, r=rng(lg.id+'Diari');
+  const list=T.mem.map(n=>{ const t=190+Math.floor(r()*260); r(); return {n:L(n), t}; }); if(list.length>2) list[list.length-1].t=null;
+  return {lg, list}; }
+function leagueNews(){ const lt=leagueToday(); if(!lt) return ''; const {lg,list}=lt, played=list.filter(x=>x.t!=null).sort((a,b)=>a.t-b.t); if(!played.length) return '';
+  let msg, sub;
+  if(!S.dailyDone){ msg=L('{0} de «{1}» ja han jugat avui',played.length,esc(lg.name)); sub=L('La més ràpida: {0}, {1}',esc(played[0].n),fmt(played[0].t)); }
+  else { const me=Math.round(S.dailyDone.time), ahead=played.filter(x=>x.t<me);
+    if(ahead.length){ const r=ahead[ahead.length-1]; msg=L('{0} t’ha superat per {1}',esc(r.n),fmt(me-r.t)); sub=L('Posició {0} de {1} a «{2}»',ahead.length+1,played.length+1,esc(lg.name)); }
+    else { const nx=played[0]; msg=L('Vas primer a «{0}»!',esc(lg.name)); sub=nx?L('{0} és a {1}',esc(nx.n),fmt(nx.t-me)):''; } }
+  return `<button class="card lgnews cardbtn" onclick="S.lbScope='${lg.id}';S.lbPeriod='Diari';go('class')"><span class="lgem" aria-hidden="true">${LG_TYPES[lg.type]?LG_TYPES[lg.type].em:'⭐'}</span><span class="tx"><b>${msg}</b><small>${sub}</small></span><span class="chev" aria-hidden="true">›</span></button>`; }
+
+// ---- Notificació diària (al prototip es mostra dins l'app, com arribaria al mòbil) ----
+function notifText(){ if(!S._dp){ try{ S._dp=generate(todaySeed,'trad',28).phrase; }catch(e){ S._dp=''; } }
+  const words=S._dp.split(/\s+/).filter(Boolean), SI=streakInfo(), lt=leagueToday(), first=(words[0]||'').replace(/[«»,.;:!?]/g,'');
+  const pick=new Date().getDate()%3, rival=lt&&lt.list.filter(x=>x.t!=null).sort((a,b)=>a.t-b.t)[0];
+  if(rival&&pick===0) return L('{0} ja ha fet el tauler d’avui en {1}. L’atrapes?',rival.n,fmt(rival.t));
+  if(SI.n>=2&&pick!==2) return L('🔥 {0} dies seguits. El refrany d’avui té {1} paraules: no perdis la ratxa!',SI.n,words.length);
+  return L('El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?',first); }
+let notifT=null;
+function showNotif(){ clearTimeout(notifT); document.querySelectorAll('.notif').forEach(e=>e.remove()); const d=document.createElement('button'); d.className='notif'; d.type='button';
+  d.innerHTML=`<span class="nic" style="background-image:${senURL(activeSen())}" aria-hidden="true"></span><span class="ntx"><span class="nhd"><b>Melodia</b><small>${L('ara')}</small></span><span>${esc(notifText())}</span></span>`;
+  d.onclick=()=>{ d.remove(); S.sheet=null; renderSheet(); playDaily(); }; $('#phone').appendChild(d); requestAnimationFrame(()=>d.classList.add('in'));
+  notifT=setTimeout(()=>{ d.classList.remove('in'); setTimeout(()=>d.remove(),400); },6000); }
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key]||(isT&&chAll()?'or':null), rest=SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
@@ -1945,6 +1979,7 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
     ${done?`<p class="sub" style="font-size:13px;opacity:.8">${L('Torna demà per a un tauler nou')}</p>`:''}
     ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:dailyOut()?`<p class="sub trainnote">${L('Avui ja no et queden intents. Pots seguir practicant sense puntuar.')}</p><button class="btn gold" onclick="startCalm()">☕ ${L('Partida tranquil·la')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
   </div>
+  ${leagueNews()}
   <div class="card"><div class="row"><b>${L('La teva setmana')}</b><button class="linkbtn" onclick="keepScroll(()=>{S.showMonth=!S.showMonth;render();})">${S.showMonth?L('Amagar el mes'):L('Veure el mes')}</button></div><div class="week">${week}</div><p class="streaknote">🌙 ${L('{0} dies de descans disponibles aquest mes',SI.left)} · ${L('Millor ratxa: {0}',SI.best)}</p></div>
   ${S.showMonth?monthCard():''}${chCard()}
   <div class="card"><b>${L('La frase d’ahir')}</b><p class="muted ans" style="margin:4px 0 8px;font-size:15px">${L('La va resoldre el 64% dels jugadors · dades d’exemple')}</p>
