@@ -771,6 +771,16 @@ html,body{overflow-x:hidden}
 .helplist{list-style:none;padding:0;margin:6px 0 10px} .helplist li{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px;line-height:1.4} .helplist li:last-child{border-bottom:0}
 .helplist .hi{flex:none;width:30px;height:30px;border-radius:9px;background:var(--jade-soft);display:grid;place-items:center;font-size:16px;font-weight:700;font-family:var(--serif)}
 .jstep.locked .jtx{justify-content:center} .jlock{margin-left:auto;padding-right:8px;font-size:16px;opacity:.45}
+.shareres{display:block;margin:10px auto 0;font-size:15px}
+.nearmiss{background:var(--jade-soft);border-radius:14px;padding:10px 14px;margin:4px 0 10px} .nearmiss b{font-size:16px} .nearmiss .bar{margin-top:8px}
+.streakup{display:flex;gap:12px;align-items:center;text-align:left;margin:12px auto 0;max-width:320px;background:#FFF4D6;border-radius:16px;padding:10px 14px}
+.streakup .fl{font-size:28px;animation:flame 1.2s ease-in-out infinite} .streakup b{display:block;font-size:17px;color:#6B4B00} .streakup small{color:#8A6A1E;font-size:14px}
+.streakup.ms{background:linear-gradient(135deg,#FFE7A0,#F4C95D)} .dark .streakup{background:#3A3322} .dark .streakup b{color:#F4D27A} .dark .streakup small{color:#D9C08A}
+@keyframes flame{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.15) rotate(3deg)}}
+@media (prefers-reduced-motion:reduce){.streakup .fl{animation:none}}
+.savestreak{display:flex;gap:12px;align-items:center;background:#FFF4D6;border-radius:18px;padding:12px 14px;margin:0 0 14px} .savestreak>span{font-size:26px} .savestreak div{flex:1;min-width:0} .savestreak b{display:block;color:#6B4B00} .savestreak small{color:#8A6A1E;font-size:14px} .savestreak .btn{width:auto;padding:0 18px;min-height:44px}
+.dark .savestreak{background:#3A3322} .dark .savestreak b{color:#F4D27A} .dark .savestreak small{color:#D9C08A}
+.streakchip:not(.lit){filter:grayscale(1);opacity:.7}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -920,6 +930,8 @@ Object.assign(TR.es,{"Amagar el mes": "Ocultar el mes", "Veure el mes": "Ver el 
 Object.assign(TR.en,{"Amagar el mes": "Hide month", "Veure el mes": "See month", "Or: sense ajuda · Plata: amb ajuda · Bronze: sense acabar": "Gold: no help · Silver: with help · Bronze: unfinished", "Sense rellotge ni puntuació.": "No clock, no score.", "Perquè no es perdi si canvies de mòbil.": "So it isn't lost if you change phones.", "Crear un compte o entrar": "Create an account or sign in", "Regalar Plus": "Give Plus"});
 Object.assign(TR.es,{"Toca dues fitxes iguals, o arrossega l’una damunt l’altra.": "Toca dos fichas iguales, o arrastra una encima de la otra.", "Només es mouen les lliures: sense cap fitxa a sobre i amb el costat esquerre o el dret buit.": "Solo se mueven las libres: sin ninguna ficha encima y con el lado izquierdo o el derecho vacío.", "Al faristol hi caben 2 fitxes: deixa-n’hi per destapar les de sota.": "En el atril caben 2 fichas: déjalas ahí para destapar las de debajo.", "Cada parella destapa lletres del refrany. Si l’endevines abans, guanyes {0} s per lletra amagada (cada error, +{1} s).": "Cada pareja destapa letras del refrán. Si lo adivinas antes, ganas {0} s por letra oculta (cada error, +{1} s).", "Deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3, fallada.": "Dejar una ficha encima de una que no es su pareja es un error. Con 3, fallo.", "T’has encallat? Desfés l’última fitxa del faristol o barreja (un cop per tauler).": "¿Atascado? Deshaz la última ficha del atril o baraja (una vez por tablero).", "Tots els taulers tenen solució.": "Todos los tableros tienen solución.", "Cada intent fallat suma 2 min a la classificació.": "Cada intento fallido suma 2 min en la clasificación.", "Surt a 2,50 € al mes": "Sale a 2,50 € al mes"});
 Object.assign(TR.en,{"Toca dues fitxes iguals, o arrossega l’una damunt l’altra.": "Tap two matching tiles, or drag one onto the other.", "Només es mouen les lliures: sense cap fitxa a sobre i amb el costat esquerre o el dret buit.": "Only free tiles move: nothing on top and an empty left or right side.", "Al faristol hi caben 2 fitxes: deixa-n’hi per destapar les de sota.": "The rack holds 2 tiles: park some there to uncover the ones below.", "Cada parella destapa lletres del refrany. Si l’endevines abans, guanyes {0} s per lletra amagada (cada error, +{1} s).": "Each pair reveals letters of the proverb. Guess it early and win {0} s per hidden letter (each mistake, +{1} s).", "Deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3, fallada.": "Dropping a tile on one that isn't its pair is a mistake. Three and you're out.", "T’has encallat? Desfés l’última fitxa del faristol o barreja (un cop per tauler).": "Stuck? Undo the last rack tile or shuffle (once per board).", "Tots els taulers tenen solució.": "Every board can be solved.", "Cada intent fallat suma 2 min a la classificació.": "Each failed try adds 2 min to your ranking time.", "Surt a 2,50 € al mes": "Works out at €2.50 a month"});
+Object.assign(TR.es,{"net": "limpio", "Refrany endevinat amb {0} lletres amagades": "Refrán adivinado con {0} letras ocultas", "Posició {0} a la meva comarca": "Posición {0} en mi comarca", "Hi jugues?": "¿Juegas?", "Compartir el resultat sense desvetllar el refrany": "Compartir el resultado sin desvelar el refrán", "Gairebé! Només et faltaven {0} parelles.": "¡Casi! Solo te faltaban {0} parejas.", "Has fet {0} de {1} parelles.": "Has hecho {0} de {1} parejas.", "Fita! {0} dies seguits": "¡Hito! {0} días seguidos", "Ratxa: {0} dies": "Racha: {0} días", "Comença la teva ratxa!": "¡Empieza tu racha!", "Guarda-la: demà, un tauler nou.": "Guárdala: mañana, un tablero nuevo.", "Torna demà per mantenir-la.": "Vuelve mañana para mantenerla.", "Encara pots salvar la ratxa de {0} dies": "Aún puedes salvar la racha de {0} días", "Juga una partida abans de mitjanit.": "Juega una partida antes de medianoche."});
+Object.assign(TR.en,{"net": "clean", "Refrany endevinat amb {0} lletres amagades": "Proverb guessed with {0} letters hidden", "Posició {0} a la meva comarca": "#{0} in my county", "Hi jugues?": "Want to play?", "Compartir el resultat sense desvetllar el refrany": "Share your result without spoiling the proverb", "Gairebé! Només et faltaven {0} parelles.": "So close! Only {0} pairs left.", "Has fet {0} de {1} parelles.": "You made {0} of {1} pairs.", "Fita! {0} dies seguits": "Milestone! {0} days in a row", "Ratxa: {0} dies": "Streak: {0} days", "Comença la teva ratxa!": "Your streak starts today!", "Guarda-la: demà, un tauler nou.": "Keep it going: a new board tomorrow.", "Torna demà per mantenir-la.": "Come back tomorrow to keep it.", "Encara pots salvar la ratxa de {0} dies": "You can still save your {0}-day streak", "Juga una partida abans de mitjanit.": "Play a game before midnight."});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1647,7 +1659,7 @@ async function celebrate(){ const g=S.game; chTrack('win',{hints:g.hints||0, tim
 function openSolve(){ const g=S.game; if(g.solved||g.busy||(g.over&&!g.won)) return; if(!g.over&&!g.pauseAt) g.pauseAt=Date.now(); S.sheet='solve'; S.solveMsg=''; renderSheet(); setTimeout(()=>{ const i=$('#solveIn'); if(i) i.focus(); },350); }
 function closeSolve(){ const g=S.game; S.sheet=null; renderSheet(); if(!g.over) resume(); }
 function trySolve(f){ const g=S.game, inp=$('#solveIn'), v=f?g.phrase:(inp?inp.value:''); if(!norm(v)) return;
-  if(f||closeEnough(norm(v),norm(g.phrase))){ const hid=hiddenCount(); g.solved=true; chTrack('phrase',{hid}); g.bonus=Math.round(hid*BONUS_PER*(f||1)); const pi=PHRASES.indexOf(g.phrase); g.newPhrase=pi>=0&&!S.solvedIdx.has(pi); if(pi>=0) S.solvedIdx.add(pi); S.found=S.solvedIdx.size;
+  if(f||closeEnough(norm(v),norm(g.phrase))){ const hid=hiddenCount(); g.solveMask=f?[]:g.order.filter(li=>!g.revealed.has(li)); g.solved=true; chTrack('phrase',{hid}); g.bonus=Math.round(hid*BONUS_PER*(f||1)); const pi=PHRASES.indexOf(g.phrase); g.newPhrase=pi>=0&&!S.solvedIdx.has(pi); if(pi>=0) S.solvedIdx.add(pi); S.found=S.solvedIdx.size;
     bell(14,0,.18,1.6); bell(21,.12,.14,1.6); bell(26,.24,.14,2.2);
     let k=0; g.order.forEach(li=>{ if(!g.revealed.has(li)) revealLetter(li, 300+(k++)*40); });
     setTimeout(()=>document.querySelectorAll('#phrase .lc').forEach((n,j)=>setTimeout(()=>n.classList.add('win'),j*25)), 300+k*40);
@@ -1922,8 +1934,9 @@ function keepScroll(fn){ const sc=document.querySelector('#view .screen'), y=sc?
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key]||(isT&&chAll()?'or':null), rest=SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
-  <div class="row"><div class="brand"><span class="dot rj"></span>Melodia</div><span class="streakchip">🔥 ${SI.n}</span></div>
-  ${provaHome()}
+  <div class="row"><div class="brand"><span class="dot rj"></span>Melodia</div><span class="streakchip ${S.days[todaySeed]?'lit':''}" title="${L('Ratxa: {0} dies',SI.n)}">🔥 ${SI.n}</span></div>
+  ${provaHome()}${(()=>{ const SI=streakInfo(), h=new Date().getHours(); if(S.days[todaySeed]||SI.n<1||h<18) return '';
+    return `<div class="savestreak" role="status"><span aria-hidden="true">🔥</span><div><b>${L('Encara pots salvar la ratxa de {0} dies',SI.n)}</b><small>${L('Juga una partida abans de mitjanit.')}</small></div><button class="btn gold" onclick="playDaily()">${L('Jugar')}</button></div>`; })()}
   <div class="hero herobg">
     <div class="stackt">${stackTiles(['r1','d5','b3'],46,61,[[10,30,-12],[40,18,-2],[70,30,10]])}</div>
     <span class="pill" style="background:rgba(255,255,255,.16);color:#fff">${L('Partida diària')}</span>
@@ -2392,7 +2405,9 @@ function vSheet(){ const g=S.game;
       ${row('🔀',L('T’has encallat? Desfés l’última fitxa del faristol o barreja (un cop per tauler).'))}
       </ul><p class="muted" style="font-size:14px">${L('Tots els taulers tenen solució.')}</p><div class="stack"><button class="btn primary" onclick="resume()">${L('Entesos')}</button></div>`); }
   if(S.sheet==='blocked'){ const calm=g.mode==='calma', ok=calm||canRetry(), errs=g.failReason==='errors', canSh=!errs&&(calm||!g.shuffled), canUndo=!errs&&!!g.lastPark;
-    return sheetWrap(`<h2 style="margin-top:0">${errs?L('Tres errors'):L('Sense jugades')}</h2><p>${errs?L('Has deixat 3 fitxes damunt d’una que no era la seva parella.'):L('El faristol és ple i no queda cap parella.')} ${canSh?(calm?L('Barreja les fitxes que queden: el tauler tornarà a tenir solució.'):L('Pots barrejar les fitxes que queden un cop per tauler. Suma 1 minut.')):ok?L('Pots tornar a provar el mateix tauler.'):L('Has gastat els intents d’avui, però pots seguir jugant una partida tranquil·la: sense límit i sense puntuar.')}</p>
+    const leftP=Math.ceil((present().length+g.reserve.filter(Boolean).length)/2), doneP=Math.max(0,g.nPairs-leftP);
+    return sheetWrap(`<h2 style="margin-top:0">${errs?L('Tres errors'):L('Sense jugades')}</h2>
+    <div class="nearmiss"><b>${leftP<=5?L('Gairebé! Només et faltaven {0} parelles.',leftP):L('Has fet {0} de {1} parelles.',doneP,g.nPairs)}</b><div class="bar"><span style="width:${Math.round(doneP/g.nPairs*100)}%"></span></div></div><p>${errs?L('Has deixat 3 fitxes damunt d’una que no era la seva parella.'):L('El faristol és ple i no queda cap parella.')} ${canSh?(calm?L('Barreja les fitxes que queden: el tauler tornarà a tenir solució.'):L('Pots barrejar les fitxes que queden un cop per tauler. Suma 1 minut.')):ok?L('Pots tornar a provar el mateix tauler.'):L('Has gastat els intents d’avui, però pots seguir jugant una partida tranquil·la: sense límit i sense puntuar.')}</p>
     ${calm?'':`<p class="muted">${L('Cada intent fallat suma 2 min a la classificació.')}</p>`}
     <div class="stack">${canSh?`<button class="btn primary" onclick="shuffleBoard()">🔀 ${calm?L('Barrejar les fitxes'):L('Barrejar les fitxes (+1 min)')}</button>`:''}
     ${canUndo?`<button class="btn secondary" onclick="undoPark()">↶ ${L('Desfer l’última fitxa')}</button>`:''}
@@ -2456,10 +2471,14 @@ function vSheet(){ const g=S.game;
     return sheetWrap(`<div style="text-align:center"><h2 style="margin:0 0 10px">${rp===null?(g.solved?L('Frase resolta!'):L('Tauler resolt')):rp<0?L('Has guanyat el repte!'):rp===0?L('Empat exacte!'):L('Gairebé!')}</h2>
       <div class="postalwrap" style="background-image:${senURL(senOf(g))}"><img id="postalImg" class="postal" alt="${g.mode==='calma'?L('La teva postal de la partida tranquil·la'):L('La teva postal del dia, amb el refrany i el temps')}"></div>
       <button class="btn gold sendbtn" onclick="sendPostal()">${ICON.send} ${L('Enviar la postal')}</button>
+      ${g.mode==='calma'?'':`<button class="linkbtn shareres" onclick="shareResult()">${L('Compartir el resultat sense desvetllar el refrany')}</button>`}
       ${g.mode==='calma'||parts.length<2?'':`<p class="muted" style="margin:10px 0 0;font-size:15px">${parts.join(' ')}</p>`}
       ${rp!==null?`<div class="vs"><div class="${rp<=0?'win':''}"><small>${L('Tu')}</small><b>${fmt(tot)}</b></div><div class="${rp>0?'win':''}"><small>${L('Qui t’ha reptat')}</small><b>${fmt(S.challenge.t)}</b></div></div>
         <p style="font-weight:700;margin:4px 0">${rp<0?L('Per {0}. Ara li toca a l’altra persona.',fmt(-rp)):rp===0?L('Ni un segon de diferència.'):L('T’ha guanyat per {0}. Torna-li el repte!',fmt(rp))}</p>`:''}
       ${pos?`<p style="margin:8px 0 0"><span class="pill">${L('Posició {0} a la teva comarca',pos)}</span></p>`:''}
+      ${(()=>{ if(g.streakN===undefined) g.streakN = S.days[todaySeed] ? 0 : streakInfo().n+1; const n=g.streakN; if(!n) return '';
+        const ms=[3,7,14,30,50,100,365].includes(n); if(ms&&!g.msShown){ g.msShown=true; setTimeout(()=>{ try{ petals(); }catch(e){} },400); }
+        return `<div class="streakup ${ms?'ms':''}"><span class="fl" aria-hidden="true">🔥</span><div><b>${ms?L('Fita! {0} dies seguits',n):n===1?L('Comença la teva ratxa!'):L('Ratxa: {0} dies',n)}</b><small>${ms?L('Guarda-la: demà, un tauler nou.'):L('Torna demà per mantenir-la.')}</small></div></div>`; })()}
       ${g.newUnlock&&g.level%10===0?`<p style="margin:8px 0 0"><span class="pill">${L('Desbloquejats els nivells {0}–{1}!',g.level+1,g.level+10)}</span></p>`:''}
       ${g.newSen?(x=>`<button class="newsen" onclick="S.senView='${x.k}';S.sheet='rajola';renderSheet()"><i style="background-image:${senURL(x)}"></i><span><small>${L('Nova rajola!')}</small><b>${esc(L(x.n))}</b></span><span class="chev" aria-hidden="true">›</span></button>`)(SENEFES.find(x=>x.k===g.newSen)):''}</div>
       ${g.mode!=='calma'&&(meaningOf(g.phrase)||g.newPhrase)?`<div class="meaning" style="margin-top:12px">${meaningOf(g.phrase)?`<b>${L('Què vol dir')}</b><span class="mn">${esc(meaningOf(g.phrase))}</span>${equivHTML(PHRASES.indexOf(g.phrase))}`:''}
@@ -2477,6 +2496,16 @@ function shareGrid(){ const g=S.game, n=Math.min(5,Math.ceil(elapsed()/60)); ret
 // ================= repte: el mateix tauler per a una altra persona =================
 const LINK_KEYS=['repte','tema','p','t','lang','prova','regal','de','msg','familia','lliga','tipus'];
 function baseURL(){ const u=new URL(location.href.split('#')[0]); LINK_KEYS.forEach(k=>u.searchParams.delete(k)); return u; }
+// Resultat per compartir: cada lletra del refrany és un quadre (🟩 l'has endevinada abans que sortís, ⬜ l'han destapat les parelles)
+function resultText(){ const g=S.game, mask=new Set(g.solveMask||[]), d=new Date();
+  const head = g.mode==='daily' ? 'Melodia · '+d.toLocaleDateString(LANG==='en'?'en-GB':LANG==='es'?'es-ES':'ca-ES',{day:'numeric',month:'long'}) : g.mode==='level' ? 'Melodia · '+L('Nivell {0}',g.level) : 'Melodia';
+  const words=[]; let cur=''; [...g.phrase].forEach((ch,i)=>{ if(ch===' '){ if(cur) words.push(cur); cur=''; } else if(isLetter(ch)) cur+= g.solved&&mask.has(i)?'🟩':'⬜'; }); if(cur) words.push(cur);
+  const lines=[head, '⏱ '+fmt(total())+(g.hints?' · 💡 '+g.hints:'')+(g.misses?' · ✋ '+g.misses:'')+(!g.hints&&!g.misses?' · '+L('net'):'')];
+  if(g.mode!=='calma') lines.push(words.join(' '));
+  if(g.solved&&mask.size) lines.push(L('Refrany endevinat amb {0} lletres amagades',mask.size));
+  if(g.mode==='daily'&&S.dailyDone) lines.push('🏆 '+L('Posició {0} a la meva comarca',S.dailyDone.pos));
+  return lines.join('\n'); }
+function shareResult(){ const url=baseURL(); shareLink(resultText()+'\n'+L('Hi jugues?'), url.toString()); }
 async function shareLink(txt, url){ if(navigator.share){ try{ await navigator.share({title:'Melodia', text:txt, url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
   try{ await navigator.clipboard.writeText(txt+'\n'+url); toast(L('Enllaç copiat: enganxa’l on vulguis')); }catch(e){ toast(L('No s’ha pogut copiar')); } }
 function sendGift(){ const de=($('#gFrom').value||'').trim().slice(0,30), msg=($('#gMsg').value||'').trim().slice(0,140), u=baseURL();
