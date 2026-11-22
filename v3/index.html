@@ -762,6 +762,12 @@ html,body{overflow-x:hidden}
 .dark .preview .lc.win{background:linear-gradient(160deg,#FFE7A0,#E9B949);color:#1F2A4D;border-bottom-color:#B8862B}
 .dark .preview .punct{color:#F4EEE2}
 #sheet .preview .lc{width:20px;height:27px;font-size:17px;border-radius:5px} #sheet .preview{gap:6px 12px}
+/* v3: repàs de disseny */
+.felt{background-image:none}
+.topbar .title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.bar span{background:var(--jade)!important}
+.setcard .pairctl{box-shadow:none;background:transparent;padding:0;margin:0 0 6px}
+.acopen{margin-top:12px}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -907,6 +913,8 @@ Object.assign(TR.es,{"Plus de regal": "Plus de regalo", "Veure Melodia Plus": "V
 Object.assign(TR.en,{"Plus de regal": "Gifted Plus", "Veure Melodia Plus": "See Melodia Plus", "Pla": "Plan", "Actiu fins al": "Active until", "Propera renovació": "Next renewal", "És un regal: no es renova ni es cobra res.": "It's a gift: it won't renew and nothing is charged.", "Has cancel·lat el pla: no es renovarà. Fins al {0} continues tenint Plus.": "You've cancelled: it won't renew. You keep Plus until {0}.", "Renovació reactivada (simulat)": "Renewal turned back on (simulated)", "Reactivar la renovació": "Turn renewal back on", "Cancel·lar el pla": "Cancel plan", "La teva subscripció": "Your subscription", "Cancel·lar Melodia Plus?": "Cancel Melodia Plus?", "No es tornarà a cobrar. Continuaràs tenint Plus fins al {0}; després tornaràs a la versió gratuïta.": "You won't be charged again. You keep Plus until {0}; then you'll go back to the free version.", "No perds res: els nivells, els trofeus i la ratxa es queden. Les lligues que has creat continuen, però no en podràs crear de noves.": "You don't lose anything: levels, trophies and your streak stay. Leagues you created carry on, but you can't create new ones.", "Mantenir Plus": "Keep Plus", "Pla cancel·lat (simulat). Tens Plus fins al {0}.": "Plan cancelled (simulated). You have Plus until {0}.", "Sí, cancel·lar el pla": "Yes, cancel plan", "Prototip: a l’app de veritat la cancel·lació es fa a l’App Store o a Google Play.": "Prototype: in the real app you cancel in the App Store or Google Play.", "Subscripció": "Subscription", "Sessió": "Session", "Tens Melodia Plus": "You have Melodia Plus", "Gestionar la subscripció": "Manage subscription", "El teu pla de Plus es continuarà renovant: cancel·la’l abans.": "Your Plus plan will keep renewing: cancel it first.", "S’esborraran el compte i el progrés desat al núvol. En aquest mòbil continuaràs podent jugar sense compte.": "Your account and cloud progress will be deleted. You can keep playing on this phone without an account."});
 Object.assign(TR.es,{"Mostra quines fitxes es poden moure. Sense aquesta opció, totes es veuen igual.": "Muestra qué fichas se pueden mover. Sin esta opción, todas se ven igual.", "Colors i vores més marcats": "Colores y bordes más marcados"});
 Object.assign(TR.en,{"Mostra quines fitxes es poden moure. Sense aquesta opció, totes es veuen igual.": "Shows which tiles can move. Without it, every tile looks the same.", "Colors i vores més marcats": "Stronger colours and edges"});
+Object.assign(TR.es,{"Amagar el mes": "Ocultar el mes", "Veure el mes": "Ver el mes", "Or: sense ajuda · Plata: amb ajuda · Bronze: sense acabar": "Oro: sin ayuda · Plata: con ayuda · Bronce: sin terminar", "Sense rellotge ni puntuació.": "Sin reloj ni puntuación.", "Perquè no es perdi si canvies de mòbil.": "Para que no se pierda si cambias de móvil.", "Crear un compte o entrar": "Crear una cuenta o entrar", "Regalar Plus": "Regalar Plus"});
+Object.assign(TR.en,{"Amagar el mes": "Hide month", "Veure el mes": "See month", "Or: sense ajuda · Plata: amb ajuda · Bronze: sense acabar": "Gold: no help · Silver: with help · Bronze: unfinished", "Sense rellotge ni puntuació.": "No clock, no score.", "Perquè no es perdi si canvies de mòbil.": "So it isn't lost if you change phones.", "Crear un compte o entrar": "Create an account or sign in", "Regalar Plus": "Give Plus"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1481,7 +1489,7 @@ function updateReserve(){ const g=S.game; const full=g.reserve.filter(Boolean).l
     el.classList.toggle('warnpulse', full===SLOTS-1 && !r); });
   const ri=$('#resInfo'); if(ri){ ri.textContent=L('{0} de {1}',full,SLOTS); ri.className=full>=SLOTS-1?'w':''; }
   const fi=$('#failInfo'); if(fi) fi.textContent=failsText(); const ub=$('#undoBtn'); if(ub) ub.hidden=!g.lastPark||!!g.over; }
-function updateHUD(){ const g=S.game; const pl=$('#pairsLeft'); if(pl) pl.textContent=L('{0} parelles',present().length/2|0);
+function updateHUD(){ const g=S.game; const pl=$('#pairsLeft'); if(pl){ const n=present().length/2|0; pl.innerHTML=n+'<svg viewBox="0 0 20 16" width="17" height="14" aria-hidden="true" style="vertical-align:-2px;margin-left:4px"><rect x="1" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'; pl.setAttribute('aria-label',L('{0} parelles',n)); pl.title=L('{0} parelles',n); }
   const hi=$('#hidInfo'); if(hi) hi.textContent = L('estalvia {0} s',hiddenCount()*BONUS_PER);
   const sb=$('#solveBtn'); if(sb) sb.style.display=(g.solved||(g.over&&!g.won))?'none':''; const pn=document.querySelector('.panel'); if(pn) pn.classList.toggle('solved',g.solved);
   const c=$('#clock'); if(c){ c.style.display=(S.set.hideTime||g.mode==='calma')?'none':''; c.textContent=fmt(elapsed()); } }
@@ -1702,7 +1710,7 @@ function startCalm(){ S.calmN=(S.calmN||0)+1; const ts=S.set.trainSet||'trad'; l
   if(ts==='cami'){ THEMES.cami={name:L('Dibuixos del camí'), sym:SEQ.slice(0, Math.max(60, winStart(Math.min(S.unlocked,200))+winSize(Math.min(S.unlocked,200))))}; th='cami'; }
   if(ts==='tot'){ THEMES.tot={name:L('Tots els dibuixos'), sym:[...SEQ]}; th='tot'; }
   try{ localStorage.setItem('melodia-v3-entrena', ts); }catch(e){}
-  startGame('calma',th,'calma-'+todaySeed+'-'+S.calmN, L('Partida tranquil·la'), L('Sense rellotge i sense puntuar'), pairsOver(28)); }
+  startGame('calma',th,'calma-'+todaySeed+'-'+S.calmN, L('Tranquil·la'), L('Sense rellotge i sense puntuar'), pairsOver(28)); }
 function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Date(y,m+1,0).getDate(), td=today.getDate(), first=(new Date(y,m,1).getDay()+6)%7, r=rng('mes'+y+'-'+m), done=S.dailyDone;
   let cells=[1,2,3,4,5,6,0].map(d=>`<b>${DAYS[d]}</b>`).join(''); for(let i=0;i<first;i++) cells+='<i class="e"></i>';
   const cnt={or:0,pl:0,br:0}, SI=streakInfo();
@@ -1711,7 +1719,7 @@ function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Da
     cells+=`<i class="${c}">${t}</i>`; }
   return `<div class="card"><div class="row"><b>${L('El teu mes')} · ${MONTHS[m]}</b><span class="muted" style="font-size:13px">${L('{0} or · {1} plata · {2} bronze',cnt.or,cnt.pl,cnt.br)}</span></div>
     <div class="mcal">${cells}</div>
-    <p class="muted" style="font-size:14px;margin:10px 0 0">${L('Cada dia que jugues és una medalla: or si acabes sense ajuda, plata si acabes amb ajuda i bronze si hi jugues però no l’acabes. Si un dia no pots jugar, un dia de descans guarda la ratxa (en tens 2 cada mes).')}</p></div>`; }
+    <p class="muted" style="font-size:14px;margin:10px 0 0">${L('Or: sense ajuda · Plata: amb ajuda · Bronze: sense acabar')}</p></div>`; }
 
 // ================= Reptes del dia (inspirats en els reptes diaris del Mahjong de Microsoft) =================
 const CH_POOL=[
@@ -1905,6 +1913,7 @@ function useRetry(){ if(!(S.pass||S.plus)) S.fails--; S.sheet=null; renderSheet(
 function tabsBar(){ const t=[['avui','sun',L('Avui')],['nivells','grid',L('Nivells')],['class','trophy',L('Classificació')],['perfil','user',L('Perfil')]];
   return `<nav class="tabs">${t.map(([k,ic,l])=>`<button class="${S.tab===k?'on':''}" onclick="go('${k}')" ${S.tab===k?'aria-current="page"':''}>${ICON[ic]}${l}</button>`).join('')}</nav>`; }
 function stackTiles(keys, w, h, pos){ return keys.map((k,i)=>tileHTML(k,'',`width:${w}px;height:${h}px;left:${pos[i][0]}px;top:${pos[i][1]}px;transform:rotate(${pos[i][2]}deg);--sym:${w*.62}px`)).join(''); }
+function keepScroll(fn){ const sc=document.querySelector('#view .screen'), y=sc?sc.scrollTop:0; fn(); const s2=document.querySelector('#view .screen'); if(s2) s2.scrollTop=y; }
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key]||(isT&&chAll()?'or':null), rest=SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
@@ -1915,20 +1924,18 @@ function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[
     <span class="pill" style="background:rgba(255,255,255,.16);color:#fff">${L('Partida diària')}</span>
     <h2>${done?L('Feta!')+' '+fmt(done.time):L('Avui')}</h2>
     <p class="sub">${done?L('Posició {0} a la teva comarca',done.pos):todayLabel+' · '+L('amaga un refrany')}</p>
-    <p class="sub" style="font-size:13px;opacity:.8">${done?L('Torna demà per a un tauler nou'):L('El mateix tauler per a tothom. 1.284 persones ja hi han jugat (dades d’exemple)')}</p>
+    ${done?`<p class="sub" style="font-size:13px;opacity:.8">${L('Torna demà per a un tauler nou')}</p>`:''}
     ${done?`<button class="btn gold" onclick="go('class')">${L('Veure classificació')}</button>`:dailyOut()?`<p class="sub trainnote">${L('Avui ja no et queden intents. Pots seguir practicant sense puntuar.')}</p><button class="btn gold" onclick="startCalm()">☕ ${L('Partida tranquil·la')}</button>`:`<button class="btn gold" onclick="playDaily()">${L('Jugar')}</button>`}
   </div>
-  <div class="card"><div class="row"><b>${L('La teva setmana')}</b><span class="muted" style="font-size:14px">${L('Ratxa: {0} dies',SI.n)}</span></div><div class="week">${week}</div><p class="streaknote">🌙 ${L('{0} dies de descans disponibles aquest mes',SI.left)} · ${L('Millor ratxa: {0}',SI.best)}</p></div>
-  ${chCard()}${monthCard()}
+  <div class="card"><div class="row"><b>${L('La teva setmana')}</b><button class="linkbtn" onclick="keepScroll(()=>{S.showMonth=!S.showMonth;render();})">${S.showMonth?L('Amagar el mes'):L('Veure el mes')}</button></div><div class="week">${week}</div><p class="streaknote">🌙 ${L('{0} dies de descans disponibles aquest mes',SI.left)} · ${L('Millor ratxa: {0}',SI.best)}</p></div>
+  ${S.showMonth?monthCard():''}${chCard()}
   <div class="card"><b>${L('La frase d’ahir')}</b><p class="muted ans" style="margin:4px 0 8px;font-size:15px">${L('La va resoldre el 64% dels jugadors · dades d’exemple')}</p>
     <button class="btn secondary" style="min-height:44px;font-size:16px" onclick="playYesterday(this)">${L('Mostrar la resposta')}</button></div>
   <div class="card listen cardbtn" role="button" tabindex="0" onclick="startCalm()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span class="playbtn" aria-hidden="true">☕</span>
-    <div style="flex:1"><b>${L('Partida tranquil·la')}</b><p class="muted" style="margin:2px 0 0;font-size:15px">${L('Sense rellotge i sense puntuar. Tria les parelles i els dibuixos amb la roda ⚙ o a Perfil.')}</p></div><span class="chev" aria-hidden="true">›</span></div>
+    <div style="flex:1"><b>${L('Partida tranquil·la')}</b><p class="muted" style="margin:2px 0 0;font-size:15px">${L('Sense rellotge ni puntuació.')}</p></div><span class="chev" aria-hidden="true">›</span></div>
   <div class="card listen cardbtn" role="button" tabindex="0" onclick="S.sheet='album';renderSheet()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><span class="playbtn" style="font-family:var(--serif);font-weight:700;font-size:20px">Aa</span>
     <div style="flex:1"><b>${L('El teu refranyer')}</b><p class="muted" style="margin:2px 0 0;font-size:15px">${L('{0} refranys resolts de {1}',S.found,PHRASES.length)}</p><div class="bar"><span style="width:${S.found/PHRASES.length*100}%"></span></div></div><span class="chev" aria-hidden="true">›</span></div>
-  <div class="card"><div class="row"><b>${L('Temporada de tardor')}</b><span class="muted" style="font-size:14px">${L('3 setmanes')}</span></div>
-    <div class="bar"><span style="width:68%"></span></div><p class="muted" style="font-size:15px">${L('17 de 25 partides per a la medalla de jade')}</p></div>
-  <p class="fine">${failsText()} · ${L('es reinicien a mitjanit')}<br>${L('Si se t’acaben, pots seguir jugant en mode tranquil.')}</p>
+  <p class="fine">${failsText()} · ${L('es reinicien a mitjanit')}</p>
   </div>${tabsBar()}`; }
 const GROUPS=[{from:1,theme:'trad',name:'Tradicional'},{from:11,theme:'fruites',name:'Fruites i horta'},{from:21,theme:'esports',name:'Esports'},{from:31,theme:'vehicles',name:'Vehicles'},
   {from:41,soon:true,theme:'animals',name:L('Animals'),bg:'linear-gradient(140deg,#8C9A5B,#55633A)',em:'🦊'},{from:51,soon:true,theme:'viatges',name:L('Viatges pel món'),bg:'linear-gradient(140deg,#C27C5B,#7E4A34)',em:'🗺️'}];
@@ -2029,7 +2036,7 @@ function vClass(){ const per=['Diari','Setmanal','Mensual'], lg=curLeague();
   const head=`<h1>${L('Classificació')}</h1>
   <div class="seg">${per.map(p=>`<button class="${S.lbPeriod===p?'on':''}" onclick="S.lbPeriod='${p}';render()">${L(p)}</button>`).join('')}</div>
   <div class="chips lgchips" id="lgChips">${S.leagues.map(l=>`<button class="${lg&&lg.id===l.id?'on':''}" data-lg="${l.id}" onclick="if(!this._dragged){S.lbScope='${l.id}';render()}"><span aria-hidden="true">${lgEm(l)}</span> ${esc(lgName(l))}</button>`).join('')}<button class="add" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir')}</button>${S.leagues.length>1?`<button class="add" onclick="S.sheet='sortlg';renderSheet()">⇅ ${L('Ordenar')}</button>`:''}</div>
-  ${S.leagues.length>1?`<p class="lghint">${L('Mantén premuda una lliga i arrossega-la per canviar-ne l’ordre.')}</p>`:''}`;
+`;
   if(!lg) return `<div class="screen">${head}<div class="card famcard"><div class="giftbig" aria-hidden="true">🏆</div><b style="font-size:20px">${L('Encara no tens cap lliga')}</b>
     <p class="muted">${L('Crea’n una per a la teva gent o afegeix una classificació oberta.')}</p><button class="btn primary" onclick="S.sheet='addlg';renderSheet()">＋ ${L('Afegir una lliga')}</button></div></div>${tabsBar()}`;
   const body = lg.pub ? vPublic(lg) : lg.type==='parella' ? vDuel(lg) : vPrivate(lg);
@@ -2221,8 +2228,8 @@ const acctBtns=()=>`<div class="acbtns"><button class="acb apple" onclick="acctS
   <button class="acb mail" onclick="S.sheet='acmail';renderSheet()">✉️ ${L('Continuar amb el correu')}</button></div>`;
 const PROV={apple:'Apple',google:'Google',mail:L('Correu')};
 function acctCard(){ const a=S.acct;
-  if(!a) return `<div class="card accard"><div class="acrow"><span class="acav off" aria-hidden="true">👤</span><div><b>${L('Desa el teu progrés')}</b><p class="muted">${L('Crea un compte i no perdràs els nivells, la ratxa, els trofeus ni el Plus si canvies de mòbil.')}</p></div></div>
-    ${acctBtns()}${S.plus?`<p class="codeline" style="margin:10px 0 0">⭐ ${L('Tens Melodia Plus')} · <button class="linkbtn" onclick="S.sheet='acplan';renderSheet()">${L('Gestionar la subscripció')}</button></p>`:''}<p class="stnote">${L('Prototip: no es crea cap compte de veritat ni s’envia cap dada.')}</p></div>`;
+  if(!a) return `<div class="card accard"><div class="acrow"><span class="acav off" aria-hidden="true">👤</span><div style="flex:1;min-width:0"><b>${L('Desa el teu progrés')}</b><p class="muted">${L('Perquè no es perdi si canvies de mòbil.')}</p></div></div>
+    <button class="btn secondary acopen" onclick="S.sheet='aclogin';renderSheet()">${L('Crear un compte o entrar')}</button>${S.plus?`<p class="codeline" style="margin:10px 0 0">⭐ ${L('Tens Melodia Plus')} · <button class="linkbtn" onclick="S.sheet='acplan';renderSheet()">${L('Gestionar la subscripció')}</button></p>`:''}</div>`;
   return `<div class="card accard"><div class="acrow"><span class="acav" aria-hidden="true">${esc((a.name||'?').trim().charAt(0).toUpperCase())}</span><div style="flex:1;min-width:0"><b>${esc(a.name)}</b><p class="muted acmail">${esc(a.email)}</p></div></div>
     <p class="acsync">☁️ ${L('Progrés desat al teu compte')} · <span class="muted">${L('amb {0}',PROV[a.prov]||a.prov)}</span></p>
     <p class="codeline" style="margin:6px 0 0"><button class="linkbtn" onclick="S.sheet='acmanage';renderSheet()">${L('Gestionar el compte')}</button></p></div>`; }
@@ -2265,11 +2272,13 @@ function planSheets(){
     <p class="stnote">${L('Prototip: a l’app de veritat la cancel·lació es fa a l’App Store o a Google Play.')}</p>`; }
   return null; }
 function acctSheets(){
+  if(S.sheet==='aclogin') return `<h2 style="margin-top:0">${L('Desa el teu progrés')}</h2><p class="muted">${L('Crea un compte i no perdràs els nivells, la ratxa, els trofeus ni el Plus si canvies de mòbil.')}</p>
+    ${acctBtns()}<p class="stnote">${L('Prototip: no es crea cap compte de veritat ni s’envia cap dada.')}</p><div class="stack" style="margin-top:8px"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`;
   if(S.sheet==='acmail') return `<h2 style="margin-top:0">✉️ ${L('Continuar amb el correu')}</h2><p class="muted">${L('Sense contrasenyes: t’enviarem un enllaç per entrar.')}</p>
     <label class="fld">${L('Nom')}<input id="acName" maxlength="30" autocomplete="name" placeholder="${L('Com et diuen?')}"></label>
     <label class="fld">${L('Correu electrònic')}<input id="acMail" type="email" maxlength="60" autocomplete="email" inputmode="email" placeholder="nom@exemple.cat"></label>
     <p id="acErr" class="acerr" role="alert"></p>
-    <div class="stack"><button class="btn primary" onclick="acctMail()">${L('Enviar l’enllaç')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Enrere')}</button></div>
+    <div class="stack"><button class="btn primary" onclick="acctMail()">${L('Enviar l’enllaç')}</button><button class="btn secondary" onclick="S.sheet='aclogin';renderSheet()">${L('Enrere')}</button></div>
     <p class="stnote">${L('Prototip: no s’envia cap correu i les dades no surten d’aquest navegador.')}</p>`;
   if(S.sheet==='acsent'){ const pa=S._acPending||{}; return `<div style="text-align:center"><div class="giftbig" aria-hidden="true">📬</div><h2 style="margin:6px 0 0">${L('Mira el teu correu')}</h2>
     <p>${L('Hem enviat un enllaç a {0}. Obre’l des d’aquest mòbil per entrar.',`<b>${esc(pa.email||'')}</b>`)}</p></div>
@@ -2288,10 +2297,9 @@ function vPerfil(){
   return `<div class="screen"><h1>${L('Perfil')}</h1>
   ${acctCard()}
   ${trofCard()}
-  ${statsEntry()}${senCard()}
+  ${statsEntry()}
   ${S.plus?'':`  <div class="card"><div class="row"><div><b>Melodia Plus</b>${PLUSTAG()}<p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Ara jugues amb la versió gratuïta.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div>${plusList()}
-    <button class="btn secondary giftbtn" onclick="S.sheet='gift';renderSheet()">🎁 ${L('Regalar Plus a algú')}</button>
-    <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="toast('${L('Compres restaurades (simulat)')}')">${L('Restaurar compres')}</button> · <span class="muted">${S.acct?L('Les compres van lligades al teu compte'):L('Sense compte, el progrés només es guarda en aquest mòbil')}</span></p></div>`}
+    <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="S.sheet='gift';renderSheet()">🎁 ${L('Regalar Plus')}</button> · <button class="linkbtn" onclick="toast('${L('Compres restaurades (simulat)')}')">${L('Restaurar compres')}</button> · <span class="muted">${S.acct?L('Les compres van lligades al teu compte'):L('Sense compte, el progrés només es guarda en aquest mòbil')}</span></p></div>`}
   <h2>${L('Ajustos')}</h2>
   <div class="card setcard">${settingsHTML('perfil')}</div>
   <h2>${L('Eines del prototip')}</h2>
@@ -2365,7 +2373,6 @@ function vSheet(){ const g=S.game;
   if(S.sheet==='cfg') return sheetWrap(cfgSheet());
   if(S.sheet==='pause') return sheetWrap(`<h2 style="margin-top:0">${L('En pausa')}</h2><div class="stack">
     <button class="btn primary" onclick="resume()">${L('Continuar')}</button>
-    <button class="btn secondary" onclick="S.sheet='cfg';renderSheet()">⚙ ${L('Configuració')}</button>
     <button class="btn secondary" onclick="S.sheet='help';renderSheet()">${L('Com es juga')}</button>
     <button class="btn secondary" onclick="showSolution()">👁 ${L('Veure la solució')}<small class="bsub">${L('La partida no comptarà')}</small></button>
     <button class="btn secondary" onclick="quit()">${L('Sortir')}</button></div>`);
