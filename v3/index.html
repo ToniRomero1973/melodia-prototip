@@ -729,6 +729,11 @@ html,body{overflow-x:hidden}
 .sndsub{transition:opacity .2s} .sndsub.off{opacity:.4;pointer-events:none}
 .setcard .cfgsec:first-child{border-top:0;padding-top:0;margin-top:0} .setcard .cfgsec.train{background:none;padding:0}
 .protocard{background:transparent;border:2px dashed var(--line);box-shadow:none} .giftbtn{margin-top:10px}
+.trofcard .bar{margin-top:8px} .trofmore{margin:10px 0 0;font-weight:700;color:var(--jade);font-size:15px}
+.trofg{margin:16px 0 4px;font-size:16px} .troflist{list-style:none;padding:0;margin:0}
+.troflist li{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)} .troflist li:last-child{border-bottom:0}
+.troflist .tm svg{width:48px;height:48px;display:block} .troflist .tx{flex:1;display:flex;flex-direction:column;gap:2px} .troflist .tx .muted{font-size:14px}
+.troflist .bar{margin:4px 0 0} .troflist small{font-size:13px} .troflist .tok{color:var(--jade);font-weight:700} .tsteps{display:flex;gap:4px;margin-top:4px} .tsteps svg{width:26px;height:26px;display:block}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -859,6 +864,10 @@ Object.assign(TR.es,{"So i música": "Sonido y música", "So": "Sonido", "Vista"
 Object.assign(TR.en,{"So i música": "Sound and music", "So": "Sound", "Vista": "Display", "General": "General", "Eines del prototip": "Prototype tools", "Sense rellotge i sense puntuar. Tria les parelles i els dibuixos amb la roda ⚙ o a Perfil.": "No clock and no score. Choose pairs and drawings with the ⚙ gear or in Profile."});
 Object.assign(TR.es,{"Parelles":"Parejas"});
 Object.assign(TR.en,{"Parelles":"Pairs"});
+Object.assign(TR.es,{"2,50 € al mes · intents il·limitats, lligues i arxiu": "2,50 € al mes · intentos ilimitados, ligas y archivo", "Un any amb intents il·limitats, lligues i arxiu. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.": "Un año con intentos ilimitados, ligas y archivo. Le enviarás un enlace y el regalo quedará activado en su móvil.", "Un any de Melodia Plus: intents il·limitats, lligues i arxiu.": "Un año de Melodia Plus: intentos ilimitados, ligas y archivo.", "Constància": "Constancia", "Partides": "Partidas", "Nivells": "Niveles", "Refranys i cançons": "Refranes y canciones", "Col·lecció": "Colección", "Amb la teva gent": "Con tu gente", "Dies seguits": "Días seguidos", "Juga {0} dies seguits": "Juega {0} días seguidos", "Dies d’or": "Días de oro", "Fes els tres reptes del dia {0} vegades": "Haz los tres retos del día {0} veces", "Partides guanyades": "Partidas ganadas", "Guanya {0} partides": "Gana {0} partidas", "Sense pistes": "Sin pistas", "Guanya {0} partides sense demanar cap pista": "Gana {0} partidas sin pedir ninguna pista", "Combo": "Combo", "Fes {0} parelles seguides": "Haz {0} parejas seguidas", "Nivells superats": "Niveles superados", "Supera {0} nivells": "Supera {0} niveles", "Refranyer": "Refranero", "Resol {0} refranys": "Resuelve {0} refranes", "Bona orella": "Buen oído", "Endevina {0} cançons": "Adivina {0} canciones", "Rajoles": "Azulejos", "Aconsegueix {0} rajoles": "Consigue {0} azulejos", "En lliga": "En liga", "Juga en una lliga amb la teva gent": "Juega en una liga con tu gente", "Top comarca": "Top comarca", "Queda entre el 10% millor de la comarca a la partida diària": "Queda entre el 10% mejor de la comarca en la partida diaria", "Bronze": "Bronce", "Plata": "Plata", "Or": "Oro", "Jade": "Jade", "Vitrina de trofeus": "Vitrina de trofeos", "{0} de {1}": "{0} de {1}", "Encara no tens cap trofeu. Guanya la primera partida!": "Aún no tienes ningún trofeo. ¡Gana la primera partida!", "Veure tots els trofeus": "Ver todos los trofeos", "Trofeus": "Trofeos", "Tens {0} de {1} trofeus.": "Tienes {0} de {1} trofeos.", "Tots": "Todos", "Els tinc": "Los tengo", "Em falten": "Me faltan", "Aconseguit": "Conseguido", "Encara no": "Todavía no", "Encara no tens cap trofeu.": "Aún no tienes ningún trofeo.", "Els tens tots! 🎉": "¡Los tienes todos! 🎉"});
+Object.assign(TR.en,{"2,50 € al mes · intents il·limitats, lligues i arxiu": "€2.50 a month · unlimited tries, leagues and archive", "Un any amb intents il·limitats, lligues i arxiu. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.": "A year of unlimited tries, leagues and the archive. You'll send them a link and the gift activates on their phone.", "Un any de Melodia Plus: intents il·limitats, lligues i arxiu.": "A year of Melodia Plus: unlimited tries, leagues and the archive.", "Constància": "Consistency", "Partides": "Games", "Nivells": "Levels", "Refranys i cançons": "Proverbs and songs", "Col·lecció": "Collection", "Amb la teva gent": "With your people", "Dies seguits": "Day streak", "Juga {0} dies seguits": "Play {0} days in a row", "Dies d’or": "Golden days", "Fes els tres reptes del dia {0} vegades": "Complete all three daily challenges {0} times", "Partides guanyades": "Games won", "Guanya {0} partides": "Win {0} games", "Sense pistes": "No hints", "Guanya {0} partides sense demanar cap pista": "Win {0} games without asking for a hint", "Combo": "Combo", "Fes {0} parelles seguides": "Make {0} pairs in a row", "Nivells superats": "Levels cleared", "Supera {0} nivells": "Clear {0} levels", "Refranyer": "Proverb book", "Resol {0} refranys": "Solve {0} proverbs", "Bona orella": "Good ear", "Endevina {0} cançons": "Guess {0} songs", "Rajoles": "Tiles", "Aconsegueix {0} rajoles": "Collect {0} tiles", "En lliga": "In a league", "Juga en una lliga amb la teva gent": "Play in a league with your people", "Top comarca": "Top of the county", "Queda entre el 10% millor de la comarca a la partida diària": "Finish in your county's top 10% in the daily game", "Bronze": "Bronze", "Plata": "Silver", "Or": "Gold", "Jade": "Jade", "Vitrina de trofeus": "Trophy cabinet", "{0} de {1}": "{0} of {1}", "Encara no tens cap trofeu. Guanya la primera partida!": "No trophies yet. Win your first game!", "Veure tots els trofeus": "See all trophies", "Trofeus": "Trophies", "Tens {0} de {1} trofeus.": "You have {0} of {1} trophies.", "Tots": "All", "Els tinc": "Earned", "Em falten": "Missing", "Aconseguit": "Earned", "Encara no": "Not yet", "Encara no tens cap trofeu.": "You don't have any trophies yet.", "Els tens tots! 🎉": "You have them all! 🎉"});
+Object.assign(TR.es,{"Fes els tres reptes d’un dia":"Haz los tres retos de un día","Guanya la primera partida":"Gana la primera partida","Guanya una partida sense demanar cap pista":"Gana una partida sin pedir ninguna pista","Endevina una cançó":"Adivina una canción","Següent":"Siguiente","Sèrie completa":"Serie completa"});
+Object.assign(TR.en,{"Fes els tres reptes d’un dia":"Complete all three challenges in one day","Guanya la primera partida":"Win your first game","Guanya una partida sense demanar cap pista":"Win a game without asking for a hint","Endevina una cançó":"Guess a song","Següent":"Next","Sèrie completa":"Series complete"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -2044,11 +2053,48 @@ function vDuel(lg){ const who=L(LG_TYPES.parella.mem[0]), r=rng(lg.id+S.lbPeriod
 function sortRows(){ return S.leagues.map((l,i)=>`<li data-i="${i}"><span class="hdl" aria-hidden="true">⋮⋮</span><span class="em" aria-hidden="true">${lgEm(l)}</span><span class="nm">${esc(lgName(l))}${i===0?`<small>${L('Principal')}</small>`:''}</span>
   <button aria-label="${L('Pujar')}: ${esc(lgName(l))}" ${i===0?'disabled':''} onclick="moveLg(${i},-1)">▲</button><button aria-label="${L('Baixar')}: ${esc(lgName(l))}" ${i===S.leagues.length-1?'disabled':''} onclick="moveLg(${i},1)">▼</button><button class="del" aria-label="${L('Treure')}: ${esc(lgName(l))}" onclick="delLg(${i})">✕</button></li>`).join(''); }
 function medal(c1,c2,txt){ return `<svg viewBox="0 0 56 56"><path d="M18 2h8l4 14h-8zM38 2h-8l-4 14h8z" fill="${c2}"/><circle cx="28" cy="34" r="19" fill="${c1}"/><circle cx="28" cy="34" r="14" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2"/><text x="28" y="40" text-anchor="middle" font-size="16" font-weight="700" fill="#fff" font-family="Fraunces,serif">${txt}</text></svg>`; }
+
+// ---- Trofeus: cada un té graons (bronze, plata, or, jade); es calculen amb el que has fet ----
+const TROF=[
+ {g:'Constància',ic:'🔥',n:'Dies seguits',d:'Juga {0} dies seguits',st:[3,7,30,100],v:()=>streakInfo().best},
+ {g:'Constància',ic:'🥇',n:'Dies d’or',d:'Fes els tres reptes del dia {0} vegades',d1:'Fes els tres reptes d’un dia',st:[1,10,30],v:()=>Object.entries(S.days).filter(([k,x])=>x==='or'&&k!==todaySeed).length+(S.days[todaySeed]==='or'||chAll()?1:0)},
+ {g:'Partides',ic:'🏆',n:'Partides guanyades',d:'Guanya {0} partides',d1:'Guanya la primera partida',st:[1,10,50,200],v:()=>S.st.won},
+ {g:'Partides',ic:'💡',n:'Sense pistes',d:'Guanya {0} partides sense demanar cap pista',d1:'Guanya una partida sense demanar cap pista',st:[1,10,50],v:()=>S.st.nohint},
+ {g:'Partides',ic:'⚡',n:'Combo',d:'Fes {0} parelles seguides',st:[5,10,20],v:()=>S.st.combo},
+ {g:'Nivells',ic:'🧩',n:'Nivells superats',d:'Supera {0} nivells',st:[10,50,100,200],v:()=>Math.max(0,S.unlocked-1)},
+ {g:'Refranys i cançons',ic:'Aa',n:'Refranyer',d:'Resol {0} refranys',st:[5,25,100],v:()=>S.found},
+ {g:'Refranys i cançons',ic:'♪',n:'Bona orella',d:'Endevina {0} cançons',d1:'Endevina una cançó',st:[1,10,50],v:()=>S.st.songOK},
+ {g:'Col·lecció',ic:'🎨',n:'Rajoles',d:'Aconsegueix {0} rajoles',st:[3,10,SENEFES.length],v:()=>SENEFES.filter(senOk).length},
+ {g:'Amb la teva gent',ic:'👪',n:'En lliga',d:'Juga en una lliga amb la teva gent',st:[1],v:()=>S.leagues.filter(l=>!l.pub).length},
+ {g:'Amb la teva gent',ic:'📍',n:'Top comarca',d:'Queda entre el 10% millor de la comarca a la partida diària',st:[1],v:()=>S.dailyDone&&S.dailyDone.pos<=128?1:0} ];
+const TIER=[['#C98B5A','#8A5634','Bronze'],['#A9AEB8','#6E7480','Plata'],['#E3AE3B','#B8322A','Or'],['#1F6F5C','#E3AE3B','Jade']];
+// cada graó és un trofeu: bronze, plata, or (i jade si n'hi ha quatre); els trofeus d'un sol graó són d'or
+function trofList(){ const out=[]; TROF.forEach(t=>{ const v=t.v()||0, n=t.st.length; t.st.forEach((goal,i)=>out.push({t, goal, v, ok:v>=goal, tier:TIER[n===1?2:i]}));  }); return out; }
+function trofMedal(x){ const lab=x.t.st.length>1?(x.goal>=1000?Math.round(x.goal/1000)+'k':x.goal):x.t.ic;
+  return x.ok ? medal(x.tier[0],x.tier[1],lab) : medal('#D9D2C3','#BFB6A4',lab).replace('fill="#fff" font-family','fill="#8C8474" font-family'); }
+function trofCard(){ const all=trofList(), got=all.filter(x=>x.ok), last=got.slice(-4).reverse();
+  return `<div class="card trofcard cardbtn" role="button" tabindex="0" onclick="S.trofF='tots';S.sheet='trofeus';renderSheet()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}">
+    <div class="row"><b>🏆 ${L('Vitrina de trofeus')}</b><span class="muted" style="font-size:14px">${L('{0} de {1}',got.length,all.length)}</span></div>
+    <div class="bar"><span style="width:${got.length/all.length*100}%"></span></div>
+    <div class="medals" style="margin-top:12px">${last.length?last.map(x=>`<div class="medal">${trofMedal(x)}${L(x.t.n)}</div>`).join(''):`<p class="muted" style="margin:0">${L('Encara no tens cap trofeu. Guanya la primera partida!')}</p>`}</div>
+    <p class="trofmore">${L('Veure tots els trofeus')} ›</p></div>`; }
+const trofTxt=(t,goal)=>goal===1&&t.d1?L(t.d1):L(t.d,goal);
+function trofSheet(){ const all=trofList(), f=S.trofF||'tots', got=all.filter(x=>x.ok).length;
+  const rows=TROF.map(t=>{ const xs=all.filter(x=>x.t===t), n=xs.filter(x=>x.ok).length; return {t, xs, n, best:xs.filter(x=>x.ok).pop(), next:xs.find(x=>!x.ok)}; })
+    .filter(r=>f==='tots'||(f==='tinc'?r.n>0:!!r.next)), groups=[...new Set(rows.map(r=>r.t.g))];
+  return `<h2 style="margin-top:0">🏆 ${L('Trofeus')}</h2><p class="muted">${L('Tens {0} de {1} trofeus.',got,all.length)}</p>
+    <div class="seg">${[['tots',L('Tots')],['tinc',L('Els tinc')],['falten',L('Em falten')]].map(([k,l])=>`<button class="${f===k?'on':''}" aria-pressed="${f===k}" onclick="S.trofF='${k}';renderSheet()">${l}</button>`).join('')}</div>
+    ${groups.length?groups.map(g=>`<h3 class="trofg">${L(g)}</h3><ul class="troflist">${rows.filter(r=>r.t.g===g).map(r=>{ const x=r.next||r.best;
+      return `<li class="${r.next?'':'ok'}"><span class="tm">${trofMedal(r.best||r.xs[0])}</span>
+      <div class="tx"><b>${L(r.t.n)}${r.best&&r.xs.length>1?' · '+L(r.best.tier[2]):''}</b>
+      <span class="muted">${r.next?(r.best?L('Següent')+': ':'')+trofTxt(r.t,r.next.goal):trofTxt(r.t,r.best.goal)}</span>
+      ${r.next?(r.next.goal>1?`<div class="bar"><span style="width:${Math.min(100,r.next.v/r.next.goal*100)}%"></span></div><small class="muted">${Math.min(r.next.v,r.next.goal)} / ${r.next.goal}</small>`:`<small class="muted">${L('Encara no')}</small>`):`<small class="tok">✓ ${r.xs.length>1?L('Sèrie completa'):L('Aconseguit')}</small>`}
+      ${r.xs.length>1?`<span class="tsteps">${r.xs.map(y=>`<i title="${L(y.tier[2])}">${trofMedal(y)}</i>`).join('')}</span>`:''}</div></li>`; }).join('')}</ul>`).join('')
+      :`<p class="muted" style="text-align:center;margin:24px 0">${f==='tinc'?L('Encara no tens cap trofeu.'):L('Els tens tots! 🎉')}</p>`}
+    <div class="stack"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`; }
 function vPerfil(){
   return `<div class="screen"><h1>${L('Perfil')}</h1>
-  <div class="card"><b>${L('Vitrina')}</b><div class="medals" style="margin-top:12px">
-   <div class="medal">${medal('#E3AE3B','#1F6F5C','10%')}${L('Top comarca')}</div><div class="medal">${medal('#1F6F5C','#B8322A',''+streakInfo().best)}${L('Dies seguits')}</div>
-   <div class="medal">${medal('#B8322A','#E3AE3B','中')}${L('Tradicional')}</div><div class="medal">${medal('#3B6FC2','#E3AE3B',''+S.found)}${L('Refranys')}</div></div></div>
+  ${trofCard()}
   ${statsCard()}${senCard()}
   <div class="card"><div class="row"><div><b>Melodia Plus</b>${PLUSTAG()}<p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Ara jugues amb la versió gratuïta.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div>${plusList()}
     <button class="btn secondary giftbtn" onclick="S.sheet='gift';renderSheet()">🎁 ${L('Regalar Plus a algú')}</button>
@@ -2064,19 +2110,20 @@ function vPerfil(){
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&S.sheet) closeSheet(); });
 const sheetWrap = html => `<div class="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`;
 function vSheet(){ const g=S.game;
+  if(S.sheet==='trofeus') return sheetWrap(trofSheet());
   if(S.sheet==='plusask') return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">🏆</div><h2 style="margin:6px 0 0">${L('Crear lligues és de Melodia Plus')}</h2></div>
     <p class="muted">${L('Amb Plus pots crear totes les lligues que vulguis i convidar-hi la teva gent. Els convidats hi entren gratis.')}</p>
     <div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>
     <div class="stack"><button class="btn primary" onclick="tryPlus()">${L('Activar Plus (prototip, gratis)')}</button><button class="btn secondary" onclick="S.sheet='pay';renderSheet()">${L('Veure preus')}</button><button class="btn secondary" onclick="S.plusNext=null;S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`);
   if(S.sheet==='gift') return sheetWrap(`<h2 style="margin-top:0">🎁 ${L('Regala Melodia Plus')}</h2>
-    <p class="muted">${L('Un any sense límits i amb tots els nivells. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.')}</p>
+    <p class="muted">${L('Un any amb intents il·limitats, lligues i arxiu. Li enviaràs un enllaç i el regal quedarà activat al seu mòbil.')}</p>
     <label class="fld">${L('De part de')}<input id="gFrom" maxlength="30" placeholder="${L('El teu nom')}"></label>
     <label class="fld">${L('Missatge')}<textarea id="gMsg" maxlength="140" rows="3">${L('Perquè juguis cada dia una estona. Una abraçada!')}</textarea></label>
     <div class="stack"><button class="btn gold" onclick="sendGift()">${L('Pagar 29,99 € i enviar')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>
     <p class="fine"><b>${L('Prototip: no es fa cap cobrament.')}</b></p>`);
   if(S.sheet==='regal'){ const gf=S.links.gift; return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">🎁</div>
     <h2 style="margin:6px 0 0">${gf.de?L('{0} t’ha fet un regal',esc(gf.de)):L('T’han fet un regal')}</h2>
-    <p>${L('Un any de Melodia Plus: sense límits i amb tots els nivells.')}</p>${gf.msg?`<blockquote class="giftmsg">${esc(gf.msg)}</blockquote>`:''}</div>
+    <p>${L('Un any de Melodia Plus: intents il·limitats, lligues i arxiu.')}</p>${gf.msg?`<blockquote class="giftmsg">${esc(gf.msg)}</blockquote>`:''}</div>
     <div class="stack"><button class="btn gold" onclick="acceptGift()">${L('Obrir el regal')}</button></div>`); }
   if(S.sheet==='instr') return sheetWrap(`<h2 style="margin-top:0">📋 ${L('Instruccions de la prova')}</h2>
     <div class="instr">
@@ -2164,7 +2211,7 @@ function vSheet(){ const g=S.game;
   if(S.sheet==='pay') return sheetWrap(`<h2 style="margin-top:0">${L('Segueix jugant avui')}</h2><p class="muted">${L('Sense anuncis i sense monedes. Preus amb IVA inclòs.')}</p>${S.plus?'':`<div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>`}
     <div class="stack">
     <button class="offer" onclick="buy('pass')"><span><b>${L('Passi del dia')}</b><small>${L('Intents il·limitats durant 24 hores · sense renovació')}</small></span><span class="price">${L('0,99 €')}</span></button>
-    <button class="offer best" onclick="buy('plus')"><span><span class="pill" style="font-size:13px">${L('Millor preu')}</span><br><b>${L('Plus anual')}</b><small>${L('2,50 € al mes · arxiu de melodies, lligues, tots els nivells')}</small></span><span class="price">${L('29,99 €')}</span></button>
+    <button class="offer best" onclick="buy('plus')"><span><span class="pill" style="font-size:13px">${L('Millor preu')}</span><br><b>${L('Plus anual')}</b><small>${L('2,50 € al mes · intents il·limitats, lligues i arxiu')}</small></span><span class="price">${L('29,99 €')}</span></button>
     <details><summary class="muted" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${L('Veure més opcions')}</summary>
       <div class="stack" style="margin-top:4px"><button class="offer" onclick="buy('plus')"><span><b>${L('Plus mensual')}</b></span><span class="price">${L('4,99 €/mes')}</span></button></div></details>
     <button class="offer" onclick="S.sheet='gift';renderSheet()"><span><b>🎁 ${L('Regalar Plus a algú')}</b><small>${L('Un any sencer per a un familiar')}</small></span><span class="price">${L('29,99 €')}</span></button>
@@ -2227,7 +2274,7 @@ function sendGift(){ const de=($('#gFrom').value||'').trim().slice(0,30), msg=($
   S.sheet=null; renderSheet(); toast(L('Regal pagat (simulat)')); shareLink(L('T’he regalat un any de Melodia, un joc de fitxes i refranys. Obre l’enllaç per activar-lo:'), u.toString()); }
 function acceptGift(){ S.plus=true; S.sheet=null; render(); toast(L('Regal activat. Que el gaudeixis!')); }
 const PLUSTAG=()=>`<span class="plustag">PLUS</span>`;
-const PLUS_FEATS=[['🏆','Crear lligues per a la teva gent'],['♾️','Intents il·limitats'],['🧩','Tots els nivells'],['🗂️','Arxiu de taulers i refranys']];
+const PLUS_FEATS=[['🏆','Crear lligues per a la teva gent'],['♾️','Intents il·limitats'],['🗂️','Arxiu de taulers i refranys']];
 const plusList=()=>`<ul class="plusfeat">${PLUS_FEATS.map(([e,t])=>`<li><span aria-hidden="true">${e}</span>${L(t)}${S.plus?' <b class="ok">✓</b>':''}</li>`).join('')}</ul>`;
 function newLeague(k){ S.newType=k; if(S.plus) S.sheet='newlg'; else { S.plusNext='newlg'; S.sheet='plusask'; } renderSheet(); }
 function tryPlus(){ const nx=S.plusNext; S.plusNext=null; S.plus=true; toast(L('Plus activat (simulat)')); S.sheet=nx||null; render(); renderSheet(); }
