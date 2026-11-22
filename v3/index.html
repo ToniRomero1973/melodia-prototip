@@ -1625,7 +1625,7 @@ function checkState(){ const g=S.game; if(g.over) return;
   if(g.reserve.every(Boolean) && !hasMove()){ g.over=true; g.pauseAt=Date.now(); if(g.mode==='daily') S.dailyFailed='blocked'; setTimeout(()=>{ click(220,.08); S.sheet='blocked'; renderSheet(); },450); } }
 async function celebrate(){ const g=S.game; chTrack('win',{hints:g.hints||0, time:elapsed(), mode:g.mode}); await wait(250); if(S.game!==g) return; const bd=document.querySelector('.board'); if(bd) bd.classList.add('won'); await wait(450); if(S.game!==g) return; petals(); const tt=playSong(g.song); await wait(Math.min(tt*1000, 3500));
   await wait(g.solved?1400:500); if(S.game!==g||S.tab!=='joc'||S.sheet==='solve'||S.sheet==='win') return;
-  if(g.solved){ S.sheet='win'; renderSheet(); } else { S.sheet='solve'; S.solveMsg='final'; renderSheet(); } }
+  if(g.solved||g.mode==='calma'){ S.sheet='win'; renderSheet(); } else { S.sheet='solve'; S.solveMsg='final'; renderSheet(); } }
 function openSolve(){ const g=S.game; if(g.solved||g.busy||(g.over&&!g.won)) return; if(!g.over&&!g.pauseAt) g.pauseAt=Date.now(); S.sheet='solve'; S.solveMsg=''; renderSheet(); setTimeout(()=>{ const i=$('#solveIn'); if(i) i.focus(); },350); }
 function closeSolve(){ const g=S.game; S.sheet=null; renderSheet(); if(!g.over) resume(); }
 function trySolve(f){ const g=S.game, inp=$('#solveIn'), v=f?g.phrase:(inp?inp.value:''); if(!norm(v)) return;
@@ -2248,7 +2248,8 @@ function planHTML(){ if(!S.plus) return `<ul class="strec"><li><span>Melodia Plu
       <li><span>${gift||S.plusCancel?L('Actiu fins al'):L('Propera renovació')}</span><b>${dt}</b></li></ul>
     ${gift?`<p class="stnote">${L('És un regal: no es renova ni es cobra res.')}</p>`
       :S.plusCancel?`<p class="plannote">${L('Has cancel·lat el pla: no es renovarà. Fins al {0} continues tenint Plus.',dt)}</p><div class="stack"><button class="btn secondary" onclick="S.plusCancel=false;renderSheet();render();toast(L('Renovació reactivada (simulat)'))">${L('Reactivar la renovació')}</button></div>`
-      :`<div class="stack" style="margin-top:10px"><button class="btn secondary" onclick="S.sheet='plancancel';renderSheet()">${L('Cancel·lar el pla')}</button></div>`}`; }
+      :`<div class="stack" style="margin-top:10px"><button class="btn secondary" onclick="S.sheet='plancancel';renderSheet()">${L('Cancel·lar el pla')}</button></div>`}
+    <div class="stack" style="margin-top:8px"><button class="btn secondary" onclick="S.sheet='gift';renderSheet()">🎁 ${L('Regalar Plus a algú')}</button></div>`; }
 function planSheets(){
   if(S.sheet==='acplan') return `<h2 style="margin-top:0">⭐ ${L('La teva subscripció')}</h2>${planHTML()}<div class="stack" style="margin-top:8px"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`;
   if(S.sheet==='plancancel'){ const dt=fmtDate(plusNextDate()); return `<h2 style="margin-top:0">${L('Cancel·lar Melodia Plus?')}</h2>
@@ -2366,7 +2367,7 @@ function vSheet(){ const g=S.game;
   if(S.sheet==='help') return sheetWrap(`<h2 style="margin-top:0">${L('Com es juga')}</h2>
     <p><b>${L('Fusiona:')}</b> ${L('toca una fitxa lliure i després la seva bessona. També la pots arrossegar a sobre.')}</p>
     <p><b>${L('Faristol:')}</b> ${L('arrossega-hi fins a 2 fitxes per alliberar les que tenien a sobre o al costat. Després, arrossega-les damunt la seva parella.')}</p>
-    <p><b>${L('Frase amagada:')}</b> ${L('cada fusió destapa lletres d’un refrany. Resol-la quan vulguis: cada lletra encara amagada et resta {0} s, i cada error en suma {1}.',BONUS_PER,MISS_PEN)}</p>
+    ${S.game&&S.game.mode==='calma'?'':`<p><b>${L('Frase amagada:')}</b> ${L('cada fusió destapa lletres d’un refrany. Resol-la quan vulguis: cada lletra encara amagada et resta {0} s, i cada error en suma {1}.',BONUS_PER,MISS_PEN)}</p>`}
     <p><b>${L('Si t’encalles:')}</b> ${L('pots desfer l’última fitxa del faristol i, si ja no queden parelles, barrejar les fitxes. Tots els taulers tenen solució.')}</p>
     <p><b>${L('Compte:')}</b> ${L('si arrossegues una fitxa i la deixes damunt d’una que no és la seva parella, és un error. Amb 3 errors, fallada. Tocant no hi ha errors.')}</p>
     <p class="muted">${L('Si el faristol és ple i no queda cap parella, pots barrejar les fitxes un cop. Si ja has barrejat, és fallada.')}</p><div class="stack"><button class="btn primary" onclick="resume()">${L('Entesos')}</button></div>`);
@@ -2397,15 +2398,15 @@ function vSheet(){ const g=S.game;
       <h2 style="margin:10px 0 4px">${x.special?'⭐ ':''}${esc(L(x.n))}</h2><p>${esc(L(x.d))}</p>
       <p class="muted">${x.req?L('Desbloquejada en superar el nivell {0}',x.req):L('La primera de la col·lecció')}${x===activeSen()?' · '+L('En ús'):''}</p>
       <div class="stack"><button class="btn primary" onclick="S.sheet='rajoles';renderSheet()">${L('Veure totes les rajoles')}</button><button class="btn secondary" onclick="closeSheet()">${senFromWin()?L('Tornar a la partida'):L('Tancar')}</button></div>`); }
-  if(S.sheet==='pay') return sheetWrap(`<h2 style="margin-top:0">${L('Segueix jugant avui')}</h2><p class="muted">${L('Sense anuncis i sense monedes. Preus amb IVA inclòs.')}</p>${S.plus?'':`<div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>`}
+  if(S.sheet==='pay'){ const outOf=!!(S.tab==='joc'&&S.game&&S.game.over&&!S.game.won); return sheetWrap(`<h2 style="margin-top:0">${outOf?L('Segueix jugant avui'):'⭐ Melodia Plus'}</h2><p class="muted">${L('Sense anuncis i sense monedes. Preus amb IVA inclòs.')}</p>${S.plus?'':`<div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>`}
     <div class="stack">
     <button class="offer" onclick="buy('pass')"><span><b>${L('Passi del dia')}</b><small>${L('Intents il·limitats durant 24 hores · sense renovació')}</small></span><span class="price">${L('0,99 €')}</span></button>
     <button class="offer best" onclick="buy('plus')"><span><span class="pill" style="font-size:13px">${L('Millor preu')}</span><br><b>${L('Plus anual')}</b><small>${L('2,50 € al mes · intents il·limitats, lligues i arxiu')}</small></span><span class="price">${L('29,99 €')}</span></button>
     <details><summary class="muted" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${L('Veure més opcions')}</summary>
       <div class="stack" style="margin-top:4px"><button class="offer" onclick="buy('plusm')"><span><b>${L('Plus mensual')}</b></span><span class="price">${L('4,99 €/mes')}</span></button></div></details>
     <button class="offer" onclick="S.sheet='gift';renderSheet()"><span><b>🎁 ${L('Regalar Plus a algú')}</b><small>${L('Un any sencer per a un familiar')}</small></span><span class="price">${L('29,99 €')}</span></button>
-    <button class="btn secondary" onclick="quit()">${L('Ara no, torno demà')}</button></div>
-    <p class="fine">${L('El Plus mensual i l’anual es renoven automàticament i es poden cancel·lar en qualsevol moment des de Perfil. El passi del dia no es renova.')}<br><b>${L('Prototip: no es fa cap cobrament.')}</b></p>`);
+    ${outOf?`<button class="btn secondary" onclick="quit()">${L('Ara no, torno demà')}</button>`:`<button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button>`}</div>
+    <p class="fine">${L('El Plus mensual i l’anual es renoven automàticament i es poden cancel·lar en qualsevol moment des de Perfil. El passi del dia no es renova.')}<br><b>${L('Prototip: no es fa cap cobrament.')}</b></p>`); }
   if(S.sheet==='solve'&&(S.solveMsg==='opts'||S.solveMsg==='optbad')){ const fin=g.won, hid=hiddenCount(), {head}=phraseHalf(g.phrase), os=finishOpts(), wr=g.finWrong||[];
     return sheetWrap(`<h2 style="margin-top:0">${L('Acaba el refrany')}</h2>
       <p class="fhead">«${esc(head)} …»</p>
