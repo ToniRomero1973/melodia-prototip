@@ -1477,18 +1477,19 @@ function provaBar(){ document.querySelectorAll('.provabar').forEach(e=>e.remove(
 // ================= Google Analytics (només si la persona ho accepta) =================
 // L'identificador va a prova-config.js (window.MELODIA_GA = "G-XXXXXXX"). Sense identificador no es carrega res.
 const GA_ID = String(window.MELODIA_GA || '').trim();
+const APP_VER = (location.pathname.match(/\/(v\d+)\//)||[0,'v1'])[1];   // quina versió del prototip és: v1 (arrel), v2, v3…
 let GA_CONSENT = null; try{ GA_CONSENT = localStorage.getItem('melodia-galetes'); }catch(e){}
 let gaLoaded = false;
 function gaLoad(){ if(gaLoaded || !GA_ID || GA_CONSENT!=='si') return; gaLoaded = true;
   window.dataLayer = window.dataLayer || []; window.gtag = function(){ dataLayer.push(arguments); };
   gtag('consent','default',{ analytics_storage:'granted', ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied' });
   gtag('js', new Date());
-  gtag('config', GA_ID, { send_page_view:false, debug_mode: /[?&]debug_ga=1/.test(location.search) });
-  gtag('set','user_properties',{ idioma: LANG, partides: PV.games });
+  gtag('config', GA_ID, { send_page_view:false, app_version: APP_VER, content_group: APP_VER, debug_mode: /[?&]debug_ga=1/.test(location.search) });
+  gtag('set','user_properties',{ versio: APP_VER, idioma: LANG, partides: PV.games });
   const sc = document.createElement('script'); sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID); document.head.appendChild(sc);
   pageView(S.tab); }
-function track(name, params){ if(!gaLoaded || !window.gtag) return; try{ gtag('event', name, Object.assign({ idioma: LANG }, params||{})); }catch(e){} }
-function pageView(tab){ if(!gaLoaded) return; track('page_view', { page_title: 'Melodia · ' + tab, page_location: location.origin + location.pathname + '#' + tab }); }
+function track(name, params){ if(!gaLoaded || !window.gtag) return; try{ gtag('event', name, Object.assign({ versio: APP_VER, idioma: LANG }, params||{})); }catch(e){} }
+function pageView(tab){ if(!gaLoaded) return; track('page_view', { page_title: 'Melodia ' + APP_VER + ' · ' + tab, page_location: location.origin + location.pathname + '#' + tab }); }
 function setConsent(v){ GA_CONSENT = v; try{ localStorage.setItem('melodia-galetes', v); }catch(e){} document.querySelectorAll('.cookiebar').forEach(e=>e.remove()); if(v==='si') gaLoad(); }
 function cookieBar(){ if(!GA_ID || GA_CONSENT) return; document.querySelectorAll('.cookiebar').forEach(e=>e.remove());
   const d = document.createElement('div'); d.className = 'cookiebar'; d.setAttribute('role','dialog'); d.setAttribute('aria-label', L('Galetes'));
