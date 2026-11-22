@@ -787,6 +787,11 @@ html,body{overflow-x:hidden}
   background:rgba(250,248,244,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:0;border-radius:20px;padding:11px 13px;box-shadow:0 10px 30px rgba(0,0,0,.22);transform:translateY(-130%);transition:transform .45s cubic-bezier(.2,1.2,.4,1)}
 .notif.in{transform:none} .notif .nic{flex:none;width:38px;height:38px;border-radius:9px;background-size:22px 22px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
 .notif .ntx{flex:1;min-width:0;font-size:15px;line-height:1.3} .notif .nhd{display:flex;justify-content:space-between;margin-bottom:2px} .notif .nhd small{color:#8E8E93;font-size:13px}
+.tutohand{position:absolute;z-index:60;font-size:34px;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3));animation:tutotap 1s ease-in-out infinite}
+@keyframes tutotap{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.tutobar{position:absolute;left:12px;right:12px;bottom:118px;z-index:61;display:flex;gap:12px;align-items:center;background:var(--ink,#1F2328);color:#FFFDF7;border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.tutobar span{flex:1} .tutobar .linkbtn{color:#F4D27A;flex:none}
+@media (prefers-reduced-motion:reduce){.tutohand{animation:none}}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -940,6 +945,8 @@ Object.assign(TR.es,{"net": "limpio", "Refrany endevinat amb {0} lletres amagade
 Object.assign(TR.en,{"net": "clean", "Refrany endevinat amb {0} lletres amagades": "Proverb guessed with {0} letters hidden", "Posició {0} a la meva comarca": "#{0} in my county", "Hi jugues?": "Want to play?", "Compartir el resultat sense desvetllar el refrany": "Share your result without spoiling the proverb", "Gairebé! Només et faltaven {0} parelles.": "So close! Only {0} pairs left.", "Has fet {0} de {1} parelles.": "You made {0} of {1} pairs.", "Fita! {0} dies seguits": "Milestone! {0} days in a row", "Ratxa: {0} dies": "Streak: {0} days", "Comença la teva ratxa!": "Your streak starts today!", "Guarda-la: demà, un tauler nou.": "Keep it going: a new board tomorrow.", "Torna demà per mantenir-la.": "Come back tomorrow to keep it.", "Encara pots salvar la ratxa de {0} dies": "You can still save your {0}-day streak", "Juga una partida abans de mitjanit.": "Play a game before midnight."});
 Object.assign(TR.es,{"{0} de «{1}» ja han jugat avui": "{0} de «{1}» ya han jugado hoy", "La més ràpida: {0}, {1}": "La más rápida: {0}, {1}", "{0} t’ha superat per {1}": "{0} te ha superado por {1}", "Posició {0} de {1} a «{2}»": "Posición {0} de {1} en «{2}»", "Vas primer a «{0}»!": "¡Vas primero en «{0}»!", "{0} és a {1}": "{0} está a {1}", "{0} ja ha fet el tauler d’avui en {1}. L’atrapes?": "{0} ya ha hecho el tablero de hoy en {1}. ¿Lo alcanzas?", "🔥 {0} dies seguits. El refrany d’avui té {1} paraules: no perdis la ratxa!": "🔥 {0} días seguidos. El refrán de hoy tiene {1} palabras: ¡no pierdas la racha!", "El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?": "El refrán de hoy empieza por «{0}»… ¿Lo adivinarás antes de acabar el tablero?", "ara": "ahora", "A les 10:00, si encara no has jugat. Amb la teva ratxa o una pista del refrany.": "A las 10:00, si aún no has jugado. Con tu racha o una pista del refrán.", "Veure un exemple": "Ver un ejemplo"});
 Object.assign(TR.en,{"{0} de «{1}» ja han jugat avui": "{0} in “{1}” have played today", "La més ràpida: {0}, {1}": "Fastest: {0}, {1}", "{0} t’ha superat per {1}": "{0} beat you by {1}", "Posició {0} de {1} a «{2}»": "#{0} of {1} in “{2}”", "Vas primer a «{0}»!": "You're top of “{0}”!", "{0} és a {1}": "{0} is {1} behind", "{0} ja ha fet el tauler d’avui en {1}. L’atrapes?": "{0} already did today's board in {1}. Can you beat it?", "🔥 {0} dies seguits. El refrany d’avui té {1} paraules: no perdis la ratxa!": "🔥 {0} days in a row. Today's proverb has {1} words: keep your streak!", "El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?": "Today's proverb starts with “{0}”… Can you guess it before the board is done?", "ara": "now", "A les 10:00, si encara no has jugat. Amb la teva ratxa o una pista del refrany.": "At 10:00 if you haven't played. With your streak or a proverb clue.", "Veure un exemple": "See an example"});
+Object.assign(TR.es,{"Primera partida": "Primera partida", "Ara la seva bessona: ha de ser igual.": "Ahora su gemela: tiene que ser igual.", "Toca la fitxa que t’assenyalo.": "Toca la ficha que te señalo.", "Molt bé! Només es poden agafar les fitxes lliures: sense res a sobre i amb un costat buit.": "¡Muy bien! Solo se pueden coger las fichas libres: sin nada encima y con un lado vacío.", "Ara tu sol. Si t’encalles, toca 💡 Pista.": "Ahora tú solo. Si te atascas, toca 💡 Pista.", "Saltar": "Saltar", "Ja saps jugar!": "¡Ya sabes jugar!", "A les partides de veritat, cada parella destapa lletres d’un refrany amagat. Endevina’l abans d’acabar i guanyaràs temps.": "En las partidas de verdad, cada pareja destapa letras de un refrán oculto. Adivínalo antes de acabar y ganarás tiempo.", "Jugar la partida d’avui": "Jugar la partida de hoy", "Fer la partida guiada": "Hacer la partida guiada"});
+Object.assign(TR.en,{"Primera partida": "First game", "Ara la seva bessona: ha de ser igual.": "Now its twin: it must match.", "Toca la fitxa que t’assenyalo.": "Tap the tile I'm pointing at.", "Molt bé! Només es poden agafar les fitxes lliures: sense res a sobre i amb un costat buit.": "Well done! Only free tiles can be picked: nothing on top and one side empty.", "Ara tu sol. Si t’encalles, toca 💡 Pista.": "Your turn now. If you get stuck, tap 💡 Hint.", "Saltar": "Skip", "Ja saps jugar!": "You know how to play!", "A les partides de veritat, cada parella destapa lletres d’un refrany amagat. Endevina’l abans d’acabar i guanyaràs temps.": "In real games, each pair reveals letters of a hidden proverb. Guess it before the end to win time.", "Jugar la partida d’avui": "Play today's game", "Fer la partida guiada": "Play the guided game"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1965,6 +1972,26 @@ function showNotif(){ clearTimeout(notifT); document.querySelectorAll('.notif').
   d.innerHTML=`<span class="nic" style="background-image:${senURL(activeSen())}" aria-hidden="true"></span><span class="ntx"><span class="nhd"><b>Melodia</b><small>${L('ara')}</small></span><span>${esc(notifText())}</span></span>`;
   d.onclick=()=>{ d.remove(); S.sheet=null; renderSheet(); playDaily(); }; $('#phone').appendChild(d); requestAnimationFrame(()=>d.classList.add('in'));
   notifT=setTimeout(()=>{ d.classList.remove('in'); setTimeout(()=>d.remove(),400); },6000); }
+
+// ---- Partida guiada: la primera vegada que algú juga ----
+const tutoDone=()=>{ try{ return localStorage.getItem('melodia-v3-tuto')==='1'; }catch(e){ return true; } };
+function tutoMark(){ try{ localStorage.setItem('melodia-v3-tuto','1'); }catch(e){} }
+function startTutorial(){ S.sheet=null; renderSheet(); startGame('calma','trad','guia-1',L('Primera partida'),'',6); const g=S.game; g.tuto=true;
+  const mx=Math.min(...g.tiles.map(t=>t.x)), my=Math.min(...g.tiles.map(t=>t.y)); g.tiles.forEach(t=>{ t.x-=mx; t.y-=my; }); render(); tutoTick(); }
+function tutoSkip(){ tutoMark(); document.querySelectorAll('.tutohand,.tutobar').forEach(e=>e.remove()); S.game=null; playDaily(); }
+function tutoTick(){ const g=S.game; document.querySelectorAll('.tutohand,.tutobar').forEach(e=>e.remove()); if(!g||!g.tuto||g.over||S.tab!=='joc') return;
+  const ph=$('#phone'), pr=ph.getBoundingClientRect(), n=g.pairs||0; let target=null, msg;
+  const live=g.tiles.filter(t=>!t.gone), free=live.filter(t=>isFree(t,live));
+  if(g.sel&&g.sel.k==='b'){ const sv=g.tiles[g.sel.id]; target=free.find(t=>t.id!==sv.id&&t.s===sv.s); msg=L('Ara la seva bessona: ha de ser igual.'); }
+  else if(n<2){ const pr2=g.sol.find(([a,b])=>!g.tiles[a].gone&&!g.tiles[b].gone&&isFree(g.tiles[a],live)&&isFree(g.tiles[b],live)); target=pr2?g.tiles[pr2[0]]:null;
+    msg = n===0 ? L('Toca la fitxa que t’assenyalo.') : L('Molt bé! Només es poden agafar les fitxes lliures: sense res a sobre i amb un costat buit.'); }
+  else msg=L('Ara tu sol. Si t’encalles, toca 💡 Pista.');
+  const bar=document.createElement('div'); bar.className='tutobar'; bar.innerHTML=`<span>${msg}</span><button class="linkbtn" onclick="tutoSkip()">${L('Saltar')}</button>`; ph.appendChild(bar);
+  if(target){ const el=document.querySelector(`.board .tile[data-t="${target.id}"]`); if(el){ const r=el.getBoundingClientRect(); const h=document.createElement('div'); h.className='tutohand'; h.textContent='👆';
+    h.style.left=(r.left-pr.left+r.width/2-16)+'px'; h.style.top=(r.top-pr.top+r.height*.55)+'px'; ph.appendChild(h); } } }
+setTimeout(()=>{ const u0=updateTiles; updateTiles=function(){ const r=u0.apply(this,arguments); try{ tutoTick(); }catch(e){} return r; }; window.updateTiles=updateTiles;
+  const p0=playDaily; playDaily=function(){ if(!tutoDone()&&!S.st.played&&!(S.game&&S.game.mode==='daily')) return startTutorial(); return p0.apply(this,arguments); }; window.playDaily=playDaily;
+  const g0=go; go=function(t){ const r=g0.apply(this,arguments); if(t!=='joc') document.querySelectorAll('.tutohand,.tutobar').forEach(e=>e.remove()); return r; }; window.go=go; },0);
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key]||(isT&&chAll()?'or':null), rest=SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
@@ -2438,7 +2465,7 @@ function vSheet(){ const g=S.game;
       ${calm?'':row('Aa',L('Cada parella destapa lletres del refrany. Si l’endevines abans, guanyes {0} s per lletra amagada (cada error, +{1} s).',BONUS_PER,MISS_PEN))}
       ${row('✋',L('Deixar una fitxa damunt d’una que no és la seva parella és un error. Amb 3, fallada.'))}
       ${row('🔀',L('T’has encallat? Desfés l’última fitxa del faristol o barreja (un cop per tauler).'))}
-      </ul><p class="muted" style="font-size:14px">${L('Tots els taulers tenen solució.')}</p><div class="stack"><button class="btn primary" onclick="resume()">${L('Entesos')}</button></div>`); }
+      </ul><p class="muted" style="font-size:14px">${L('Tots els taulers tenen solució.')} <button class="linkbtn" onclick="startTutorial()">${L('Fer la partida guiada')}</button></p><div class="stack"><button class="btn primary" onclick="resume()">${L('Entesos')}</button></div>`); }
   if(S.sheet==='blocked'){ const calm=g.mode==='calma', ok=calm||canRetry(), errs=g.failReason==='errors', canSh=!errs&&(calm||!g.shuffled), canUndo=!errs&&!!g.lastPark;
     const leftP=Math.ceil((present().length+g.reserve.filter(Boolean).length)/2), doneP=Math.max(0,g.nPairs-leftP);
     return sheetWrap(`<h2 style="margin-top:0">${errs?L('Tres errors'):L('Sense jugades')}</h2>
@@ -2495,6 +2522,10 @@ function vSheet(){ const g=S.game;
       <button class="btn secondary" type="button" onclick="S.solveMsg='opts';renderSheet()">💡 ${L('No me’n surto: acaba el refrany')}</button>
       ${fin?`<button class="btn secondary" type="button" onclick="giveUp()">${L('Em rendeixo, mostra-la')}</button>`:`<button class="btn secondary" type="button" onclick="closeSolve()">${L('Continuar jugant')}</button>`}</div></form>
       <p class="fine">${L('No cal escriure accents, apòstrofs ni comes, i una lletra equivocada no compta.')}</p>`); }
+  if(S.sheet==='win'&&g&&g.tuto){ tutoMark(); document.querySelectorAll('.tutohand,.tutobar').forEach(e=>e.remove());
+    return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">🎉</div><h2 style="margin:6px 0 4px">${L('Ja saps jugar!')}</h2>
+      <p class="muted">${L('A les partides de veritat, cada parella destapa lletres d’un refrany amagat. Endevina’l abans d’acabar i guanyaràs temps.')}</p></div>
+      <div class="stack"><button class="btn primary" onclick="S.game=null;S.sheet=null;playDaily()">${L('Jugar la partida d’avui')}</button><button class="btn secondary" onclick="S.sheet=null;go('avui')">${L('Tornar a l’inici')}</button></div>`); }
   if(S.sheet==='win'){ const tot=total(); const pos=g.mode==='daily'?Math.max(1,Math.round(tot/22)):null;
     if(g.mode==='daily') S.dailyDone={time:tot,pos};
     const parts=[L('{0} de joc',fmt(elapsed()))]; if(g.attempts) parts.push(L('+ {0} min (intents)',g.attempts*2)); if(g.penalty) parts.push(L('+ {0} s (errors)',g.penalty)); if(g.hintPen) parts.push(L('+ {0} s (pistes)',g.hintPen)); if(g.bonus) parts.push(L('− {0} s (frase)',g.bonus));
