@@ -792,6 +792,13 @@ html,body{overflow-x:hidden}
 .tutobar{position:absolute;left:12px;right:12px;bottom:118px;z-index:61;display:flex;gap:12px;align-items:center;background:var(--ink,#1F2328);color:#FFFDF7;border-radius:16px;padding:12px 14px;font-size:15px;line-height:1.35;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .tutobar span{flex:1} .tutobar .linkbtn{color:#F4D27A;flex:none}
 @media (prefers-reduced-motion:reduce){.tutohand{animation:none}}
+.stars{display:inline-flex;gap:1px;letter-spacing:0} .stars i{font-style:normal;color:#D8CFBF} .stars i.on{color:#E3AE3B} .stars.sm{font-size:14px}
+.winstars{margin:12px 0 0} .stars.big{font-size:34px;gap:6px} .stars.big i.on{animation:starpop .5s cubic-bezier(.3,1.6,.5,1) both} .stars.big i:nth-child(2){animation-delay:.15s} .stars.big i:nth-child(3){animation-delay:.3s}
+.winstars small{display:block;color:var(--quiet);font-size:14px}
+@keyframes starpop{from{transform:scale(0) rotate(-40deg)}to{transform:none}}
+.surprise{display:flex;gap:12px;align-items:center;text-align:left;margin:12px auto 0;max-width:320px;background:var(--jade-soft);border-radius:16px;padding:10px 14px;animation:starpop .5s .4s cubic-bezier(.3,1.6,.5,1) both}
+.surprise .gift{font-size:28px} .surprise b{display:block;font-size:17px} .surprise small{color:var(--quiet);font-size:14px}
+@media (prefers-reduced-motion:reduce){.stars.big i.on,.surprise{animation:none}}
 /* v3: fitxes petites */
 .board.small .tile::before{transform:translate(2px,3px);border-radius:6px} .board.small .face{border-radius:6px}
 .board.tiny .tile::before{transform:translate(1px,2px);border-radius:4px;box-shadow:1px 2px 4px rgba(0,0,0,.35)} .board.tiny .face{border-radius:4px;box-shadow:inset 0 0 0 1px rgba(110,90,60,.25)}
@@ -947,6 +954,8 @@ Object.assign(TR.es,{"{0} de «{1}» ja han jugat avui": "{0} de «{1}» ya han 
 Object.assign(TR.en,{"{0} de «{1}» ja han jugat avui": "{0} in “{1}” have played today", "La més ràpida: {0}, {1}": "Fastest: {0}, {1}", "{0} t’ha superat per {1}": "{0} beat you by {1}", "Posició {0} de {1} a «{2}»": "#{0} of {1} in “{2}”", "Vas primer a «{0}»!": "You're top of “{0}”!", "{0} és a {1}": "{0} is {1} behind", "{0} ja ha fet el tauler d’avui en {1}. L’atrapes?": "{0} already did today's board in {1}. Can you beat it?", "🔥 {0} dies seguits. El refrany d’avui té {1} paraules: no perdis la ratxa!": "🔥 {0} days in a row. Today's proverb has {1} words: keep your streak!", "El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?": "Today's proverb starts with “{0}”… Can you guess it before the board is done?", "ara": "now", "A les 10:00, si encara no has jugat. Amb la teva ratxa o una pista del refrany.": "At 10:00 if you haven't played. With your streak or a proverb clue.", "Veure un exemple": "See an example"});
 Object.assign(TR.es,{"Primera partida": "Primera partida", "Ara la seva bessona: ha de ser igual.": "Ahora su gemela: tiene que ser igual.", "Toca la fitxa que t’assenyalo.": "Toca la ficha que te señalo.", "Molt bé! Només es poden agafar les fitxes lliures: sense res a sobre i amb un costat buit.": "¡Muy bien! Solo se pueden coger las fichas libres: sin nada encima y con un lado vacío.", "Ara tu sol. Si t’encalles, toca 💡 Pista.": "Ahora tú solo. Si te atascas, toca 💡 Pista.", "Saltar": "Saltar", "Ja saps jugar!": "¡Ya sabes jugar!", "A les partides de veritat, cada parella destapa lletres d’un refrany amagat. Endevina’l abans d’acabar i guanyaràs temps.": "En las partidas de verdad, cada pareja destapa letras de un refrán oculto. Adivínalo antes de acabar y ganarás tiempo.", "Jugar la partida d’avui": "Jugar la partida de hoy", "Fer la partida guiada": "Hacer la partida guiada"});
 Object.assign(TR.en,{"Primera partida": "First game", "Ara la seva bessona: ha de ser igual.": "Now its twin: it must match.", "Toca la fitxa que t’assenyalo.": "Tap the tile I'm pointing at.", "Molt bé! Només es poden agafar les fitxes lliures: sense res a sobre i amb un costat buit.": "Well done! Only free tiles can be picked: nothing on top and one side empty.", "Ara tu sol. Si t’encalles, toca 💡 Pista.": "Your turn now. If you get stuck, tap 💡 Hint.", "Saltar": "Skip", "Ja saps jugar!": "You know how to play!", "A les partides de veritat, cada parella destapa lletres d’un refrany amagat. Endevina’l abans d’acabar i guanyaràs temps.": "In real games, each pair reveals letters of a hidden proverb. Guess it before the end to win time.", "Jugar la partida d’avui": "Play today's game", "Fer la partida guiada": "Play the guided game"});
+Object.assign(TR.es,{"{0} de 3 estrelles": "{0} de 3 estrellas", "Superat": "Superado", "sense pistes": "sin pistas", "sense errors": "sin errores", "Sorpresa!": "¡Sorpresa!", "Una pista gratis per a la propera partida.": "Una pista gratis para la próxima partida.", "Una fallada gratuïta més per avui.": "Un fallo gratuito más para hoy.", "Pista gratis: no suma temps": "Pista gratis: no suma tiempo"});
+Object.assign(TR.en,{"{0} de 3 estrelles": "{0} of 3 stars", "Superat": "Cleared", "sense pistes": "no hints", "sense errors": "no mistakes", "Sorpresa!": "Surprise!", "Una pista gratis per a la propera partida.": "A free hint for your next game.", "Una fallada gratuïta més per avui.": "One extra free try for today.", "Pista gratis: no suma temps": "Free hint: no time added"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
@@ -1470,7 +1479,7 @@ function findPair(){ const g=S.game, set=present();
   const by={}; for(const x of c){ if(by[x.s]) return [by[x.s],x]; by[x.s]=x; } return null; }
 function hint(){ const g=S.game; if(!g||g.over||g.busy||g.pauseAt) return; const p=findPair();
   if(!p){ toast(L('No hi ha cap parella lliure: aparta una fitxa al faristol')); document.querySelectorAll('.slot').forEach(el=>{ el.classList.remove('hintslot'); void el.offsetWidth; el.classList.add('hintslot'); }); return; }
-  if(g.mode!=='calma') g.hintPen=(g.hintPen||0)+HINT_PEN; g.hints=(g.hints||0)+1; g.sel=null; updateTiles(); updateReserve();
+  if(g.mode!=='calma'){ if(S.freeHints>0){ S.freeHints--; starsSave(); toast('🎁 '+L('Pista gratis: no suma temps')); } else { g.hintPen=(g.hintPen||0)+HINT_PEN; g.hints=(g.hints||0)+1; } } g.sel=null; updateTiles(); updateReserve();
   const note=g.song.n[g.pairs%g.song.n.length];
   p.forEach((x,k)=>{ const el=elOf(x); if(!el) return; el.classList.remove('hint'); void el.offsetWidth; el.classList.add('hint'); setTimeout(()=>el.classList.remove('hint'),2200); voice(note+(k?7:0),k*.3,.16); voice(note+(k?7:0),.9+k*.3,.1); });
   toast(g.mode==='calma'?L('Pista'):L('Pista: +{0} s',HINT_PEN)); updateHUD(); }
@@ -1791,7 +1800,7 @@ function stSave(){ try{ localStorage.setItem('melodia-v3-st', JSON.stringify(S.s
 function stLogPush(won){ const g=S.game; if(!g||g.demo) return; let made=g.nPairs; if(!won){ try{ made=Math.max(0,g.nPairs-Math.round(present().length/2)); }catch(e){ made=0; } }
   (S.st.log=S.st.log||[]).push({ts:Date.now(), mode:g.mode, won:!!won, el:Math.round(elapsed()), t:Math.round(total()), pairs:g.nPairs, made, hints:g.hints||0, misses:g.misses||0, sh:g.shuffled?1:0, phr:g.solved?1:0, lvl:g.level||0});
   S.st.log=S.st.log.slice(-500); }
-function stCount(won){ stLogPush(won); const g=S.game, st=S.st; dayMark(won ? ((g.hints||g.errors||g.shuffled||g.misses||g.demo)?'pl':'or') : 'br'); st.played++; st.modes[g.mode]=(st.modes[g.mode]||0)+1;
+function stCount(won){ stLogPush(won); if(won&&S.game&&S.game.mode==='level'){ const g=S.game, n=gameStars(g); if(n>(S.stars[g.level]||0)){ S.stars[g.level]=n; starsSave(); } } const g=S.game, st=S.st; dayMark(won ? ((g.hints||g.errors||g.shuffled||g.misses||g.demo)?'pl':'or') : 'br'); st.played++; st.modes[g.mode]=(st.modes[g.mode]||0)+1;
   if(won){ st.won++; if(!g.hints) st.nohint++; if(g.solved) st.phr++;
     if(g.mode!=='calma'){ const t=Math.max(1,Math.round(total())); st.times.push(t); st.times=st.times.slice(-10); st.best=st.best==null?t:Math.min(st.best,t); } }
   stSave(); }
@@ -1992,6 +2001,18 @@ function tutoTick(){ const g=S.game; document.querySelectorAll('.tutohand,.tutob
 setTimeout(()=>{ const u0=updateTiles; updateTiles=function(){ const r=u0.apply(this,arguments); try{ tutoTick(); }catch(e){} return r; }; window.updateTiles=updateTiles;
   const p0=playDaily; playDaily=function(){ if(!tutoDone()&&!S.st.played&&!(S.game&&S.game.mode==='daily')) return startTutorial(); return p0.apply(this,arguments); }; window.playDaily=playDaily;
   const g0=go; go=function(t){ const r=g0.apply(this,arguments); if(t!=='joc') document.querySelectorAll('.tutohand,.tutobar').forEach(e=>e.remove()); return r; }; window.go=go; },0);
+
+// ---- Estrelles per nivell: ★ superat · ★ sense pistes · ★ sense errors ni intents fallats ----
+S.stars=(()=>{ try{ return JSON.parse(localStorage.getItem('melodia-v3-estrelles'))||{}; }catch(e){ return {}; } })();
+S.freeHints=(()=>{ try{ return +localStorage.getItem('melodia-v3-pistes')||0; }catch(e){ return 0; } })();
+function starsSave(){ try{ localStorage.setItem('melodia-v3-estrelles',JSON.stringify(S.stars)); localStorage.setItem('melodia-v3-pistes',S.freeHints); }catch(e){} }
+const levelStars=n=>S.stars[n]||(n<S.unlocked?1:0);
+const starsHTML=(n,cls='')=>`<span class="stars ${cls}" aria-label="${L('{0} de 3 estrelles',n)}">${[0,1,2].map(i=>`<i class="${i<n?'on':''}">★</i>`).join('')}</span>`;
+function gameStars(g){ return 1+(g.hints?0:1)+(g.misses||g.attempts?0:1); }
+// ---- Sorpreses: de tant en tant, en guanyar, un premi petit que es pot fer servir ----
+function pickSurprise(g){ if(g.surprise!==undefined) return g.surprise; if(g.tuto||Math.random()>.28){ g.surprise=null; return null; }
+  const opts=['hint']; if(!S.plus&&!S.pass) opts.push('retry'); g.surprise=opts[Math.floor(Math.random()*opts.length)];
+  if(g.surprise==='hint') S.freeHints++; else S.fails++; starsSave(); return g.surprise; }
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key]||(isT&&chAll()?'or':null), rest=SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
@@ -2080,7 +2101,7 @@ function vNivells(){
   if(S.lvGroup!==null){ const gi=S.lvGroup, gr=GROUPS[gi], doneN=Math.max(0,Math.min(10,S.unlocked-gr.from));
     const cells=Array.from({length:10},(_,i)=>{ const n=gr.from+i, done=n<S.unlocked, cur=n===S.unlocked, lock=n>S.unlocked, nw=levelNew(n).slice(0,3);
       return `<button class="lvl2 ${done?'done':''} ${cur?'cur':''} ${lock?'lock':''}" onclick="startLevel(${n})" aria-label="${L('Nivell {0}',n)}${lock?L(', bloquejat'):''}">
-        <span class="lvtop"><span class="num">${n}</span><small>${done?L('✓ Fet'):cur?L('Juga'):lock?ICON.lock:''}</small></span>
+        <span class="lvtop"><span class="num">${n}</span><small>${done?starsHTML(levelStars(n),'sm'):cur?L('Juga'):lock?ICON.lock:''}</small></span>
         <span class="nw">${nchips(nw, lock)}</span><small class="pp">${isBoss(n)?'⭐ ':''}${L('{0} parelles',levelPairs(n))}</small>${diffDots(n)}</button>`; }).join('');
     return `<div class="screen"><button class="back" onclick="S.lvGroup=null;render()">‹ ${L('Nivells')}</button>
       <div class="grphead" style="${grpBg(gr.theme)}"><div class="mini">${stackTiles(gr.show,38,48,[[0,14,-10],[20,6,0],[40,14,10]])}</div>
@@ -2541,6 +2562,8 @@ function vSheet(){ const g=S.game;
       ${g.mode==='calma'||parts.length<2?'':`<p class="muted" style="margin:10px 0 0;font-size:15px">${parts.join(' ')}</p>`}
       ${rp!==null?`<div class="vs"><div class="${rp<=0?'win':''}"><small>${L('Tu')}</small><b>${fmt(tot)}</b></div><div class="${rp>0?'win':''}"><small>${L('Qui t’ha reptat')}</small><b>${fmt(S.challenge.t)}</b></div></div>
         <p style="font-weight:700;margin:4px 0">${rp<0?L('Per {0}. Ara li toca a l’altra persona.',fmt(-rp)):rp===0?L('Ni un segon de diferència.'):L('T’ha guanyat per {0}. Torna-li el repte!',fmt(rp))}</p>`:''}
+      ${g.mode==='level'?(()=>{ const n=gameStars(g); return `<div class="winstars">${starsHTML(n,'big')}<small>${[L('Superat'),g.hints?null:L('sense pistes'),g.misses||g.attempts?null:L('sense errors')].filter(Boolean).join(' · ')}</small></div>`; })():''}
+      ${g.mode!=='calma'?(()=>{ const sp=pickSurprise(g); if(!sp) return ''; return `<div class="surprise"><span class="gift" aria-hidden="true">🎁</span><div><b>${L('Sorpresa!')}</b><small>${sp==='hint'?L('Una pista gratis per a la propera partida.'):L('Una fallada gratuïta més per avui.')}</small></div></div>`; })():''}
       ${pos?`<p style="margin:8px 0 0"><span class="pill">${L('Posició {0} a la teva comarca',pos)}</span></p>`:''}
       ${(()=>{ if(g.streakN===undefined) g.streakN = S.days[todaySeed] ? 0 : streakInfo().n+1; const n=g.streakN; if(!n) return '';
         const ms=[3,7,14,30,50,100,365].includes(n); if(ms&&!g.msShown){ g.msShown=true; setTimeout(()=>{ try{ petals(); }catch(e){} },400); }
