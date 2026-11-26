@@ -973,6 +973,8 @@ Object.assign(TR.en,{"Animals": "Animals", "El temps i les estacions": "Weather 
 Object.assign(TR.es,{"{0} de {1} refranys. Toca una col·lecció per veure només els seus.":"{0} de {1} refranes. Toca una colección para ver solo los suyos."});
 Object.assign(TR.en,{"{0} de {1} refranys. Toca una col·lecció per veure només els seus.":"{0} of {1} proverbs. Tap a collection to see only its proverbs."});
 Object.assign(TR.es,{"La Castanyada": "La Castañada", "Nadal": "Navidad", "Sant Jordi": "Sant Jordi", "Sant Joan": "San Juan", "Festa: {0}": "Fiesta: {0}", "Medalla aconseguida! Les fitxes de la festa continuen a la partida diària.": "¡Medalla conseguida! Las fichas de la fiesta siguen en la partida diaria.", "La partida diària porta fitxes de la festa. Juga-la {0} dies per la medalla.": "La partida diaria trae fichas de la fiesta. Juégala {0} días para la medalla.", "Festes": "Fiestas", "Medalles de festa": "Medallas de fiesta", "Aconsegueix {0} medalles de festa": "Consigue {0} medallas de fiesta", "Aconsegueix una medalla de festa": "Consigue una medalla de fiesta", "Marc del perfil: {0}": "Marco del perfil: {0}", "Encara sense marc de perfil": "Aún sin marco de perfil", "{0} amb {1} trofeus": "{0} con {1} trofeos", "Tens el millor marc!": "¡Tienes el mejor marco!", "Festa simulada: {0}": "Fiesta simulada: {0}", "Sense festa simulada": "Sin fiesta simulada", "Prototip: festa simulada · {0}": "Prototipo: fiesta simulada · {0}", "Prototip: simular una festa": "Prototipo: simular una fiesta"});
+Object.assign(TR.es,{"Tria el teu avatar":"Elige tu avatar","Fer servir la inicial del nom":"Usar la inicial del nombre","Canviar el nom":"Cambiar el nombre","Desar":"Guardar","Nom desat":"Nombre guardado"});
+Object.assign(TR.en,{"Tria el teu avatar":"Choose your avatar","Fer servir la inicial del nom":"Use the initial of your name","Canviar el nom":"Change name","Desar":"Save","Nom desat":"Name saved"});
 Object.assign(TR.en,{"La Castanyada": "Chestnut Festival", "Nadal": "Christmas", "Sant Jordi": "Saint George's Day", "Sant Joan": "Midsummer", "Festa: {0}": "Festival: {0}", "Medalla aconseguida! Les fitxes de la festa continuen a la partida diària.": "Medal earned! Festival tiles stay in the daily game.", "La partida diària porta fitxes de la festa. Juga-la {0} dies per la medalla.": "The daily game has festival tiles. Play it on {0} days for the medal.", "Festes": "Festivals", "Medalles de festa": "Festival medals", "Aconsegueix {0} medalles de festa": "Earn {0} festival medals", "Aconsegueix una medalla de festa": "Earn a festival medal", "Marc del perfil: {0}": "Profile frame: {0}", "Encara sense marc de perfil": "No profile frame yet", "{0} amb {1} trofeus": "{0} at {1} trophies", "Tens el millor marc!": "You have the best frame!", "Festa simulada: {0}": "Simulated festival: {0}", "Sense festa simulada": "No simulated festival", "Prototip: festa simulada · {0}": "Prototype: simulated festival · {0}", "Prototip: simular una festa": "Prototype: simulate a festival"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
 const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
@@ -1364,6 +1366,9 @@ function isFree(t, set){
   if(set.some(o=>o.z===t.z+1&&Math.abs(o.x-t.x)<2&&Math.abs(o.y-t.y)<2)) return false;
   const L=set.some(o=>o!==t&&o.z===t.z&&o.x===t.x-2&&Math.abs(o.y-t.y)<2), R=set.some(o=>o!==t&&o.z===t.z&&o.x===t.x+2&&Math.abs(o.y-t.y)<2);
   return !L || !R; }
+// Regla afegida (app 0.15.1): una fitxa lliure fa parella amb la seva bessona que la toca pel costat (mateixa alçada),
+// encara que aquesta tingui l'altre costat ocupat, sempre que no tingui res a sobre.
+function twinNext(a,b,set){ return !!a&&!!b&&a!==b&&!a.gone&&!b.gone&&a.s===b.s&&a.z===b.z&&Math.abs(a.y-b.y)<2&&Math.abs(a.x-b.x)===2&&!set.some(o=>o.z===b.z+1&&Math.abs(o.x-b.x)<2&&Math.abs(o.y-b.y)<2); }
 function extents(tiles){ let mx=0,my=0; tiles.forEach(t=>{ mx=Math.max(mx,t.x+2); my=Math.max(my,t.y+2); }); return {cw:mx/2, ch:my/2}; }
 // Simula un jugador que fa parelles visibles a l'atzar (sense faristol). Com menys vegades guanya, més difícil és el tauler.
 function greedyRate(tiles, r, runs=24){ let win=0;
@@ -1486,7 +1491,8 @@ const elapsed = () => { const g=S.game; return Math.max(0,((g.pauseAt||Date.now(
 const total = () => { const g=S.game; return Math.max(0, elapsed()+g.attempts*120+g.penalty+(g.hintPen||0)-g.bonus); };
 const symOf = sel => sel.k==='b' ? S.game.tiles[sel.id].s : S.game.reserve[sel.i].s;
 function hasMove(){ const g=S.game, set=present(); const syms=set.filter(t=>isFree(t,set)).map(t=>t.s).concat(g.reserve.filter(Boolean).map(r=>r.s));
-  const seen=new Set(); for(const s of syms){ if(seen.has(s)) return true; seen.add(s);} return false; }
+  const seen=new Set(); for(const s of syms){ if(seen.has(s)) return true; seen.add(s);}
+  for(const t of set){ if(isFree(t,set)&&set.some(o=>twinNext(t,o,set))) return true; } return false; }
 const PAIRS_OF = () => S.game.tiles.length/2;
 function lettersForPair(idx){ const g=S.game, R=Math.ceil(g.order.length*.7), P=PAIRS_OF(); return g.order.slice(Math.floor(idx*R/P), Math.floor((idx+1)*R/P)); }
 const hiddenCount = () => { const g=S.game; return g.order.filter(i=>!g.revealed.has(i)).length; };
@@ -1494,7 +1500,8 @@ const BONUS_PER=2, MISS_PEN=30, HINT_PEN=20;
 // Pista: la primera parella lliure (tauler o faristol). Les dues fitxes bateguen al ritme de dues notes.
 function findPair(){ const g=S.game, set=present();
   const c=set.filter(t=>isFree(t,set)).map(t=>({k:'b',id:t.id,s:t.s})).concat(g.reserve.map((r,i)=>r?{k:'r',i,s:r.s}:null).filter(Boolean));
-  const by={}; for(const x of c){ if(by[x.s]) return [by[x.s],x]; by[x.s]=x; } return null; }
+  const by={}; for(const x of c){ if(by[x.s]) return [by[x.s],x]; by[x.s]=x; }
+  for(const t of set){ if(!isFree(t,set)) continue; const o=set.find(q=>twinNext(t,q,set)); if(o) return [{k:'b',id:t.id,s:t.s},{k:'b',id:o.id,s:o.s}]; } return null; }
 function hint(){ const g=S.game; if(!g||g.over||g.busy||g.pauseAt) return; const p=findPair();
   if(!p){ toast(L('No hi ha cap parella lliure: aparta una fitxa al faristol')); document.querySelectorAll('.slot').forEach(el=>{ el.classList.remove('hintslot'); void el.offsetWidth; el.classList.add('hintslot'); }); return; }
   if(g.mode!=='calma'){ if(S.freeHints>0){ S.freeHints--; starsSave(); toast('🎁 '+L('Pista gratis: no suma temps')); } else { g.hintPen=(g.hintPen||0)+HINT_PEN; g.hints=(g.hints||0)+1; } } g.sel=null; updateTiles(); updateReserve();
@@ -1592,6 +1599,8 @@ const srcOf = el => el.dataset.t!==undefined ? {k:'b',id:+el.dataset.t} : {k:'r'
 const elOf = s => s.k==='b' ? document.querySelector(`.board [data-t="${s.id}"]`) : document.querySelector(`.slot[data-s="${s.i}"] .tile`);
 const same = (a,b) => a&&b&&a.k===b.k&&(a.k==='b'?a.id===b.id:a.i===b.i);
 function isFreeSrc(s){ return s.k==='r' || isFree(S.game.tiles[s.id], present()); }
+// «s» es pot tocar ara: és lliure, o és la bessona del costat de la fitxa del tauler «from» (triada o arrossegada)
+function canTarget(s,from){ if(isFreeSrc(s)) return true; return !!from&&from.k==='b'&&s.k==='b'&&twinNext(S.game.tiles[from.id],S.game.tiles[s.id],present()); }
 function shake(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); click(300,.04); }
 let D=null;
 function bindDrag(){ const root=$('#view'); if(root.dataset.bound) return; root.dataset.bound='1';
@@ -1599,7 +1608,7 @@ function bindDrag(){ const root=$('#view'); if(root.dataset.bound) return; root.
     const tEl=e.target.closest('.tile'); const sEl=e.target.closest('.slot');
     if(!tEl){ if(sEl&&!g.reserve[+sEl.dataset.s]&&g.sel&&g.sel.k==='b') tapSlot(+sEl.dataset.s); return; }
     if(tEl.closest('#fx')) return; const src=srcOf(tEl);
-    if(!isFreeSrc(src)){ shake(tEl); return; }
+    if(!canTarget(src,g.sel)){ shake(tEl); return; }
     D={src, el:tEl, x0:e.clientX, y0:e.clientY, moved:false, clone:null, target:null, pid:e.pointerId}; e.preventDefault(); });
   window.addEventListener('pointermove',e=>{ if(!D||e.pointerId!==D.pid) return; const dx=e.clientX-D.x0, dy=e.clientY-D.y0;
     if(!D.moved && Math.hypot(dx,dy)<9) return;
@@ -1608,7 +1617,7 @@ function bindDrag(){ const root=$('#view'); if(root.dataset.bound) return; root.
     D.clone.style.transform=`translate(${dx/sc}px,${dy/sc}px) scale(1.1) rotate(${Math.max(-8,Math.min(8,dx/14))}deg)`;
     const under=document.elementFromPoint(e.clientX,e.clientY); let tgt=null;
     if(under){ const tt=under.closest('.tile'), ss=under.closest('.slot');
-      if(tt&&!tt.closest('#fx')){ const s=srcOf(tt); if(!same(s,D.src)&&isFreeSrc(s)&&symOf(s)===symOf(D.src)) tgt={kind:'tile',s,el:tt}; }
+      if(tt&&!tt.closest('#fx')){ const s=srcOf(tt); if(!same(s,D.src)&&canTarget(s,D.src)&&symOf(s)===symOf(D.src)) tgt={kind:'tile',s,el:tt}; }
       else if(ss&&!S.game.reserve[+ss.dataset.s]&&D.src.k==='b') tgt={kind:'slot',i:+ss.dataset.s,el:ss}; }
     if(D.target&&(!tgt||tgt.el!==D.target.el)) D.target.el.classList.remove('target');
     if(tgt&&(!D.target||tgt.el!==D.target.el)){ tgt.el.classList.add('target'); vib(6); }
@@ -1623,14 +1632,14 @@ function bindDrag(){ const root=$('#view'); if(root.dataset.bound) return; root.
     const under=document.elementFromPoint(d.lx,d.ly); const wt=under&&under.closest('.tile');
     const far=Math.hypot(d.lx-d.x0,d.ly-d.y0) > d.el.getBoundingClientRect().width*.8;
     if(far&&wt&&!wt.closest('#fx')&&!same(srcOf(wt),d.src)){ const ws=srcOf(wt);
-      if(symOf(ws)===symOf(d.src)||!isFreeSrc(ws)){ shake(wt); toast(L('Aquesta fitxa encara està tapada')); } else wrongDrop(wt); }
+      if(!canTarget(ws,d.src)){ shake(wt); toast(L('Aquesta fitxa encara està tapada')); } else wrongDrop(wt); }
     // torna al lloc
     const back=d.clone.animate([{transform:d.clone.style.transform},{transform:'none'}],{duration:reduced?1:260,easing:'cubic-bezier(.34,1.4,.64,1)'});
     back.onfinish=()=>{ d.clone.remove(); d.el.style.visibility=''; }; };
   window.addEventListener('pointerup',end); window.addEventListener('pointercancel',end);
   root.addEventListener('click',e=>{ if(e.detail!==0||S.tab!=='joc') return; const g=S.game; if(!g||g.over) return;
     const sl=e.target.closest('.slot'); if(sl) return tapSlot(+sl.dataset.s);
-    const t=e.target.closest('.tile[data-t]'); if(!t) return; if(!isFreeSrc(srcOf(t))) return shake(t); tapTile(+t.dataset.t); }); }
+    const t=e.target.closest('.tile[data-t]'); if(!t) return; if(!canTarget(srcOf(t),g.sel)) return shake(t); tapTile(+t.dataset.t); }); }
 const MAX_ERR=3;
 function wrongDrop(el){ const g=S.game; if(g.mode==='calma'){ shake(el); toast(L('No és la seva parella')); return; } g.errors=(g.errors||0)+1; el.classList.add('wrong'); shake(el); setTimeout(()=>el.classList.remove('wrong'),500);
   thump(0,.25); click(160,.12); vib([30,40,30]); updateErrors();
@@ -2278,7 +2287,7 @@ function trofSheet(){ const all=trofList(), f=S.trofF||'tots', got=all.filter(x=
   const rows=TROF.map(t=>{ const xs=all.filter(x=>x.t===t), n=xs.filter(x=>x.ok).length; return {t, xs, n, best:xs.filter(x=>x.ok).pop(), next:xs.find(x=>!x.ok)}; })
     .filter(r=>f==='tots'||(f==='tinc'?r.n>0:!!r.next)), groups=[...new Set(rows.map(r=>r.t.g))];
   const fr=frameNow(); return `<h2 style="margin-top:0">🏆 ${L('Trofeus')}</h2><p class="muted">${L('Tens {0} de {1} trofeus.',got,all.length)}</p>
-    <div class="framerow"><span class="acav${fr.f?' fr-'+fr.f[1]:''}" aria-hidden="true">${S.acct?esc((S.acct.name||'?').charAt(0).toUpperCase()):'👤'}</span><div><b>${fr.f?L('Marc del perfil: {0}',L(fr.f[2])):L('Encara sense marc de perfil')}</b><small>${fr.next?L('{0} amb {1} trofeus',L(fr.next[2]),fr.next[0]):L('Tens el millor marc!')}</small></div></div>
+    <div class="framerow"><span class="acav${fr.f?' fr-'+fr.f[1]:''}" aria-hidden="true">${acctChar(S.acct)}</span><div><b>${fr.f?L('Marc del perfil: {0}',L(fr.f[2])):L('Encara sense marc de perfil')}</b><small>${fr.next?L('{0} amb {1} trofeus',L(fr.next[2]),fr.next[0]):L('Tens el millor marc!')}</small></div></div>
     <div class="seg">${[['tots',L('Tots')],['tinc',L('Els tinc')],['falten',L('Em falten')]].map(([k,l])=>`<button class="${f===k?'on':''}" aria-pressed="${f===k}" onclick="S.trofF='${k}';renderSheet()">${l}</button>`).join('')}</div>
     ${groups.length?groups.map(g=>`<h3 class="trofg">${L(g)}</h3><ul class="troflist">${rows.filter(r=>r.t.g===g).map(r=>{ const x=r.next||r.best;
       return `<li class="${r.next?'':'ok'}"><span class="tm">${trofMedal(r.best||r.xs[0])}</span>
@@ -2401,10 +2410,14 @@ const acctBtns=()=>`<div class="acbtns"><button class="acb apple" onclick="acctS
   <button class="acb google" onclick="acctSignIn('google')">${ICO_GOOGLE}${L('Continuar amb Google')}</button>
   <button class="acb mail" onclick="S.sheet='acmail';renderSheet()">✉️ ${L('Continuar amb el correu')}</button></div>`;
 const PROV={apple:'Apple',google:'Google',mail:L('Correu')};
+const AVATARS=['🐱','🐶','🦊','🐼','🦉','🐸','🐙','🦋','🌻','🌹','🍀','🌙','⭐','🍋','🍒','🎲','🀄','🎵','☕','🏔️'];
+function acctChar(a){ return a ? (a.avatar||esc((a.name||'?').trim().charAt(0).toUpperCase())) : '👤'; }
+function acctSetAvatar(e){ if(!S.acct) return; if(e) S.acct.avatar=e; else delete S.acct.avatar; acctSave(); renderSheet(); render(); }
+function acctSetName(){ if(!S.acct) return; const v=(($('#acNewName')||{}).value||'').trim(); if(!v) return; S.acct.name=v.slice(0,30); acctSave(); renderSheet(); render(); toast(L('Nom desat')); }
 function acctCard(){ const a=S.acct;
   if(!a) return `<div class="card accard"><div class="acrow"><span class="acav off${frameCls()}" aria-hidden="true">👤</span><div style="flex:1;min-width:0"><b>${L('Desa el teu progrés')}</b><p class="muted">${L('Perquè no es perdi si canvies de mòbil.')}</p></div></div>
     <button class="btn secondary acopen" onclick="S.sheet='aclogin';renderSheet()">${L('Crear un compte o entrar')}</button>${S.plus?`<p class="codeline" style="margin:10px 0 0">⭐ ${L('Tens Melodia Plus')} · <button class="linkbtn" onclick="S.sheet='acplan';renderSheet()">${L('Gestionar la subscripció')}</button></p>`:''}</div>`;
-  return `<div class="card accard"><div class="acrow"><span class="acav${frameCls()}" aria-hidden="true">${esc((a.name||'?').trim().charAt(0).toUpperCase())}</span><div style="flex:1;min-width:0"><b>${esc(a.name)}</b><p class="muted acmail">${esc(a.email)}</p></div></div>
+  return `<div class="card accard"><div class="acrow"><span class="acav${frameCls()}" aria-hidden="true">${acctChar(a)}</span><div style="flex:1;min-width:0"><b>${esc(a.name)}</b><p class="muted acmail">${esc(a.email)}</p></div></div>
     <p class="acsync">☁️ ${L('Progrés desat al teu compte')} · <span class="muted">${L('amb {0}',PROV[a.prov]||a.prov)}</span></p>
     <p class="codeline" style="margin:6px 0 0"><button class="linkbtn" onclick="S.sheet='acmanage';renderSheet()">${L('Gestionar el compte')}</button></p></div>`; }
 function acctSignIn(prov, name, email){
@@ -2458,6 +2471,12 @@ function acctSheets(){
     <p>${L('Hem enviat un enllaç a {0}. Obre’l des d’aquest mòbil per entrar.',`<b>${esc(pa.email||'')}</b>`)}</p></div>
     <div class="stack"><button class="btn primary" onclick="acctSignIn('mail',S._acPending.name,S._acPending.email)">${L('Prototip: fer com si l’hagués obert')}</button><button class="btn secondary" onclick="S.sheet='acmail';renderSheet()">${L('Canviar el correu')}</button></div>`; }
   if(S.sheet==='acmanage'){ const a=S.acct||{}; return `<h2 style="margin-top:0">${L('El teu compte')}</h2>
+    <div style="text-align:center"><span class="acav${frameCls()}" style="width:84px;height:84px;font-size:40px;margin:0 auto" aria-hidden="true">${acctChar(a)}</span>
+      <p class="muted" style="margin:8px 0 4px">${L('Tria el teu avatar')}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">${AVATARS.map(e=>`<button class="btn secondary" style="width:48px;height:48px;padding:0;font-size:24px;border-radius:50%" aria-label="${e}" onclick="acctSetAvatar('${e}')">${e}</button>`).join('')}</div>
+      <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="acctSetAvatar('')">${L('Fer servir la inicial del nom')}</button></p></div>
+    <form onsubmit="event.preventDefault();acctSetName()" class="stack" style="margin-top:10px"><label class="fld">${L('Canviar el nom')}<input id="acNewName" maxlength="30" autocomplete="name" value="${esc(a.name||'')}"></label>
+      <button class="btn primary" type="submit">${L('Desar')}</button></form>
     <ul class="strec"><li><span>${L('Nom')}</span><b>${esc(a.name||'')}</b></li><li><span>${L('Correu')}</span><b class="acmail">${esc(a.email||'')}</b></li><li><span>${L('Inici de sessió')}</span><b>${PROV[a.prov]||''}</b></li>
       <li><span>${L('Compte creat')}</span><b>${a.since?new Date(a.since).toLocaleDateString():''}</b></li></ul>
     <h3 class="trofg">⭐ ${L('Subscripció')}</h3>${planHTML()}
