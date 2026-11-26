@@ -1540,12 +1540,12 @@ function phraseHTML(){ const g=S.game; const words=[]; let cur=[];
 function vJoc(){ const g=S.game; const {W,H,G}=dims();
   const tiles=g.tiles.map(t=>{ const p=tilePos(t); return `<button class="tile${t.pile?(t.z<t.ph-1?' pile buried':' pile'):''}" data-t="${t.id}" style="left:${p.left}px;top:${p.top}px;z-index:${t.z*1000+t.y*20+t.x}"><span class="face">${faceHTML(t.s)}</span></button>`; }).join('');
   return `<div class="felt" style="flex:1;display:flex;flex-direction:column;min-height:0">
-  <div class="topbar"><button class="iconbtn" aria-label="${L('Pausa')}" onclick="pause()">${ICON.pause}</button><button class="iconbtn gear" aria-label="${L('Configuració')}" onclick="openCfg()"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-1.7-1L15 3.5h-4l-.4 2.5a7.4 7.4 0 0 0-1.7 1l-2.4-1-2 3.4L6.6 11a7.6 7.6 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 1.7 1l.3 2.5h4l.4-2.5a7.4 7.4 0 0 0 1.7-1l2.4 1 2-3.4zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg></button>
+  <div class="topbar"><button class="iconbtn" aria-label="${L('Pausa')}" onclick="pause()">${ICON.pause}</button>
    <div class="title">${esc(g.title)}</div><button class="hintbtn" id="hintBtn" onclick="hint()" aria-label="${L('Pista: ensenya una parella (+{0} s)',HINT_PEN)}">${ICON.bulb}<span>${L('Pista')}</span></button><span class="chip" id="pairsLeft"></span><span class="chip" id="clock"></span></div>
   <div class="panel"${g.mode==='calma'?' style="display:none"':''}><div class="phrase" id="phrase" aria-label="${L('Frase amagada')}">${phraseHTML()}</div>
    <button class="solvebtn" id="solveBtn" onclick="openSolve()">${L('Resoldre')}<small id="hidInfo"></small></button></div>
   <div class="boardwrap" id="boardwrap"><div class="board" style="width:${extents(g.tiles).cw*(W+G)+16}px;height:${extents(g.tiles).ch*(H+G)+20}px">${tiles}</div></div>
-  <div class="stand"><div class="standside"><span class="standlabel">${ICON.stand}${L('Faristol')}</span><span id="resInfo"></span><button class="undobtn" id="undoBtn" onclick="undoPark()" hidden>↶ ${L('Desfer')}</button></div>
+  <div class="stand"><div class="standside"><span class="standlabel">${ICON.stand}${L('Faristol')}</span><span id="resInfo" hidden></span><button class="undobtn" id="undoBtn" onclick="undoPark()" hidden>↶ ${L('Desfer')}</button></div>
    <div class="slots">${Array.from({length:SLOTS},(_,i)=>`<button class="slot" data-s="${i}" aria-label="${L('Lloc {0} del faristol',i+1)}"></button>`).join('')}</div>
    <div class="standside r"><span id="errInfo"></span><span id="failInfo"></span></div></div></div>`; }
 function failsText(){ if(S.tab==='joc'&&S.game&&S.game.mode==='calma') return L('Sense límit'); if(S.plus) return L('Plus: intents il·limitats'); if(S.pass) return L('Passi del dia actiu'); return S.fails===1?L('1 fallada gratuïta'):L('{0} fallades gratuïtes',S.fails); }
@@ -1560,7 +1560,7 @@ function updateReserve(){ const g=S.game; const full=g.reserve.filter(Boolean).l
     const t=el.querySelector('.tile'); if(t) t.classList.toggle('sel', !!(g.sel&&g.sel.k==='r'&&g.sel.i===i));
     el.classList.toggle('warnpulse', full===SLOTS-1 && !r); });
   const ri=$('#resInfo'); if(ri){ ri.textContent=L('{0} de {1}',full,SLOTS); ri.className=full>=SLOTS-1?'w':''; }
-  const fi=$('#failInfo'); if(fi) fi.textContent=failsText(); const ub=$('#undoBtn'); if(ub) ub.hidden=!g.lastPark||!!g.over; }
+  const fi=$('#failInfo'); if(fi) fi.textContent=(g.mode==='calma'||S.plus||S.pass||S.fails<=1)?failsText():''; const ub=$('#undoBtn'); if(ub) ub.hidden=!g.lastPark||!!g.over; }
 function updateHUD(){ const g=S.game; const pl=$('#pairsLeft'); if(pl){ const n=present().length/2|0; pl.innerHTML=n+'<svg viewBox="0 0 20 16" width="17" height="14" aria-hidden="true" style="vertical-align:-2px;margin-left:4px"><rect x="1" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'; pl.setAttribute('aria-label',L('{0} parelles',n)); pl.title=L('{0} parelles',n); }
   const hi=$('#hidInfo'); if(hi) hi.textContent = L('estalvia {0} s',hiddenCount()*BONUS_PER);
   const sb=$('#solveBtn'); if(sb) sb.style.display=(g.solved||(g.over&&!g.won))?'none':''; const pn=document.querySelector('.panel'); if(pn) pn.classList.toggle('solved',g.solved);
@@ -1652,7 +1652,7 @@ function wrongDrop(el){ const g=S.game; if(g.mode==='calma'){ shake(el); toast(L
   if(g.errors>=MAX_ERR){ g.over=true; g.pauseAt=Date.now(); g.failReason='errors'; if(g.mode==='daily') S.dailyFailed='errors'; chargeFail(g); setTimeout(()=>{ S.sheet='blocked'; renderSheet(); },550); }
   else toast(L('Error {0} de {1}',g.errors,MAX_ERR)); }
 function updateErrors(){ const g=S.game, el=$('#errInfo'); if(!el) return; const n=g.errors||0; if(g.mode==='calma'){ el.textContent=L('Mode tranquil'); return; }
-  el.setAttribute('aria-label',L('Errors: {0} de {1}',n,MAX_ERR)); el.innerHTML=L('Errors')+' '+Array.from({length:MAX_ERR},(_,i)=>`<i class="ed ${i<n?'on':''}"></i>`).join(''); }
+  el.setAttribute('aria-label',L('Errors: {0} de {1}',n,MAX_ERR)); el.innerHTML=Array.from({length:MAX_ERR},(_,i)=>`<i class="ed ${i<n?'on':''}"></i>`).join(''); }
 function tapTile(id){ const g=S.game; const t=g.tiles[id];
   const sel=g.sel;
   if(sel&&sel.k==='b'&&sel.id===id){ g.sel=null; updateTiles(); return; }
@@ -2538,12 +2538,14 @@ function vPerfil(){
   ${provaCard()}
   <h2>${L('Ajustos')}</h2>
   <div class="card setcard">${settingsHTML('perfil')}</div>
+  <details class="more" ${S.perfilMore?'open':''} ontoggle="S.perfilMore=this.open"><summary>${L('Més')}</summary>
   <h2>${L('Eines del prototip')}</h2>
   <div class="card protocard"><div class="toggle"><div><b>${L('Prototip: veure-ho com a usuari Plus')}</b><br><span class="muted" style="font-size:14px">${L('Per comparar la versió gratuïta amb la de Plus')}</span></div><button class="sw ${S.plus?'on':''}" role="switch" aria-checked="${!!S.plus}" aria-label="${L('Prototip: veure-ho com a usuari Plus')}" onclick="plusDemo()"></button></div>
     <button class="btn secondary" style="margin-top:10px" onclick="const i=EVENTS.findIndex(e=>e.k===S.evSim);S.evSim=i+1<EVENTS.length?EVENTS[i+1].k:null;S.game=null;toast(S.evSim?L('Festa simulada: {0}',L(EVENTS.find(e=>e.k===S.evSim).n)):L('Sense festa simulada'));render()">${S.evSim?L('Prototip: festa simulada · {0}',L(EVENTS.find(e=>e.k===S.evSim).n)):L('Prototip: simular una festa')}</button>
     <button class="btn secondary" style="margin-top:10px" onclick="S.sheet='weekly';renderSheet()">${L('Prototip: veure el resum setmanal')}</button>
     <button class="btn secondary" style="margin-top:10px" onclick="S.unlocked=GROUPS.length*10+1;toast('${L('Prototip: tots els nivells desbloquejats')}')">${L('Prototip: desbloquejar tots els nivells')}</button></div>
-  <p class="fine">${L('Sense anuncis. Mai.')}<br>${L('Prototip de disseny · Melodia')}</p></div>${tabsBar()}`; }
+  </details>
+  <p class="fine">${L('Prototip de disseny · Melodia')}</p></div>${tabsBar()}`; }
 
 // ================= fulls inferiors =================
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&S.sheet) closeSheet(); });
@@ -2614,6 +2616,7 @@ function vSheet(){ const g=S.game;
   if(S.sheet==='pause') return sheetWrap(`<h2 style="margin-top:0">${L('En pausa')}</h2><div class="stack">
     <button class="btn primary" onclick="resume()">${L('Continuar')}</button>
     <button class="btn secondary" onclick="S.sheet='help';renderSheet()">${L('Com es juga')}</button>
+    <button class="btn secondary" onclick="openCfg()">⚙ ${L('Configuració')}</button>
     <button class="btn secondary" onclick="showSolution()">👁 ${L('Veure la solució')}<small class="bsub">${L('La partida no comptarà')}</small></button>
     <button class="btn secondary" onclick="quit()">${L('Sortir')}</button></div>`);
   if(S.sheet==='help'){ const calm=S.game&&S.game.mode==='calma';
