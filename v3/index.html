@@ -983,7 +983,9 @@ Object.assign(TR.es,{"Més":"Más","Més opcions":"Más opciones","Has gastat el
 Object.assign(TR.en,{"Tria el teu avatar":"Choose your avatar","Fer servir la inicial del nom":"Use the initial of your name","Canviar el nom":"Change name","Desar":"Save","Nom desat":"Name saved"});
 Object.assign(TR.en,{"La Castanyada": "Chestnut Festival", "Nadal": "Christmas", "Sant Jordi": "Saint George's Day", "Sant Joan": "Midsummer", "Festa: {0}": "Festival: {0}", "Medalla aconseguida! Les fitxes de la festa continuen a la partida diària.": "Medal earned! Festival tiles stay in the daily game.", "La partida diària porta fitxes de la festa. Juga-la {0} dies per la medalla.": "The daily game has festival tiles. Play it on {0} days for the medal.", "Festes": "Festivals", "Medalles de festa": "Festival medals", "Aconsegueix {0} medalles de festa": "Earn {0} festival medals", "Aconsegueix una medalla de festa": "Earn a festival medal", "Marc del perfil: {0}": "Profile frame: {0}", "Encara sense marc de perfil": "No profile frame yet", "{0} amb {1} trofeus": "{0} at {1} trophies", "Tens el millor marc!": "You have the best frame!", "Festa simulada: {0}": "Simulated festival: {0}", "Sense festa simulada": "No simulated festival", "Prototip: festa simulada · {0}": "Prototype: simulated festival · {0}", "Prototip: simular una festa": "Prototype: simulate a festival"});
 // L('text català', a0, a1…): text traduït amb {0}, {1}… substituïts
-const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
+// Nom de la marca: un sol lloc. Als textos traduïbles s'escriu «Melodia» i es canvia en mostrar-lo.
+const APP_NAME='Melodia'; try{ document.title=APP_NAME; }catch(e){}
+const L=(s,...a)=>{ let r=(TR[LANG]&&TR[LANG][s])||s; if(APP_NAME!=='Melodia') r=r.split('Melodia').join(APP_NAME); a.forEach((v,i)=>{ r=r.split('{'+i+'}').join(String(v)); }); return r; };
 const MONTHS={ca:['gener','febrer','març','abril','maig','juny','juliol','agost','setembre','octubre','novembre','desembre'],
   es:['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'],
   en:['January','February','March','April','May','June','July','August','September','October','November','December']}[LANG];
@@ -1589,7 +1591,7 @@ function mountGame(){ const php=$('#phone'); if(php&&!php._noSide){ php._noSide=
 function introInfo(g){ return g.mode==='level' ? [L('Nivell'), String(g.level)]
   : g.mode==='daily' ? [L('Partida del dia'), todayLabel]
   : g.mode==='repte' ? [L('Repte'), '⚔']
-  : g.mode==='calma' ? [L('Partida tranquil·la'), '☕'] : [g.title||'Melodia', '♪']; }
+  : g.mode==='calma' ? [L('Partida tranquil·la'), '☕'] : [g.title||APP_NAME, '♪']; }
 function introPostal(g, done){ const ph=$('#phone'); document.querySelectorAll('.intro').forEach(x=>x.remove());
   const [cap, big]=introInfo(g), x=senOf(g), bg=senURL(x), longBig=[...big].length>3;
   const seal=`<div class="iseal"><span class="icap">${esc(cap)}</span><b class="${longBig?'long':''}">${esc(big)}</b><span class="isen">${esc(L(x.n))}</span></div>`;
@@ -2021,7 +2023,7 @@ function notifText(){ if(!S._dp){ try{ S._dp=generate(todaySeed,'trad',28).phras
   return L('El refrany d’avui comença per «{0}»… L’endevinaràs abans d’acabar el tauler?',first); }
 let notifT=null;
 function showNotif(){ clearTimeout(notifT); document.querySelectorAll('.notif').forEach(e=>e.remove()); const d=document.createElement('button'); d.className='notif'; d.type='button';
-  d.innerHTML=`<span class="nic" style="background-image:${senURL(activeSen())}" aria-hidden="true"></span><span class="ntx"><span class="nhd"><b>Melodia</b><small>${L('ara')}</small></span><span>${esc(notifText())}</span></span>`;
+  d.innerHTML=`<span class="nic" style="background-image:${senURL(activeSen())}" aria-hidden="true"></span><span class="ntx"><span class="nhd"><b>${APP_NAME}</b><small>${L('ara')}</small></span><span>${esc(notifText())}</span></span>`;
   d.onclick=()=>{ d.remove(); S.sheet=null; renderSheet(); playDaily(); }; $('#phone').appendChild(d); requestAnimationFrame(()=>d.classList.add('in'));
   notifT=setTimeout(()=>{ d.classList.remove('in'); setTimeout(()=>d.remove(),400); },6000); }
 
@@ -2135,7 +2137,7 @@ const frameCls=()=>{ const f=frameNow().f; return f?' fr-'+f[1]:''; };
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
   const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key]||(isT&&chAll()?'or':null), rest=SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
-  <div class="row"><div class="brand"><span class="dot rj"></span>Melodia</div><span class="streakchip ${S.days[todaySeed]?'lit':''}" title="${L('Ratxa: {0} dies',SI.n)}">🔥 ${SI.n}</span></div>
+  <div class="row"><div class="brand"><span class="dot rj"></span>${APP_NAME}</div><span class="streakchip ${S.days[todaySeed]?'lit':''}" title="${L('Ratxa: {0} dies',SI.n)}">🔥 ${SI.n}</span></div>
   ${provaHome()}${surveyHome()}${(()=>{ const SI=streakInfo(), h=new Date().getHours(); if(S.days[todaySeed]||SI.n<1||h<18) return '';
     return `<div class="savestreak" role="status"><span aria-hidden="true">🔥</span><div><b>${L('Encara pots salvar la ratxa de {0} dies',SI.n)}</b><small>${L('Juga una partida abans de mitjanit.')}</small></div><button class="btn gold" onclick="playDaily()">${L('Jugar')}</button></div>`; })()}
   <div class="hero herobg">
@@ -2481,10 +2483,10 @@ const PLAN_N={any:'Plus anual',mes:'Plus mensual',regal:'Plus de regal'}, PLAN_P
 function plusNextDate(){ const st=new Date(S.plusSince||Date.now()), step=S.plusPlan==='mes'?1:12, d=new Date(st); let k=0;
   do{ k++; d.setTime(+st); d.setMonth(st.getMonth()+step*k); } while(S.plusPlan!=='regal'&&d<=new Date()); return d; }
 const fmtDate=d=>d.toLocaleDateString(LANG==='en'?'en-GB':LANG==='es'?'es-ES':'ca-ES',{day:'numeric',month:'long',year:'numeric'});
-function planHTML(){ if(!S.plus) return `<ul class="strec"><li><span>Melodia Plus</span><b>${L('No')}</b></li></ul>
+function planHTML(){ if(!S.plus) return `<ul class="strec"><li><span>${APP_NAME} Plus</span><b>${L('No')}</b></li></ul>
     <div class="stack" style="margin-top:10px"><button class="btn gold" onclick="S.sheet='pay';renderSheet()">${L('Veure Melodia Plus')}</button></div>`;
   const plan=S.plusPlan||'any', dt=fmtDate(plusNextDate()), gift=plan==='regal';
-  return `<ul class="strec"><li><span>Melodia Plus</span><b class="planok">✓ ${L('Actiu')}</b></li>
+  return `<ul class="strec"><li><span>${APP_NAME} Plus</span><b class="planok">✓ ${L('Actiu')}</b></li>
       <li><span>${L('Pla')}</span><b>${L(PLAN_N[plan])}${PLAN_P[plan]?' · '+L(PLAN_P[plan]):''}</b></li>
       <li><span>${gift||S.plusCancel?L('Actiu fins al'):L('Propera renovació')}</span><b>${dt}</b></li></ul>
     ${gift?`<p class="stnote">${L('És un regal: no es renova ni es cobra res.')}</p>`
@@ -2533,7 +2535,7 @@ function vPerfil(){
   ${acctCard()}
   ${trofCard()}
   ${statsEntry()}
-  ${S.plus?'':`  <div class="card"><div class="row"><div><b>Melodia Plus</b>${PLUSTAG()}<p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Ara jugues amb la versió gratuïta.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div>${plusList()}
+  ${S.plus?'':`  <div class="card"><div class="row"><div><b>${APP_NAME} Plus</b>${PLUSTAG()}<p class="muted" style="font-size:15px">${S.plus?L('Actiu. Pots cancel·lar quan vulguis.'):L('Ara jugues amb la versió gratuïta.')}</p></div><button class="btn secondary" style="width:auto" onclick="S.sheet='pay';renderSheet()">${S.plus?L('Gestionar'):L('Veure')}</button></div>${plusList()}
     <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="S.sheet='gift';renderSheet()">🎁 ${L('Regalar Plus')}</button> · <button class="linkbtn" onclick="toast('${L('Compres restaurades (simulat)')}')">${L('Restaurar compres')}</button> · <span class="muted">${S.acct?L('Les compres van lligades al teu compte'):L('Sense compte, el progrés només es guarda en aquest mòbil')}</span></p></div>`}
   ${provaCard()}
   <h2>${L('Ajustos')}</h2>
@@ -2661,7 +2663,7 @@ function vSheet(){ const g=S.game;
       <h2 style="margin:10px 0 4px">${x.special?'⭐ ':''}${esc(L(x.n))}</h2><p>${esc(L(x.d))}</p>
       <p class="muted">${x.req?L('Desbloquejada en superar el nivell {0}',x.req):L('La primera de la col·lecció')}${x===activeSen()?' · '+L('En ús'):''}</p>
       <div class="stack"><button class="btn primary" onclick="S.sheet='rajoles';renderSheet()">${L('Veure totes les rajoles')}</button><button class="btn secondary" onclick="closeSheet()">${senFromWin()?L('Tornar a la partida'):L('Tancar')}</button></div>`); }
-  if(S.sheet==='pay'){ const outOf=!!(S.tab==='joc'&&S.game&&S.game.over&&!S.game.won); return sheetWrap(`<h2 style="margin-top:0">${outOf?L('Segueix jugant avui'):'⭐ Melodia Plus'}</h2><p class="muted">${L('Sense monedes. Preu final.')}</p>${S.plus?'':`<div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>`}
+  if(S.sheet==='pay'){ const outOf=!!(S.tab==='joc'&&S.game&&S.game.over&&!S.game.won); return sheetWrap(`<h2 style="margin-top:0">${outOf?L('Segueix jugant avui'):'⭐ '+APP_NAME+' Plus'}</h2><p class="muted">${L('Sense monedes. Preu final.')}</p>${S.plus?'':`<div class="paybox"><b>⭐ ${L('Melodia Plus inclou')}</b>${plusList()}</div>`}
     <div class="stack">
     <button class="offer" onclick="buy('pass')"><span><b>${L('Passi del dia')}</b><small>${L('Pagament únic, sense subscripció · intents il·limitats durant 24 hores')}</small></span><span class="price">${L('0,99 €')}</span></button>
     <button class="offer best" onclick="buy('plus')"><span><span class="pill" style="font-size:13px">${L('Millor preu')}</span><br><b>${L('Plus anual')}</b><small>${L('Surt a 2,50 € al mes')}</small></span><span class="price">${L('29,99 €')}</span></button>
@@ -2732,7 +2734,7 @@ const LINK_KEYS=['repte','tema','p','t','lang','prova','regal','de','msg','famil
 function baseURL(){ const u=new URL(location.href.split('#')[0]); LINK_KEYS.forEach(k=>u.searchParams.delete(k)); return u; }
 // Resultat per compartir: cada lletra del refrany és un quadre (🟩 l'has endevinada abans que sortís, ⬜ l'han destapat les parelles)
 function resultText(){ const g=S.game, mask=new Set(g.solveMask||[]), d=new Date();
-  const head = g.mode==='daily' ? 'Melodia · '+d.toLocaleDateString(LANG==='en'?'en-GB':LANG==='es'?'es-ES':'ca-ES',{day:'numeric',month:'long'}) : g.mode==='level' ? 'Melodia · '+L('Nivell {0}',g.level) : 'Melodia';
+  const head = g.mode==='daily' ? APP_NAME+' · '+d.toLocaleDateString(LANG==='en'?'en-GB':LANG==='es'?'es-ES':'ca-ES',{day:'numeric',month:'long'}) : g.mode==='level' ? APP_NAME+' · '+L('Nivell {0}',g.level) : APP_NAME;
   const words=[]; let cur=''; [...g.phrase].forEach((ch,i)=>{ if(ch===' '){ if(cur) words.push(cur); cur=''; } else if(isLetter(ch)) cur+= g.solved&&mask.has(i)?'🟩':'⬜'; }); if(cur) words.push(cur);
   const lines=[head, '⏱ '+fmt(total())+(g.hints?' · 💡 '+g.hints:'')+(g.misses?' · ✋ '+g.misses:'')+(!g.hints&&!g.misses?' · '+L('net'):'')];
   if(g.mode!=='calma') lines.push(words.join(' '));
@@ -2740,7 +2742,7 @@ function resultText(){ const g=S.game, mask=new Set(g.solveMask||[]), d=new Date
   if(g.mode==='daily'&&S.dailyDone) lines.push('🏆 '+L('Posició {0} a la meva comarca',S.dailyDone.pos));
   return lines.join('\n'); }
 function shareResult(){ const url=baseURL(); shareLink(resultText()+'\n'+L('Hi jugues?'), url.toString()); }
-async function shareLink(txt, url){ if(navigator.share){ try{ await navigator.share({title:'Melodia', text:txt, url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
+async function shareLink(txt, url){ if(navigator.share){ try{ await navigator.share({title:APP_NAME, text:txt, url}); return; }catch(e){ if(e&&e.name==='AbortError') return; } }
   try{ await navigator.clipboard.writeText(txt+'\n'+url); toast(L('Enllaç copiat: enganxa’l on vulguis')); }catch(e){ toast(L('No s’ha pogut copiar')); } }
 function sendGift(){ const de=($('#gFrom').value||'').trim().slice(0,30), msg=($('#gMsg').value||'').trim().slice(0,140), u=baseURL();
   u.searchParams.set('regal','1'); if(de) u.searchParams.set('de',de); if(msg) u.searchParams.set('msg',msg);
@@ -2796,7 +2798,7 @@ function readLinks(){ const q=new URLSearchParams(location.search), out={};
   return out; }
 function challengeURL(){ const g=S.game, u=baseURL();
   u.searchParams.set('repte',g.seedStr); u.searchParams.set('tema',g.theme); u.searchParams.set('p',g.nPairs); u.searchParams.set('t',Math.floor(total())); return u.toString(); }
-function challenge(){ const g=S.game; shareLink(`Melodia · ${g.mode==='daily'?todayLabel:g.title}\n${shareGrid()}\n`+L('He fet {0} en aquest tauler. Em guanyes?',fmt(total())), challengeURL()); }
+function challenge(){ const g=S.game; shareLink(`${APP_NAME} · ${g.mode==='daily'?todayLabel:g.title}\n${shareGrid()}\n`+L('He fet {0} en aquest tauler. Em guanyes?',fmt(total())), challengeURL()); }
 function readChallenge(){ const q=new URLSearchParams(location.search), seed=q.get('repte'), th=q.get('tema'), p=+q.get('p'), t=+q.get('t');
   if(!seed||!/^[\w-]{1,40}$/.test(seed)||!THEMES[th]||!(p>=12&&p<=40)||!(t>=0&&t<36000)) return null;
   try{ ['repte','tema','p','t'].forEach(k=>q.delete(k)); history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')); }catch(e){}
@@ -2822,7 +2824,7 @@ async function postalCanvas(){ const g=S.game, W=1080, H=1350, P=gamePal(g), [G,
   x.beginPath(); x.arc(540,200,76,0,7); x.strokeStyle=c1; x.lineWidth=5; x.stroke();
   x.textAlign='center'; x.textBaseline='alphabetic'; x.fillStyle=c1;
   try{ x.letterSpacing='5px'; }catch(e){}
-  x.font='700 27px "Atkinson Hyperlegible", sans-serif'; x.fillText(('Melodia · '+(g.mode==='daily'?todayLabel:g.title)).toUpperCase(),540,350);
+  x.font='700 27px "Atkinson Hyperlegible", sans-serif'; x.fillText((APP_NAME+' · '+(g.mode==='daily'?todayLabel:g.title)).toUpperCase(),540,350);
   try{ x.letterSpacing='0px'; }catch(e){}
   // el refrany, tan gran com càpiga
   const hideP=g.mode==='daily'||g.mode==='repte'; const txt=g.mode==='calma'?L('{0} parelles sense pressa',g.nPairs):hideP?maskPhrase(g.phrase):'«'+g.phrase+'»'; let fs=92, lines; do{ x.font=`700 ${fs}px Fraunces, Georgia, serif`; lines=wrapText(x,txt,720); fs-=4; }while(lines.length*fs*1.16>430&&fs>44);
@@ -2887,7 +2889,7 @@ function splash(){ const d=document.createElement('div'); d.className='splash'; 
   let cells=''; for(let y=0;y<rows;y++) for(let x=0;x<cols;x++){ const dist=Math.hypot(x-(cols-1)/2,(y-(rows-1)/2)*.8); const k=(x+y)%2?((x*7+y*3)%4):0;
     cells+=`<i style="background-image:url('${seeds[k]}');animation-delay:${reduced?0:Math.round(dist*85)}ms"></i>`; }
   d.innerHTML=`<div class="smosaic" style="grid-template-columns:repeat(${cols},1fr)">${cells}</div>
-    <div class="smedal"><span class="sring" style="background-image:url('${seeds[0]}')"></span><div class="word">Melodia</div><div class="tag">${L('Fitxes i refranys')}</div></div>
+    <div class="smedal"><span class="sring" style="background-image:url('${seeds[0]}')"></span><div class="word">${APP_NAME}</div><div class="tag">${L('Fitxes i refranys')}</div></div>
     <div class="sbtns"><span class="sb-pill">${L('Versió 3 · esborrany')}</span><button class="sb-play" type="button">${L('Jugar')}</button></div>`;
   $('#phone').appendChild(d);
   const close=then=>{ d.classList.add('out'); setTimeout(()=>d.remove(),600);
@@ -2947,7 +2949,7 @@ function gaLoad(){ if(gaLoaded || !GA_ID || GA_CONSENT!=='si') return; gaLoaded 
   const sc = document.createElement('script'); sc.async = true; sc.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_ID); document.head.appendChild(sc);
   pageView(S.tab); }
 function track(name, params){ if(!gaLoaded || !window.gtag) return; try{ gtag('event', name, Object.assign({ versio: APP_VER, idioma: LANG }, params||{})); }catch(e){} }
-function pageView(tab){ if(!gaLoaded) return; track('page_view', { page_title: 'Melodia ' + APP_VER + ' · ' + tab, page_location: location.origin + location.pathname + '#' + tab }); }
+function pageView(tab){ if(!gaLoaded) return; track('page_view', { page_title: APP_NAME+' ' + APP_VER + ' · ' + tab, page_location: location.origin + location.pathname + '#' + tab }); }
 function setConsent(v){ GA_CONSENT = v; try{ localStorage.setItem('melodia-galetes', v); }catch(e){} document.querySelectorAll('.cookiebar').forEach(e=>e.remove()); if(v==='si') gaLoad(); }
 function cookieBar(){ if(!GA_ID || GA_CONSENT) return; document.querySelectorAll('.cookiebar').forEach(e=>e.remove());
   const d = document.createElement('div'); d.className = 'cookiebar'; d.setAttribute('role','dialog'); d.setAttribute('aria-label', L('Galetes'));
