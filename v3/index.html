@@ -858,6 +858,10 @@ details.more>summary{cursor:pointer;color:var(--muted,#6b665c);font-weight:700;p
 .solvebtn.quiet{background:transparent;color:#F4EEDF;box-shadow:none;border:1.5px solid rgba(244,238,223,.5)}
 .celebword{position:absolute;left:0;right:0;top:36%;z-index:55;display:flex;justify-content:center;pointer-events:none}
 .celebword span{pointer-events:auto;cursor:pointer;background:rgba(23,63,52,.92);color:#F4EEDF;font-size:40px;font-weight:900;padding:16px 28px;border-radius:26px;animation:rise .35s both cubic-bezier(.2,.9,.3,1.2)}
+.combo{top:6px;font-size:24px;color:#fff;text-shadow:none;-webkit-text-stroke:5px #173F34;paint-order:stroke fill}
+.solvebad{color:#B8322A;font-weight:800;margin:0 0 8px;padding:8px 12px;background:rgba(184,50,42,.12);border-radius:10px;text-align:center}
+@keyframes solveshake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(4px)}}
+.solvein.shaky{animation:solveshake .38s}
 </style>
 <script src="../prova-config.js"></script>
 </head>
@@ -991,6 +995,8 @@ Object.assign(TR.es,{"Temps de joc {0}": "Tiempo de juego {0}", "Refrany −{0}"
 Object.assign(TR.en,{"Temps de joc {0}": "Play time {0}", "Refrany −{0}": "Proverb −{0}", "Temps final {0}": "Final time {0}", "Penalitzacions +{0}": "Penalties +{0}", "Si l’encertes ara, et traiem {0} s. Cada resposta equivocada suma {1} s.": "Get it right now and we take off {0} s. Each wrong answer adds {1} s.", "Amb ajuda, et traiem {0} s.": "With help, we take off {0} s.", "Jugar ara": "Play now", "Nou duel": "New duel", "Duel creat amb {0}": "Duel created with {0}"});
 Object.assign(TR.es,{"Tauler net!": "¡Tablero limpio!", "Rajola: {0}": "Baldosa: {0}"});
 Object.assign(TR.en,{"Tauler net!": "Board cleared!", "Rajola: {0}": "Tile: {0}"});
+Object.assign(TR.es,{"{0} seguides!": "¡{0} seguidas!", "Increïble, {0} seguides!": "¡Increíble, {0} seguidas!", "No cal posar accents ni apòstrofs. Et perdonem una lletra equivocada.": "No hace falta poner acentos ni apóstrofos. Te perdonamos una letra equivocada."});
+Object.assign(TR.en,{"{0} seguides!": "{0} in a row!", "Increïble, {0} seguides!": "Incredible, {0} in a row!", "No cal posar accents ni apòstrofs. Et perdonem una lletra equivocada.": "No need for accents or apostrophes. We forgive one wrong letter."});
 Object.assign(TR.es,{"Més":"Más","Més opcions":"Más opciones","Has gastat els intents d’avui.":"Has gastado los intentos de hoy."});Object.assign(TR.en,{"Més":"More","Més opcions":"More options","Has gastat els intents d’avui.":"You’ve used today’s tries."});Object.assign(TR.en,{"Veure un vídeo i jugar un altre cop":"Watch a video and play again","Passi del dia o subscripció":"Day pass or subscription","Passar al dia següent":"Wait until tomorrow","Vídeo (simulat)":"Video (simulated)","Prototip: aquí hi aniria un vídeo curt. En acabar, guanyes un intent més.":"Prototype: a short video would play here. When it ends, you get one more try.","Un intent més guanyat":"One more try earned","Has gastat els intents d’avui. Pots mirar un vídeo per jugar un altre cop, seguir amb el passi del dia o Plus, jugar una partida tranquil·la (sense puntuar) o passar al dia següent.":"You’ve used today’s tries. Watch a video to play again, continue with the day pass or Plus, play a calm game (unscored) or wait until tomorrow."});
 Object.assign(TR.en,{"Tria el teu avatar":"Choose your avatar","Fer servir la inicial del nom":"Use the initial of your name","Canviar el nom":"Change name","Desar":"Save","Nom desat":"Name saved"});
 Object.assign(TR.en,{"La Castanyada": "Chestnut Festival", "Nadal": "Christmas", "Sant Jordi": "Saint George's Day", "Sant Joan": "Midsummer", "Festa: {0}": "Festival: {0}", "Medalla aconseguida! Les fitxes de la festa continuen a la partida diària.": "Medal earned! Festival tiles stay in the daily game.", "La partida diària porta fitxes de la festa. Juga-la {0} dies per la medalla.": "The daily game has festival tiles. Play it on {0} days for the medal.", "Festes": "Festivals", "Medalles de festa": "Festival medals", "Aconsegueix {0} medalles de festa": "Earn {0} festival medals", "Aconsegueix una medalla de festa": "Earn a festival medal", "Marc del perfil: {0}": "Profile frame: {0}", "Encara sense marc de perfil": "No profile frame yet", "{0} amb {1} trofeus": "{0} at {1} trophies", "Tens el millor marc!": "You have the best frame!", "Festa simulada: {0}": "Simulated festival: {0}", "Sense festa simulada": "No simulated festival", "Prototip: festa simulada · {0}": "Prototype: simulated festival · {0}", "Prototip: simular una festa": "Prototype: simulate a festival"});
@@ -1492,7 +1498,7 @@ function burst(x,y,combo){ const fx=$('#fx');
   fx.appendChild(f); f.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:0},{transform:'translate(-50%,-110%) scale(1.15)',opacity:1,offset:.25},{transform:'translate(-50%,-260%) scale(1)',opacity:0}],{duration:1100,easing:'ease-out'}).onfinish=()=>f.remove();
 }
 function showCombo(n){ if(reduced) return; const fx=$('#fx'); fx.querySelectorAll('.combo').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='combo';
-  d.textContent = n>=5?L('Increïble! ×{0}',n): n>=3?L('Molt bé! ×{0}',n):L('Combo ×{0}',n); fx.appendChild(d);
+  d.textContent = n>=5?L('Increïble, {0} seguides!',n):L('{0} seguides!',n); fx.appendChild(d);
   d.animate([{transform:'translateX(-50%) scale(.4)',opacity:0},{transform:'translateX(-50%) scale(1.15)',opacity:1,offset:.25},{transform:'translateX(-50%) scale(1)',opacity:1,offset:.7},{transform:'translateX(-50%) translateY(-20px)',opacity:0}],{duration:1300,easing:'ease-out'}).onfinish=()=>d.remove(); }
 function petals(){ if(reduced) return; const fx=$('#fx'); const set=['♪','♫','✦','♪','✧']; for(let i=0;i<34;i++){ const p=document.createElement('div'); p.className='petal';
   p.textContent=set[i%set.length]; p.style.left=(Math.random()*100)+'%'; p.style.color=gamePal(S.game)[1+i%4]; p.style.fontSize=(16+Math.random()*16)+'px'; fx.appendChild(p);
@@ -1713,7 +1719,7 @@ async function doMatch(a,b,dragClone){ const g=S.game; g.busy++; const ea=elOf(a
       {duration:T,easing:'cubic-bezier(.45,0,.25,1)'}).finished; };
   if(S.set.pairSnd!==false) setTimeout(()=>clack(), T*.62);
   const lets=lettersForPair(idx).filter(i=>!g.revealed.has(i));
-  setTimeout(()=>{ burst(m.x,m.y,g.combo); stamp(m.x,m.y,g.combo); vib([12,30,18]); if(g.combo>1) showCombo(g.combo);
+  setTimeout(()=>{ if(g.combo>=5||present().length<=2){ burst(m.x,m.y,g.combo); stamp(m.x,m.y,g.combo); } vib([12,30,18]); if(g.combo>1) showCombo(g.combo);
     const note=g.song.n[idx%g.song.n.length]; (g.notes=g.notes||[]).push({t:Date.now(),note,combo:g.combo}); if(S.set.pairSnd!==false){ voice(note,0,.22); bell(note+24,.06,.05,.7); if(g.combo>1) voice(note+(g.combo>3?12:7),.07,.09); if(g.combo>2) voice(note-12,0,.08,2); }
     lets.forEach((li,k)=>flyLetter(m, li, k*110)); setTimeout(updateHUD, 900); }, T*.72);
   await Promise.race([Promise.all([fly(A,ca),fly(B,cb)]).catch(()=>{}), new Promise(r=>setTimeout(r,T+250))]); A.c.remove(); B.c.remove(); g.busy--; checkState(); }
@@ -1730,7 +1736,7 @@ async function celebrate(){ const g=S.game; chTrack('win',{hints:g.hints||0, tim
   if(g.solved||g.mode==='calma'){ S.sheet='win'; renderSheet(); } else { S.sheet='solve'; S.solveMsg='final'; renderSheet(); } }
 function openSolve(){ const g=S.game; if(g.solved||g.busy||(g.over&&!g.won)) return; if(!g.over&&!g.pauseAt) g.pauseAt=Date.now(); S.sheet='solve'; S.solveMsg=''; renderSheet(); setTimeout(()=>{ const i=$('#solveIn'); if(i) i.focus(); },350); }
 function closeSolve(){ const g=S.game; S.sheet=null; renderSheet(); if(!g.over) resume(); }
-function trySolve(f){ const g=S.game, inp=$('#solveIn'), v=f?g.phrase:(inp?inp.value:''); if(!norm(v)) return;
+function trySolve(f){ const g=S.game, inp=$('#solveIn'), v=f?g.phrase:(inp?inp.value:''); if(!norm(v)) return; g.draft=v;
   if(f||closeEnough(norm(v),norm(g.phrase))){ const hid=hiddenCount(); g.solveMask=f?[]:g.order.filter(li=>!g.revealed.has(li)); g.solved=true; chTrack('phrase',{hid}); g.bonus=Math.round(hid*BONUS_PER*(f||1)); const pi=PHRASES.indexOf(g.phrase); g.newPhrase=pi>=0&&!S.solvedIdx.has(pi); if(pi>=0) S.solvedIdx.add(pi); S.found=S.solvedIdx.size;
     bell(14,0,.18,1.6); bell(21,.12,.14,1.6); bell(26,.24,.14,2.2);
     let k=0; g.order.forEach(li=>{ if(!g.revealed.has(li)) revealLetter(li, 300+(k++)*40); });
@@ -2698,12 +2704,11 @@ function vSheet(){ const g=S.game;
     return sheetWrap(`<h2 style="margin-top:0">${fin?L('Tauler resolt! Ara, el refrany'):L('Resol el refrany')}</h2>
       <div class="preview">${phraseHTML()}</div>
       <p class="muted" style="text-align:center">${L('Si l’encertes ara, et traiem {0} s. Cada resposta equivocada suma {1} s.',hid*BONUS_PER,MISS_PEN)}</p>
-      <form onsubmit="event.preventDefault();trySolve()"><input id="solveIn" class="solvein" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${L('Escriu el refrany…')}" aria-label="${L('La teva resposta')}">
-      ${bad?`<p style="color:#B8322A;font-weight:700;margin:8px 0 0">${L('No és aquesta. +{0} s',MISS_PEN)}</p>`:''}
+      <form onsubmit="event.preventDefault();trySolve()">${bad?`<p class="solvebad" role="alert">${L('No és aquesta. +{0} s',MISS_PEN)}</p>`:''}<input id="solveIn" class="solvein${bad?' shaky':''}" enterkeyhint="done" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(g.draft||'')}" oninput="S.game.draft=this.value" placeholder="${L('Escriu el refrany…')}" aria-label="${L('La teva resposta')}">
       <div class="stack"><button class="btn primary" type="submit">${L('Comprovar')}</button>
       <button class="btn secondary" type="button" onclick="S.solveMsg='opts';renderSheet()">💡 ${L('No me’n surto: acaba el refrany')}</button>
       ${fin?`<button class="btn secondary" type="button" onclick="giveUp()">${L('Em rendeixo, mostra-me’l')}</button>`:`<button class="btn secondary" type="button" onclick="closeSolve()">${L('Continuar jugant')}</button>`}</div></form>
-      <p class="fine">${L('No cal escriure accents, apòstrofs ni comes, i una lletra equivocada no compta.')}</p>`); }
+      <p class="fine">${L('No cal posar accents ni apòstrofs. Et perdonem una lletra equivocada.')}</p>`); }
   if(S.sheet==='win'&&g&&g.tuto){ tutoMark(); document.querySelectorAll('.tutohand,.tutobar').forEach(e=>e.remove());
     return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">🎉</div><h2 style="margin:6px 0 4px">${L('Ja saps jugar!')}</h2>
       <p class="muted">${L('A les partides de veritat, cada parella destapa lletres d’un refrany amagat. Endevina’l abans d’acabar i guanyaràs temps.')}</p></div>
