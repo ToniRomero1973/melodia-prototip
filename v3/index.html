@@ -875,7 +875,7 @@ details.more>summary{cursor:pointer;color:var(--muted,#6b665c);font-weight:700;p
 @keyframes edpulse{0%{transform:scale(1.9)}100%{transform:scale(1)}}
 .ed.pulse{animation:edpulse .38s cubic-bezier(.3,1.5,.6,1)}
 /* M4: el refrany, protagonista: franja sòlida d'un sol to, una línia sota cada lletra com en un mot encreuat */
-.panel{background:#1B2A41;backdrop-filter:none;box-shadow:none}
+.panel{background:var(--phrasebg);backdrop-filter:none;box-shadow:none}
 .panel .lc{width:16px;height:24px;font-size:var(--fs-body);background:rgba(255,255,255,.08);border-bottom:2.5px solid rgba(244,238,223,.6);color:#FFFDF7;border-radius:0}
 .panel .lc.on{background:transparent;color:#FFFDF7;border-bottom-color:#F4EEDF;box-shadow:none}
 .panel .lc.win{background:transparent;color:#FFE08A;border-bottom-color:#FFE08A}
@@ -886,11 +886,11 @@ details.more>summary{cursor:pointer;color:var(--muted,#6b665c);font-weight:700;p
 .dark #sheet .preview .lc{background:rgba(255,255,255,.06);color:#F4EEE2;border-bottom-color:#D8D2C4}
 .dark #sheet .preview .lc.on,.dark #sheet .preview .lc.win{background:transparent;color:#F4EEE2;border-bottom-color:#D8D2C4}
 /* M7: sota les fitxes, una superfície llisa d'un sol to; la rajola, només com a marc estret */
-.board{box-sizing:border-box;padding:7px;background:linear-gradient(#1B4F40,#1B4F40) content-box,var(--mosaic) border-box;background-size:auto,calc(var(--tw)*1.18) calc(var(--tw)*1.18);box-shadow:none}
-.felt{background-image:linear-gradient(rgba(23,63,52,.94),rgba(23,63,52,.94)),var(--mosaic)}
+.board{box-sizing:border-box;padding:7px;background:linear-gradient(#1B4F40,#1B4F40) content-box,linear-gradient(rgba(27,79,64,.55),rgba(27,79,64,.55)) border-box,var(--mosaic) border-box;background-size:auto,auto,calc(var(--tw)*1.18) calc(var(--tw)*1.18);box-shadow:none}
+.felt{background-image:linear-gradient(rgba(23,63,52,.96),rgba(23,63,52,.96)),var(--mosaic)}
 /* M6: mode nit de debò al joc */
-.dark .board{background:linear-gradient(#101A17,#101A17) content-box,var(--mosaic) border-box;background-size:auto,calc(var(--tw)*1.18) calc(var(--tw)*1.18)}
-.dark .felt{background-image:linear-gradient(rgba(8,15,12,.95),rgba(8,15,12,.95)),var(--mosaic)}
+.dark .board{background:linear-gradient(#101A17,#101A17) content-box,linear-gradient(rgba(16,26,23,.7),rgba(16,26,23,.7)) border-box,var(--mosaic) border-box;background-size:auto,auto,calc(var(--tw)*1.18) calc(var(--tw)*1.18)}
+.dark .felt{background-image:linear-gradient(rgba(8,15,12,.97),rgba(8,15,12,.97)),var(--mosaic)}
 .dark .board .tile:not(.blocked) .face{filter:brightness(.88)}
 /* M8: barra de dalt simple: pausa · rellotge (centre, xifres fixes) · pista (icona) */
 .topbar .title,#pairsLeft{display:none!important}
@@ -926,6 +926,16 @@ h1,h2{font-size:var(--fs-head);font-weight:800}
 .mepin[hidden]{display:none}.mepin .pos{width:34px;color:var(--muted);font-weight:800}.mepin .nm{flex:1}
 /* R4: les tapades porten una trama diagonal suau per a tothom (forta amb alt contrast) */
 .tile.blocked .face::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:repeating-linear-gradient(45deg,rgba(0,0,0,.11) 0 1.6px,transparent 1.6px 11px)}
+/* R13: el blau és el color del refrany i de res més */
+:root{--phrasebg:#1B2A41}
+/* R12: un sol component de dia (setmana i mes): color de la medalla, número a dins, símbol petit a sota */
+.dd{width:var(--dd,40px);height:var(--dd,40px);border-radius:50%;box-sizing:border-box;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;font-size:var(--fs-cap);line-height:1.05;font-style:normal;font-weight:400;color:var(--quiet);font-variant-numeric:tabular-nums}
+.dd s{text-decoration:none;font-size:9px;line-height:1}
+.dd.or{background:#E3AE3B}.dd.pl{background:#D8D1C2}.dd.br{background:#C98B5A}
+.dd.or,.dd.pl,.dd.br{color:#1F2328;font-weight:800}
+.dd.avui{border:2.5px solid var(--jade);font-weight:800} .dd.avui:not(.or):not(.pl):not(.br){color:var(--ink)}
+.dd.rest{background:var(--jade-soft);color:var(--ink)} .dd.rest svg{width:42%;height:42%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.week .dd{--dd:42px} .mcal .dd{--dd:40px;justify-self:center}
 </style>
 <script src="../prova-config.js"></script>
 </head>
@@ -1947,12 +1957,16 @@ function startCalm(){ S.calmN=(S.calmN||0)+1; const ts=S.set.trainSet||'trad'; l
   if(ts==='tot'){ THEMES.tot={name:L('Tots els dibuixos'), sym:[...SEQ]}; th='tot'; }
   try{ localStorage.setItem('melodia-v3-entrena', ts); }catch(e){}
   startGame('calma',th,'calma-'+todaySeed+'-'+S.calmN, L('Tranquil·la'), L('Sense rellotge i sense puntuar'), pairsOver(28)); }
+const DD_NAME={or:'Or',pl:'Plata',br:'Bronze'}, DD_SYM={or:'★',pl:'◆',br:'●'};
+const MOON_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/></svg>';
+function dayDot(day,mk,isT,rest){ const played=mk&&!rest, cls=rest?'rest':played?mk:isT?'avui':'', lbl=rest?`${day}, ${L('descans')}`:played?`${day}, ${L(DD_NAME[mk])}`:`${day}`;
+  return `<span class="dd ${cls} ${isT&&cls!=='avui'?'avui':''}" role="img" aria-label="${lbl}">${rest?MOON_SVG:`<span aria-hidden="true">${day}</span>${played?`<s aria-hidden="true">${DD_SYM[mk]}</s>`:''}`}</span>`; }
 function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Date(y,m+1,0).getDate(), td=today.getDate(), first=(new Date(y,m,1).getDay()+6)%7, r=rng('mes'+y+'-'+m), done=S.dailyDone;
   let cells=[1,2,3,4,5,6,0].map(d=>`<b>${DAYS[d]}</b>`).join(''); for(let i=0;i<first;i++) cells+='<i class="e"></i>';
   const cnt={or:0,pl:0,br:0}, SI=streakInfo();
   for(let d=1;d<=dn;d++){ const key=iso(new Date(y,m,d)), isT=d===td; let mk=S.days[key]; let c=mk||'', t=String(d); // T1: l'or és només guanyar sense ajuda; els reptes ja no el donen
-    if(SI.n>=1&&SI.rests.has(key)){ c='rest'; t='🌙'; } else if(mk) cnt[mk]++; else if(isT) c='avui';
-    cells+=`<i class="${c}">${t}${c==='or'?'★':c==='pl'?'◆':c==='br'?'●':''}</i>`; } // T1: un símbol perquè no depengui només del color
+    const rest=SI.n>=1&&SI.rests.has(key); if(!rest&&mk) cnt[mk]++;
+    cells+=dayDot(d,mk,isT,rest); } // R12: el mateix component que la setmana
   return `<div class="card"><div class="row"><b>${L('El teu mes')} · ${MONTHS[m]}</b><span class="muted" style="font-size:var(--fs-cap)">${L('{0} or · {1} plata · {2} bronze',cnt.or,cnt.pl,cnt.br)}</span></div>
     <div class="mcal">${cells}</div>
     <p class="muted" style="font-size:var(--fs-body);margin:10px 0 0">${L('★ Or: guanyada sense pistes, barrejar ni errors · ◆ Plata: guanyada amb pistes, barrejar o errors · ● Bronze: jugada')}</p></div>`; }
@@ -2269,7 +2283,7 @@ function weekStats(off){ const {log,sample}=stSource(), end=Date.now()-off*7*864
   return {sample, n:w.length, won:won.length, time:w.reduce((a,x)=>a+x.el,0), best:tm.length?Math.min(...tm):null, phr:w.filter(x=>x.phr).length, days:new Set(w.map(x=>new Date(x.ts).toDateString())).size, pairs:w.reduce((a,x)=>a+x.made,0)}; }
 function weeklySheet(){ const a=weekStats(0), b=weekStats(1), dif=(x,y)=>x===y?'':`<i class="${x>y?'up':'dn'}">${x>y?'▲':'▼'} ${Math.abs(x-y)}</i>`;
   const row=(ic,l,v,d)=>`<li><span>${ic} ${l}</span><b>${v}${d||''}</b></li>`;
-  return `<h2 style="margin-top:0">📅 ${L('La teva setmana')}</h2>${a.sample?`<p class="stsample">${L('Dades d’exemple fins que acabis 5 partides.')}</p>`:''}
+  return `<h2 style="margin-top:0">${L('La teva setmana')}</h2>${a.sample?`<p class="stsample">${L('Dades d’exemple fins que acabis 5 partides.')}</p>`:''}
     <div class="wkhero"><b>${a.days}/7</b><small>${L('dies que has jugat')}</small></div>
     <ul class="strec">${row('🀄',L('Partides'),a.n,dif(a.n,b.n))}${row('🏆',L('Guanyades'),a.won,dif(a.won,b.won))}${row('⏱',L('Millor temps'),a.best==null?'—':fmt(a.best))}
       ${row('🔤',L('Refranys resolts'),a.phr,dif(a.phr,b.phr))}${row('⧉',L('Parelles fetes'),a.pairs,dif(a.pairs,b.pairs))}${row('⌛',L('Temps jugat'),fmtH(a.time))}</ul>
@@ -2301,7 +2315,7 @@ const FRAMES=[[2,'bronze','Bronze'],[6,'plata','Plata'],[12,'or','Or'],[20,'jade
 function frameNow(){ const n=trofList().filter(x=>x.ok).length; let f=null; FRAMES.forEach(x=>{ if(n>=x[0]) f=x; }); return {n, f, next:FRAMES.find(x=>n<x[0])}; }
 const frameCls=()=>{ const f=frameNow().f; return f?' fr-'+f[1]:''; };
 function vAvui(){ const done=S.dailyDone; const wd=today.getDay(); const order=[1,2,3,4,5,6,0];
-  const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const key=iso(addDays(mon,i)), isT=key===todaySeed, m=S.days[key], rest=SI.n>=1&&SI.rests.has(key); return `<div><i class="${rest?'rest':m?'done':''} ${isT?'today':''}">${rest?'🌙':m?'✓':''}</i>${DAYS[d]}</div>`; }).join('');
+  const SI=streakInfo(), mon=addDays(today,-((wd+6)%7)); const week=order.map((d,i)=>{ const dt=addDays(mon,i), key=iso(dt), isT=key===todaySeed, m=S.days[key], rest=SI.n>=1&&SI.rests.has(key); return `<div>${dayDot(dt.getDate(),m,isT,rest)}${DAYS[d]}</div>`; }).join('');
   return `<div class="screen">
   <div class="row"><div class="brand">${APP_NAME}</div>${S.pts>0||Object.keys(S.days).length?`<span class="ptschip" id="ptsChip" role="status" aria-label="${L('{0} punts',S.pts)}">⭐ ${fmtN(S.pts)}</span>`:''}${Object.keys(S.days).length?`<span class="streakchip ${S.days[todaySeed]?'lit':''}" title="${SI.n===1?L('Ratxa: 1 dia'):L('Ratxa: {0} dies',SI.n)}">🔥 ${SI.n}</span>`:''}</div>
   ${provaHome()}${surveyHome()}${(()=>{ const SI=streakInfo(), h=new Date().getHours(); if(S.days[todaySeed]||SI.n<1||h<18) return '';
@@ -2377,6 +2391,8 @@ GROUPS.length=0; [{"name": "La taula de l’àvia", "theme": "trad", "desc": "Le
 GROUPS.forEach(g=>{ g.show=levelNew(g.from).slice(-3); if(g.show.length<3) g.show=levelWin(g.from).slice(0,3); });
 { const seen=new Set(); GROUPS.forEach(g=>{ if(COLS[g.theme]&&!seen.has(g.theme)){ seen.add(g.theme); COLSEN[g.theme].req=g.from-1; SENEFES.push(COLSEN[g.theme]); } }); }
 const lum = h => { const v=parseInt(h.slice(1),16); return .299*(v>>16)+.587*(v>>8&255)+.114*(v&255); };
+function heroBg(theme){ const g=grpBg(theme), m=g.match(/100%\),(.*?);background-size/s); const img=m?m[1]:'none';
+  return `background-color:rgb(var(--heroveil));background-image:linear-gradient(90deg,rgba(var(--heroveil),1) 0%,rgba(var(--heroveil),.9) 45%,rgba(var(--heroveil),.3) 100%),${img};background-size:auto,78px 78px`; }
 function grpBg(theme){ if(COLS[theme]){ const P=COLS[theme].pal, d=P.slice(1).concat(P[0]).reduce((a,b)=>lum(b)<lum(a)?b:a);
     return `background-color:${d};background-image:linear-gradient(90deg,${d} 0%,${d}E6 45%,${d}40 100%),url('${colData(theme)}');background-size:auto,78px 78px`; }
   const P=TPAL[theme]||uiPal(), d=P.slice(1).reduce((a,b)=>lum(b)<lum(a)?b:a);
@@ -2400,7 +2416,7 @@ function vNivells(){
       <p class="muted lvnote">${L('A cada nivell s’estrenen fitxes noves i en marxen d’altres. Aquí tens les que hi debuten.')}</p>
       <div class="lvlist">${cells}</div></div>${tabsBar()}`; }
   const curG=Math.min(GROUPS.length-1,Math.floor((S.unlocked-1)/10)), cg=GROUPS[curG], curN=Math.min(S.unlocked,GROUPS.length*10);
-  const hero=`<div class="jhero" style="${grpBg(cg.theme)}"><small>${L('Capítol {0} de {1}',curG+1,GROUPS.length)}</small><h2>${cg.name}</h2><p>${cg.desc}</p>
+  const hero=`<div class="jhero" style="${heroBg(cg.theme)}"><small>${L('Capítol {0} de {1}',curG+1,GROUPS.length)}</small><h2>${cg.name}</h2><p>${cg.desc}</p>
       <div class="jnew"><div class="nrow">${nchips(levelNew(curN).slice(0,5))}</div></div>
       <div class="jmeta">${isBoss(curN)?`<span class="boss">⭐ ${L('Nivell final del capítol')}</span>`:''}<span>${L('{0} parelles',levelPairs(curN))}</span>${diffDots(curN)}</div>
       <button class="btn" onclick="startLevel(${curN})">${L('Juga el nivell {0}',curN)}</button></div>`;
@@ -2504,7 +2520,7 @@ const trofTxt=(t,goal)=>goal===1&&t.d1?L(t.d1):L(t.d,goal);
 function trofSheet(){ const all=trofList(), f=S.trofF||'tots', got=all.filter(x=>x.ok).length;
   const rows=TROF.map(t=>{ const xs=all.filter(x=>x.t===t), n=xs.filter(x=>x.ok).length; return {t, xs, n, best:xs.filter(x=>x.ok).pop(), next:xs.find(x=>!x.ok)}; })
     .filter(r=>f==='tots'||(f==='tinc'?r.n>0:!!r.next)), groups=[...new Set(rows.map(r=>r.t.g))];
-  const fr=frameNow(); return `<h2 style="margin-top:0">🏆 ${L('Trofeus')}</h2><p class="muted">${L('Tens {0} de {1} trofeus.',got,all.length)}</p>
+  const fr=frameNow(); return `<h2 style="margin-top:0">${L('Trofeus')}</h2><p class="muted">${L('Tens {0} de {1} trofeus.',got,all.length)}</p>
     <div class="framerow"><span class="acav${fr.f?' fr-'+fr.f[1]:''}" aria-hidden="true">${acctChar(S.acct)}</span><div><b>${fr.f?L('Marc del perfil: {0}',L(fr.f[2])):L('Encara sense marc de perfil')}</b><small>${fr.next?L('{0} amb {1} trofeus',L(fr.next[2]),fr.next[0]):L('Tens el millor marc!')}</small></div></div>
     <div class="seg">${[['tots',L('Tots')],['tinc',L('Els tinc')],['falten',L('Em falten')]].map(([k,l])=>`<button class="${f===k?'on':''}" aria-pressed="${f===k}" onclick="S.trofF='${k}';renderSheet()">${l}</button>`).join('')}</div>
     ${groups.length?groups.map(g=>`<h3 class="trofg">${L(g)}</h3><ul class="troflist">${rows.filter(r=>r.t.g===g).map(r=>{ const x=r.next||r.best;
@@ -2541,13 +2557,13 @@ function statsEntry(){ const {log,sample}=stSource(), won=log.filter(x=>x.won), 
     ${sample?`<p class="stnote">${L('Dades d’exemple fins que acabis 5 partides.')}</p>`:(typeof stSource==='function'&&stSource().empty?`<p class="stnote">${L('Acaba 5 partides i aquí veuràs com millores · {0} de 5',stSource().n)}</p>`:'')}<p class="trofmore">${S.plus?L('Veure totes les estadístiques'):L('Més de 40 dades i gràfics amb Plus')}</p></div>`; }
 function openStats(){ if(S.plus){ S.stPer=S.stPer||'tot'; S.sheet='stats'; } else { S.plusWhy='stats'; S.plusNext='stats'; S.sheet='plusask'; } renderSheet(); }
 function statsSheet(){ const src=stSource(), per=S.stPer||'tot', now=Date.now(), lim={'7':7,'30':30,'tot':1e5}[per];
-  if(src.empty) return `<h2 style="margin-top:0">📊 ${L('Estadístiques')}</h2><p style="text-align:center;font-weight:700;font-size:var(--fs-title)">${L('Acaba 5 partides i aquí veuràs com millores · {0} de 5',src.n)}</p><div style="height:8px;border-radius:6px;background:rgba(0,0,0,.1);overflow:hidden"><i style="display:block;height:100%;width:${src.n*20}%;background:var(--jade)"></i></div>`;
+  if(src.empty) return `<h2 style="margin-top:0">${L('Estadístiques')}</h2><p style="text-align:center;font-weight:700;font-size:var(--fs-title)">${L('Acaba 5 partides i aquí veuràs com millores · {0} de 5',src.n)}</p><div style="height:8px;border-radius:6px;background:rgba(0,0,0,.1);overflow:hidden"><i style="display:block;height:100%;width:${src.n*20}%;background:var(--jade)"></i></div>`;
   const log=src.log.filter(x=>now-x.ts<=lim*864e5), won=log.filter(x=>x.won), timed=won.filter(x=>x.mode!=='calma');
   const tPlay=log.reduce((a,x)=>a+x.el,0), pairsMade=log.reduce((a,x)=>a+x.made,0), SI=src.sample?stLogStreak(src.log):streakInfo();
   const kpi=(v,l,sub)=>`<div><b>${v}</b><small>${l}</small>${sub?`<i>${sub}</i>`:''}</div>`;
   const sec=(t,html,note)=>`<section class="stsec2"><h3>${t}</h3>${html}${note?`<p class="stnote">${note}</p>`:''}</section>`;
   const hbar=(lab,v,max,txt,col)=>`<div class="hbar"><span class="hl">${lab}</span><span class="tr"><i style="width:${max?Math.round(v/max*100):0}%;background:${col||'var(--jade)'}"></i></span><b>${txt}</b></div>`;
-  if(!log.length) return `<h2 style="margin-top:0">📊 ${L('Estadístiques')}</h2>${stPerSeg(per)}<p class="muted" style="text-align:center;margin:30px 0">${L('No hi ha partides en aquest període.')}</p><div class="stack"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`;
+  if(!log.length) return `<h2 style="margin-top:0">${L('Estadístiques')}</h2>${stPerSeg(per)}<p class="muted" style="text-align:center;margin:30px 0">${L('No hi ha partides en aquest període.')}</p><div class="stack"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`;
   // --- evolució del temps (partides guanyades amb rellotge) ---
   const ev=timed.slice(-40), evSVG=(()=>{ if(ev.length<2) return `<div class="stempty">${L('Calen almenys 2 partides guanyades amb rellotge.')}</div>`;
     const W=320,H=150,pl=34,pr=8,pt=12,pb=20, mx=Math.max(...ev.map(x=>x.t)), mn=Math.min(...ev.map(x=>x.t)), lo=Math.max(0,mn-30), hi=mx+30;
@@ -2588,7 +2604,7 @@ function statsSheet(){ const src=stSource(), per=S.stPer||'tot', now=Date.now(),
   const tips=[]; if(impr!=null) tips.push(impr>0?L('Ets un {0}% més ràpid que a les teves 10 primeres partides.',impr):L('Les últimes partides t’han costat una mica més que les primeres.'));
   tips.push(L('El dia que més jugues és el {0}.',L(['dilluns','dimarts','dimecres','dijous','divendres','dissabte','diumenge'][favWd]))); if(bestPart&&bestPart.r>=0) tips.push(L('On més guanyes és a la {0}: {1} de partides guanyades.',L(DAYPART[bestPart.i][0]).toLowerCase(),Math.round(bestPart.r*100)+'%'));
   if(wonNC.length) tips.push(L('El {0} de les partides guanyades, sense cap pista.',pctS(wonNC.filter(x=>!x.hints).length,wonNC.length)));
-  return `<h2 style="margin-top:0">📊 ${L('Estadístiques')}${PLUSTAG()}</h2>
+  return `<h2 style="margin-top:0">${L('Estadístiques')}${PLUSTAG()}</h2>
     ${src.sample?`<p class="stsample">${L('Dades d’exemple: quan hagis acabat 5 partides, hi sortiran les teves.')}</p>`:''}
     ${stPerSeg(per)}
     <div class="kpi6">${kpi(log.length,L('Partides'))}${kpi(pctS(won.length,log.length),L('Guanyades'),L('{0} de {1}',won.length,log.length))}${kpi(fmtH(tPlay),L('Temps jugat'))}
@@ -2669,7 +2685,7 @@ function planHTML(){ if(!S.plus) return `<ul class="strec"><li><span>${APP_NAME}
       :`<div class="stack" style="margin-top:10px"><button class="btn secondary" onclick="S.sheet='plancancel';renderSheet()">${L('Cancel·lar el pla')}</button></div>`}
     <div class="stack" style="margin-top:8px"><button class="btn secondary" onclick="S.sheet='gift';renderSheet()">🎁 ${L('Regalar Plus a algú')}</button></div>`; }
 function planSheets(){
-  if(S.sheet==='acplan') return `<h2 style="margin-top:0">⭐ ${L('La teva subscripció')}</h2>${planHTML()}<div class="stack" style="margin-top:8px"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`;
+  if(S.sheet==='acplan') return `<h2 style="margin-top:0">${L('La teva subscripció')}</h2>${planHTML()}<div class="stack" style="margin-top:8px"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`;
   if(S.sheet==='plancancel'){ const dt=fmtDate(plusNextDate()); return `<h2 style="margin-top:0">${L('Cancel·lar Melodia Plus?')}</h2>
     <p>${L('No es tornarà a cobrar. Continuaràs tenint Plus fins al {0}; després tornaràs a la versió gratuïta.',`<b>${dt}</b>`)}</p>
     <p class="muted">${L('No perds res: els nivells, els trofeus i la ratxa es queden. Les lligues que has creat continuen, però no en podràs crear de noves.')}</p>
@@ -2686,7 +2702,7 @@ function acctSheets(){
     <p id="acErr" class="acerr" role="alert"></p>
     <div class="stack"><button class="btn primary" onclick="acctMail()">${L('Enviar l’enllaç')}</button><button class="btn secondary" onclick="S.sheet='aclogin';renderSheet()">${L('Enrere')}</button></div>
     <p class="stnote">${L('Prototip: no s’envia cap correu i les dades no surten d’aquest navegador.')}</p>`;
-  if(S.sheet==='acsent'){ const pa=S._acPending||{}; return `<div style="text-align:center"><div class="giftbig" aria-hidden="true">📬</div><h2 style="margin:6px 0 0">${L('Mira el teu correu')}</h2>
+  if(S.sheet==='acsent'){ const pa=S._acPending||{}; return `<div><div class="giftbig" aria-hidden="true">📬</div><h2 style="margin:6px 0 0">${L('Mira el teu correu')}</h2>
     <p>${L('Hem enviat un enllaç a {0}. Obre’l des d’aquest mòbil per entrar.',`<b>${esc(pa.email||'')}</b>`)}</p></div>
     <div class="stack"><button class="btn primary" onclick="acctSignIn('mail',S._acPending.name,S._acPending.email)">${L('Prototip: fer com si l’hagués obert')}</button><button class="btn secondary" onclick="S.sheet='acmail';renderSheet()">${L('Canviar el correu')}</button></div>`; }
   if(S.sheet==='acmanage'){ const a=S.acct||{}; return `<h2 style="margin-top:0">${L('El teu compte')}</h2>
@@ -2784,7 +2800,7 @@ function vSheet(){ const g=S.game;
   if(S.sheet==='weekly') return sheetWrap(weeklySheet());
   if(S.sheet==='stats') return sheetWrap(statsSheet());
   { const ah=acctSheets()||planSheets(); if(ah) return sheetWrap(ah); }
-  if(S.sheet==='plusask') return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">${S.plusWhy==='stats'?'📊':'🏆'}</div><h2 style="margin:6px 0 0">${S.plusWhy==='stats'?L('Les estadístiques completes són de Plus'):L('Crear lligues és de Plus')}</h2></div>
+  if(S.sheet==='plusask') return sheetWrap(`<div><div class="giftbig" aria-hidden="true">${S.plusWhy==='stats'?'📊':'🏆'}</div><h2 style="margin:6px 0 0">${S.plusWhy==='stats'?L('Les estadístiques completes són de Plus'):L('Crear lligues és de Plus')}</h2></div>
     <p class="muted" style="text-align:center">${S.plusWhy==='stats'?L('Evolució del temps, activitat de cada dia, quan i com jugues, rècords i molt més.'):L('Amb Plus pots crear totes les lligues que vulguis i convidar-hi la teva gent. Els convidats hi entren gratis.')}</p>
     <div class="stack"><button id="murAnual" class="btn gold" onclick="tryPlus()"><b>${L('Plus anual')} · ${L('29,99 €')}</b><br><small>${L('Surt a 2,50 € al mes')}</small></button>
     <button id="murMensual" class="btn secondary" onclick="tryPlus('mes')">${L('Plus mensual')} · ${L('4,99 €/mes')}</button></div>
@@ -2797,7 +2813,7 @@ function vSheet(){ const g=S.game;
     <label class="fld">${L('Missatge')}<textarea id="gMsg" maxlength="140" rows="3">${L('Perquè juguis cada dia una estona. Una abraçada!')}</textarea></label>
     <div class="stack"><button class="btn gold" onclick="sendGift()">${L('Pagar 29,99 € i enviar')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>
     <p class="fine"><b>${L('Prototip: no es fa cap cobrament.')}</b></p>`);
-  if(S.sheet==='regal'){ const gf=S.links.gift; return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">🎁</div>
+  if(S.sheet==='regal'){ const gf=S.links.gift; return sheetWrap(`<div><div class="giftbig" aria-hidden="true">🎁</div>
     <h2 style="margin:6px 0 0">${gf.de?L('{0} t’ha fet un regal',esc(gf.de)):L('T’han fet un regal')}</h2>
     <p>${L('Un any de Melodia Plus: intents il·limitats, lligues i arxiu.')}</p>${gf.msg?`<blockquote class="giftmsg">${esc(gf.msg)}</blockquote>`:''}</div>
     <div class="stack"><button class="btn gold" onclick="acceptGift()">${L('Obrir el regal')}</button></div>`); }
@@ -2822,7 +2838,7 @@ function vSheet(){ const g=S.game;
     <b>${L('Amb la teva gent')}</b>${PLUSTAG()}${S.plus?'':`<p class="muted plusnote">${L('Crear una lliga és de Plus. Les lligues obertes i unir-te a una lliga on t’han convidat són gratis.')}</p>`}<div class="lgtypes">${Object.entries(LG_TYPES).map(([k,t])=>`<button onclick="newLeague('${k}')"><span aria-hidden="true">${t.em}</span>${L(t.n)}</button>`).join('')}</div>
     <b>${L('Obertes a tothom')}</b><div class="lgpub">${Object.entries(LG_PUB).map(([k,[em,n]])=>{ const has=S.leagues.some(l=>l.pub===k); return `<button ${has?'disabled':''} onclick="addPublic('${k}')"><span aria-hidden="true">${em}</span>${L(n)}<i>${has?'✓ '+L('Ja hi és'):'＋ '+L('Afegir')}</i></button>`; }).join('')}</div>
     <div class="stack"><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`);
-  if(S.sheet==='newlg'){ const T=LG_TYPES[S.newType]||LG_TYPES.altra; return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">${T.em}</div><h2 style="margin:6px 0 0">${S.newType==='parella'?L('Nou duel'):L('Nova lliga')+' · '+L(T.n)}</h2></div>
+  if(S.sheet==='newlg'){ const T=LG_TYPES[S.newType]||LG_TYPES.altra; return sheetWrap(`<div><div class="giftbig" aria-hidden="true">${T.em}</div><h2 style="margin:6px 0 0">${S.newType==='parella'?L('Nou duel'):L('Nova lliga')+' · '+L(T.n)}</h2></div>
     <p class="muted">${S.newType==='parella'?L('Un duel cada dia amb la mateixa persona: el mateix tauler, i guanya qui el fa més ràpid.'):L('Cada dia, el mateix tauler per a tots. Sense comptes ni contrasenyes: només un enllaç per al grup.')}</p>
     <label class="fld">${L('Nom de la lliga')}<input id="fName" maxlength="30" value="${esc(L(T.def))}"></label>
     <div class="stack"><button class="btn primary" onclick="createLeague()">${L('Crear i convidar')}</button><button class="btn secondary" onclick="S.sheet='addlg';renderSheet()">${L('Enrere')}</button></div>`); }
@@ -2830,7 +2846,7 @@ function vSheet(){ const g=S.game;
     <p class="muted">${L('Arrossega-les o fes servir les fletxes. La primera és la que veuràs en obrir la classificació.')}</p>
     <ul class="lgsort" id="lgSort">${sortRows()}</ul>
     <div class="stack"><button class="btn primary" onclick="S.sheet=null;renderSheet()">${L('Fet')}</button></div>`);
-  if(S.sheet==='lgjoin'){ const j=S.links.league, T=LG_TYPES[j.type]; return sheetWrap(`<div style="text-align:center"><div class="giftbig" aria-hidden="true">${T.em}</div>
+  if(S.sheet==='lgjoin'){ const j=S.links.league, T=LG_TYPES[j.type]; return sheetWrap(`<div><div class="giftbig" aria-hidden="true">${T.em}</div>
     <h2 style="margin:6px 0 0">${L('T’han convidat a «{0}»',esc(j.name))}</h2>
     <p>${j.type==='parella'?L('Cada dia jugareu el mateix tauler i guanyarà qui el faci més ràpid.'):L('Cada dia jugareu el mateix tauler i veureu qui l’ha fet més ràpid.')}</p></div>
     <div class="stack"><button class="btn primary" onclick="joinLeague()">${L('Unir-me a la lliga')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Ara no')}</button></div>`); }
@@ -2876,7 +2892,7 @@ function vSheet(){ const g=S.game;
       let more=''; if(canSh&&!calm&&ok) more+=Sx(retry); if(!calm&&!ok){ if(canSh){ if(canVideo()) more+=Sx(vid); more+=Sx(pay); } else if(canVideo()) more+=Sx(pay); }
       return `<div class="stack">${main}${undo}${more}
       <details class="more" ${S.stuckMore?'open':''} ontoggle="S.stuckMore=this.open"><summary>${L('Més opcions')}</summary><div class="stack">${!calm&&!ok?`<button class="btn secondary" onclick="startCalm()">☕ ${L('Partida tranquil·la')}</button>`:''}<button class="btn secondary" onclick="showSolution()">👁 ${L('Veure la solució')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Mirar el tauler')}</button><button class="btn secondary" onclick="quit()">${ok?L('Sortir'):L('Passar al dia següent')}</button></div></details></div>`; })()}`); }
-  if(S.sheet==='video') return sheetWrap(`<h2 style="margin-top:0">${L('Vídeo (simulat)')}</h2><p class="muted">${L('Prototip: aquí hi aniria un vídeo curt. En acabar, guanyes un intent més.')}</p><div class="nearmiss"><div class="bar"><span style="width:${Math.round((5-S.vidLeft)/5*100)}%"></span></div></div><p class="muted" style="text-align:center">${S.vidLeft} s</p><div class="stack"><button class="btn secondary" onclick="videoCancel()">${L('Cancel·lar')}</button></div>`);
+  if(S.sheet==='video') return sheetWrap(`<h2 style="margin-top:0">${L('Vídeo (simulat)')}</h2><p class="muted">${L('Prototip: aquí hi aniria un vídeo curt. En acabar, guanyes un intent més.')}</p><div class="nearmiss"><div class="bar"><span style="width:${Math.round((5-S.vidLeft)/5*100)}%"></span></div></div><p class="muted">${S.vidLeft} s</p><div class="stack"><button class="btn secondary" onclick="videoCancel()">${L('Cancel·lar')}</button></div>`);
   if(S.sheet==='shown'){ const daily=g.mode==='daily', mn=meaningOf(g.phrase);
     return sheetWrap(`<h2 style="margin-top:0">${L('Així es resolia')}</h2>
       ${g.mode==='calma'?'':`<div class="meaning"><span class="ph">${esc(g.phrase)}</span>${mn?`<span class="mn">${esc(mn)}</span>`:''}${equivHTML(PHRASES.indexOf(g.phrase))}</div>`}
