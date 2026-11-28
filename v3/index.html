@@ -59,14 +59,14 @@ p{line-height:1.45;margin:6px 0} .muted{color:var(--quiet)}
 .tile.blocked{filter:brightness(.66) saturate(.7)}
 .hc .tile.blocked .face::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(0,0,0,.22) 0 3px,transparent 3px 9px)}
 .tile.sel{transform:translate(-1px,-8px)}
-.tile.hint .face{animation:hintp .6s ease-in-out 0s 2 alternate, hintg 2.2s ease-out}
-@keyframes hintp{to{transform:translateY(-7px) scale(1.06)}}
-@keyframes hintg{0%,70%{box-shadow:0 0 0 4px var(--gold),0 0 24px rgba(246,200,90,.95)}100%{box-shadow:none}}
+.tile.hint .face{background:linear-gradient(155deg,#FFF6C9 0%,#FBE7A0 55%,#F2D47A 100%);box-shadow:inset 0 0 0 1px rgba(110,90,60,.22), 1.5px 2.5px 0 #DCCDB0, 0 0 0 3px var(--gold), 0 0 22px rgba(246,200,90,.9);animation:hinth 1.5s ease-in-out 1 both}
+/* R10: halo groc (el llenguatge de la selecció) que bateja dues vegades i queda fix; s'apaga sol als 3 s o en tocar */
+@keyframes hinth{0%,66%{box-shadow:inset 0 0 0 1px rgba(110,90,60,.22), 1.5px 2.5px 0 #DCCDB0, 0 0 0 1px var(--gold), 0 0 6px rgba(246,200,90,.35)}33%,100%{box-shadow:inset 0 0 0 1px rgba(110,90,60,.22), 1.5px 2.5px 0 #DCCDB0, 0 0 0 4px var(--gold), 0 0 24px rgba(246,200,90,.95)}}
 .slot.hintslot{animation:hints 1s ease-in-out 2}
 @keyframes hints{50%{border-color:var(--gold);box-shadow:0 0 0 4px rgba(246,200,90,.6)}}
 .hintbtn{display:flex;align-items:center;gap:4px;border:0;border-radius:11px;padding:0 10px;height:36px;background:var(--gchip,rgba(255,255,255,.12));color:var(--gink,inherit);font:inherit;font-size:var(--fs-body);font-weight:700;cursor:pointer}
 .hintbtn svg{width:18px;height:18px}
-@media (prefers-reduced-motion:reduce){ .tile.hint .face{animation:hintg 2.2s ease-out} .slot.hintslot{animation:none;border-color:var(--gold)} }
+@media (prefers-reduced-motion:reduce){ .tile.hint .face{animation:none} .slot.hintslot{animation:none;border-color:var(--gold)} }
 .tile.sel .face{box-shadow:inset 0 0 0 1px rgba(110,90,60,.22), 1.5px 2.5px 0 #DCCDB0, 0 0 0 3px var(--gold), 0 0 22px rgba(246,200,90,.9)}
 @media (hover:hover){ .tile:not(.blocked):not(.sel):hover{transform:translateY(-3px)} }
 .tile.gone{display:none}
@@ -1653,12 +1653,14 @@ function findParkHint(){ const g=S.game, set=present(); const slot=g.reserve.fin
   let best=null,bp=-1,bf=-1; for(const t of free){ const rest=set.filter(o=>o.id!==t.id); if(canFinish(rest,[...g.reserve.filter(Boolean).map(r=>g.tiles[r.id]),t])===false) continue; /* E3: sense sortida, no ho recomanis */ const pr=pairsAfter(rest,[...held,t.s]); const f=rest.filter(o=>isFree(o,rest)).length-(free.length-1); if(pr>bp||(pr===bp&&f>bf)){ best=t; bp=pr; bf=f; } }
   return best?{t:best,slot}:null; }
 function parkHand(id){ document.querySelectorAll('.parkhand').forEach(e=>e.remove()); const el=document.querySelector(`.board .tile[data-t="${id}"]`), ph=$('#phone'); if(!el||!ph) return; const r=el.getBoundingClientRect(), pr=ph.getBoundingClientRect(); const h=document.createElement('div'); h.className='tutohand parkhand'; h.textContent='👆'; h.style.left=(r.left-pr.left+r.width/2-16)+'px'; h.style.top=(r.top-pr.top+r.height*.55)+'px'; ph.appendChild(h); setTimeout(()=>h.remove(),3000); }
+function clearHint(){ clearTimeout(clearHint.t); document.querySelectorAll('.tile.hint').forEach(el=>el.classList.remove('hint')); }
+document.addEventListener('pointerdown',clearHint,true); // R10: la pista s'apaga quan toques qualsevol cosa
 function hint(){ const g=S.game; if(!g||g.over||g.busy||g.pauseAt) return; let p=findPair(), park=null;
   if(!p){ park=findParkHint(); document.querySelectorAll('.slot').forEach(el=>{ if(park&&+el.dataset.s!==park.slot) return; el.classList.remove('hintslot'); void el.offsetWidth; el.classList.add('hintslot'); });
     if(!park){ toast(g.reserve.some(r=>!r)?L('Apartar una fitxa ara et deixaria sense jugades: millor barreja les fitxes'):L('El faristol és ple: desfés l’última fitxa o barreja'),3000); return; } p=[{k:'b',id:park.t.id}]; }
   if(g.mode!=='calma'){ if(S.freeHints>0){ S.freeHints--; starsSave(); toast('🎁 '+L('Pista gratis: no suma temps')); } else { g.hintPen=(g.hintPen||0)+HINT_PEN; g.hints=(g.hints||0)+1; } } g.sel=null; updateTiles(); updateReserve();
   const note=g.song.n[g.pairs%g.song.n.length];
-  p.forEach((x,k)=>{ const el=elOf(x); if(!el) return; el.classList.remove('hint'); void el.offsetWidth; el.classList.add('hint'); setTimeout(()=>el.classList.remove('hint'),2200); voice(note+(k?7:0),k*.3,.16); voice(note+(k?7:0),.9+k*.3,.1); });
+  p.forEach((x,k)=>{ const el=elOf(x); if(!el) return; el.classList.remove('hint'); void el.offsetWidth; el.classList.add('hint'); voice(note+(k?7:0),k*.3,.16); voice(note+(k?7:0),.9+k*.3,.1); }); clearTimeout(clearHint.t); clearHint.t=setTimeout(clearHint,3000);
   if(park){ toast(L('Aparta aquesta fitxa al faristol.'),3000); parkHand(park.t.id); } else toast(g.mode==='calma'?L('Pista'):L('Pista: +{0} s',HINT_PEN)); updateHUD(); }
 
 // ================= joc: vista =================
