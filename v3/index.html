@@ -365,6 +365,7 @@ p{line-height:1.45;margin:6px 0} .muted{color:var(--quiet)}
 .lvl.lock{opacity:.55;background:var(--bg)} .lvl .lk{color:var(--quiet)}
 @keyframes curp{50%{transform:scale(1.05)}}
 .ed{display:inline-block;width:10px;height:10px;border-radius:50%;border:2px solid var(--gquiet);margin-left:4px;vertical-align:-1px}
+#clock .ed{width:13px;height:13px;border-color:currentColor;opacity:.85}#clock .ed.on{opacity:1;border-color:#fff}
 .ed.on{background:#D64545;border-color:#D64545}
 .tile.wrong .face{outline:3px solid #D64545;outline-offset:2px;background:#FDECEC}
 .topbar{height:40px;gap:6px;padding:0 8px} .topbar .iconbtn{width:36px!important;height:36px!important;border-radius:11px} .topbar .title{font-size:var(--fs-body)} .chip{padding:4px 9px;font-size:var(--fs-cap)}
@@ -1696,7 +1697,7 @@ function vJoc(){ const g=S.game; const {W,H,G}=dims();
   <div class="boardwrap" id="boardwrap"><div class="board" style="width:${extents(g.tiles).cw*(W+G)+16}px;height:${extents(g.tiles).ch*(H+G)+20}px">${tiles}</div></div>
   <div class="stand"><div class="standside"><span class="standlabel">${ICON.stand}${L('Faristol')}</span><span id="resInfo" hidden></span><button class="undobtn" id="undoBtn" onclick="undoPark()" hidden>↶ ${L('Desfer')}</button></div>
    <div class="slots">${Array.from({length:SLOTS},(_,i)=>`<button class="slot" data-s="${i}" aria-label="${L('Lloc {0} del faristol',i+1)}"></button>`).join('')}</div>
-   <div class="standside r"><span id="errInfo"></span><span id="failInfo"></span></div></div></div>`; }
+   <div class="standside r"><span id="failInfo"></span></div></div></div>`; }
 function failsText(){ if(S.tab==='joc'&&S.game&&S.game.tuto) return ''; if(S.tab==='joc'&&S.game&&S.game.mode==='calma') return ''; if(S.plus) return L('Plus: intents il·limitats'); if(S.pass) return L('Passi del dia actiu'); return S.fails===1?L('1 intent'):L('{0} intents',S.fails); } // un sol nom: «intents»
 function updateTiles(){ const g=S.game, set=present();
   g.tiles.forEach(t=>{ const el=document.querySelector(`[data-t="${t.id}"]`); if(!el) return;
@@ -1714,7 +1715,12 @@ function paintFixed(){ const g=S.game, gm=(S.tab==='joc'&&g&&!S.sheet)?$('#gamem
 function updateHUD(){ const g=S.game; paintFixed(); const pl=$('#pairsLeft'); if(pl){ const n=present().length/2|0; pl.innerHTML=n+'<svg viewBox="0 0 20 16" width="17" height="14" aria-hidden="true" style="vertical-align:-2px;margin-left:4px"><rect x="1" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'; pl.setAttribute('aria-label',L('{0} parelles',n)); pl.title=L('{0} parelles',n); }
   const sbq=$('#solveBtn'); if(sbq&&g.order&&g.order.length) sbq.classList.toggle('quiet', !g.over && (g.order.length-hiddenCount())/g.order.length<.25);
   const sb=$('#solveBtn'); if(sb) sb.style.display=(g.solved||(g.over&&!g.won))?'none':''; const pn=document.querySelector('.panel'); if(pn) pn.classList.toggle('solved',g.solved);
-  const c=$('#clock'); if(c){ c.style.display=(S.set.hideTime||g.mode==='calma')?'none':''; const sec=Math.floor(elapsed()); c.textContent=fmt(elapsed()); c.setAttribute('aria-label',L('Temps: {0} min {1} s',Math.floor(sec/60),sec%60)); } }
+  paintClock(); }
+// R11: la pastilla de dalt porta el rellotge i els punts d'error («2:07 · ●○○»); a la tranquil·la, només el nom
+function paintClock(){ const g=S.game, c=$('#clock'); if(!c||!g) return; const calm=g.mode==='calma', n=g.errors||0, key=(calm?'c':'e')+n+(S.set.hideTime?'h':'');
+  if(c.dataset.k!==key){ c.dataset.k=key; c.removeAttribute('aria-label');
+    c.innerHTML=calm?`<span>${L('Partida tranquil·la')}</span>`:`<span class="ckt" role="img"></span>${S.set.hideTime?'':'<span aria-hidden="true"> · </span>'}<span class="ckd" role="img" aria-label="${L('Errors: {0} de {1}',n,MAX_ERR)}">${Array.from({length:MAX_ERR},(_,i)=>`<i class="ed ${i<n?'on':''}${i===n-1&&n>0?' pulse':''}"></i>`).join('')}</span>`; }
+  if(!calm){ const t=c.querySelector('.ckt'); if(t){ const sec=Math.floor(elapsed()); t.textContent=S.set.hideTime?'':fmt(elapsed()); t.setAttribute('aria-label',L('Temps: {0} min {1} s',Math.floor(sec/60),sec%60)); t.style.display=S.set.hideTime?'none':''; } } }
 function revealLetter(i, delay=0){ const g=S.game; g.revealed.add(i); setTimeout(()=>{ if(S.game!==g) return; const n=document.querySelector(`#phrase [data-l="${i}"]`); if(!n) return;
     n.textContent=g.phrase[i].toUpperCase(); n.classList.remove('on'); void n.offsetWidth; n.classList.add('on'); }, delay); }
 function letterXY(i){ const n=document.querySelector(`#phrase [data-l="${i}"]`); if(!n) return null; const r=rel(n); return {x:r.x+r.w/2, y:r.y+r.h/2}; }
@@ -1802,8 +1808,7 @@ const MAX_ERR=3;
 function wrongDrop(el){ const g=S.game; if(g.mode==='calma'){ shake(el); toast(L('No és la seva parella')); return; } g.errors=(g.errors||0)+1; el.classList.add('wrong'); shake(el); setTimeout(()=>el.classList.remove('wrong'),500);
   thump(0,.25); click(160,.12); vib([30,40,30]); updateErrors();
   if(g.errors>=MAX_ERR){ g.over=true; g.pauseAt=Date.now(); g.failReason='errors'; if(g.mode==='daily') S.dailyFailed='errors'; chargeFail(g); setTimeout(()=>{ S.sheet='blocked'; renderSheet(); },550); } }
-function updateErrors(){ const g=S.game, el=$('#errInfo'); if(!el) return; const n=g.errors||0; if(g.mode==='calma'){ el.textContent=L('Partida tranquil·la'); return; }
-  el.setAttribute('aria-label',L('Errors: {0} de {1}',n,MAX_ERR)); el.innerHTML=Array.from({length:MAX_ERR},(_,i)=>`<i class="ed ${i<n?'on':''}${i===n-1&&n>0?' pulse':''}"></i>`).join(''); }
+function updateErrors(){ paintClock(); } // R11: els punts d'error viuen a la pastilla del rellotge
 function tapTile(id){ const g=S.game; const t=g.tiles[id];
   const sel=g.sel;
   if(sel&&sel.k==='b'&&sel.id===id){ g.sel=null; updateTiles(); return; }
