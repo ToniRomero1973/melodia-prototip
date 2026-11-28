@@ -917,6 +917,9 @@ h1,h2{font-size:var(--fs-head);font-weight:800}
 .lk .licw,.jlock .licw{color:var(--quiet)}
 .ptschip{margin-left:auto;margin-right:8px;background:var(--jade-soft);color:var(--ink);border-radius:999px;padding:4px 12px;font-size:var(--fs-body);font-weight:800;display:inline-flex;align-items:center;gap:4px}
 .btn:disabled{opacity:.55;cursor:not-allowed}
+/* M9: la teva fila, fixada a baix de la classificació quan no es veu */
+.mepin{position:sticky;bottom:-16px;margin:8px -20px -16px;padding:0 28px;min-height:56px;display:flex;align-items:center;gap:12px;background:var(--jade-soft);color:var(--ink);border:0;border-top:1px solid var(--line);box-shadow:0 -4px 12px rgba(0,0,0,.12);font:inherit;font-size:var(--fs-body);font-weight:800;width:calc(100% + 40px);text-align:left;cursor:pointer;font-variant-numeric:tabular-nums}
+.mepin[hidden]{display:none}.mepin .pos{width:34px;color:var(--muted);font-weight:800}.mepin .nm{flex:1}
 </style>
 <script src="../prova-config.js"></script>
 </head>
@@ -1068,6 +1071,8 @@ Object.assign(TR.es,{"Comprar una lletra · {0} punts": "Comprar una letra · {0
 Object.assign(TR.en,{"Comprar una lletra · {0} punts": "Buy a letter · {0} points", "en tens {0}": "you have {0}", "Et falten {0} punts per comprar una lletra": "You need {0} more points to buy a letter", "punts": "points", "{0} punts": "{0} points"});
 Object.assign(TR.es,{"Punts guanyats": "Puntos ganados", "Punts gastats": "Puntos gastados"});
 Object.assign(TR.en,{"Punts guanyats": "Points earned", "Punts gastats": "Points spent"});
+Object.assign(TR.es,{"Anar a la teva fila":"Ir a tu fila"});
+Object.assign(TR.en,{"Anar a la teva fila":"Go to your row"});
 Object.assign(TR.es,{"Més":"Más","Més opcions":"Más opciones","Has gastat els intents d’avui.":"Has gastado los intentos de hoy."});Object.assign(TR.en,{"Més":"More","Més opcions":"More options","Has gastat els intents d’avui.":"You’ve used today’s tries."});Object.assign(TR.en,{"Veure un vídeo i jugar un altre cop":"Watch a video and play again","Passi del dia o subscripció":"Day pass or subscription","Passar al dia següent":"Wait until tomorrow","Vídeo (simulat)":"Video (simulated)","Prototip: aquí hi aniria un vídeo curt. En acabar, guanyes un intent més.":"Prototype: a short video would play here. When it ends, you get one more try.","Un intent més guanyat":"One more try earned","Has gastat els intents d’avui. Pots mirar un vídeo per jugar un altre cop, seguir amb el passi del dia o Plus, jugar una partida tranquil·la (sense puntuar) o passar al dia següent.":"You’ve used today’s tries. Watch a video to play again, continue with the day pass or Plus, play a calm game (unscored) or wait until tomorrow."});
 Object.assign(TR.en,{"Tria el teu avatar":"Choose your avatar","Fer servir la inicial del nom":"Use the initial of your name","Canviar el nom":"Change name","Desar":"Save","Nom desat":"Name saved"});
 Object.assign(TR.en,{"La Castanyada": "Chestnut Festival", "Nadal": "Christmas", "Sant Jordi": "Saint George's Day", "Sant Joan": "Midsummer", "Festa: {0}": "Festival: {0}", "Medalla aconseguida! Les fitxes de la festa continuen a la partida diària.": "Medal earned! Festival tiles stay in the daily game.", "La partida diària porta fitxes de la festa. Juga-la {0} dies per la medalla.": "The daily game has festival tiles. Play it on {0} days for the medal.", "Festes": "Festivals", "Medalles de festa": "Festival medals", "Aconsegueix {0} medalles de festa": "Earn {0} festival medals", "Aconsegueix una medalla de festa": "Earn a festival medal", "Marc del perfil: {0}": "Profile frame: {0}", "Encara sense marc de perfil": "No profile frame yet", "{0} amb {1} trofeus": "{0} at {1} trophies", "Tens el millor marc!": "You have the best frame!", "Festa simulada: {0}": "Simulated festival: {0}", "Sense festa simulada": "No simulated festival", "Prototip: festa simulada · {0}": "Prototype: simulated festival · {0}", "Prototip: simular una festa": "Prototype: simulate a festival"});
@@ -3044,6 +3049,15 @@ let toastT; function toast(m,ms=2000){ clearTimeout(toastT);
   { const gm=(S.tab==='joc'&&S.game&&!S.sheet)?$('#gamemsg'):null; // M3: dins la partida, l'avís surt a la franja de dalt (mai damunt de fitxes ni del faristol)
     if(gm){ document.querySelectorAll('.toast').forEach(e=>e.remove()); gm.innerHTML='<span>'+esc(m)+'</span>'; toastT=setTimeout(()=>{ gm.innerHTML=''; },ms); return; } } document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.setAttribute('aria-live','polite'); d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),ms); }
 
+// M9: si la teva fila no es veu a la llista, surt fixada a baix (posició i temps); si es veu, no es duplica; en tocar-la, hi baixa
+function pinMe(){ const sc=$('#view .screen'); let bar=sc&&sc.querySelector('.mepin'); const row=sc&&sc.querySelector('.lb li.me');
+  if(!sc||!row){ if(bar) bar.remove(); return; }
+  if(!bar){ bar=document.createElement('button'); bar.type='button'; bar.className='mepin'; bar.onclick=()=>{ const r=sc.querySelector('.lb li.me'); if(r) r.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}); }; sc.appendChild(bar); sc.addEventListener('scroll',pinMe,{passive:true}); }
+  const pos=row.querySelector('.pos'), val=row.lastElementChild;
+  bar.innerHTML=`<span class="pos">${pos?pos.textContent:''}</span><span class="nm">${L('Tu')}</span><span>${val?val.textContent:''}</span><span aria-hidden="true">⌄</span>`;
+  bar.setAttribute('aria-label',`${L('Tu')}: ${pos?pos.textContent:''}, ${val?val.textContent:''}. ${L('Anar a la teva fila')}`);
+  const r=row.getBoundingClientRect(), v=sc.getBoundingClientRect(), vis=r.top>=v.top&&r.bottom<=v.bottom-56;
+  bar.hidden=vis; if(vis) row.removeAttribute('aria-hidden'); else row.setAttribute('aria-hidden','true'); }
 function render(){ const ph=$('#phone'); const vkey=S.tab+'|'+S.lvGroup, osc=$('#view .screen'), otop=(S._vkey===vkey&&osc)?osc.scrollTop:0; S._vkey=vkey;
   ph.style.setProperty('--mosaic-hero', senURL(activeSen()));
   if(S.game) ph.style.setProperty('--mosaic', senURL(senOf(S.game)));
@@ -3051,6 +3065,7 @@ function render(){ const ph=$('#phone'); const vkey=S.tab+'|'+S.lvGroup, osc=$('
   if(S.tab==='joc'){ $('#view').innerHTML=vJoc(); mountGame(); ambStart(); }
   else { ambStop(); const ph=$('#phone'); ['--tw','--th','--sym'].forEach(v=>ph.style.removeProperty(v)); $('#view').innerHTML={avui:vAvui,nivells:vNivells,class:vClass,perfil:vPerfil}[S.tab](); if(S.tab==='class'){ bindChipDrag(); const c=$('#lgChips'), o=c&&c.querySelector('.on'); if(o) c.scrollLeft=Math.max(0,o.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-o.offsetWidth)/2); } }
   if(otop&&S.tab!=='joc'){ const nsc=$('#view .screen'); if(nsc) nsc.scrollTop=otop; }
+  if(S.tab==='class') pinMe();
   renderSheet(); }
 setInterval(()=>{ if(S.tab==='joc'&&S.game&&!S.game.pauseAt) updateHUD(); },500);
 
