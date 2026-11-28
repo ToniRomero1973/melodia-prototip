@@ -912,6 +912,7 @@ details.more>summary{cursor:pointer;color:var(--muted,#6b665c);font-weight:700;p
 h1,h2{font-size:var(--fs-head);font-weight:800}
 .card>.row>b,.card .lghead b,.trofcard .row>b{font-size:var(--fs-title);font-weight:800}
 /* G1.4: icones de línia en lloc d'emojis decoratius */
+.chic .licw{margin:0}.chic .licw svg,.hi .licw svg{width:1.05em;height:1.05em}
 .licw{display:inline-flex;vertical-align:-.22em;margin-right:.4em;color:currentColor}
 .licw:last-child{margin-right:0}
 .licw svg{width:1.2em;height:1.2em;display:block}
@@ -1087,6 +1088,8 @@ Object.assign(TR.es,{"Joc {0}": "Juego {0}", "Pistes {0}": "Pistas {0}", "Barrej
 Object.assign(TR.en,{"Joc {0}": "Play {0}", "Pistes {0}": "Hints {0}", "Barrejar {0}": "Shuffle {0}", "Intents {0}": "Tries {0}", "Respostes {0}": "Answers {0}", "Altres {0}": "Other {0}", "Refrany {0}": "Proverb {0}", "Cada pista suma 20 s; barrejar, 1 min; una resposta equivocada del refrany, 30 s.": "Each hint adds 20 s; shuffling, 1 min; a wrong proverb answer, 30 s."});
 Object.assign(TR.es,{"Dues fitxes iguals enganxades pel costat també fan parella si cap té res a sobre, encara que una tingui l’altre costat tancat.": "Dos fichas iguales pegadas por el lado también hacen pareja si ninguna tiene nada encima, aunque una tenga el otro lado cerrado."});
 Object.assign(TR.en,{"Dues fitxes iguals enganxades pel costat també fan parella si cap té res a sobre, encara que una tingui l’altre costat tancat.": "Two identical tiles side by side also make a pair if neither has anything on top, even if one has its other side blocked."});
+Object.assign(TR.es,{"Refrany encertat! −{0} s. Ara buida el tauler.": "¡Refrán acertado! −{0} s. Ahora vacía el tablero."});
+Object.assign(TR.en,{"Refrany encertat! −{0} s. Ara buida el tauler.": "Proverb solved! −{0} s. Now clear the board."});
 Object.assign(TR.es,{"Més":"Más","Més opcions":"Más opciones","Has gastat els intents d’avui.":"Has gastado los intentos de hoy."});Object.assign(TR.en,{"Més":"More","Més opcions":"More options","Has gastat els intents d’avui.":"You’ve used today’s tries."});Object.assign(TR.en,{"Veure un vídeo i jugar un altre cop":"Watch a video and play again","Passi del dia o subscripció":"Day pass or subscription","Passar al dia següent":"Wait until tomorrow","Vídeo (simulat)":"Video (simulated)","Prototip: aquí hi aniria un vídeo curt. En acabar, guanyes un intent més.":"Prototype: a short video would play here. When it ends, you get one more try.","Un intent més guanyat":"One more try earned","Has gastat els intents d’avui. Pots mirar un vídeo per jugar un altre cop, seguir amb el passi del dia o Plus, jugar una partida tranquil·la (sense puntuar) o passar al dia següent.":"You’ve used today’s tries. Watch a video to play again, continue with the day pass or Plus, play a calm game (unscored) or wait until tomorrow."});
 Object.assign(TR.en,{"Tria el teu avatar":"Choose your avatar","Fer servir la inicial del nom":"Use the initial of your name","Canviar el nom":"Change name","Desar":"Save","Nom desat":"Name saved"});
 Object.assign(TR.en,{"La Castanyada": "Chestnut Festival", "Nadal": "Christmas", "Sant Jordi": "Saint George's Day", "Sant Joan": "Midsummer", "Festa: {0}": "Festival: {0}", "Medalla aconseguida! Les fitxes de la festa continuen a la partida diària.": "Medal earned! Festival tiles stay in the daily game.", "La partida diària porta fitxes de la festa. Juga-la {0} dies per la medalla.": "The daily game has festival tiles. Play it on {0} days for the medal.", "Festes": "Festivals", "Medalles de festa": "Festival medals", "Aconsegueix {0} medalles de festa": "Earn {0} festival medals", "Aconsegueix una medalla de festa": "Earn a festival medal", "Marc del perfil: {0}": "Profile frame: {0}", "Encara sense marc de perfil": "No profile frame yet", "{0} amb {1} trofeus": "{0} at {1} trophies", "Tens el millor marc!": "You have the best frame!", "Festa simulada: {0}": "Simulated festival: {0}", "Sense festa simulada": "No simulated festival", "Prototip: festa simulada · {0}": "Prototype: simulated festival · {0}", "Prototip: simular una festa": "Prototype: simulate a festival"});
@@ -1699,7 +1702,8 @@ function updateReserve(){ const g=S.game; const full=g.reserve.filter(Boolean).l
     el.classList.toggle('warnpulse', full===SLOTS-1 && !r); });
   const ri=$('#resInfo'); if(ri){ ri.textContent=L('{0} de {1}',full,SLOTS); ri.className=full>=SLOTS-1?'w':''; }
   const fi=$('#failInfo'); if(fi) fi.textContent=(g.mode==='calma'||S.plus||S.pass||S.fails<=1)?failsText():''; const ub=$('#undoBtn'); if(ub) ub.hidden=!g.lastPark||!!g.over; }
-function updateHUD(){ const g=S.game; const pl=$('#pairsLeft'); if(pl){ const n=present().length/2|0; pl.innerHTML=n+'<svg viewBox="0 0 20 16" width="17" height="14" aria-hidden="true" style="vertical-align:-2px;margin-left:4px"><rect x="1" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'; pl.setAttribute('aria-label',L('{0} parelles',n)); pl.title=L('{0} parelles',n); }
+function paintFixed(){ const g=S.game, gm=(S.tab==='joc'&&g&&!S.sheet)?$('#gamemsg'):null; if(gm&&g.fixedMsg&&!g.over&&!gm.firstChild) gm.innerHTML='<span>'+esc(g.fixedMsg)+'</span>'; }
+function updateHUD(){ const g=S.game; paintFixed(); const pl=$('#pairsLeft'); if(pl){ const n=present().length/2|0; pl.innerHTML=n+'<svg viewBox="0 0 20 16" width="17" height="14" aria-hidden="true" style="vertical-align:-2px;margin-left:4px"><rect x="1" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="2" width="8" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'; pl.setAttribute('aria-label',L('{0} parelles',n)); pl.title=L('{0} parelles',n); }
   const sbq=$('#solveBtn'); if(sbq&&g.order&&g.order.length) sbq.classList.toggle('quiet', !g.over && (g.order.length-hiddenCount())/g.order.length<.25);
   const sb=$('#solveBtn'); if(sb) sb.style.display=(g.solved||(g.over&&!g.won))?'none':''; const pn=document.querySelector('.panel'); if(pn) pn.classList.toggle('solved',g.solved);
   const c=$('#clock'); if(c){ c.style.display=(S.set.hideTime||g.mode==='calma')?'none':''; const sec=Math.floor(elapsed()); c.textContent=fmt(elapsed()); c.setAttribute('aria-label',L('Temps: {0} min {1} s',Math.floor(sec/60),sec%60)); } }
@@ -1864,7 +1868,8 @@ function trySolve(f){ const g=S.game, inp=$('#solveIn'), v=f?g.phrase:(inp?inp.v
     setTimeout(()=>document.querySelectorAll('#phrase .lc').forEach((n,j)=>setTimeout(()=>n.classList.add('win'),j*25)), 300+k*40);
     if(g.tuto&&!g.won){ g.over=true; g.won=true; g.pauseAt=Date.now(); }
     const fin=!!g.won; S.sheet=null; renderSheet(); if(!fin) resume();
-    toast(L('Encertada! −{0} s',g.bonus)); updateHUD();
+    if(fin) toast(L('Encertada! −{0} s',g.bonus)); else g.fixedMsg=L('Refrany encertat! −{0} s. Ara buida el tauler.',g.bonus); // R3: sense el botó, la franja diu què toca ara (fix fins que s'acaba)
+    updateHUD();
     if(fin){ setTimeout(()=>{ S.sheet='win'; renderSheet(); }, 1400+k*40); }
   } else { g.penalty+=MISS_PEN; g.misses++; click(200,.1); S.solveMsg = g.won?'finalbad':'bad'; renderSheet(); updateHUD();
     setTimeout(()=>{ const i=$('#solveIn'); if(i){ i.value=v; i.focus(); i.classList.add('shake'); } },50); } }
@@ -1943,7 +1948,7 @@ function monthCard(){ const y=today.getFullYear(), m=today.getMonth(), dn=new Da
 const CH_POOL=[
  {k:'combo', t:'Fes un combo de ×3', n:1, ic:'⚡'},
  {k:'nohint', t:'Acaba un tauler sense fer servir cap pista', n:1, ic:'💡'},
- {k:'early', t:'Resol el refrany quan encara hi hagi 8 lletres amagades', n:1, ic:'Aa'},
+ {k:'early', t:'Resol el refrany quan encara hi hagi 8 lletres amagades', n:1, ic:'🔤'},
  {k:'calm', t:'Acaba una partida tranquil·la', n:1, ic:'☕'},
  {k:'pairs', t:'Fes 40 parelles avui', n:40, ic:'🀄'},
  {k:'res', t:'Fes 3 parelles amb fitxes del faristol', n:3, ic:'⇅'},
@@ -2254,7 +2259,7 @@ function weeklySheet(){ const a=weekStats(0), b=weekStats(1), dif=(x,y)=>x===y?'
   return `<h2 style="margin-top:0">📅 ${L('La teva setmana')}</h2>${a.sample?`<p class="stsample">${L('Dades d’exemple fins que acabis 5 partides.')}</p>`:''}
     <div class="wkhero"><b>${a.days}/7</b><small>${L('dies que has jugat')}</small></div>
     <ul class="strec">${row('🀄',L('Partides'),a.n,dif(a.n,b.n))}${row('🏆',L('Guanyades'),a.won,dif(a.won,b.won))}${row('⏱',L('Millor temps'),a.best==null?'—':fmt(a.best))}
-      ${row('Aa',L('Refranys resolts'),a.phr,dif(a.phr,b.phr))}${row('⧉',L('Parelles fetes'),a.pairs,dif(a.pairs,b.pairs))}${row('⌛',L('Temps jugat'),fmtH(a.time))}</ul>
+      ${row('🔤',L('Refranys resolts'),a.phr,dif(a.phr,b.phr))}${row('⧉',L('Parelles fetes'),a.pairs,dif(a.pairs,b.pairs))}${row('⌛',L('Temps jugat'),fmtH(a.time))}</ul>
     <p class="stnote">${L('▲▼ respecte a la setmana anterior.')}</p>
     <div class="stack"><button class="btn gold" onclick="shareLink(L('La meva setmana a Melodia: {0} partides, {1} guanyades i {2} refranys. Hi jugues?',${a.n},${a.won},${a.phr}), baseURL().toString())">${L('Compartir')}</button><button class="btn secondary" onclick="S.sheet=null;renderSheet()">${L('Tancar')}</button></div>`; }
 
@@ -2465,7 +2470,7 @@ const TROF=[
  {g:'Partides',ic:'💡',n:'Sense pistes',d:'Guanya {0} partides sense demanar cap pista',d1:'Guanya una partida sense demanar cap pista',st:[1,10,50],v:()=>S.st.nohint},
  {g:'Partides',ic:'⚡',n:'Combo',d:'Fes {0} parelles seguides',st:[5,10,20],v:()=>S.st.combo},
  {g:'Nivells',ic:'🧩',n:'Nivells superats',d:'Supera {0} nivells',st:[10,50,100,200],v:()=>Math.max(0,S.unlocked-1)},
- {g:'Refranys',ic:'Aa',n:'Refranyer',d:'Resol {0} refranys',st:[5,25,100],v:()=>S.found},
+ {g:'Refranys',ic:'🔤',n:'Refranyer',d:'Resol {0} refranys',st:[5,25,100],v:()=>S.found},
  {g:'Refranys',ic:'📚',n:'Col·leccions de refranys',d:'Completa {0} col·leccions',d1:'Completa una col·lecció de refranys',st:[1,3,6],v:()=>colsComplete()},
  {g:'Festes',ic:'🎉',n:'Medalles de festa',d:'Aconsegueix {0} medalles de festa',d1:'Aconsegueix una medalla de festa',st:[1,2,4],v:()=>evMedals()},
  {g:'Col·lecció',ic:'🎨',n:'Rajoles',d:'Aconsegueix {0} rajoles',st:[3,10,SENEFES.length],v:()=>SENEFES.filter(senOk).length},
@@ -2674,7 +2679,7 @@ function acctSheets(){
   if(S.sheet==='acmanage'){ const a=S.acct||{}; return `<h2 style="margin-top:0">${L('El teu compte')}</h2>
     <div style="text-align:center"><span class="acav${frameCls()}" style="width:84px;height:84px;font-size:40px;margin:0 auto" aria-hidden="true">${acctChar(a)}</span>
       <p class="muted" style="margin:8px 0 4px">${L('Tria el teu avatar')}</p>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">${AVATARS.map(e=>`<button class="btn secondary" style="width:48px;height:48px;padding:0;font-size:var(--fs-head);border-radius:50%" aria-label="${e}" onclick="acctSetAvatar('${e}')">${e}</button>`).join('')}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center">${AVATARS.map(e=>`<button class="btn secondary" style="width:48px;height:48px;padding:0;font-size:var(--fs-head);border-radius:50%" aria-label="${e}" data-noic onclick="acctSetAvatar('${e}')">${e}</button>`).join('')}</div>
       <p class="codeline" style="margin:8px 0 0"><button class="linkbtn" onclick="acctSetAvatar('')">${L('Fer servir la inicial del nom')}</button></p></div>
     <form onsubmit="event.preventDefault();acctSetName()" class="stack" style="margin-top:10px"><label class="fld">${L('Canviar el nom')}<input id="acNewName" maxlength="30" autocomplete="name" value="${esc(a.name||'')}"></label>
       <button class="btn primary" type="submit">${L('Desar')}</button></form>
@@ -2710,7 +2715,7 @@ function vPerfil(){
 // ================= fulls inferiors =================
 
 // G1.4: les icones decoratives són de línia; els emojis només queden per celebrar (🎉 🥇 🏅), la ratxa (🔥) i el contingut
-const LINEIC={'⭐':'star','☕':'cup','📅':'cal','🏆':'cup2','🎁':'gift','📺':'video','🔀':'shuf','👁':'eye','⚙':'gear','📊':'bars','✉':'mail','☁':'cloud','🌐':'globe','🀄':'grid','💡':'bulb','＋':'plus','↶':'undo','🧩':'puzzle','⚡':'bolt','🏔':'mount','♪':'music','💞':'heart','❓':'help','🔒':'lock','📬':'mail','♾':'inf','🗂':'folder'};
+const LINEIC={'⭐':'star','☕':'cup','📅':'cal','🏆':'cup2','🎁':'gift','📺':'video','🔀':'shuf','👁':'eye','⚙':'gear','📊':'bars','✉':'mail','☁':'cloud','🌐':'globe','🀄':'grid','💡':'bulb','＋':'plus','↶':'undo','🧩':'puzzle','⚡':'bolt','🏔':'mount','♪':'music','💞':'heart','❓':'help','🔒':'lock','📬':'mail','♾':'inf','🗂':'folder','⏱':'timer','🔓':'unlock','✋':'hand','🏘':'house','📍':'pin','🗺':'map','🌍':'globe','👨‍👩‍👧':'family','🥂':'cheers','🎒':'pack','👤':'user','🌙':'moon','🔤':'aa'};
 const ICP={star:'<polygon points="12 3 14.8 9 21 9.8 16.5 14.2 17.8 20.6 12 17.4 6.2 20.6 7.5 14.2 3 9.8 9.2 9"/>',
  cup:'<path d="M4 8h12v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 9h2a2.5 2.5 0 0 1 0 5h-2M7 3v2M11 3v2"/>',
  cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/>',
@@ -2736,16 +2741,28 @@ const ICP={star:'<polygon points="12 3 14.8 9 21 9.8 16.5 14.2 17.8 20.6 12 17.4
  help:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/>',
  lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
  inf:'<path d="M7 9a3 3 0 1 0 0 6c4 0 6-6 10-6a3 3 0 1 1 0 6c-4 0-6-6-10-6z"/>',
- folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'};
+ folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+ unlock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/>',
+ hand:'<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-1a5 5 0 0 1-4-2l-2.5-4a1.5 1.5 0 0 1 2.5-1.5L8 14"/>',
+ house:'<path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/>',
+ pin:'<path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+ map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"/>',
+ family:'<circle cx="8" cy="6" r="2.5"/><circle cx="17" cy="8" r="2"/><path d="M3 20v-5a5 5 0 0 1 10 0v5M14 20v-3a3.5 3.5 0 0 1 7 0v3"/>',
+ cheers:'<path d="M7 3h5l-1 6a2.5 2.5 0 0 1-5 0zM9.5 11.5V19M7 20h5M17 7l-3 11M13 4l2 .5"/>',
+ pack:'<path d="M7 8a5 5 0 0 1 10 0v11a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1zM9 14h6M10 5V3h4v2"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+ moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+ aa:'<path d="M3 19l5-13 5 13M5 14h6M15 19l3.5-8 3.5 8M16.3 16.5h4.4"/>'};
 const LKEYS=Object.keys(LINEIC);
-const LNO='.face,.tile,.board,.slot,.reserve,svg,script,style,textarea,input,.chic,.hi,.nchips,.nrow,.jprev,.tsym,.lc,.preview,[data-noic]';
+const LNO='.face,.tile,.board,.slot,.reserve,svg,script,style,textarea,input,.nchips,.nrow,.jprev,.tsym,.lc,.preview,[data-noic]';
 function lineify(root){ if(!root||!root.nodeType) return; const w=document.createTreeWalker(root.nodeType===1?root:root.parentNode||document.body,NodeFilter.SHOW_TEXT,null), hits=[]; let n;
   while((n=w.nextNode())){ const t=n.nodeValue; if(!t||t.length>400||!n.parentElement) continue; const st=t.replace(/^\s+/,''); const k=LKEYS.find(k=>st.startsWith(k)); if(!k) continue;
     const rest=st.slice(k.length).replace(/^\uFE0F/,''); if(rest!==''&&!/^\s/.test(rest)) continue; if(n.parentElement.closest(LNO)) continue; hits.push([n,k,rest]); }
   hits.forEach(([n,k,rest])=>{ const sp=document.createElement('span'); sp.className='licw'; sp.setAttribute('aria-hidden','true');
     sp.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+ICP[LINEIC[k]]+'</svg>';
     n.parentNode.insertBefore(sp,n); n.nodeValue=rest.replace(/^\s+/,''); }); }
-let lineT=0; new MutationObserver(()=>{ if(lineT) return; lineT=requestAnimationFrame(()=>{ lineT=0; lineify(document.body); }); }).observe(document.body,{childList:true,subtree:true});
+let lineT=0; new MutationObserver(()=>{ if(lineT) return; lineT=requestAnimationFrame(()=>{ lineT=0; lineify(document.body); document.querySelectorAll('.bar:not([aria-hidden])').forEach(b=>b.setAttribute('aria-hidden','true')); }); }).observe(document.body,{childList:true,subtree:true});
 lineify(document.body);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&S.sheet) closeSheet(); });
 const sheetWrap = html => `<div class="scrim" onclick="if(event.target===this)closeSheet()"><div class="sheet" role="dialog" aria-modal="true"><div class="grab"></div>${html}</div></div>`;
@@ -2826,7 +2843,7 @@ function vSheet(){ const g=S.game;
       ${row('👯',L('Dues fitxes iguals enganxades pel costat també fan parella si cap té res a sobre, encara que una tingui l’altre costat tancat.'))}
       ${row('⇅',L('Al faristol hi caben 2 fitxes. Si t’encalles, desfés l’última o barreja (+1 min, un cop per tauler).'))}
       ${calm?'':row('⏱',L('Cada pista suma 20 s; barrejar, 1 min; una resposta equivocada del refrany, 30 s.'))}
-      ${calm?'':row('Aa',L('Cada parella destapa lletres del refrany. Si l’endevines abans, guanyes temps.'))}
+      ${calm?'':row('🔤',L('Cada parella destapa lletres del refrany. Si l’endevines abans, guanyes temps.'))}
       ${row('✋',L('Deixar una fitxa damunt una que no és la seva parella és un error. Amb 3 errors, s’acaba.'))}
       </ul><p style="font-size:var(--fs-body);margin:0"><button class="linkbtn" onclick="startTutorial()">${L('Fer la partida guiada')}</button></p><div class="stack"><button class="btn primary" onclick="helpDone()">${L('Entesos')}</button></div>`); }
   if(S.sheet==='blocked'){ const calm=g.mode==='calma', lvl=g.mode==='level', ok=calm||lvl||canRetry(), errs=g.failReason==='errors', canSh=!errs&&(calm||!g.shuffled), canUndo=!errs&&!!g.lastPark;
@@ -3080,7 +3097,7 @@ function buy(k){ if(k==='pass') S.pass=true; else plusStart(k==='plusm'?'mes':'a
 function playYesterday(el){ el.parentElement.querySelector('.ans').innerHTML='<b style="font-family:var(--serif);font-size:var(--fs-title);color:var(--ink)">«'+esc(pickPhrase(yesterdaySeed))+'»</b>'; el.remove(); }
 let toastT; function toast(m,ms=2000){ clearTimeout(toastT);
   { const gm=(S.tab==='joc'&&S.game&&!S.sheet)?$('#gamemsg'):null; // M3: dins la partida, l'avís surt a la franja de dalt (mai damunt de fitxes ni del faristol)
-    if(gm){ document.querySelectorAll('.toast').forEach(e=>e.remove()); gm.innerHTML='<span>'+esc(m)+'</span>'; toastT=setTimeout(()=>{ gm.innerHTML=''; },ms); return; } } document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.setAttribute('aria-live','polite'); d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),ms); }
+    if(gm){ document.querySelectorAll('.toast').forEach(e=>e.remove()); gm.innerHTML='<span>'+esc(m)+'</span>'; toastT=setTimeout(()=>{ gm.innerHTML=''; paintFixed(); },ms); return; } } document.querySelectorAll('.toast').forEach(e=>e.remove()); const d=document.createElement('div'); d.className='toast'; d.setAttribute('role','status'); d.setAttribute('aria-live','polite'); d.textContent=m; $('#phone').appendChild(d); toastT=setTimeout(()=>d.remove(),ms); }
 
 // M9: si la teva fila no es veu a la llista, surt fixada a baix (posició i temps); si es veu, no es duplica; en tocar-la, hi baixa
 function pinMe(){ const sc=$('#view .screen'); let bar=sc&&sc.querySelector('.mepin'); const row=sc&&sc.querySelector('.lb li.me');
